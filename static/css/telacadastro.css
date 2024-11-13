@@ -1,0 +1,154 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+}
+
+/* Barra superior laranja com o nome PetLand */
+.header {
+    width: 100%;
+    background-color: #F6910D;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: left;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    font-family: 'lobster', cursive;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    margin: 100px auto;
+    margin-top: 200px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #F6910D;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    flex: 1 1 calc(50% - 20px);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: black;
+    margin-bottom: 5px;
+    align-self: flex-start;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="date"] {
+    width: calc(100% - 20px);
+    max-width: 300px;
+    padding: 10px;
+    border: 2px solid #F6910D;
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: rgba(175, 170, 170, 0.3);
+    color: black;
+    margin-bottom: 10px;
+}
+
+.form-group input::placeholder {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #bcc912;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    max-width: 300px;
+}
+
+input[type="submit"]:hover {
+    background-color: #e57f0a;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        margin-top: 150px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .form-group {
+        flex: 1 1 100%;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group input[type="date"] {
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"],
+    .form-group input[type="date"] {
+        font-size: 14px;
+    }
+
+    input[type="submit"] {
+        font-size: 14px;
+    }
+}
