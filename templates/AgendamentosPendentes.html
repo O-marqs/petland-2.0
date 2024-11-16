@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Agendamentos</title>
+    <link rel="stylesheet" href="agendamentosPendentes.css">
+</head>
+<body>
+
+    <div class="header">
+        <div class="menu-hamburguer" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="menu" class="hidden">
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#meus-pets">Meus Pets</a></li>
+                <li><a href="#perfil">Meu Perfil</a></li>
+            </ul>
+        </div>
+        PetLand 
+    </div>
+
+    <div class="container">
+        <h1>Meus Agendamentos</h1>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pet</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Serviço</th>
+                        <th>Subserviço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="agendamentosTableBody">
+                    <!-- Linhas de agendamentos serão inseridas dinamicamente aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="AgendamentosPendentes.js"></script>
+
+</body>
+</html>

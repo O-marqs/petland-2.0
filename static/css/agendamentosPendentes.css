@@ -1,0 +1,213 @@
+/* Estilo Global */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: white;
+    color: black;
+}
+
+/* Cabeçalho */
+.header {
+    width: 100%;
+    background-color: #F6910D;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: left;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Lobster', cursive;
+    z-index: 1000;
+}
+
+/* Container principal */
+.container {
+    width: 80%;
+    max-width: 800px;
+    background-color: #f0f0f0;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    margin: 150px auto 50px; /* Ajuste da margem para considerar o cabeçalho fixo */
+    text-align: center;
+}
+
+/* Tabela com barra de rolagem horizontal */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Adiciona barra de rolagem horizontal */
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th, td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+td {
+    background-color: white;
+}
+
+/* Botões de ação */
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+button:hover {
+    background-color: #F6910D;
+}
+
+/* Esconder o botão de editar */
+.edit-btn {
+    display: none; /* Ou você pode usar visibility: hidden; */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        margin-top: 150px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    .header {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        font-size: 28px;
+        padding: 10px; /* Reduz o padding em telas menores */
+    }
+
+    .container {
+        padding: 15px;
+        margin-top: 130px;
+    }
+
+    th, td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    /* Para garantir que a tabela caiba em telas muito pequenas */
+    table {
+        font-size: 12px;
+    }
+
+    .menu-hamburguer div {
+        width: 20px;
+        height: 2px;
+        background-color: white;
+    }
+
+    #menu {
+        width: 100%;
+        left: 0;
+        padding: 0;
+    }
+
+    #menu ul li {
+        padding: 10px;
+    }
+}
+
+/* Estilo do Menu Hambúrguer */
+.menu-hamburguer {
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.menu-hamburguer div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+#menu {
+    position: absolute;
+    top: 60px; /* Alinha logo abaixo do ícone do menu */
+    left: 20px; /* Alinha à esquerda do ícone */
+    width: 150px; /* Defina uma largura discreta */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona uma leve sombra */
+    display: none;
+    text-align: left; /* Alinhamento do texto à esquerda */
+    z-index: 999;
+    border-radius: 5px; /* Adiciona cantos arredondados */
+    padding: 10px 0; /* Adiciona um pequeno padding ao redor das opções */
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    padding: 10px 20px; /* Espaçamento entre os itens */
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+#menu ul li:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+/* Classe para exibir o menu */
+#menu.show {
+    display: block;
+}
+h1{
+    color: #F6910D;
+}

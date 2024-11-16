@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Cadastre-se</title>
+<style>
+    .error-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        background-color: #f5f5f5; /* Cor de fundo clara */
+    }
+
+    .login-section, .signup-section {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .login-section {
+        background-color: #F6910D;
+        position: relative;
+        /* width: 80%; */
+    }
+
+    .signup-section {
+        background-color: white;
+        position: relative;
+        display: flex; /* Adicionado para corrigir a quebra */
+        align-items: center; /* Adicionado para corrigir a quebra */
+        justify-content: center; /* Adicionado para corrigir a quebra */
+    }
+
+    .form-container {
+        text-align: center;
+        /* width: 80%; */
+        
+    }
+    
+    
+    input[type="text"], input[type="password"], input[type="submit"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 50%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        font-size: 16px;
+        display: inline-block;
+        
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #ADFF2F;
+        color: black;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        
+    }
+
+    .forgot-password {
+        margin-top: 10px;
+        font-size: 14px;
+        text-decoration: underline;
+        cursor: pointer;
+        
+    }
+    
+
+    /* Estilos adicionais para o conteúdo na metade branca */
+    .store-info {
+        text-align: center; /* Centralizar o conteúdo */
+    }
+
+    .store-info img {
+        width: 350px; /* Ajuste o tamanho da imagem conforme necessário */
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .signup-button {
+        margin-top: 20px;
+    }
+    #botao-cadastrar{
+        background-color: #ADFF2F ;
+        height: 50px;
+        width: 300px;
+        color: black;
+        
+        
+
+    }
+    *{
+        /* border: 1px solid red; */
+    }
+    #logo{
+        /* border: 1px solid red; */
+        /* margin-bottom: 600px; */
+        float: right;
+        height: 25%;
+        width: 25%;
+        padding-top: 20 px;
+        
+    }
+    .store-info2{
+        color: #F6910D;
+        
+    }
+    h2{
+        font-size: 35px;
+        margin-bottom: 90px;
+        
+    }
+    .petl{
+        padding-left: 70px;
+        padding-top: 5px;
+    }
+    #petsimg{
+        padding-bottom: -5px;
+        /* border: 1px solid green; */
+        margin-bottom: 15px;
+    }
+    #botao-entrar{
+        background-color: #ADFF2F ;
+        height: 50px;
+        width: 300px;
+        margin-top: 40px;
+    }
+    #inputtexto{
+        margin-bottom: 45px;
+    }
+    .store-info2{
+        margin-bottom: 40px;
+    }
+</style>
+</head>
+<body>
+
+    <div class="login-section">
+        <div class="form-container" >
+            <h2>Login Funcionário</h2>
+            <form onsubmit="event.preventDefault(); login();">
+                <input type="text" placeholder="Email" id="email" name="email">
+                <input type="password" placeholder="Senha" id="senha" name="senha">
+                <input type="submit" value="Entrar" id="botao-entrar">
+                <a href="/recuperar-senha" class="forgot-password">Esqueci a senha</a>
+            </form>
+        </div>
+    </div>
+   
+    <div id="error-message" class="error-message"></div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    <script>
+        window.onload = function() {
+            const flashMessageDiv = document.getElementById('flash-message');
+            if (flashMessageDiv.innerHTML.trim() !== '') {
+                flashMessageDiv.style.display = 'block'; // Mostra a mensagem
+            }
+        }
+        function validarEmail(email) {
+            // Expressão regular simples para validar o formato do email
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+    
+        async function login() {
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+            const errorMessageDiv = document.getElementById('error-message');
+    
+            // Limpa mensagens de erro anteriores
+            errorMessageDiv.style.display = 'none';
+            errorMessageDiv.innerHTML = '';
+    
+            // Validações de campo vazio
+            if (!email) {
+                mostrarMensagemErro('Por favor, preencha o campo de email.');
+                return;
+            }
+    
+            if (!senha) {
+                mostrarMensagemErro('Por favor, preencha o campo de senha.');
+                return;
+            }
+    
+            // Validação de formato de email
+            if (!validarEmail(email)) {
+                mostrarMensagemErro('Por favor, insira um email válido.');
+                return;
+            }
+    
+            // Se passar nas validações, faz a requisição
+            try {
+                const response = await fetch('/api/funcionario/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, senha })
+                });
+    
+                // Redireciona ou mostra o erro baseado na resposta
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    const result = await response.json();
+                    mostrarMensagemErro(result.message);
+                }
+            } catch (error) {
+                mostrarMensagemErro('Erro ao tentar se comunicar com o servidor.');
+            }
+        }
+    
+        // Função para exibir mensagens de erro
+        function mostrarMensagemErro(mensagem) {
+            const errorMessageDiv = document.getElementById('error-message');
+            errorMessageDiv.style.display = 'block';
+            errorMessageDiv.innerHTML = mensagem;
+        }
+    </script>
+    
+    
+</body>
+</html>

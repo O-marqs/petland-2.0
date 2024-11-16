@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Cliente</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
+            color: black;
+        }
+
+        /* Cabeçalho (Barra superior) */
+        .header {
+            width: 100%;
+            background-color: #F6910D;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Lobster', cursive;
+            z-index: 1000;
+        }
+
+        /* Menu hamburguer */
+        .menu-hamburguer {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .menu-hamburguer div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        
+
+        /* Container principal */
+        .form-container {
+            max-width: 800px;
+            margin: 150px auto 50px;
+            background-color: #f0f0f0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #F6910D;
+            font-family: 'Lobster', cursive;
+            margin-bottom: 30px;
+        }
+
+        /* Layout flexível para os inputs */
+        .form-group-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: black;
+            margin-bottom: 5px;
+            align-self: flex-start;
+        }
+
+        .form-group input {
+            padding: 10px;
+            width: 100%;
+            border: 2px solid #F6910D;
+            border-radius: 10px;
+            background-color: rgba(175, 170, 170, 0.1);
+            font-size: 16px;
+            color: black;
+            box-sizing: border-box;
+        }
+
+        .pet-carousel {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 0;
+            margin-top: 20px;
+            scroll-behavior: smooth;
+        }
+
+        .pet-item {
+            min-width: 150px;
+            height: 150px;
+            margin-right: 15px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .pet-item h3 {
+            margin: 10px 0 5px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .pet-item button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #F6910D;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #bcc912;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .button.back {
+            background-color: #6c757d;
+        }
+
+        .button.edit {
+            background-color: #bcc912;
+        }
+
+        .button:hover {
+            background-color: #e57f0a;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .edit-mode .form-group input {
+            background-color: white;
+        }
+        /* Estilizando o menu que aparece ao clicar no ícone do hambúrguer */
+/* Estilizando o menu que aparece ao clicar no ícone do hambúrguer */
+#menu {
+    position: absolute;
+    top: 60px; /* Alinha logo abaixo do ícone do menu */
+    left: 20px; /* Alinha à esquerda do ícone */
+    width: 150px; /* Defina uma largura discreta */
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona uma leve sombra */
+    display: none;
+    text-align: left; /* Alinhamento do texto à esquerda */
+    z-index: 999;
+    border-radius: 5px; /* Adiciona cantos arredondados */
+    padding: 10px 0; /* Adiciona um pequeno padding ao redor das opções */
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#menu ul li {
+    padding: 10px 20px; /* Espaçamento entre os itens */
+}
+
+#menu ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+#menu ul li:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+/* Classe para exibir o menu */
+#menu.show {
+    display: block;
+}
+
+
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                margin-top: 150px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .button {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                font-size: 30px;
+            }
+
+            .form-container {
+                padding: 20px;
+                margin-top: 130px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .form-group label {
+                font-size: 12px;
+            }
+
+            .form-group input {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 14px;
+            }
+        }
+    </style>
+        
+</head>
+<body>
+    <div class="header">
+        <div class="menu-hamburguer" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="menu" class="hidden">
+            <ul>
+                <li><a href="{{ url_for('cliente_bp.tela_inicial') }}">Início</a></li>
+                <li><a href="{{ url_for('pet_bp.meus_pets') }}">Meus Pets</a></li>
+                <li></li><a href="{{ url_for('pet_bp.agendamento_pets') }}">Agendamentos</a></li>
+                <li> <a href="{{ url_for('agendamento_bp.meus_agendamentos') }}">Meus agendamentos</a></li>
+                <li><a href="{{ url_for('cliente_bp.logout') }}" >Sair</a></li>
+            </ul>
+        </div>
+        PetLand 
+    </div>
+
+    <div class="form-container">
+        <h1>Perfil</h1>
+
+        <div class="form-group-container">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input value="{{ cliente.nome_cliente }}"    type="text" id="name" disabled>
+            </div>  
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input value="{{ cliente.email_cliente }}" type="email" id="email" disabled>
+            </div>
+            <div class="form-group">
+                <label for="address">Endereço:</label>
+                <input value="{{ cliente.endereco_cliente }}" type="text" id="address" disabled>
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefone:</label>
+                <input value="{{ cliente.telefone_cliente }}" type="text" id="phone" disabled>
+            </div>     
+            <div class="form-group">
+                <label for="cpf">CPF:</label>
+                <input value="{{ cliente.cpf_cliente }}" type="text" id="cpf" disabled>
+            </div>
+        
+        </div>
+
+
+        <div class="actions">
+            <button class="button edit" id="editBtn" onclick="enableEditing()">Editar Informações</button>
+            <button class="button hidden" id="saveBtn" onclick="confirmSave()">Salvar</button>
+            <button class="button back hidden" id="cancelBtn" onclick="cancelEditing()">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para habilitar a edição dos campos
+        function enableEditing() {
+            // Habilita os inputs
+            document.querySelectorAll('.form-group input').forEach(input => {
+                if (input.id !== 'cpf' && input.id !== 'email') { // Verifica se o input não é o de CPF
+                    input.disabled = false; // Habilita o input
+                    input.style.backgroundColor = 'white'; // Altera a cor de fundo para branco
+                }
+            });
+    
+            // Mostra os botões de salvar e cancelar
+            document.getElementById('saveBtn').classList.remove('hidden');
+            document.getElementById('cancelBtn').classList.remove('hidden');
+            document.getElementById('editBtn').classList.add('hidden'); // Esconde o botão de editar
+    
+            // Oculta o menu
+            document.getElementById('menu').classList.remove('show'); // Esconde o menu
+        }
+    
+        // Função para cancelar a edição
+        function cancelEditing() {
+            location.reload(); // Recarrega a página
+        }
+    
+        // Função para salvar as informações
+        function confirmSave() {
+            const clienteData = {
+                nome: document.getElementById('name').value,
+                endereco: document.getElementById('address').value,
+                telefone: document.getElementById('phone').value,
+            };
+    
+            // Enviar os dados para o servidor via fetch
+            fetch('{{ url_for("cliente_bp.editar_cliente") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(clienteData)
+            })
+            .then(response => {
+                console.log(response.status); // Para depuração
+                if (!response.ok) { // Verifica se a resposta não está no intervalo de sucesso
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'Erro ao salvar as informações'); // Lida com erros no corpo da resposta
+                    });
+                }
+                return response.json(); // Se a resposta estiver OK, retorna o JSON
+            })
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect; // Redireciona para a URL fornecida
+                }
+                console.log('Sucesso:', data);
+                alert('Informações salvas com sucesso!');
+            })
+            .catch((error) => {
+                console.error('Erro:', error);
+                alert('Erro ao salvar as informações.');
+            });
+        }
+        // Função para alternar a visibilidade do menu
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('show');
+        }
+    </script>
+
+    
+</body>
+</html>

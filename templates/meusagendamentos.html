@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Agendamentos - PetLand</title>
+    <style>
+        /* Estilos CSS (copiados do estilo do HTML fornecido) */
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 60px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            width: 100%;
+            background-color: #F6910D;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Lobster', cursive;
+            z-index: 1000;
+        }
+
+        .menu-hamburguer {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .menu-hamburguer div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        #menu {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            width: 150px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: left;
+            z-index: 999;
+            border-radius: 5px;
+            padding: 10px 0;
+        }
+
+        #menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #menu ul li {
+            padding: 10px 20px;
+        }
+
+        #menu ul li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        #menu ul li:hover {
+            background-color: #f0f0f0;
+        }
+
+        #menu.show {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .agendamento {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .agendamento h2 {
+            font-size: 1.2em;
+            margin: 0 0 10px;
+            color: #436E95;
+        }
+
+        .agendamento p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin-top: 120px;
+            }
+
+            .header {
+                font-size: 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                font-size: 24px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+            .btn-delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="menu-hamburguer" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="menu" class="hidden">
+            <ul>
+                <li><a href="{{ url_for('cliente_bp.tela_inicial') }}">Início</a></li>
+                <li><a href="{{ url_for('pet_bp.meus_pets') }}">Meus Pets</a></li>
+                <li><a href="{{ url_for('cliente_bp.perfil_cliente') }}">Meu Perfil</a></li>
+                <li><a href="{{ url_for('cliente_bp.logout') }}" >Sair</a></li>
+            </ul>
+        </div>
+        PetLand
+    </div>
+
+    <div class="container">
+        <h1>Meus Agendamentos</h1>
+        {% if agendamentos %}
+            {% for agendamento in agendamentos %}
+                <div class="agendamento">
+                    <h2>Agendamento para {{ agendamento.nome_pet }}</h2>
+                    <p><strong>Serviço:</strong> {{ agendamento.servico_nome }}</p>
+                    <p><strong>Data:</strong> {{ agendamento.data_agendamento }}</p>
+                    <p><strong>Horário:</strong> {{ agendamento.hora_agendamento }}</p>
+                    <form method="POST" action="{{ url_for('agendamento_bp.apagar_agendamento', agendamento_id=agendamento.id_agendamento) }}" style="display: inline;">
+                        <button type="submit" class="btn-delete">Deletar</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Você não possui agendamentos.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

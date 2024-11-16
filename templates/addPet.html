@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro do Pet - PetLand</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
+            color: black;
+        }
+
+        /* Cabeçalho */
+        .header {
+            width: 100%;
+            background-color: #F6910D;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Lobster', cursive;
+            z-index: 1000;
+        }
+
+        /* Menu hamburguer */
+        .menu-hamburguer {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .menu-hamburguer div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* Container principal */
+        .form-container {
+            max-width: 800px;
+            margin: 150px auto 50px;
+            background-color: #f0f0f0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #F6910D;
+            font-family: 'Lobster', cursive;
+            margin-bottom: 30px;
+        }
+
+        .form-group-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-group {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: black;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            padding: 10px;
+            width: 100%;
+            border: 2px solid #F6910D;
+            border-radius: 10px;
+            background-color: rgba(175, 170, 170, 0.1);
+            font-size: 16px;
+            color: black;
+            box-sizing: border-box;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        .button {
+            background-color: #F6910D;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #e57f0a;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <div class="header">
+        <div class="menu-hamburguer" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        PetLand
+    </div>
+
+    <!-- Container principal -->
+    <div class="form-container">
+        <h1>Cadastro do Pet</h1>
+        <form id="pet-cadastro-form" action="{{ url_for('pet_bp.cadastrar_pet') }}" method="POST">
+            <div class="form-group-container">
+                <div class="form-group">
+                    <label for="nome">Nome do Pet:</label>
+                    <input type="text" id="nome" name="nome_pet" placeholder="Nome do Pet">
+                    <div class="error" id="error-nome"></div>
+                </div>
+                <div class="form-group">
+                    <label for="especie">Espécie:</label>
+                    <select id="especie" name="especie" onchange="fetchRacas()">
+                        <option value="">Selecione uma espécie</option>
+                    </select>
+                    <div class="error" id="error-especie"></div>
+                </div>
+                <div class="form-group">
+                    <label for="raca">Raça:</label>
+                    <select id="raca" name="raca_id" disabled>
+                        <option value="">Selecione uma raça</option>
+                    </select>
+                    <div class="error" id="error-raca"></div>
+                </div>
+                <div class="form-group">
+                    <label for="genero">Gênero:</label>
+                    <select id="genero" name="genero_id">
+                        <option value="">Selecione o Gênero</option>
+                    </select>
+                    <div class="error" id="error-genero"></div>
+                </div>
+                <div class="form-group">
+                    <label for="porte">Observações:</label>
+                    <input type="text" id="observacoes" name="observacao_pet" placeholder="Observações">
+                    <div class="error" id="error-porte"></div>
+                </div>
+                <div class="form-group">
+                    <label for="idade">Idade:</label>
+                    <input type="number" id="idade" name="idade_pet" placeholder="Idade">
+                    <div class="error" id="error-idade"></div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <input class="button" type="submit" value="Cadastrar Pet">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Carrega espécies e gêneros assim que a página é carregada
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEspecies();
+            carregarGeneros();
+        });
+    
+        // Função para carregar espécies
+        async function loadEspecies() {
+            try {
+                const response = await fetch('{{ url_for("pet_bp.obter_especies") }}');
+                const especies = await response.json();
+                const especieSelect = document.getElementById('especie');
+                especies.forEach(especie => {
+                    const option = document.createElement('option');
+                    option.value = especie.id;
+                    option.textContent = especie.nome;
+                    especieSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar as espécies:', error);
+            }
+        }
+    
+        // Função para carregar raças com base na espécie selecionada
+        async function fetchRacas() {
+            const especieId = document.getElementById('especie').value;
+            const racaSelect = document.getElementById('raca');
+    
+            if (especieId) {
+                try {
+                    const response = await fetch(`/api/racas?especie_id=${especieId}`);
+                    const racas = await response.json();
+                    racaSelect.innerHTML = '<option value="">Selecione uma raça</option>';
+                    racas.forEach(raca => {
+                        const option = document.createElement('option');
+                        option.value = raca.id;
+                        option.textContent = raca.nome;
+                        racaSelect.appendChild(option);
+                    });
+                    racaSelect.disabled = false;
+                } catch (error) {
+                    console.error('Erro ao carregar as raças:', error);
+                }
+            } else {
+                racaSelect.innerHTML = '<option value="">Selecione uma raça</option>';
+                racaSelect.disabled = true;
+            }
+        }
+    
+        // Função para carregar gêneros
+        async function carregarGeneros() {
+            try {
+                const response = await fetch('{{ url_for("pet_bp.obter_generos") }}');
+                const generos = await response.json();
+                const generoSelect = document.getElementById('genero');
+                generos.forEach(genero => {
+                    const option = document.createElement('option');
+                    option.value = genero.id;
+                    option.textContent = genero.nome;
+                    generoSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar gêneros:', error);
+            }
+        }
+    </script>
+    
+</body>
+</html>

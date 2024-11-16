@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento PetLand</title>
+    <style>
+      /* Estilos CSS */
+/* Estilos CSS */
+ /* Estilos gerais */
+ body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            color: #333;
+        }
+
+        /* Container principal */
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 60px;
+            box-sizing: border-box;
+        }
+
+        /* Cabeçalho */
+        .header {
+            width: 100%;
+            background-color: #F6910D;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            font-family: 'Lobster', cursive;
+            z-index: 1000;
+        }
+
+        /* Menu hamburguer */
+        .menu-hamburguer {
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .menu-hamburguer div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* Menu dropdown */
+        #menu {
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            width: 150px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: left;
+            z-index: 999;
+            border-radius: 5px;
+            padding: 10px 0;
+        }
+
+        #menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #menu ul li {
+            padding: 10px 20px;
+        }
+
+        #menu ul li a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        #menu ul li:hover {
+            background-color: #f0f0f0;
+        }
+
+        #menu.show {
+            display: block;
+        }
+
+        /* Títulos */
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            border-color: #F6910D; /* Cor de foco mais visível */
+            outline: none;
+        }
+
+        /* Botão */
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-prox {
+            background-color: #436E95;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 200px; /* Largura máxima para o botão */
+            transition: background-color 0.3s ease;
+        }
+
+        .button-prox:hover {
+            background-color: #F6910D;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                margin-top: 120px;
+            }
+
+            .header {
+                font-size: 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .button-prox {
+                font-size: 16px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                font-size: 24px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group select,
+            .form-group input {
+                font-size: 16px;
+            }
+
+            .button-prox {
+                font-size: 16px;
+            }
+        }
+
+        /* Separador de input e campos */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        /* Feedback de validação */
+        input:invalid, select:invalid {
+            border-color: #FF6B6B; /* Cor para indicar erro */
+        }
+
+        input:valid, select:valid {
+            border-color: #66CC66; /* Cor para indicar sucesso */
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="menu-hamburguer" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="menu" class="hidden">
+            <ul>
+                <li><a href="{{ url_for('cliente_bp.tela_inicial') }}">Início</a></li>
+                <li><a href="{{ url_for('pet_bp.meus_pets') }}">Meus Pets</a></li>
+                <li><a href="{{ url_for('agendamento_bp.meus_agendamentos') }}">Meus agendamentos</a></li>
+                <li><a href="{{ url_for('cliente_bp.perfil_cliente') }}">Meu Perfil</a></li>
+                <li><a href="{{ url_for('cliente_bp.logout') }}" >Sair</a></li>
+            </ul>
+        </div>
+        PetLand
+    </div>
+            <h1>Agendamento</h1>
+            <form method="POST" action="{{ url_for('agendamento_bp.submit_agendamento') }}">
+                <div class="form-group">
+                    <label for="pet">Pet</label>
+                    <select id="pet" name="pet" >
+                        <option value="">Selecione um pet</option>
+                        {% for pet in pets %}
+                            <option value="{{ pet.id_pet }}">{{ pet.nome_pet }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="servico">Serviço</label>
+                    <select id="servico" name="servico" >
+                        <option value="">Selecione um serviço</option>
+                        {% for servico in servicos %}
+                            <option value="{{ servico.id_servico }}">{{ servico.servico_nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            
+                <div class="form-group">
+                    <label for="data_agendamento">Data do Agendamento</label>
+                    <input type="date" id="data_agendamento" name="data_agendamento" min="{{ today_date }}" onchange="fetchAvailableTimes()">
+                </div>
+            
+                <div class="form-group">
+                    <label for="horario_agendamento">Horário Disponível</label>
+                    <select id="horario_agendamento" name="horario_agendamento">
+                        <option value="">Selecione um horário</option>
+                        <!-- Os horários disponíveis serão preenchidos aqui -->
+                    </select>
+                </div>
+            
+                <div class="actions">
+                    <button type="submit" class="button-prox">Agendar</button>
+                </div>
+            </form>
+    </div>
+
+    <script>
+         function toggleMenu() {
+            document.getElementById('menu').classList.toggle('show');
+        }        
+        // Função para carregar serviços baseados no pet selecionado
+        // Função para carregar serviços baseados no pet selecionado
+
+function fetchAvailableTimes() {
+    const dataAgendamento = document.getElementById("data_agendamento").value;
+    if (!dataAgendamento) return;
+
+    fetch(`/api/get_available_times/${dataAgendamento}`)
+        .then(response => response.json())
+        .then(data => {
+            const horarioSelect = document.getElementById("horario_agendamento");
+            horarioSelect.innerHTML = '<option value="">Selecione um horário</option>'; // Limpa opções antigas
+
+            data.horarios_disponiveis.forEach(horario => {
+                const option = document.createElement("option");
+                option.value = horario;
+                option.textContent = horario;
+                horarioSelect.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Erro ao buscar horários disponíveis:", error));
+}
+
+
+
+// Função para carregar horários disponíveis
+function loadAvailableHours() {
+    var date = document.getElementById('data_agendamento').value;
+    if (date) {
+        fetch(`/get_available_hours/${date}`)
+            .then(response => response.json())
+            .then(data => {
+                let hourSelect = document.getElementById('hora_agendamento');
+                hourSelect.innerHTML = "<option value=''>Selecione a hora</option>";
+                data.available_hours.forEach(hour => {
+                    hourSelect.innerHTML += `<option value="${hour}">${hour}</option>`;
+                });
+                hourSelect.disabled = false;
+            });
+    } else {
+        document.getElementById('hora_agendamento').disabled = true;
+    }
+}
+
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Início Petshop</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+    .header {
+        background-color: #F6910D;
+        color: white;
+        padding: 20px;
+        font-family: lobster;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .header h1 {
+        margin: 0;
+        font-size: 2.5em;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: center;
+        background-color: #FFF;
+        padding: 20px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu a {
+        text-decoration: none;
+        color: #F6910D;
+        font-size: 1.2em;
+        margin: 0 15px;
+        font-weight: bold;
+    }
+
+    .menu a:hover {
+        color: #bcc912;
+    }
+
+    .content {
+        padding: 40px;
+        text-align: center;
+    }
+
+    .content h2 {
+        color: #F6910D;
+        margin-bottom: 20px;
+        font-size: 2em;
+    }
+
+    .content img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .buttons-container a {
+        background-color: #F6910D;
+        color: white;
+        padding: 15px 30px;
+        margin: 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1.2em;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .buttons-container a:hover {
+        background-color: #bcc912;
+    }
+
+    .footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+    img{
+        margin-top: 30px; 
+        margin-bottom: 70px; 
+        height: 300px;
+        width: 420px;
+        ; }
+</style>
+</head>
+<body>
+    <div class="header">
+        <h1>PetLand</h1>
+    </div>
+    <div class="menu">
+        <a href="{{ url_for('cliente_bp.perfil_cliente') }}">Meu Perfil</a>
+        <a href="{{ url_for('pet_bp.agendamento_pets') }}">Agendamentos</a>
+        <a href="{{ url_for('agendamento_bp.meus_agendamentos') }}">Meus agendamentos</a>
+        <a href="{{ url_for('pet_bp.meus_pets') }}">Meus Pets</a>
+        <a href="{{ url_for('cliente_bp.logout') }}" style="position: absolute;  right: 20px;">Sair</a>
+
+    </div>
+    <div class="content">
+        <h2>Descubra um Mundo de Cuidados e Amor</h2>
+        <main></main>
+            <section id="introducao">
+                <p>Na Petland, sabemos que seu pet é parte da família. Por isso, estamos aqui para oferecer tudo o que ele precisa para viver feliz e saudável! Desde serviços de banho e tosa até consultas veterinárias, cada detalhe é pensado com carinho e profissionalismo. Agende seu serviço para conhecer e descubrir como podemos tornar a vida do seu melhor amigo ainda melhor!</p>
+            </section>  
+    
+        </main>
+        <img src="{{ url_for('static', filename='images/pets.JPEG.jpeg') }}" alt="Pets">
+        
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>
+    </div>
+</body>
+</html>

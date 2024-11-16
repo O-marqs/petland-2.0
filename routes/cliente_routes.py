@@ -17,6 +17,13 @@ def load_user(user_id):
     return Cliente.buscar_cliente(user_id)
 
 
+@cliente_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('cliente_bp.tela_login'))
+
+
 @cliente_bp.route('/tela_login')
 def tela_login():
     return render_template('telalogin_cliente.html')
@@ -32,7 +39,7 @@ def tela_cadastro():
 def tela_inicial():
     print(
         f'Bem-vindo, {current_user.nome_cliente}! Você está na página principal.')
-    return render_template('telainicialCliente.html')
+    return render_template('telainicial.html')
 
 
 @cliente_bp.route('/cliente/login', methods=['POST'])
@@ -67,12 +74,15 @@ def cadastrar_cliente():
 
     try:
         data = request.get_json()
+        print('pegou os dados do front')
         cliente = Cliente.cadastrar_cliente(data)
+        print('cliente criado')
         if cliente:  # Se o login for bem-sucedido
             print("realizando login depois do cadastro")
             login_user(cliente)  # Armazena o cliente na sessão
             flash('Login realizado com sucesso!', 'success')
-            return redirect(url_for('cliente_bp.tela_inicial'))
+            print('Login realizado com sucesso!', 'success')
+            return redirect(url_for('pet_bp.cadastrar_pet'))
 
         else:
             # Adiciona a mensagem para ser exibida na tela de login
@@ -92,3 +102,50 @@ def cadastrar_cliente():
 def buscar_cliente(cpf_cliente):
     cliente = Cliente.buscar_cliente(cpf_cliente)
     return jsonify(cliente)
+
+
+@cliente_bp.route('/cliente/perfil')
+@login_required  # Garante que apenas usuários logados podem acessar
+def perfil_cliente():
+    # Busca o cliente atual no banco usando o ID do current_user
+    # Supondo que há uma função `buscar_por_id`
+    cliente = Cliente.buscar_cliente(current_user.cpf_cliente)
+    print(current_user.cpf_cliente)
+    if cliente:
+        return render_template('alterarPerfil.html', cliente=cliente)
+    else:
+        return redirect(url_for('cliente_bp.tela_inicial'))
+
+
+@cliente_bp.route('/cliente/editar_cliente', methods=['GET', 'POST'])
+@login_required  # Garante que apenas usuários logados podem acessar
+def editar_cliente():
+
+    data = request.get_json()  # Usando get_json() para obter dados JSON
+    print(data)
+    # Verifica se os dados necessários estão presentes
+    if not all(key in data for key in ['nome', 'endereco', 'telefone']):
+        print("Por favor, preencha todos os campos obrigatórios. algum dado vazio no back", "danger")
+        flash("Por favor, preencha todos os campos obrigatórios.", "danger")
+        return redirect(url_for('cliente_bp.perfil_cliente'))
+
+    # Chama o método de atualização da classe Cliente
+    try:
+        # Supondo que o CPF do cliente está no objeto do usuário logado
+        cpf_cliente = current_user.cpf_cliente
+        # Adapte os nomes das chaves conforme o que você está enviando no JSON
+        Cliente.atualizar_cliente(cpf_cliente, {
+            'telefone_cliente': data['telefone'],
+            'endereco_cliente': data['endereco'],
+            'nome_cliente': data['nome']
+        })
+        flash("Cliente atualizado com sucesso!", "success")
+        return jsonify({"redirect": url_for('cliente_bp.tela_inicial')}), 200
+    except Exception as e:
+        print(f"Ocorreu um erro ao atualizar o cliente: {e}, danger")
+        flash("Ocorreu um erro ao atualizar o cliente: " + str(e), "danger")
+        # Retorne um status 500
+        return jsonify({"redirect": url_for('cliente_bp.perfil_cliente')}), 500
+
+    # Redireciona de volta para a tela de perfil do cliente
+    return render_template('editar_cliente.html')

@@ -1,46 +1,60 @@
+from flask_login import UserMixin
 from config.database import create_connection, close_connection
-import bcrypt
 
-class Colaborador:
-    def __init__(self, cpf_colaborador, nome_colaborador, senha_backoffice, email_colaborador, acesso_id):
-        self.cpf_colaborador = cpf_colaborador
-        self.nome_colaborador = nome_colaborador
-        self.senha_backoffice = senha_backoffice
-        self.email_colaborador = email_colaborador
+
+class Funcionario(UserMixin):
+    def __init__(self, id_agendamento=None, nome_pet=None, data_agendamento=None, servico_nome=None, hora_agendamento=None, acesso_id=None, nome_colaborador=None, email_colaborador=None, senha_backOffice=None, cpf_colaborador=None, active=True):
         self.acesso_id = acesso_id
+        self.nome_colaborador = nome_colaborador
+        self.email_colaborador = email_colaborador
+        self.senha_backOffice = senha_backOffice
+        self.cpf_colaborador = cpf_colaborador
+        self.id_agendamento = id_agendamento
+        self.nome_pet = nome_pet
+        self.servico_nome = servico_nome
+        self.data_agendamento = data_agendamento
+        self.hora_agendamento = hora_agendamento
+        self.active = active
 
     @staticmethod
-    def cadastrar_colaborador(data):
+    def buscar_funcionario(user_id):
+        # Consulta no banco para encontrar o funcionário com base no ID
         connection = create_connection()
         cursor = connection.cursor()
-
-        hashed_senha = bcrypt.hashpw(data['senha_backoffice'].encode('utf-8'), bcrypt.gensalt())
-
-        query = """
-        INSERT INTO colaboradores (cpf_colaborador, nome_colaborador, senha_backoffice, email_colaborador, acesso_id)
-        VALUES (%s, %s, %s, %s, %s)
-        """
-        values = (
-            data['cpf_colaborador'], data['nome_colaborador'], hashed_senha, 
-            data['email_colaborador'], data['acesso_id']
-        )
-        cursor.execute(query, values)
-        connection.commit()
+        cursor.execute(
+            "SELECT * FROM funcionario WHERE cpf_colaborador = %s", (user_id,))
+        row = cursor.fetchone()
         close_connection(connection)
-        return {"message": "Colaborador cadastrado com sucesso!"}
+
+        if row:
+            return Funcionario(*row)
+        return None
 
     @staticmethod
-    def login_colaborador(email, senha):
+    def login_funcionario(email, senha):
         connection = create_connection()
-        cursor = connection.cursor(dictionary=True)
-
-        query = "SELECT * FROM colaboradores WHERE email_colaborador = %s"
-        cursor.execute(query, (email,))
-        colaborador = cursor.fetchone()
-
+        cursor = connection.cursor()
+        cursor.execute(
+            "SELECT * FROM funcionario WHERE email_colaborador = %s AND senha_backOffice = %s", (email, senha))
+        row = cursor.fetchone()
         close_connection(connection)
 
-        if colaborador and bcrypt.checkpw(senha.encode('utf-8'), colaborador['senha_backoffice'].encode('utf-8')):
-            return {"message": "Login bem-sucedido!", "colaborador": colaborador}
-        else:
-            return {"message": "Email ou senha inválidos"}
+        if row:
+            return Funcionario(*row)
+        return None
+
+    @staticmethod
+    def buscar_agendamentos_por_data(data):
+        connection = create_connection()
+        cursor = connection.cursor(dictionary=True)
+        query = """
+            SELECT ag.id_agendamento as id_agendamento, p.nome_pet as nome_pet, s.servico_nome as servico_nome, ag.data_agendamento as data_agendamento, ag.hora_agendamento as hora_agendamento
+            FROM agendamento ag
+            JOIN pet p ON ag.pet_id = p.id_pet
+            JOIN servico s ON ag.servico_id = s.id_servico
+            WHERE ag.data_agendamento = %s
+        """
+        cursor.execute(query, (data,))
+        agendamentos = cursor.fetchall()
+        close_connection(connection)
+        return agendamentos

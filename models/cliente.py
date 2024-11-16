@@ -13,6 +13,9 @@ class Cliente(UserMixin):
         self.senha_cliente = senha_cliente
         self.active = active
 
+    def is_active(self):
+        return self.active
+
     def get_id(self):
         return self.cpf_cliente  # Retorna o CPF como
 
@@ -21,17 +24,19 @@ class Cliente(UserMixin):
         connection = create_connection()
         cursor = connection.cursor()
         # Verifica se o CPF já está cadastrado
+        print('Puxou o cursor')
         try:
             cursor.execute(
                 "SELECT cpf_cliente FROM cliente WHERE cpf_cliente = %s", (data['cpf'],))
-
+            print('Realizou o select')
             if cursor.fetchone() is not None:
                 return {"message": "Cliente já cadastrado. Redirecionando para a tela de login."}, 409
         except Exception as e:
-            print(f"Erro: {e}")
+            print(f"Erro ao buscar se pessoa está cadastrada: {e}")
         try:
             hashed_senha = bcrypt.hashpw(
                 data['senha'].encode('utf-8'), bcrypt.gensalt())
+            print('Criou hash da senha')
 
             query = """
             INSERT INTO cliente (cpf_cliente, telefone_cliente, email_cliente, endereço_cliente, nome_cliente, senha_cliente)
@@ -42,16 +47,17 @@ class Cliente(UserMixin):
                 data['endereco'], data['nome'], hashed_senha
             )
             cursor.execute(query, values)
+            print('Realizou insert do cliente novo')
             connection.commit()
             print("Cliente cadastrado com sucesso.")  # Confirmação final
             return Cliente(
-                cpf_cliente=data['cpf_cliente'],
-                telefone_cliente=data['telefone_cliente'],
-                email_cliente=data['email_cliente'],
-                endereco_cliente=data['endereço_cliente'],
-                nome_cliente=data['nome_cliente'],
+                cpf_cliente=data['cpf'],
+                telefone_cliente=data['telefone'],
+                email_cliente=data['email'],
+                endereco_cliente=data['endereco'],
+                nome_cliente=data['nome'],
                 # A senha não deve ser exposta
-                senha_cliente=data['senha_cliente'],
+                senha_cliente=hashed_senha,
                 active=True
             )
 
@@ -103,7 +109,8 @@ class Cliente(UserMixin):
                 endereco_cliente=cliente['endereço_cliente'],
                 nome_cliente=cliente['nome_cliente'],
                 # A senha não deve ser exposta
-                senha_cliente=cliente['senha_cliente']
+                senha_cliente=cliente['senha_cliente'],
+                active=True
             )
         return None  # Se não encontrar, retorna None
 
@@ -114,11 +121,11 @@ class Cliente(UserMixin):
 
         query = """
         UPDATE cliente
-        SET telefone_cliente = %s, email_cliente = %s, endereco_cliente = %s, nome_cliente = %s
+        SET telefone_cliente = %s, endereço_cliente = %s, nome_cliente = %s
         WHERE cpf_cliente = %s
         """
         values = (
-            data['telefone_cliente'], data['email_cliente'],
+            data['telefone_cliente'],
             data['endereco_cliente'], data['nome_cliente'], cpf_cliente
         )
         cursor.execute(query, values)
