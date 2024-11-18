@@ -16,6 +16,12 @@ class Funcionario(UserMixin):
         self.hora_agendamento = hora_agendamento
         self.active = active
 
+    def is_active(self):
+        return self.active
+
+    def get_id(self):
+        return self.cpf_colaborador  # Retorna o CPF como
+
     @staticmethod
     def buscar_funcionario(user_id):
         # Consulta no banco para encontrar o funcionário com base no ID
@@ -33,14 +39,20 @@ class Funcionario(UserMixin):
     @staticmethod
     def login_funcionario(email, senha):
         connection = create_connection()
-        cursor = connection.cursor()
+        cursor = connection.cursor(dictionary=True)
         cursor.execute(
-            "SELECT * FROM funcionario WHERE email_colaborador = %s AND senha_backOffice = %s", (email, senha))
+            "SELECT * FROM colaboradores WHERE email_colaborador = %s AND senha_backOffice = %s", (email, senha))
         row = cursor.fetchone()
+        print(row)
         close_connection(connection)
 
         if row:
-            return Funcionario(*row)
+            return Funcionario(
+                cpf_colaborador=row['cpf_colaborador'],
+                nome_colaborador=row['nome_colaborador'],
+                email_colaborador=row['email_colaborador'],
+                active=True
+            )
         return None
 
     @staticmethod
@@ -50,8 +62,8 @@ class Funcionario(UserMixin):
         query = """
             SELECT ag.id_agendamento as id_agendamento, p.nome_pet as nome_pet, s.servico_nome as servico_nome, ag.data_agendamento as data_agendamento, ag.hora_agendamento as hora_agendamento
             FROM agendamento ag
-            JOIN pet p ON ag.pet_id = p.id_pet
-            JOIN servico s ON ag.servico_id = s.id_servico
+            JOIN pet p ON ag.pet_idPet = p.id_pet
+            JOIN servico s ON ag.serviço_id = s.id_servico
             WHERE ag.data_agendamento = %s
         """
         cursor.execute(query, (data,))

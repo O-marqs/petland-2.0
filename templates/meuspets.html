@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Lato', sans-serif;
+            font-family: 'Lobster', cursive;
             background-color: white;
             color: black;
         }
@@ -140,6 +140,15 @@
         #menu.show {
     display: block;
 }
+footer {
+    background-color: #F6910D;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 
         /* Responsividade */
         @media (max-width: 768px) {
@@ -206,6 +215,10 @@
     <a href="{{ url_for('pet_bp.cadastrar_pet') }}">
         <button>Cadastrar Novo Pet</button>
     </a>
+
+    <footer>
+        <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         // Função para alternar a visibilidade do menu

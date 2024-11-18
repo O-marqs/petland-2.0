@@ -16,22 +16,26 @@ app.secret_key = 'sua_chave_secreta_aqui'
 # Instanciando o LoginManager
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'cliente_bp.tela_login'  # Redireciona para a página de login se o usuário não estiver autenticado
+# Redireciona para a página de login se o usuário não estiver autenticado
+login_manager.login_view = 'cliente_bp.tela_login'
+
 
 @login_manager.user_loader
 def load_user(user_id):
   # Tenta carregar primeiro o Cliente
     cliente = Cliente.buscar_cliente(user_id)
     if cliente:
+        print('É cliente')
         return cliente
-    
+
+    print('Não é cliente')
     # Se não for um Cliente, tenta carregar um Funcionario
     funcionario = Funcionario.buscar_funcionario(user_id)
     if funcionario:
+        print('É funcionário')
         return funcionario
-
-    return None    
-
+    print('Não é funcionário')
+    return None
 
 
 # Registrar as rotas

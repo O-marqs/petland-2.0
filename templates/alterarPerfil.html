@@ -215,6 +215,15 @@
 #menu.show {
     display: block;
 }
+footer {
+    background-color: #F6910D;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 
 
 
@@ -278,8 +287,8 @@
             <ul>
                 <li><a href="{{ url_for('cliente_bp.tela_inicial') }}">Início</a></li>
                 <li><a href="{{ url_for('pet_bp.meus_pets') }}">Meus Pets</a></li>
-                <li></li><a href="{{ url_for('pet_bp.agendamento_pets') }}">Agendamentos</a></li>
-                <li> <a href="{{ url_for('agendamento_bp.meus_agendamentos') }}">Meus agendamentos</a></li>
+                <li><a href="{{ url_for('pet_bp.agendamento_pets') }}">Agendamentos</a></li>
+                <li><a href="{{ url_for('agendamento_bp.meus_agendamentos') }}">Meus agendamentos</a></li>
                 <li><a href="{{ url_for('cliente_bp.logout') }}" >Sair</a></li>
             </ul>
         </div>
@@ -320,6 +329,10 @@
             <button class="button back hidden" id="cancelBtn" onclick="cancelEditing()">Cancelar</button>
         </div>
     </div>
+
+    <footer>
+        <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         // Função para habilitar a edição dos campos

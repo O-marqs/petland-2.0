@@ -7,7 +7,7 @@
     <style>
         /* Estilos CSS (copiados do estilo do HTML fornecido) */
         body {
-            font-family: 'Lato', sans-serif;
+            font-family: 'Lobster', cursive;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
@@ -127,6 +127,30 @@
             margin: 5px 0;
             color: #555;
         }
+        footer {
+    background-color: #F6910D;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button{
+    background-color: #f44336;
+    color: white;
+
+}
+button:hover{
+    background-color: #f44336a2;
+}
 
         @media (max-width: 768px) {
             .container {
@@ -200,6 +224,9 @@
             <p>Você não possui agendamentos.</p>
         {% endif %}
     </div>
+    <footer>
+        <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>
+    </footer>
 
     <script>
         function toggleMenu() {
