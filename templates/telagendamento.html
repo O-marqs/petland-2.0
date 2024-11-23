@@ -10,10 +10,10 @@
 /* Estilos CSS */
  /* Estilos gerais */
  body {
-            font-family: 'Lato', sans-serif;
+    font-family: 'Lobster', cursive;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: white;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -134,8 +134,8 @@
             width: 100%;
             padding: 12px;
             font-size: 1.1em;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 1px solid #F6910D;
+            border-radius: 10px;
             background-color: #f9f9f9;
             transition: border-color 0.3s ease;
         }
@@ -153,7 +153,7 @@
         }
 
         .button-prox {
-            background-color: #436E95;
+            background-color: #bcc912;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -224,12 +224,35 @@
 
         /* Feedback de validação */
         input:invalid, select:invalid {
-            border-color: #FF6B6B; /* Cor para indicar erro */
+            border-color: red; /* Cor para indicar erro */
         }
 
         input:valid, select:valid {
-            border-color: #66CC66; /* Cor para indicar sucesso */
+            border-color: #F6910D; /* Cor para indicar sucesso */
         }
+        .container-gray {
+  background-color: #f0f0f0; /* Cinza claro */
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: #F6910D;
+  color: #fff;
+  position: absolute; /* Se necessário, ajustar o posicionamento */
+  bottom: 0;
+  width: 100%;
+}
+#data_agendamento{
+    width: 96.3%;
+}
+h1{
+    color: #F6910D;
+}
 
 
     </style>
@@ -294,7 +317,10 @@
                 </div>
             </form>
     </div>
-
+    <footer>
+        <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>
+    </footer>
+    
     <script>
          function toggleMenu() {
             document.getElementById('menu').classList.toggle('show');
