@@ -48,13 +48,19 @@
 
         /* Container para os Pets */
         .pets-container {
+            text-align:center;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
-            max-width: 1200px;
             margin-top: 120px;
             padding: 20px;
+        }
+        .pets-container a {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            text-decoration: none;
         }
 
         .pet-card {
@@ -69,6 +75,7 @@
         }
 
         .pet-card:hover {
+            text-align:center;
             transform: translateY(-5px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
@@ -80,6 +87,7 @@
         }
 
         .pet-card p {
+            text-align:center;
             color: #666;
             font-size: 1em;
             margin: 10px 0 0;
@@ -210,11 +218,12 @@ footer {
                 <p>Espécie: {{ pet.tipo_pet }}</p>
             </div>
         {% endfor %}
+        <a href="{{ url_for('pet_bp.cadastrar_pet') }}">
+            <button>Cadastrar Novo Pet</button>
+        </a>
     </div>
 
-    <a href="{{ url_for('pet_bp.cadastrar_pet') }}">
-        <button>Cadastrar Novo Pet</button>
-    </a>
+    
 
     <footer>
         <p>&copy; 2024 PetLand. Todos os direitos reservados.</p>

@@ -5,19 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cadastro - PetLand</title>
 <style>
-    .error-message {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 20px;
-        background-color: #f44336;
-        color: white;
-        border-radius: 5px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 9999;
+    #error-message {
+    position: fixed; /* Fixa a posição na tela */
+    top: 20px; /* Distância do topo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta o alinhamento */
+    background-color: #f8d7da; /* Cor de fundo para erros */
+    color: #721c24; /* Texto vermelho escuro */
+    border: 1px solid #f5c6cb; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 15px 30px; /* Espaçamento interno */
+    margin: 10px; /* Margem externa */
+    font-size: 16px; /* Tamanho do texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: none; /* Oculta por padrão */
+    z-index: 9999; /* Garante que a mensagem apareça sobre outros elementos */
+    max-width: 500px; /* Largura máxima */
+    width: 90%; /* Largura flexível */
+    text-align: center; /* Centraliza o texto */
+    opacity: 0; /* Inicialmente invisível */
+    animation: fadeInOut 2s ease-in-out; /* Animação de aparecimento e desaparecimento */
+}
+
+/* Animação para o efeito de fade-in e fade-out */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px); /* Aparece suavemente */
     }
+    30% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); /* Fica visível */
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px); /* Desaparece suavemente */
+    }
+}
+
+/* Estilo para a lista de mensagens */
+#error-message ul {
+    list-style-type: none; /* Remove os marcadores da lista */
+    margin: 0;
+    padding: 0;
+}
+
+#error-message li {
+    margin: 5px 0; /* Espaçamento entre os itens */
+    font-size: 16px; /* Tamanho do texto das mensagens */
+}
+/* Transição para suavidade */
+#error-message.fade-in {
+    display: block; /* Exibir a mensagem */
+    animation: fadeIn 0.2s ease-in-out; /* Efeito de entrada */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
     body {
         margin: 0;
@@ -253,6 +306,35 @@ footer {
             mostrarMensagemErro('Preencha todos os campos obrigatórios corretamente.');
             return;
         }
+        if (!validarEmail(formData.email)) {
+        mostrarMensagemErro('Email inválido.');
+        return;
+    }
+
+    if (!validarCPF(formData.cpf)) {
+        mostrarMensagemErro('CPF inválido.');
+        return;
+    }
+
+    if (!validarCEP(formData.cep)) {
+        mostrarMensagemErro('CEP inválido.');
+        return;
+    }
+
+    if (!validarTelefone(formData.telefone)) {
+        mostrarMensagemErro('Telefone inválido.');
+        return;
+    }
+
+    if (!validarDataNascimento(formData.data_nascimento)) {
+        mostrarMensagemErro('Você deve ter pelo menos 18 anos.');
+        return;
+    }
+
+    if (!validarSenha(formData.senha)) {
+        mostrarMensagemErro('A senha deve ter pelo menos 8 caracteres, 1 número, 1 letra e 1 caractere especial.');
+        return;
+    }
 
         try {
             const response = await fetch('/api/cliente/cadastrar_cliente', {
@@ -276,7 +358,65 @@ footer {
         const errorMessageDiv = document.getElementById('error-message');
         errorMessageDiv.style.display = 'block';
         errorMessageDiv.innerHTML = mensagem;
+        setTimeout(() => {
+        errorMessageDiv.style.display = 'none';
+        errorMessageDiv.innerHTML = '';
+    }, 2000);
     }
+    function validarEmail(email) {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
+}
+
+function validarCPF(cpf) {
+    cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false; // CPF com números repetidos
+
+    let soma = 0, resto;
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf.charAt(i - 1)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(9))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf.charAt(i - 1)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.charAt(10))) return false;
+
+    return true;
+}
+
+function validarCEP(cep) {
+    const regex = /^\d{5}-\d{3}$/;
+    return regex.test(cep);
+}
+
+function validarTelefone(telefone) {
+    const regex = /^\d{11}$/;
+    return regex.test(telefone);
+}
+
+function validarDataNascimento(dataNascimento) {
+    const nascimento = new Date(dataNascimento);
+    const hoje = new Date();
+    const idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+    return idade >= 18;
+}
+
+function validarSenha(senha) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return regex.test(senha);
+}
+
+function isNumberKey(evt) {
+    const charCode = evt.which ? evt.which : evt.keyCode;
+    return charCode >= 48 && charCode <= 57;
+}
 
     function isNumberKey(evt) {
         const charCode = evt.which ? evt.which : evt.keyCode;

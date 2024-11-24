@@ -5,18 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login & Cadastre-se</title>
 <style>
-    .error-message {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #f44336;
-    color: white;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 9999;
+  #error-message {
+    position: fixed; /* Fixa a posição na tela */
+    top: 20px; /* Distância do topo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta o alinhamento */
+    background-color: #f8d7da; /* Cor de fundo para erros */
+    color: #721c24; /* Texto vermelho escuro */
+    border: 1px solid #f5c6cb; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 15px 30px; /* Espaçamento interno */
+    margin: 10px; /* Margem externa */
+    font-size: 16px; /* Tamanho do texto */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: none; /* Oculta por padrão */
+    z-index: 9999; /* Garante que a mensagem apareça sobre outros elementos */
+    max-width: 500px; /* Largura máxima */
+    width: 90%; /* Largura flexível */
+    text-align: center; /* Centraliza o texto */
+    opacity: 0; /* Inicialmente invisível */
+    animation: fadeInOut 5s ease-in-out; /* Animação de aparecimento e desaparecimento */
+}
+
+/* Animação para o efeito de fade-in e fade-out */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px); /* Aparece suavemente */
+    }
+    30% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); /* Fica visível */
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px); /* Desaparece suavemente */
+    }
+}
+
+/* Estilo para a lista de mensagens */
+#error-message ul {
+    list-style-type: none; /* Remove os marcadores da lista */
+    margin: 0;
+    padding: 0;
+}
+
+#error-message li {
+    margin: 5px 0; /* Espaçamento entre os itens */
+    font-size: 16px; /* Tamanho do texto das mensagens */
+}
+/* Transição para suavidade */
+#error-message.fade-in {
+    display: block; /* Exibir a mensagem */
+    animation: fadeIn 0.5s ease-in-out; /* Efeito de entrada */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
     body {
         margin: 0;
@@ -133,8 +186,8 @@
         
     }
     .petl{
-        padding-left: 70px;
-        padding-top: 5px;
+        padding-left: 0px;
+        padding-top: 0px;
     }
     #petsimg{
         padding-bottom: -5px;
@@ -172,10 +225,11 @@
         
         <div class="form-container" >
             <!-- <h2>Petland</h2> -->
-            <div class="store-info2" >
-                <h2 class="petl">Petland</h2>
-                
+            <div class="store-info2" >         
                 <form action="/api/tela_cadastro" method="GET">
+                <h2 class="petl" style="text-align: center;">Petland</h2>
+                <img src="{{ url_for('static', filename='images/logo.jpeg.jpeg') }}" alt="Pets" style="text-align: center;">
+
                 <div class="signup-button">
                     <input type="submit" value="Cadastre-se" id="botao-cadastrar">
                 </div>
@@ -183,7 +237,7 @@
             </div>
         </div>
     </div>
-    <div id="error-message" class="error-message"></div>
+    <div id="error-message" class="error-message" style="display: none;">
     {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul>
@@ -193,14 +247,14 @@
         </ul>
     {% endif %}
     {% endwith %}
-
+</div>
     <script>
-        window.onload = function() {
-            const flashMessageDiv = document.getElementById('flash-message');
-            if (flashMessageDiv.innerHTML.trim() !== '') {
-                flashMessageDiv.style.display = 'block'; // Mostra a mensagem
-            }
-        }
+        window.onload = function () {
+    const flashMessageDiv = document.getElementById('error-message');
+    if (flashMessageDiv && flashMessageDiv.innerHTML.trim() !== '') {
+        flashMessageDiv.style.display = 'block'; // Mostra a mensagem se houver conteúdo
+    }
+};
         function validarEmail(email) {
             // Expressão regular simples para validar o formato do email
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -260,6 +314,10 @@
             const errorMessageDiv = document.getElementById('error-message');
             errorMessageDiv.style.display = 'block';
             errorMessageDiv.innerHTML = mensagem;
+            setTimeout(() => {
+        errorMessageDiv.style.display = 'none';
+        errorMessageDiv.innerHTML = '';
+    }, 5000);
         }
     </script>
     
