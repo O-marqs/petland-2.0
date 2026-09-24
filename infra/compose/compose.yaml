@@ -1,0 +1,65 @@
+name: petland3
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_DB: petland
+      POSTGRES_USER: petland_migrator
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/dev.py init}
+      APP_DATABASE_PASSWORD: ${APP_DATABASE_PASSWORD:?Run python scripts/dev.py init}
+    ports: ["127.0.0.1:55432:5432"]
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../docker/init-db.sh:/docker-entrypoint-initdb.d/10-runtime-role.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U petland_migrator -d petland"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  migrate:
+    build: { context: ../.., dockerfile: infra/docker/api.Dockerfile }
+    environment:
+      MIGRATION_DATABASE_URL: postgresql+psycopg://petland_migrator:${POSTGRES_PASSWORD}@postgres:5432/petland
+    command: [uv, run, --no-sync, alembic, upgrade, head]
+    depends_on: { postgres: { condition: service_healthy } }
+  api:
+    build: { context: ../.., dockerfile: infra/docker/api.Dockerfile }
+    environment:
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://petland_app:${APP_DATABASE_PASSWORD}@postgres:5432/petland
+      PUBLIC_ORIGIN: http://localhost:5173
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    healthcheck:
+      test: [CMD, /app/.venv/bin/python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=4)"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  web:
+    build: { context: ../.., dockerfile: infra/docker/web.Dockerfile }
+    environment: { API_PROXY_TARGET: "http://api:8000" }
+    ports: ["127.0.0.1:5173:5173"]
+    depends_on: { api: { condition: service_healthy } }
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:5173').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  test-postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    profiles: [quality]
+    environment:
+      POSTGRES_DB: petland_test
+      POSTGRES_USER: petland_test
+      POSTGRES_PASSWORD: ${TEST_DATABASE_PASSWORD:?Run python scripts/dev.py init}
+    ports: ["127.0.0.1:55433:5432"]
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U petland_test -d petland_test"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  postgres_data:

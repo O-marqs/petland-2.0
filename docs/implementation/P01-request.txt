@@ -1,0 +1,1262 @@
+# PETLAND 3.0
+# FULL-STACK SOFTWARE ENGINEERING & PRODUCT IMPLEMENTATION
+
+Você atuará como Principal Software Engineer e Software
+Architect responsável pela implementação integral do
+PetLand 3.0.
+
+Sua missão é transformar um sistema legado em um produto
+moderno, funcional, profissional e arquiteturalmente
+bem estruturado.
+
+Não quero apenas migrar o backend para FastAPI e
+substituir as páginas HTML por componentes React.
+
+Quero reconstruir o PetLand como um produto de software,
+seguindo rigorosamente o planejamento desenvolvido.
+
+O resultado deverá demonstrar evolução em:
+
+- Engenharia de software.
+- Arquitetura de sistemas.
+- Modelagem de domínio.
+- Qualidade de código.
+- Segurança.
+- Experiência do usuário.
+- Desenvolvimento frontend.
+- Desenvolvimento backend.
+- Modelagem de dados.
+- Infraestrutura.
+- Testes automatizados.
+- Documentação técnica.
+
+Este projeto também será utilizado como um case
+de engenharia de software no meu portfólio profissional.
+
+========================================================
+1. REPOSITÓRIO E DOCUMENTOS
+========================================================
+
+REPOSITÓRIO ORIGINAL:
+
+https://github.com/O-marqs/petland-2.0
+
+DOCUMENTOS ANEXADOS:
+
+1. PetLand_3.0_Plano_Consolidado.md
+
+2. PetLand_3.0_Caderno_UX.pdf
+
+Os dois documentos são as referências oficiais
+do planejamento da versão 3.0.
+
+O arquivo Markdown contém:
+
+- Diagnóstico do PetLand 2.0.
+- Inventário de funcionalidades.
+- Inventário das telas.
+- Requisitos funcionais e não funcionais.
+- Visão do produto.
+- Jornadas dos usuários.
+- Regras de negócio.
+- Arquitetura proposta.
+- Estrutura do monorepo.
+- Modelo de domínio.
+- Modelo de dados.
+- Contratos de API.
+- Segurança.
+- Estratégia de testes.
+- Infraestrutura.
+- Roadmap.
+- Critérios de aceite.
+- Decisões pendentes.
+
+O PDF contém:
+
+- Direção visual.
+- Design system.
+- Paleta de cores.
+- Tipografia.
+- Conceitos de navegação.
+- Wireframes.
+- Telas de clientes.
+- Telas de funcionários.
+- Telas administrativas.
+- Estados de interface.
+- Experiência responsiva.
+
+Leia integralmente os dois documentos antes de iniciar
+qualquer implementação.
+
+Não utilize apenas os resumos ou as primeiras páginas.
+
+Consulte as seções específicas sempre que estiver
+implementando uma funcionalidade relacionada.
+
+O Plano Consolidado é a principal referência técnica,
+funcional e arquitetural.
+
+O Caderno de UX é a principal referência visual
+e de experiência do usuário.
+
+Caso encontre divergência entre os documentos,
+registre-a e utilize a definição técnica do Plano
+Consolidado para regras de negócio e arquitetura.
+
+Não descarte decisões, requisitos ou restrições
+simplesmente porque sua solução habitual utiliza
+uma abordagem diferente.
+
+========================================================
+2. AUTORIZAÇÃO E ESCOPO DESTA EXECUÇÃO
+========================================================
+
+Estou autorizando o início da implementação técnica
+do PetLand 3.0, começando pela fase P01 do roadmap.
+
+Considere aprovadas como diretrizes iniciais:
+
+- A transformação do PetLand 2.0 em um novo produto.
+- A utilização de FastAPI e React com TypeScript.
+- A permanência em um monorepo.
+- A adoção de um monólito modular.
+- A aplicação pragmática de arquitetura hexagonal.
+- A organização do backend em camadas.
+- A separação entre domínio e infraestrutura.
+- A utilização de PostgreSQL, SQLAlchemy e Alembic.
+- A preservação da evolução histórica do projeto.
+- A construção incremental com testes e documentação.
+- A utilização do design system proposto como
+  referência visual inicial.
+
+O objetivo inicial é uma aplicação demonstrável,
+para portfólio, modelada para um estabelecimento
+com três perfis:
+
+- Cliente.
+- Funcionário.
+- Administrador.
+
+Não implemente arquitetura multiempresa,
+microsserviços ou outras expansões que não pertençam
+ao MVP aprovado.
+
+As propostas dos documentos que dependem de decisões
+comerciais específicas não estão automaticamente
+aprovadas.
+
+Respeite os gates e as dependências descritos
+no planejamento.
+
+A autorização para iniciar P01 não significa
+autorização para:
+
+- Executar deploy em produção.
+- Migrar dados pessoais reais.
+- Alterar o banco MySQL original.
+- Implementar políticas comerciais não definidas.
+- Criar recursos pagos em provedores externos.
+- Fazer merge na branch principal.
+
+========================================================
+3. PRESERVAÇÃO DO LEGADO
+========================================================
+
+Antes de alterar o código, analise o estado atual
+do repositório.
+
+O planejamento utilizou como referência o commit:
+
+3cc3f898cde896b80fed587bf8c06f4aa46742f6
+
+Verifique se o estado atual do repositório continua
+correspondendo à versão analisada.
+
+Caso existam alterações posteriores, identifique
+seu impacto antes de iniciar a reestruturação.
+
+Preserve o histórico do Git.
+
+A implementação deverá ocorrer no mesmo repositório,
+em uma branch dedicada à evolução para o PetLand 3.0.
+
+Não implemente diretamente na branch main.
+
+Não utilize force push.
+
+Não reescreva o histórico existente.
+
+Não exclua o sistema original antes de garantir
+que ele permaneça recuperável por uma referência
+Git estável.
+
+Registre o commit de referência do legado.
+
+Após criar a branch de evolução, o código ativo
+poderá ser reorganizado conforme a arquitetura
+aprovada.
+
+Não é necessário manter duas aplicações
+executáveis dentro do monorepo.
+
+Entretanto, o PetLand 2.0 precisa continuar
+acessível pelo histórico e pela documentação.
+
+Não incorpore o ambiente virtual antigo, caches
+ou dependências versionadas à nova aplicação.
+
+Não copie credenciais, dados pessoais ou
+configurações inseguras do sistema original.
+
+========================================================
+4. ARQUITETURA OBRIGATÓRIA
+========================================================
+
+A arquitetura deve seguir o Plano Consolidado.
+
+Utilize:
+
+MONOREPO
+    |
+    +-- Backend FastAPI
+    |
+    +-- Frontend React + TypeScript
+    |
+    +-- Contratos compartilhados de API
+    |
+    +-- Infraestrutura
+    |
+    +-- Documentação
+
+O backend deverá ser um monólito modular
+organizado por domínio de negócio.
+
+Dentro dos módulos, aplique as camadas
+definidas no planejamento:
+
+DOMAIN
+
+Responsável por entidades, Value Objects,
+invariantes e regras de negócio.
+
+APPLICATION
+
+Responsável pelos casos de uso, coordenação
+das operações, autorização contextual e
+contratos necessários à aplicação.
+
+INFRASTRUCTURE
+
+Responsável pelos adaptadores concretos,
+persistência, ORM e integração com recursos
+externos.
+
+PRESENTATION
+
+Responsável pelas interfaces HTTP,
+requisições, respostas e adaptação dos
+contratos externos.
+
+Respeite a direção das dependências.
+
+O domínio não pode depender diretamente de:
+
+- FastAPI.
+- SQLAlchemy.
+- Pydantic HTTP.
+- Bibliotecas de infraestrutura.
+
+Não implemente regras centrais de negócio
+diretamente nos endpoints.
+
+Não implemente SQL dentro dos casos de uso.
+
+Não transforme entidades de domínio em
+simples representações das tabelas do banco.
+
+Não crie interfaces genéricas ou camadas
+adicionais sem justificativa concreta.
+
+A arquitetura deve facilitar a evolução
+do produto, não aumentar artificialmente
+a quantidade de arquivos.
+
+========================================================
+5. ESTRUTURA DO MONOREPO
+========================================================
+
+Utilize a estrutura proposta na seção 11
+do Plano Consolidado.
+
+A organização deverá contemplar:
+
+apps/api
+
+Backend FastAPI, módulos de domínio,
+casos de uso, adaptadores, endpoints,
+migrações e testes.
+
+apps/web
+
+Frontend React, roteamento, funcionalidades,
+componentes compartilhados, layouts,
+design system e testes.
+
+packages/api-contract
+
+Contratos OpenAPI, tipos e cliente TypeScript
+gerados a partir da API.
+
+docs
+
+Documentação de produto, arquitetura,
+decisões técnicas, UX, migração e evidências.
+
+infra
+
+Docker, Compose e configurações necessárias
+para os ambientes definidos.
+
+.github/workflows
+
+Automação de validações e integração contínua.
+
+Não crie estruturas paralelas ou duplicadas
+sem uma necessidade arquitetural justificada.
+
+Não crie pastas vazias apenas para reproduzir
+um diagrama.
+
+========================================================
+6. IMPLEMENTAÇÃO DO BACKEND
+========================================================
+
+Utilize a stack técnica definida no planejamento.
+
+A implementação deverá contemplar, conforme
+a etapa correspondente do roadmap:
+
+- FastAPI.
+- Python com tipagem.
+- SQLAlchemy.
+- PostgreSQL.
+- Alembic.
+- Pydantic na camada HTTP.
+- Dependency Injection.
+- Configuração por ambiente.
+- Tratamento consistente de exceções.
+- Logs estruturados.
+- Health checks.
+- Readiness checks.
+- Autenticação.
+- Autorização.
+- Testes automatizados.
+
+Utilize casos de uso explícitos nas operações
+que possuem comportamento de negócio.
+
+Implemente as regras conforme o catálogo
+do Plano Consolidado.
+
+Dê atenção especial ao módulo de agendamentos.
+
+A disponibilidade de horários deverá ser
+controlada pelo backend.
+
+A confirmação de uma reserva não pode depender
+exclusivamente de uma consulta anterior de
+disponibilidade.
+
+O sistema deverá impedir agendamentos concorrentes
+que ultrapassem a capacidade disponível.
+
+Implemente a estratégia transacional e de
+idempotência prevista no planejamento.
+
+Entretanto, não inicie o motor completo de agenda
+antes da aprovação das decisões de negócio que
+bloqueiam essa fase.
+
+Não invente a unidade de capacidade ou políticas
+de cancelamento.
+
+========================================================
+7. IMPLEMENTAÇÃO DO FRONTEND
+========================================================
+
+O frontend deverá utilizar:
+
+- React.
+- TypeScript.
+- Vite.
+- Roteamento por área.
+- TanStack Query.
+- React Hook Form.
+- Zod.
+- Contratos derivados da API.
+
+Siga as decisões de frontend do Plano Consolidado.
+
+A interface deverá possuir uma identidade
+visual própria.
+
+Não utilize um template genérico de dashboard
+para todas as áreas.
+
+Não converta diretamente os templates HTML
+do PetLand 2.0 para JSX.
+
+Implemente as jornadas redesenhadas.
+
+A experiência do cliente deve ser acolhedora,
+simples e orientada à realização dos agendamentos.
+
+A experiência dos funcionários deve priorizar
+a operação diária.
+
+A experiência administrativa deve priorizar
+gestão, configuração e acompanhamento.
+
+Compartilhe o design system entre todas
+as áreas do produto.
+
+Não crie três projetos frontend independentes.
+
+========================================================
+8. DESIGN SYSTEM E UX/UI
+========================================================
+
+Utilize o arquivo:
+
+PetLand_3.0_Caderno_UX.pdf
+
+como referência principal para a implementação
+visual do produto.
+
+O documento não é apenas uma inspiração genérica.
+
+Ele apresenta decisões de:
+
+- Identidade visual.
+- Cores.
+- Tipografia.
+- Hierarquia visual.
+- Navegação.
+- Estrutura de páginas.
+- Componentes.
+- Estados interativos.
+- Responsividade.
+- Acessibilidade.
+
+A direção inicial utiliza:
+
+Verde profundo: #1F5D50
+
+Marfim: #F7F5EF
+
+Branco: #FFFFFF
+
+Terracota: #A94F2D
+
+Texto principal: #243A35
+
+Verde suave: #E8F2EC
+
+Considere Manrope para títulos e Inter para
+corpo de texto, conforme o planejamento.
+
+Implemente os tokens de design de maneira
+centralizada.
+
+Evite cores e espaçamentos arbitrários
+distribuídos entre os componentes.
+
+Utilize os wireframes do PDF como referência
+para estrutura, navegação e hierarquia.
+
+Os wireframes são conceituais.
+
+Não é necessário reproduzir literalmente
+cada posicionamento se uma adaptação melhorar
+a experiência responsiva ou a acessibilidade.
+
+Entretanto, preserve a identidade visual
+e a intenção de cada interface.
+
+Implemente:
+
+- Componentes reutilizáveis.
+- Layouts responsivos.
+- Estados vazios.
+- Estados de carregamento.
+- Estados de erro.
+- Feedback de ações.
+- Navegação por teclado.
+- Indicadores de foco.
+- Formulários acessíveis.
+- Mensagens claras.
+- Estados de confirmação.
+
+Não utilize dados fictícios para apresentar
+uma funcionalidade como concluída.
+
+Os dados sintéticos são permitidos em
+ambientes de demonstração, testes e seeds,
+desde que estejam identificados.
+
+========================================================
+9. REGRAS DE NEGÓCIO
+========================================================
+
+Utilize a seção de regras de negócio do
+Plano Consolidado como referência obrigatória.
+
+As regras existentes no PetLand 2.0 não
+devem ser reproduzidas automaticamente.
+
+Algumas delas apresentam inconsistências
+e problemas identificados no diagnóstico.
+
+A versão 3.0 deverá possuir regras
+centralizadas e testáveis.
+
+Considere especialmente:
+
+- Propriedade dos pets.
+- Isolamento dos dados entre clientes.
+- Permissões por perfil.
+- Disponibilidade de serviços.
+- Disponibilidade de horários.
+- Capacidade de atendimento.
+- Conflitos entre reservas.
+- Concorrência.
+- Idempotência.
+- Cancelamento.
+- Reagendamento.
+- Histórico.
+- Transições de status.
+- Auditoria.
+- Proteção de informações pessoais.
+
+Não utilize validações do frontend como
+única forma de proteger uma regra de negócio.
+
+Não implemente exclusões destrutivas onde
+o planejamento exige histórico e rastreabilidade.
+
+As operações devem respeitar as invariantes
+definidas no domínio.
+
+========================================================
+10. DECISÕES DE NEGÓCIO PENDENTES
+========================================================
+
+O Plano Consolidado possui decisões
+identificadas de D01 até D12.
+
+Essas decisões devem ser respeitadas.
+
+Para esta primeira implementação, considere
+como direção inicial:
+
+- Uma unidade de negócio.
+- Projeto demonstrável de portfólio.
+- Três perfis de usuário.
+- Monorepo.
+- Preservação do histórico original.
+- Arquitetura e stack aprovadas acima.
+
+A direção visual apresentada no PDF está
+autorizada como base inicial de implementação,
+sujeita à validação das telas posteriormente.
+
+Não presuma que as demais decisões comerciais
+estão automaticamente resolvidas.
+
+Por exemplo:
+
+- O significado de uma vaga operacional.
+- A escolha do profissional.
+- As políticas de cancelamento.
+- As regras de reagendamento.
+- A precificação variável.
+- A configuração dos horários da loja.
+- A migração dos dados históricos.
+
+Essas decisões devem ser resolvidas antes
+da implementação das funcionalidades que
+dependem diretamente delas.
+
+Entretanto, não interrompa toda a construção
+do projeto por causa de uma decisão necessária
+apenas em uma etapa posterior.
+
+Implemente normalmente as etapas independentes.
+
+Registre cada decisão pendente e indique
+qual funcionalidade ela bloqueia.
+
+Quando chegar a uma etapa bloqueada,
+apresente as alternativas e as consequências
+técnicas de cada escolha.
+
+Não invente uma política de negócio apenas
+para continuar implementando.
+
+========================================================
+11. SEGURANÇA
+========================================================
+
+O diagnóstico do legado identificou problemas
+de autenticação, autorização e proteção dos dados.
+
+A implementação da versão 3.0 deverá
+corrigir esses problemas.
+
+Siga a estratégia de segurança definida
+no Plano Consolidado.
+
+Implemente:
+
+- Identidade única.
+- Permissões controladas pelo servidor.
+- Autorização contextual.
+- Proteção contra acesso a recursos de terceiros.
+- Sessões seguras e revogáveis.
+- Proteção CSRF.
+- Hash seguro de senhas.
+- Validação de entradas.
+- Tratamento seguro de exceções.
+- Proteção de dados pessoais.
+- Gestão adequada de segredos.
+- Auditoria das operações relevantes.
+
+Não utilize CPF como identificador público
+ou identificador principal da sessão.
+
+Não permita que o frontend atribua a si
+mesmo privilégios administrativos.
+
+Não armazene credenciais ou tokens de
+sessão em localStorage.
+
+Não exponha informações pessoais ou
+segredos em logs.
+
+Não utilize a implementação de autenticação
+do legado como base sem considerar os
+problemas identificados.
+
+========================================================
+12. BANCO DE DADOS
+========================================================
+
+Implemente o modelo de dados aprovado
+utilizando PostgreSQL.
+
+Utilize SQLAlchemy e Alembic.
+
+As migrations devem ser versionadas.
+
+Implemente constraints e índices necessários
+à integridade das informações.
+
+A modelagem deve respeitar o domínio e
+as relações definidas no planejamento.
+
+Utilize dados sintéticos para desenvolvimento
+e testes.
+
+Não tente acessar, modificar ou migrar
+automaticamente o banco MySQL original.
+
+Não suponha que os dados históricos estão
+disponíveis.
+
+A migração histórica é uma etapa separada
+e condicionada às decisões e autorizações
+descritas no planejamento.
+
+Caso o banco original não esteja disponível,
+a construção do PetLand 3.0 deve continuar
+com dados de demonstração.
+
+Não declare a migração histórica concluída.
+
+========================================================
+13. ESTRATÉGIA DE TESTES
+========================================================
+
+Utilize a estratégia definida no Plano
+Consolidado.
+
+Implemente testes proporcionais à etapa
+do projeto.
+
+Considere:
+
+BACKEND
+
+- Testes unitários.
+- Testes de domínio.
+- Testes de casos de uso.
+- Testes de integração.
+- Testes de API.
+- Testes de autorização.
+- Testes de concorrência.
+
+FRONTEND
+
+- Testes de componentes.
+- Testes de formulários.
+- Testes de navegação.
+- Testes de integração com API.
+- Testes de acessibilidade.
+- Testes end-to-end.
+
+Não implemente testes vazios apenas para
+aumentar artificialmente a cobertura.
+
+Não altere testes para esconder erros
+de implementação.
+
+Uma funcionalidade somente poderá ser
+considerada concluída quando seus critérios
+de aceite forem verificados.
+
+Documente os testes executados e seus resultados.
+
+Se algum teste não puder ser executado,
+explique o motivo e não o apresente
+como aprovado.
+
+========================================================
+14. DOCUMENTAÇÃO
+========================================================
+
+A documentação deve acompanhar a implementação.
+
+Não deixe toda a documentação para o final.
+
+Organize os documentos conforme a estrutura
+proposta no Plano Consolidado.
+
+Inclua:
+
+- Visão do produto.
+- Requisitos.
+- Arquitetura.
+- Modelo de domínio.
+- Regras de negócio.
+- Contratos de API.
+- Modelo de dados.
+- Design system.
+- Decisões arquiteturais.
+- Estratégia de testes.
+- Infraestrutura.
+- Execução local.
+- Evolução do legado.
+- Evidências de implementação.
+
+Crie um README profissional.
+
+O README deve explicar:
+
+- O que é o PetLand.
+- Qual problema o produto resolve.
+- Quais são os perfis de usuário.
+- Quais tecnologias são utilizadas.
+- Como executar o projeto.
+- Como executar os testes.
+- Como acessar o ambiente de demonstração.
+- Como navegar pela documentação.
+- Como a versão 3.0 evoluiu em relação à 2.0.
+
+Não documente funcionalidades planejadas
+como se já estivessem implementadas.
+
+========================================================
+15. AGENTS.MD
+========================================================
+
+Crie um arquivo AGENTS.md na raiz do monorepo.
+
+Esse arquivo deverá orientar os futuros
+trabalhos do Codex.
+
+Inclua:
+
+- Objetivo do projeto.
+- Localização da documentação oficial.
+- Arquitetura obrigatória.
+- Organização do monorepo.
+- Regras de dependência entre camadas.
+- Padrões de código.
+- Convenções de testes.
+- Comandos de execução.
+- Comandos de validação.
+- Regras de segurança.
+- Restrições de alteração do legado.
+- Regras para documentação.
+- Critérios de conclusão das funcionalidades.
+
+Inclua também instruções para:
+
+- Não implementar funcionalidades fora do roadmap.
+- Não alterar decisões aprovadas silenciosamente.
+- Não criar mocks permanentes para simular funcionalidades.
+- Não declarar testes aprovados sem executá-los.
+- Não realizar merge automaticamente.
+- Não executar deploy em produção sem autorização.
+
+O AGENTS.md deve ser objetivo e servir
+como referência operacional para as
+próximas sessões do Codex.
+
+Não copie integralmente o Plano Consolidado
+para dentro desse arquivo.
+
+Faça referência aos documentos específicos
+quando for necessário consultar detalhes.
+
+========================================================
+16. ROADMAP DE IMPLEMENTAÇÃO
+========================================================
+
+Siga a seção 18 do Plano Consolidado.
+
+A implementação foi organizada nas seguintes fases:
+
+P01 — Fundação e contratos.
+
+P02 — Identidade e autorização.
+
+P03 — Clientes, pets e catálogo.
+
+P04 — Núcleo de agenda.
+
+P05 — Operação e gestão.
+
+P06 — Qualidade e UX completas.
+
+P07 — Dados e ensaio operacional.
+
+P08 — Release 3.0 e case.
+
+Não ignore as dependências entre as fases.
+
+Não inicie funcionalidades de uma fase
+posterior quando isso exigir decisões
+de negócio ainda não aprovadas.
+
+Organize a execução em entregas pequenas,
+integradas e verificáveis.
+
+Sempre que possível, estruture o trabalho
+conforme os cards PL3-01 até PL3-21.
+
+Cada entrega deverá contemplar:
+
+- Escopo.
+- Requisitos relacionados.
+- Arquivos afetados.
+- Implementação.
+- Testes.
+- Evidências.
+- Documentação.
+- Pendências.
+- Critérios de aceite.
+
+Não considere uma funcionalidade concluída
+quando apenas sua interface visual existir.
+
+========================================================
+17. EXECUÇÃO INICIAL OBRIGATÓRIA
+========================================================
+
+Nesta primeira execução, quero que você
+INICIE A IMPLEMENTAÇÃO REAL DO PROJETO.
+
+Não produza novamente um planejamento completo.
+
+O planejamento já foi realizado e está
+disponível nos documentos anexados.
+
+Sua primeira tarefa é executar a fase:
+
+P01 — FUNDAÇÃO E CONTRATOS.
+
+Essa fase corresponde inicialmente aos cards:
+
+PL3-01
+PL3-02
+PL3-03
+
+Respeite as dependências entre os cards.
+
+Execute as atividades abaixo.
+
+--------------------------------------------------------
+17.1. VALIDAR O ESTADO DO REPOSITÓRIO
+--------------------------------------------------------
+
+Inspecione:
+
+- Branch atual.
+- Commit HEAD.
+- Alterações não commitadas.
+- Estrutura existente.
+- Referência histórica do PetLand 2.0.
+
+Identifique possíveis diferenças em relação
+ao commit utilizado no planejamento.
+
+Preserve o trabalho existente.
+
+Crie uma branch dedicada ao PetLand 3.0,
+caso ela ainda não exista.
+
+Não sobrescreva branches existentes.
+
+Não altere a main.
+
+--------------------------------------------------------
+17.2. INCORPORAR A DOCUMENTAÇÃO
+--------------------------------------------------------
+
+Organize os documentos recebidos dentro
+do monorepo.
+
+O Plano Consolidado deverá permanecer
+acessível como referência oficial.
+
+O Caderno de UX deverá permanecer acessível
+como referência visual.
+
+Preserve os documentos originais.
+
+Não substitua os documentos aprovados por
+resumos incompletos.
+
+Crie uma estrutura de documentação organizada
+e navegável.
+
+Identifique claramente quais decisões estão
+aprovadas e quais continuam pendentes.
+
+Registre as decisões arquiteturais iniciais.
+
+--------------------------------------------------------
+17.3. CRIAR A FUNDAÇÃO DO BACKEND
+--------------------------------------------------------
+
+Crie a estrutura inicial do backend.
+
+Implemente:
+
+- Configuração do projeto Python.
+- Gerenciamento de dependências.
+- Estrutura modular.
+- Application factory.
+- Configuração por ambiente.
+- Composição das dependências.
+- Tratamento básico de erros.
+- Health endpoint.
+- Readiness endpoint.
+- Configuração inicial de testes.
+
+Prepare a estrutura necessária para a
+arquitetura hexagonal.
+
+Não implemente módulos de negócio completos
+antes da respectiva fase.
+
+--------------------------------------------------------
+17.4. CRIAR A FUNDAÇÃO DO FRONTEND
+--------------------------------------------------------
+
+Crie a estrutura inicial do frontend.
+
+Implemente:
+
+- React.
+- TypeScript.
+- Vite.
+- Roteamento inicial.
+- Layout principal.
+- Estrutura de funcionalidades.
+- Estrutura de componentes compartilhados.
+- Integração inicial com a API.
+- Configuração de testes.
+
+Implemente uma página inicial funcional
+utilizando a identidade visual proposta.
+
+A página deve utilizar componentes reais,
+e não apenas um template genérico.
+
+--------------------------------------------------------
+17.5. CRIAR O DESIGN SYSTEM INICIAL
+--------------------------------------------------------
+
+Implemente:
+
+- Tokens de cores.
+- Tipografia.
+- Espaçamentos.
+- Bordas.
+- Botões.
+- Campos de formulário.
+- Componentes de feedback.
+- Estados de foco.
+- Estados de erro.
+
+Crie uma pequena página ou ambiente de
+demonstração dos componentes, conforme o
+escopo do planejamento.
+
+Essa etapa deve estabelecer a base visual
+que será reutilizada nas próximas telas.
+
+Não implemente antecipadamente todas
+as telas da aplicação.
+
+--------------------------------------------------------
+17.6. CONFIGURAR BANCO E INFRAESTRUTURA
+--------------------------------------------------------
+
+Implemente:
+
+- PostgreSQL para desenvolvimento local.
+- Docker Compose.
+- Configuração de conexão.
+- SQLAlchemy.
+- Alembic.
+- Estrutura inicial de migrations.
+- Configuração de variáveis de ambiente.
+- Arquivo .env.example.
+- Proteção contra versionamento de segredos.
+- Comandos necessários para executar o projeto.
+
+O ambiente deve permitir iniciar a aplicação
+e executar as migrations a partir de uma
+instalação limpa.
+
+--------------------------------------------------------
+17.7. CONTRATOS INICIAIS
+--------------------------------------------------------
+
+Crie a estrutura de contratos da API
+conforme o planejamento.
+
+Estabeleça:
+
+- Convenções dos endpoints.
+- Versionamento da API.
+- Formato de erros.
+- Estratégia de geração do OpenAPI.
+- Estrutura de tipos compartilhados.
+- Estratégia de geração do cliente TypeScript.
+
+Os contratos iniciais de identidade e reserva
+podem ser documentados conforme o planejamento,
+mas não apresente endpoints ainda não
+implementados como funcionais.
+
+Não crie uma implementação falsa de reserva
+apenas para demonstrar um contrato.
+
+--------------------------------------------------------
+17.8. CONFIGURAR CI E QUALIDADE
+--------------------------------------------------------
+
+Configure as validações iniciais:
+
+- Lint Python.
+- Formatação Python.
+- Verificação de tipos aplicável.
+- Testes Python.
+- Lint frontend.
+- TypeScript.
+- Build frontend.
+- Testes frontend.
+- Validação de migrations.
+- Verificação de dependências entre camadas.
+
+Utilize as ferramentas definidas no
+planejamento ou alternativas justificadas
+e compatíveis com a arquitetura aprovada.
+
+Não crie um pipeline que apresente sucesso
+sem executar as verificações previstas.
+
+--------------------------------------------------------
+17.9. DOCUMENTAR A EXECUÇÃO LOCAL
+--------------------------------------------------------
+
+Atualize o README.
+
+Documente:
+
+- Pré-requisitos.
+- Instalação.
+- Variáveis de ambiente.
+- Inicialização do banco.
+- Execução das migrations.
+- Inicialização do backend.
+- Inicialização do frontend.
+- Execução dos testes.
+- Execução das validações de qualidade.
+
+Os comandos documentados devem corresponder
+ao que foi efetivamente implementado.
+
+========================================================
+18. CRITÉRIOS DE ACEITE DA PRIMEIRA ENTREGA
+========================================================
+
+Ao finalizar P01, verifique:
+
+1. O histórico do legado foi preservado.
+
+2. O monorepo está organizado.
+
+3. O backend FastAPI inicia corretamente.
+
+4. O frontend React inicia corretamente.
+
+5. A comunicação inicial frontend/backend funciona.
+
+6. O PostgreSQL pode ser iniciado localmente.
+
+7. As migrations iniciais podem ser executadas.
+
+8. O design system possui uma base funcional.
+
+9. A estrutura hexagonal respeita as
+   dependências estabelecidas.
+
+10. Os testes iniciais podem ser executados.
+
+11. O build frontend funciona.
+
+12. A aplicação pode ser inicializada
+    seguindo o README.
+
+13. Os contratos iniciais estão organizados.
+
+14. O AGENTS.md está criado.
+
+15. A documentação está integrada ao repositório.
+
+16. Nenhum segredo real foi versionado.
+
+17. Nenhuma funcionalidade posterior foi
+    apresentada como concluída.
+
+Não declare a fase concluída se algum
+critério obrigatório não foi atendido.
+
+Caso exista um impedimento ambiental,
+registre o problema e sua consequência.
+
+========================================================
+19. CONTINUIDADE E CONTROLE DE PROGRESSO
+========================================================
+
+O objetivo final é implementar integralmente
+o escopo obrigatório do PetLand 3.0.
+
+Entretanto, a construção deve ocorrer
+de forma incremental.
+
+Não tente implementar todas as fases de
+uma só vez sacrificando qualidade,
+segurança ou testes.
+
+Nesta execução, concentre-se em P01.
+
+Não encerre o trabalho apenas após criar
+pastas vazias ou arquivos de configuração.
+
+Entregue uma fundação executável,
+integrada, testada e documentada.
+
+Após concluir P01, registre o estado do projeto
+de maneira que a implementação possa continuar
+em outra sessão do Codex.
+
+Crie um documento de acompanhamento em:
+
+docs/implementation/progress.md
+
+Esse documento deverá conter:
+
+- Fase atual.
+- Cards concluídos.
+- Cards em andamento.
+- Cards pendentes.
+- Decisões aprovadas.
+- Decisões pendentes.
+- Impedimentos.
+- Testes executados.
+- Resultado das verificações.
+- Próximo card recomendado.
+- Referência do commit da última entrega.
+
+Atualize esse documento conforme a evolução
+do projeto.
+
+Não recrie funcionalidades concluídas em
+execuções posteriores.
+
+Não reinicie o planejamento.
+
+Não perca as decisões arquiteturais.
+
+========================================================
+20. ENTREGA E RELATÓRIO FINAL
+========================================================
+
+Ao concluir a execução atual, apresente:
+
+1. Resumo do que foi implementado.
+
+2. Branch utilizada.
+
+3. Estrutura do monorepo criada.
+
+4. Arquivos principais criados ou alterados.
+
+5. Arquitetura implementada.
+
+6. Componentes frontend implementados.
+
+7. Infraestrutura configurada.
+
+8. Testes executados e resultados.
+
+9. Critérios de aceite atendidos.
+
+10. Critérios ainda pendentes, se existirem.
+
+11. Decisões de negócio que precisam
+    ser tomadas antes das próximas fases.
+
+12. Próximo card do roadmap.
+
+Se o ambiente permitir, disponibilize a
+implementação em um PR para revisão,
+sem realizar o merge automaticamente.
+
+Não publique uma versão em produção.
+
+Não declare o PetLand 3.0 completo quando
+apenas a fundação estiver implementada.
+
+O resultado desta execução deve ser uma
+primeira entrega real de engenharia de software,
+com código funcional, infraestrutura local,
+testes e documentação.
+
+INICIE A IMPLEMENTAÇÃO.

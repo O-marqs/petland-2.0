@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.pdf binary
+*.png binary
+docs/product/PetLand_3.0_Plano_Consolidado.md -text
+docs/implementation/P01-request.txt -text

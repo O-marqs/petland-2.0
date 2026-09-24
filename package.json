@@ -1,0 +1,18 @@
+{
+  "name": "petland", "private": true, "version": "0.1.0",
+  "packageManager": "pnpm@10.34.5",
+  "engines": { "node": ">=22.14 <23" },
+  "scripts": {
+    "dev": "pnpm --filter @petland/web dev",
+    "build": "pnpm --filter @petland/web build",
+    "lint": "pnpm --filter @petland/web lint",
+    "typecheck": "pnpm --filter @petland/api-contract typecheck && pnpm --filter @petland/web typecheck",
+    "test": "pnpm --filter @petland/web test",
+    "test:e2e": "pnpm --filter @petland/web test:e2e",
+    "contracts:generate": "uv run --project apps/api python scripts/export_openapi.py && pnpm --filter @petland/api-contract generate",
+    "contracts:check": "uv run --project apps/api python scripts/export_openapi.py --check && pnpm --filter @petland/api-contract check",
+    "format:check": "prettier --check apps/web/src apps/web/*.ts packages/api-contract/src/client.ts",
+    "format": "prettier --write apps/web/src apps/web/*.ts packages/api-contract/src/client.ts"
+  },
+  "devDependencies": { "prettier": "^3.5.0" }
+}
