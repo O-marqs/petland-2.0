@@ -1,0 +1,78 @@
+name: P01 quality
+on:
+  pull_request:
+  push:
+    branches: [petland-3.0]
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+        env:
+          POSTGRES_USER: petland_test
+          POSTGRES_PASSWORD: ephemeral-ci-only
+          POSTGRES_DB: petland_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U petland_test -d petland_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      APP_ENV: test
+      REQUIRE_INTEGRATION: '1'
+      TEST_DATABASE_URL: postgresql+psycopg://petland_test:ephemeral-ci-only@127.0.0.1:5432/petland_test
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: { version: '0.12.18', python-version: '3.13' }
+      - run: uv sync --project apps/api --frozen
+      - run: pnpm install --frozen-lockfile
+      - name: Python lint and formatting
+        run: |
+          uv run --project apps/api ruff check --config apps/api/pyproject.toml apps/api scripts
+          uv run --project apps/api ruff format --check --config apps/api/pyproject.toml apps/api scripts
+      - run: uv run --directory apps/api mypy
+      - run: uv run --project apps/api python scripts/check_architecture.py
+      - run: python scripts/check_repository.py
+      - name: Unit, HTTP and real PostgreSQL migrations
+        run: uv run --directory apps/api pytest
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm format:check
+      - run: pnpm contracts:check
+      - run: pnpm test
+      - run: pnpm build
+      - name: Dependency advisories
+        run: |
+          uv export --project apps/api --frozen --no-dev --no-emit-project --format requirements-txt -o /tmp/petland-requirements.txt
+          uv run --project apps/api pip-audit -r /tmp/petland-requirements.txt --disable-pip --no-deps
+          pnpm audit --prod --audit-level high
+  browser:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - run: pnpm install --frozen-lockfile
+      - run: python3 scripts/dev.py init
+      - name: Clean Compose startup and migration job
+        run: python3 scripts/dev.py up
+      - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - name: Stop test environment
+        if: always()
+        run: python3 scripts/dev.py down

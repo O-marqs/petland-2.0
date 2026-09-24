@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+psql --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" --set=ON_ERROR_STOP=1 --set=app_password="$APP_DATABASE_PASSWORD" <<'SQL'
+CREATE ROLE petland_app LOGIN PASSWORD :'app_password' NOSUPERUSER NOCREATEDB NOCREATEROLE;
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+GRANT CONNECT ON DATABASE petland TO petland_app;
+GRANT USAGE ON SCHEMA public TO petland_app;
+ALTER DEFAULT PRIVILEGES FOR ROLE petland_migrator IN SCHEMA public GRANT SELECT ON TABLES TO petland_app;
+SQL
