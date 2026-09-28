@@ -77,7 +77,10 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
   await page.getByRole('button', { name: 'Sair', exact: true }).click();
   await page.getByRole('link', { name: 'Esqueci minha senha' }).click();
   await page.getByLabel('E-mail (obrigatório)').fill(email);
+  // SMTP is synchronous after commit. Check the actual response before its UI feedback.
+  const recoveryResponse = page.waitForResponse(response => response.url().endsWith('/api/v1/auth/password-reset-requests') && response.request().method() === 'POST', { timeout: 15000 });
   await page.getByRole('button', { name: 'Enviar instruções' }).click();
+  expect((await recoveryResponse).status()).toBe(202);
   await expect(page.getByText('Pronto para o próximo passo')).toBeVisible();
   const resetLink = await emailLink(request, email, 'Redefina');
   await page.goto(resetLink);

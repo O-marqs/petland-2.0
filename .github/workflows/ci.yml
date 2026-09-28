@@ -73,6 +73,16 @@ jobs:
         run: python3 scripts/dev.py up
       - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
       - run: pnpm test:e2e
+      - name: Browser failure context
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for path in Path('apps/web/test-results').glob('*/error-context.md'):
+              content = path.read_text()
+              print(path.name, re.sub(r'([#?]token=)[^\s)]+', r'\1[redacted]', content))
+          PY
       - name: Stop test environment
         if: always()
         run: python3 scripts/dev.py down
