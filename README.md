@@ -2,14 +2,14 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P01 — Fundação e contratos.** Esta entrega executa a aplicação base, conecta frontend/API/PostgreSQL e demonstra o design system. Cadastro, autenticação, pets, catálogo e reservas ainda **não estão implementados**. Não há demonstração pública ou produção publicada.
+**Estado atual: P02 — Identidade e autorização.** Cadastro, verificação de e-mail, login/logout, recuperação, sessões, convites e gestão de acessos usam API e PostgreSQL reais. Pets, catálogo, reservas e operação comercial ainda **não estão implementados**. Não há demonstração pública ou produção publicada; consulte o progresso para as evidências de validação da entrega.
 
 ## Executar localmente
 
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-p02 https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -19,11 +19,15 @@ python scripts/dev.py up
 
 - Aplicação: http://localhost:5173
 - Galeria interativa: http://localhost:5173/design-system
+- Cadastro/login: http://localhost:5173/criar-conta e http://localhost:5173/entrar
+- Caixa de e-mail local: http://localhost:8025 (Mailpit, sem entrega externa)
 - OpenAPI/Swagger local: http://localhost:8000/api/docs
 - Processo: http://localhost:8000/api/v1/health/live
 - Banco/schema: http://localhost:8000/api/v1/health/ready
 
 Parar preservando o banco: `python scripts/dev.py down`. A configuração Compose desta entrega é de **desenvolvimento**, com Vite, não uma receita de produção.
+
+Para confirmar cadastro/recuperar senha, abra a mensagem no Mailpit e siga seu link. Primeiro administrador: `python scripts/dev.py bootstrap-admin --email administrador-sintetico@example.com`, seguido da aceitação por e-mail. Não existe senha default nem cadastro público de ADMIN. [Fluxos de identidade e operação](docs/runbooks/identity.md).
 
 ## Desenvolver e validar
 
@@ -63,9 +67,9 @@ docs/                     Fontes oficiais, decisões, arquitetura e evidências
 .github/workflows/        CI, sem deploy automático
 ```
 
-O backend é um monólito modular com portas pequenas e composição explícita. O módulo técnico `system` demonstra application → port ← infrastructure e adaptação HTTP. Não criamos entidades de negócio artificiais nem diretórios vazios; os módulos de negócio entram nas respectivas fases. A verificação de arquitetura já cobre imports absolutos e relativos de `domain`, `application`, `infrastructure` e `presentation`.
+O backend é um monólito modular com portas pequenas e composição explícita. `system` fornece saúde do ambiente; `identity` implementa contas, sessões, convites e autorização, com domínio e casos de uso independentes de HTTP, banco e SMTP. A verificação de arquitetura cobre imports absolutos e relativos de `domain`, `application`, `infrastructure` e `presentation`.
 
-No frontend, React Router carrega páginas sob demanda; TanStack Query gerencia a consulta real de disponibilidade do ambiente; React Hook Form/Zod validam o exemplo da galeria. O exemplo é local e não simula persistência. Manrope/Inter são hospedadas junto à aplicação. Os contratos têm apenas endpoints que realmente existem.
+No frontend, React Router carrega páginas sob demanda; TanStack Query gerencia identidade, sessões e gestão de acessos; React Hook Form/Zod validam os formulários reais. A galeria permanece separada como ferramenta de desenvolvimento. Manrope/Inter são hospedadas junto à aplicação. Os contratos têm apenas endpoints que realmente existem.
 
 ## Legado e continuidade
 
@@ -73,9 +77,9 @@ O histórico de [PetLand 2.0](https://github.com/O-marqs/petland-2.0) permanece 
 
 - [Índice da documentação e documentos oficiais integrais](docs/README.md)
 - [Progresso, aceite e próximo card](docs/implementation/progress.md)
-- [Resultados verificáveis e limitações](docs/evidence/P01.md)
+- [Resultados verificáveis e limitações P02](docs/evidence/P02.md) e [histórico P01](docs/evidence/P01.md)
 - [Decisões aprovadas e pendentes](docs/product/decisions.md)
 - [Arquitetura e decisões](docs/architecture/README.md)
 - [Orientações para próximas sessões](AGENTS.md)
 
-Próxima fase: **P02**, começando pelo **PL3-04**, após resolver D07 (permissões da equipe). Não há merge ou publicação automática.
+Próxima fase após aceite P02: **P03**, começando por **PL3-07**, respeitando D05/D06. D07 foi aprovada. Não há merge ou publicação automática.
