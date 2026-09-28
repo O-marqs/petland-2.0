@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { PawPrint, ArrowUpRight } from 'lucide-react';
+import { PawPrint } from 'lucide-react';
 
 export function PublicLayout() {
   const { pathname } = useLocation();
@@ -16,7 +16,7 @@ export function PublicLayout() {
         Pular para o conteúdo
       </a>
       <div className="preview-strip">
-        Um novo capítulo de cuidado. <span>Prévia PetLand 3.0</span>
+        Um novo capítulo de cuidado. <span>PetLand 3.0 · Em desenvolvimento</span>
       </div>
       <header className="public-header container">
         <Link className="brand" to="/" aria-label="PetLand, página inicial">
@@ -27,9 +27,8 @@ export function PublicLayout() {
           <NavLink to="/" end>
             Início
           </NavLink>
-          <NavLink to="/design-system">
-            Componentes <ArrowUpRight size={16} aria-hidden="true" />
-          </NavLink>
+          <NavLink to="/entrar">Entrar</NavLink>
+          <NavLink to="/criar-conta">Criar conta</NavLink>
         </nav>
       </header>
       <main id="main" tabIndex={-1}>
@@ -41,6 +40,7 @@ export function PublicLayout() {
         </Link>
         <p>Cuidar também é organizar.</p>
         <span>Projeto de portfólio · Em desenvolvimento</span>
+        <Link to="/design-system">Explorar componentes</Link>
       </footer>
     </>
   );

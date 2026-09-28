@@ -1,8 +1,8 @@
-name: P01 quality
+name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0]
+    branches: [petland-3.0, petland-3.0-p02]
 permissions:
   contents: read
 concurrency:

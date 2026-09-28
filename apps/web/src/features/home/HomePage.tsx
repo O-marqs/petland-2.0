@@ -1,12 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight,
-  HeartHandshake,
-  CalendarDays,
-  ClipboardCheck,
-  Sparkles,
-  ArrowUpRight,
-} from 'lucide-react';
+import { ArrowRight, HeartHandshake, CalendarDays, ClipboardCheck, Sparkles } from 'lucide-react';
 import { Badge } from '../../shared/ui/Feedback';
 import { ConnectionStatus } from './ConnectionStatus';
 import { PetIllustration } from './PetIllustration';
@@ -29,11 +22,11 @@ export default function HomePage() {
             reencontro.
           </p>
           <div className="hero-actions">
-            <a className="button button--primary" href="#proposta">
-              Conheça a proposta <ArrowRight size={18} aria-hidden="true" />
-            </a>
-            <Link className="text-link" to="/design-system">
-              Explorar componentes <ArrowUpRight size={17} aria-hidden="true" />
+            <Link className="button button--primary" to="/criar-conta">
+              Criar minha conta <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+            <Link className="text-link" to="/entrar">
+              Já tenho uma conta
             </Link>
           </div>
           <div className="hero-note">
@@ -97,15 +90,15 @@ export default function HomePage() {
           <Sparkles size={28} aria-hidden="true" />
         </div>
         <div>
-          <Badge>PRIMEIRA ENTREGA</Badge>
-          <h2 id="foundation-title">Uma base para cuidar melhor.</h2>
+          <Badge>SEU ESPAÇO PETLAND</Badge>
+          <h2 id="foundation-title">Seu cuidado começa com um acesso.</h2>
           <p>
-            Esta prévia apresenta a identidade e os componentes do novo PetLand. Cadastro, serviços
-            e agendamentos estarão disponíveis nas próximas entregas.
+            Crie sua conta, confirme seu e-mail e acesse seu espaço com segurança. Pets, serviços e
+            agendamentos serão disponibilizados nas próximas entregas.
           </p>
         </div>
-        <Link className="button button--secondary" to="/design-system">
-          Ver a galeria <ArrowRight size={18} aria-hidden="true" />
+        <Link className="button button--secondary" to="/entrar">
+          Acessar minha conta <ArrowRight size={18} aria-hidden="true" />
         </Link>
       </section>
       <ConnectionStatus />
