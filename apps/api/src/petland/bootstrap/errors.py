@@ -8,6 +8,8 @@ from pydantic import BaseModel, Field
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse
 
+from petland.modules.identity.domain.models import IdentityError
+
 
 class Problem(BaseModel):
     type: str = "about:blank"
@@ -21,11 +23,33 @@ class Problem(BaseModel):
 
 PUBLIC_ERRORS: dict[int, tuple[str, str]] = {
     400: ("BAD_REQUEST", "Não foi possível interpretar a solicitação."),
+    401: ("AUTH_REQUIRED", "Entre na sua conta para continuar."),
+    403: ("FORBIDDEN", "Sua conta não tem permissão para esta ação."),
+    409: ("CONFLICT", "O estado mudou. Atualize a página e tente novamente."),
+    413: ("BODY_TOO_LARGE", "A solicitação excede o tamanho permitido."),
+    429: ("RATE_LIMITED", "Muitas tentativas. Aguarde 15 minutos antes de tentar novamente."),
     404: ("NOT_FOUND", "O recurso solicitado não foi encontrado."),
     405: ("METHOD_NOT_ALLOWED", "Este método não está disponível para o recurso."),
     422: ("VALIDATION_ERROR", "Revise os campos indicados."),
     500: ("INTERNAL_ERROR", "Não foi possível concluir agora."),
     503: ("SERVICE_UNAVAILABLE", "O serviço está temporariamente indisponível."),
+}
+
+IDENTITY_ERRORS = {
+    "INVALID_CREDENTIALS": "E-mail ou senha inválidos.",
+    "AUTH_REQUIRED": "Entre na sua conta para continuar.",
+    "CSRF_REJECTED": "Sua sessão de segurança expirou. Atualize a página e tente novamente.",
+    "INVALID_TOKEN": "Este link é inválido, já foi usado ou expirou. Solicite um novo link.",
+    "WEAK_PASSWORD": "Use uma senha de 15 a 128 caracteres, evitando senhas comuns ou repetitivas. Espaços são permitidos.",
+    "EMAIL_NOT_VERIFIED": "Confirme seu e-mail antes de acessar esta área.",
+    "FORBIDDEN": "Sua conta não tem permissão para esta ação.",
+    "REAUTHENTICATION_FAILED": "Não foi possível confirmar sua senha atual.",
+    "LAST_ADMIN": "É necessário manter pelo menos um administrador ativo.",
+    "STALE_VERSION": "Esta conta foi alterada. Atualize a lista antes de tentar novamente.",
+    "ROLES_REQUIRED": "Selecione pelo menos um perfil.",
+    "BOOTSTRAP_CLOSED": "O primeiro administrador já foi provisionado.",
+    "RATE_LIMITED": "Muitas tentativas. Aguarde 15 minutos antes de tentar novamente.",
+    "NOT_FOUND": "O recurso solicitado não foi encontrado.",
 }
 
 
@@ -34,10 +58,13 @@ def problem_response(
     status: int,
     errors: list[dict[str, str]] | None = None,
     headers: Mapping[str, str] | None = None,
+    identity_code: str | None = None,
 ) -> JSONResponse:
     code, detail = PUBLIC_ERRORS.get(
         status, ("HTTP_ERROR", "Não foi possível concluir a solicitação.")
     )
+    if identity_code in IDENTITY_ERRORS:
+        code, detail = identity_code, IDENTITY_ERRORS[identity_code]
     body = Problem(
         title=HTTPStatus(status).phrase,
         status=status,
@@ -55,6 +82,15 @@ def problem_response(
 
 
 def register_handlers(app: FastAPI) -> None:
+    @app.exception_handler(IdentityError)
+    async def identity_error(request: Request, exc: IdentityError) -> JSONResponse:
+        return problem_response(
+            request,
+            exc.status,
+            headers={"Retry-After": "900"} if exc.status == 429 else None,
+            identity_code=exc.code,
+        )
+
     @app.exception_handler(HTTPException)
     async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
         return problem_response(request, exc.status_code, headers=exc.headers)
@@ -77,5 +113,5 @@ def problem_responses() -> dict[int | str, dict[str, Any]]:
             "content": {"application/problem+json": {"schema": Problem.model_json_schema()}},
             "description": HTTPStatus(status).phrase,
         }
-        for status in (404, 405, 422, 500, 503)
+        for status in (400, 401, 403, 404, 405, 409, 413, 422, 429, 500, 503)
     }

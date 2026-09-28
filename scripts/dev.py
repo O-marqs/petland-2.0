@@ -47,9 +47,13 @@ def main() -> None:
             "test",
             "check",
             "e2e",
+            "bootstrap-admin",
+            "prune-identity",
         ],
     )
-    command = parser.parse_args().command
+    parser.add_argument("--email", help="Destination of the first administrator invitation")
+    arguments = parser.parse_args()
+    command = arguments.command
     if command == "init":
         target = ROOT / ".env"
         if target.exists():
@@ -76,7 +80,41 @@ def main() -> None:
         run("uv", "sync", "--frozen", cwd=api, env=env)
         run("pnpm", "install", "--frozen-lockfile", env=env)
     elif command == "db":
-        run(*compose, "up", "-d", "--wait", "postgres", env=env)
+        run(*compose, "up", "-d", "--wait", "postgres", "mailpit", env=env)
+    elif command == "bootstrap-admin":
+        if not arguments.email:
+            parser.error("bootstrap-admin requires --email")
+        run(
+            *compose,
+            "exec",
+            "-T",
+            "api",
+            "uv",
+            "run",
+            "--no-sync",
+            "python",
+            "-m",
+            "petland.bootstrap.admin",
+            "bootstrap",
+            "--email",
+            arguments.email,
+            env=env,
+        )
+    elif command == "prune-identity":
+        run(
+            *compose,
+            "exec",
+            "-T",
+            "api",
+            "uv",
+            "run",
+            "--no-sync",
+            "python",
+            "-m",
+            "petland.bootstrap.admin",
+            "prune",
+            env=env,
+        )
     elif command == "up":
         run(*compose, "up", "-d", "--build", "--wait", "web", env=env)
     elif command == "down":
@@ -95,6 +133,7 @@ def main() -> None:
             "--host",
             "127.0.0.1",
             "--no-access-log",
+            "--no-proxy-headers",
             cwd=api,
             env=env,
         )

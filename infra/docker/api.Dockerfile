@@ -10,4 +10,4 @@ COPY apps/api/migrations ./migrations
 RUN uv sync --frozen --no-dev && useradd --uid 10001 --create-home petland && chown -R petland:petland /app
 USER petland
 EXPOSE 8000
-CMD ["uv", "run", "--no-sync", "uvicorn", "petland.bootstrap.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
+CMD ["uv", "run", "--no-sync", "uvicorn", "petland.bootstrap.app:create_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--no-access-log", "--no-proxy-headers"]

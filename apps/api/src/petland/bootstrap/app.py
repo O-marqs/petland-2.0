@@ -7,16 +7,24 @@ from fastapi import FastAPI, Request
 from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
 
+from petland.bootstrap.body_limit import BodyLimit
 from petland.bootstrap.errors import problem_response, problem_responses, register_handlers
+from petland.bootstrap.identity import build_identity
 from petland.bootstrap.logging import configure_logging
 from petland.bootstrap.settings import Settings
+from petland.modules.identity.application.service import IdentityService
+from petland.modules.identity.presentation.http.router import create_identity_router
 from petland.modules.system.application.readiness import CheckReadiness, ReadinessProbe
 from petland.modules.system.infrastructure.readiness import PostgresReadinessProbe
 from petland.modules.system.presentation.http.router import create_router
 from petland.shared.database import build_engine
 
 
-def create_app(settings: Settings | None = None, probe: ReadinessProbe | None = None) -> FastAPI:
+def create_app(
+    settings: Settings | None = None,
+    probe: ReadinessProbe | None = None,
+    identity: IdentityService | None = None,
+) -> FastAPI:
     configuration = settings or Settings()
     logger = configure_logging(configuration.log_level)
     engine = build_engine(
@@ -43,7 +51,15 @@ def create_app(settings: Settings | None = None, probe: ReadinessProbe | None = 
         responses=problem_responses(),
     )
     app.include_router(create_router(CheckReadiness(probe or PostgresReadinessProbe(engine))))
+    app.include_router(
+        create_identity_router(
+            identity or build_identity(engine, configuration),
+            configuration.public_origin,
+            not local,
+        )
+    )
     register_handlers(app)
+    app.add_middleware(BodyLimit)
 
     @app.middleware("http")
     async def request_context(request: Request, call_next: RequestResponseEndpoint) -> Response:
@@ -61,6 +77,11 @@ def create_app(settings: Settings | None = None, probe: ReadinessProbe | None = 
         response.headers["Cache-Control"] = "no-store"
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'none'; frame-ancestors 'none'"
+            if not request.url.path.startswith("/api/docs")
+            else "default-src 'self'; script-src https://cdn.jsdelivr.net 'unsafe-inline'; style-src https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' https://fastapi.tiangolo.com"
+        )
         route = request.scope.get("route")
         logger.info(
             "http_request",

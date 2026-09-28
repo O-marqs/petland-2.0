@@ -36,6 +36,7 @@ def test_production_docs_disabled():
         _env_file=None,
         app_env="production",
         public_origin="https://petland.example",
+        smtp_starttls=True,
         database_url="postgresql+psycopg://app:long_test_credential_123456789@db/petland?sslmode=verify-full",
     )
     app = create_app(config)

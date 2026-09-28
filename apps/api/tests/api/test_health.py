@@ -103,7 +103,27 @@ def test_validation_errors_omit_input_values(settings):
 
 def test_contract_only_exposes_implemented_endpoints(settings):
     paths = create_app(settings, Probe()).openapi()["paths"]
-    assert set(paths) == {"/api/v1/health/live", "/api/v1/health/ready"}
+    assert set(paths) == {
+        "/api/v1/health/live",
+        "/api/v1/health/ready",
+        "/api/v1/auth/csrf",
+        "/api/v1/auth/register",
+        "/api/v1/auth/login",
+        "/api/v1/auth/logout",
+        "/api/v1/auth/me",
+        "/api/v1/auth/password-reset-requests",
+        "/api/v1/auth/email-verification-requests",
+        "/api/v1/auth/email-verifications",
+        "/api/v1/auth/password-resets",
+        "/api/v1/auth/sessions",
+        "/api/v1/auth/sessions/{session_id}",
+        "/api/v1/me/password-changes",
+        "/api/v1/management/employee-invitations",
+        "/api/v1/auth/invitations/accept",
+        "/api/v1/management/users",
+        "/api/v1/management/users/{user_id}/roles",
+        "/api/v1/management/users/{user_id}/status",
+    }
     assert (
         "application/problem+json"
         in paths["/api/v1/health/ready"]["get"]["responses"]["503"]["content"]

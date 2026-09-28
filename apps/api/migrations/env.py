@@ -2,6 +2,7 @@ import os
 
 from alembic import context
 
+from petland.modules.identity.infrastructure import models  # noqa: F401
 from petland.shared.database import Base, build_engine
 
 url = os.environ.get("MIGRATION_DATABASE_URL")
