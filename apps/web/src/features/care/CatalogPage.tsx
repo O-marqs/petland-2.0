@@ -32,6 +32,14 @@ const schema = z
         enabled: z.boolean(),
         price: z.string(),
         duration: z.string(),
+        before: z
+          .string()
+          .regex(/^\d+$/)
+          .refine((v) => Number(v) <= 240, 'Use de 0 a 240 minutos.'),
+        after: z
+          .string()
+          .regex(/^\d+$/)
+          .refine((v) => Number(v) <= 240, 'Use de 0 a 240 minutos.'),
       }),
     ),
   })
@@ -83,6 +91,8 @@ function ServiceForm({
           enabled: !!o,
           price: o?.price?.toString() || '',
           duration: o?.duration_minutes?.toString() || '',
+          before: String(o?.buffer_before_minutes || 0),
+          after: String(o?.buffer_after_minutes || 0),
         };
       }),
     },
@@ -101,6 +111,8 @@ function ServiceForm({
             size: o.size,
             price: o.price.replace(',', '.'),
             duration_minutes: Number(o.duration),
+            buffer_before_minutes: Number(o.before),
+            buffer_after_minutes: Number(o.after),
           })),
       };
       return careApi.saveService(body, existing);
@@ -168,6 +180,22 @@ function ServiceForm({
                     inputMode="numeric"
                     {...form.register(`options.${i}.duration`)}
                     error={form.formState.errors.options?.[i]?.duration?.message}
+                  />
+                  <Input
+                    label={'Preparação — ' + sizeLabels[o.size] + ' (minutos)'}
+                    type="number"
+                    min={0}
+                    max={240}
+                    {...form.register(`options.${i}.before`)}
+                    error={form.formState.errors.options?.[i]?.before?.message}
+                  />
+                  <Input
+                    label={'Intervalo após — ' + sizeLabels[o.size] + ' (minutos)'}
+                    type="number"
+                    min={0}
+                    max={240}
+                    {...form.register(`options.${i}.after`)}
+                    error={form.formState.errors.options?.[i]?.after?.message}
                   />
                 </div>
               )}
@@ -291,7 +319,9 @@ export default function CatalogPage({ staff = false }: { staff?: boolean }) {
             </p>
             <Prices service={detail.data} />
             <p className="care-note">
-              O agendamento online estará disponível em uma próxima etapa.
+              <Link className="button button--primary" to="/app/agendar">
+                Consultar horários e agendar
+              </Link>
             </p>
             <Link className="button button--secondary" to="/servicos">
               Voltar aos serviços

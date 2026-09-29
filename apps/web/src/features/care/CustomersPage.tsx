@@ -138,6 +138,12 @@ export function CustomerForm({
           >
             Ver pets <ArrowRight size={18} aria-hidden="true" />
           </Link>
+          <Link
+            className="button button--primary"
+            to={staff ? '/operacao/clientes/' + existing.id + '/agendar' : '/app/agendar'}
+          >
+            Agendar um cuidado
+          </Link>
           {staff && !existing.linked && (
             <div className="care-stack">
               <p>

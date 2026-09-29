@@ -86,6 +86,10 @@ export default function AccountLayout() {
               </NavLink>
             )}
             {customer && <NavLink to="/app/pets">Meus pets</NavLink>}
+            {customer && <NavLink to="/app/agendar">Agendar um cuidado</NavLink>}
+            {customer && <NavLink to="/app/reservas">Minhas reservas</NavLink>}
+            {employee && <NavLink to="/operacao/reservas">Reservas</NavLink>}
+            {employee && <NavLink to="/operacao/agenda">Equipe e horários</NavLink>}
             {customer && <NavLink to="/app/perfil">Meu cadastro</NavLink>}
             {employee && <NavLink to="/operacao/clientes">Clientes e pets</NavLink>}
             {employee && <NavLink to="/operacao/servicos">Serviços</NavLink>}

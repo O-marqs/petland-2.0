@@ -96,7 +96,7 @@ export default function HomePage() {
           <h2 id="foundation-title">Seu cuidado começa com um acesso.</h2>
           <p>
             Crie sua conta, confirme seu e-mail e organize seus pets. Conheça os serviços e suas
-            condições por porte. O agendamento online chega em uma próxima etapa.
+            condições por porte. Consulte os horários e confirme o próximo cuidado.
           </p>
         </div>
         <Link className="button button--secondary" to="/entrar">

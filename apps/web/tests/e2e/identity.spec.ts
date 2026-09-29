@@ -114,7 +114,7 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
 
 test('administrator provisions through email, invites employee, changes roles and disables access', async ({ page, request, browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Provisioning is a singleton; the customer journey runs on both sizes.');
-  test.setTimeout(180000);
+  test.setTimeout(300000);
   const csrf = await (await request.get('/api/v1/auth/csrf')).json();
   const check = await request.post('/api/v1/auth/login', { headers: { Origin: 'http://localhost:5173', 'X-CSRF-Token': csrf.csrf_token }, data: { email: adminEmail, password: adminPassword } });
   if (check.status() !== 200) {

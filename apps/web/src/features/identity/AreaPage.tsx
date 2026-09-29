@@ -67,8 +67,8 @@ export default function AreaPage() {
         }
       >
         {area === 'customer'
-          ? 'Pets, catálogo e agendamentos serão disponibilizados nas próximas etapas. Sua conta já está criada e pode ser acessada normalmente.'
-          : 'Agenda e atendimentos estarão disponíveis nas próximas etapas. Você já pode gerenciar clientes, pets e serviços.'}
+          ? 'Organize os pets, conheça os serviços e acompanhe suas reservas.'
+          : 'Gerencie clientes, pets, serviços e reservas. Configure a capacidade em Equipe e horários.'}
       </EmptyState>
     </>
   );

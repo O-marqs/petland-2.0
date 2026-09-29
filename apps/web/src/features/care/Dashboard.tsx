@@ -98,7 +98,10 @@ export default function Dashboard() {
           <p>Preço e duração por porte.</p>
         </Link>
       </div>
-      <p className="care-note">O agendamento online estará disponível em uma próxima etapa.</p>
+      <Link className="button button--primary" to="/app/agendar">
+        Agendar um cuidado
+      </Link>
+      <Link to="/app/reservas">Acompanhar minhas reservas</Link>
     </div>
   );
 }

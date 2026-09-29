@@ -17,6 +17,9 @@ const PetsPage = lazy(() => import('../features/care/PetsPage'));
 const CatalogPage = lazy(() => import('../features/care/CatalogPage'));
 const ClaimPage = lazy(() => import('../features/care/ClaimPage'));
 const Dashboard = lazy(() => import('../features/care/Dashboard'));
+const BookingPage = lazy(() => import('../features/booking/BookingPage'));
+const AppointmentsPage = lazy(() => import('../features/booking/AppointmentsPage'));
+const CalendarPage = lazy(() => import('../features/booking/CalendarPage'));
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30000 } },
 });
@@ -55,6 +58,13 @@ export function App() {
               <Route path="app" element={<Dashboard />} />
               <Route path="app/perfil" element={<CustomersPage profile />} />
               <Route path="app/pets" element={<PetsPage />} />
+              <Route path="app/agendar" element={<BookingPage />} />
+              <Route path="app/reservas" element={<AppointmentsPage />} />
+              <Route path="app/reservas/:appointmentId" element={<AppointmentsPage />} />
+              <Route path="operacao/reservas" element={<AppointmentsPage staff />} />
+              <Route path="operacao/reservas/:appointmentId" element={<AppointmentsPage staff />} />
+              <Route path="operacao/agenda" element={<CalendarPage />} />
+              <Route path="operacao/clientes/:customerId/agendar" element={<BookingPage />} />
               <Route path="operacao/clientes" element={<CustomersPage />} />
               <Route path="operacao/clientes/:customerId" element={<CustomersPage />} />
               <Route path="operacao/clientes/:customerId/pets" element={<PetsPage />} />
