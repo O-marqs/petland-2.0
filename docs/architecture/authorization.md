@@ -14,7 +14,7 @@ Aprovação inicial: pedido integral em `docs/implementation/P02-request.txt`, r
 | Chegada/início/conclusão | Não | Sim, transições válidas | Sim | P05 |
 | Notas internas | Não | Necessárias ao atendimento | Sim | P05 |
 | Serviços, preços/duração e ativação | Não | Sim, versão e auditoria | Sim | P03 |
-| Horários/capacidade/configuração operacional | Não | Sim, conforme D07/P03; implementação futura | Sim | P04/P05 |
+| Horários/capacidade/configuração operacional | Não | Sim, versão e impacto de reservas | Sim | P04 |
 | Cancelamento/reagendamento assistidos | Próprios, pelas políticas | Sim, auditado e com comunicação ao cliente | Sim | P04/P05 |
 
 P02 implementou as três primeiras linhas. O pedido P03 amplia EMPLOYEE com catalog:manage e entrega cadastro próprio/assistido, pets e serviços. As demais capacidades estão identificadas na matriz/enum de permissões para orientar os módulos futuros, sem endpoints fictícios. Cada módulo futuro deve aplicar propriedade e projeção mínima além da capacidade do perfil. Notas internas nunca serão parte automática do schema público.
@@ -30,3 +30,5 @@ P02 implementou as três primeiras linhas. O pedido P03 amplia EMPLOYEE com cata
 - Bootstrap é CLI operacional com acesso ao ambiente, somente quando não existe admin ativo. Não existe endpoint público nem senha inicial default. Link de uso único chega pela caixa configurada.
 
 PL3-07 implementa o vínculo Customer ↔ User por convite de uso único, e-mail verificado coincidente e confirmação explícita. Criar identidade não cria perfil comercial automaticamente. Identificadores de tutor são derivados da conta no servidor para rotas próprias; busca operacional exige customer:assist. Raça/espécie e versões são verificadas na aplicação/banco; pets alheios retornam 404. Escritas comerciais geram auditoria na mesma transação. Ver ADR 0007.
+
+P04 acrescenta establishment:manage ao funcionário, disponibilidade/reservas próprias e assistidas, cancelamento e reagendamento. Escritas de agenda revalidam o ator atual sob o lock do estabelecimento. Cliente nunca escolhe recurso, valor, duração, dono ou status. Mudanças de acesso que retiram uma pessoa da capacidade são bloqueadas enquanto houver reservas. Eventos públicos não expõem identificador do funcionário, credenciais ou mensagens de e-mail.

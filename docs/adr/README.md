@@ -12,15 +12,15 @@ Aceitas pelo pedido de P01, em 23/09/2026:
 
 - **ADR-004:** identidade única, sessão opaca revogável no PostgreSQL, CSRF, hash seguro e D07 aprovada. [Decisões de implementação e limites](0004-identity.md).
 
-## Diretrizes aceitas; implementação posterior
-- **ADR-006:** snapshots, eventos e preservação do histórico. Implementar nos módulos/fases correspondentes.
+## Agenda implementada em P04
+
+- **ADR-003 / ADR-006:** unidade por pessoa, transação e exclusões, snapshots e eventos — [agenda, concorrência e avisos](0003-scheduling.md).
+- **ADR-010:** parâmetros operacionais configuráveis, sem valores comerciais semeados; termos contratados e regras de assistência no mesmo ADR.
 
 ## Propostas ainda condicionadas
 
-- **ADR-003:** unidade de capacidade e concorrência — D02/D03/D04; o protocolo transacional do plano é referência técnica, sem parâmetros comerciais inventados.
 - **ADR-008:** hospedagem/backup — D10; Compose local não é deploy de produção.
 - **ADR-009:** dados e retenção — D06/D08/D12.
-- **ADR-010:** parâmetros comerciais do MVP — D02 a D06; D07 foi resolvida pelo pedido P02, com exceções comerciais ainda sujeitas a D04.
 
 Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. Não alterar silenciosamente o plano.
 

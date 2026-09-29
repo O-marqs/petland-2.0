@@ -68,4 +68,4 @@ Auditoria de dependências: `pnpm audit --prod --audit-level high`; Python: `uv 
 
 ## Limites
 
-P03 entrega clientes/pets/catálogo, além da identidade e SMTP local; consulte os [fluxos de identidade](identity.md) e [cadastros](catalogs.md). Não existe seed comercial automático, reservas, atendimento, backup/restore operacional, deploy ou dados legados migrados. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.
+P04 acrescenta [agenda, capacidade e reservas](scheduling.md), com avisos persistentes no SMTP local. Consulte também [identidade](identity.md) e [cadastros](catalogs.md). Não existe seed comercial automático, atendimento, backup/restore operacional, deploy ou dados legados migrados. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.

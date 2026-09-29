@@ -40,10 +40,16 @@ pnpm contracts:generate
 pnpm contracts:check
 ```
 
-## Contratos futuros — não executáveis
+## Cadastros P03 e agenda P04
 
-Referência normativa: Plano §§13–14. Perfil comercial e troca de e-mail ainda não estão implementados. D07 foi aprovada para P02; as políticas comerciais continuam nos gates seguintes.
+Cadastros próprios em `/me/customer` e `/me/pets`; assistidos em `/operations/customers` e pets subordinados ao cliente. Catálogo público em `/catalog/services`; equipe mantém ofertas em `/operations/services`. Schemas completos e paginação estão no OpenAPI.
 
-Reserva: POST `/api/v1/appointments` com `Idempotency-Key`, `pet_id`, `service_id`, `starts_at`, `offer_version`. Servidor deriva dono, preço, duração e recurso; confirmação após commit. Reagendar/cancelar recebem `expected_version`; conflito retorna 409 (`SLOT_UNAVAILABLE`, `OFFER_CHANGED`, `STALE_VERSION`). D02–D05 precisam de decisão antes de fechar schemas executáveis. Nenhuma dessas rotas faz parte do OpenAPI gerado da P01.
+Disponibilidade: GET `/me/availability` e `/operations/availability` (este exige customer_id). Recebe pet_id, service_id e data local ISO; appointment_id opcional consulta reagendamento com condições contratadas. Resposta inclui slots, timezone, preço/duração/buffers, prazo de alteração, offer.version e configuration_version, sem identificar o profissional.
 
-UUIDs externos; timestamps RFC3339; datas locais ISO; dinheiro string decimal + moeda. Paginação/cursor e permissões serão implementados com suas coleções. Não há contrato fictício de reserva para dar aparência de funcionalidade entregue.
+Reservas: GET/POST `/me/appointments` e `/operations/appointments`, GET por ID e POST por ID com sufixos `/cancel` ou `/reschedule`. Criação exige Idempotency-Key UUID, pet_id, service_id, starts_at RFC3339 com timezone, offer_version e configuration_version; operação assistida acrescenta customer_id. Cancelar exige version/motivo; reagendar também novo início/versão da configuração. Campos extras são rejeitados. Reserva só é confirmada após commit.
+
+Calendário: GET/PUT `/operations/calendar`, POST `/operations/calendar/impact-preview`, POST `/operations/resources` e PUT por resource_id. Calendário representa minutos desde meia-noite e dias da semana 0=segunda a 6=domingo; datas especiais substituem o dia. Versões evitam salvar sobre mudanças de outra pessoa. Configuração e recursos têm limite HTTP de 64 KiB; outras mutações mantêm 16 KiB.
+
+Conflitos: SLOT_UNAVAILABLE, OFFER_CHANGED, STALE_VERSION, CALENDAR_IMPACT, FUTURE_BOOKINGS, RESOURCE_EXISTS, IDEMPOTENCY_MISMATCH. Política: CHANGE_WINDOW_CLOSED/BOOKING_CLOSED. Transiente: SCHEDULE_BUSY (503), repetição explícita com mesma chave. Erros públicos não expõem SQL, conta alheia ou parâmetros internos.
+
+UUIDs externos; timestamps RFC3339; datas locais ISO; dinheiro string decimal + moeda BRL. Listagens paginam offset/limit, máximo 100. Não há endpoint de atendimento, notas, indicadores, pagamento ou troca de e-mail nesta fase.

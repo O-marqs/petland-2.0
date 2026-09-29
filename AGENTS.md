@@ -2,7 +2,7 @@
 
 ## Objetivo e fontes
 
-Uma loja, demonstração de portfólio, três perfis. Leia `docs/implementation/progress.md` antes de trabalhar; não recrie entregas concluídas. Fontes oficiais: `docs/product/PetLand_3.0_Plano_Consolidado.md` (principal técnica) e `docs/ux/PetLand_3.0_Caderno_UX.pdf` (visual). Preserve esses arquivos íntegros. Autorizações em `docs/implementation/P01-request.txt`, `P02-request.txt` e `P03-request.txt`; decisões atuais em `docs/product/decisions.md` e `docs/adr/README.md`.
+Uma loja, demonstração de portfólio, três perfis. Leia `docs/implementation/progress.md` antes de trabalhar; não recrie entregas concluídas. Fontes oficiais: `docs/product/PetLand_3.0_Plano_Consolidado.md` (principal técnica) e `docs/ux/PetLand_3.0_Caderno_UX.pdf` (visual). Preserve esses arquivos íntegros. Autorizações em `docs/implementation/P01-request.txt`, `P02-request.txt`, `P03-request.txt` e `P04-request.txt`; decisões atuais em `docs/product/decisions.md` e `docs/adr/README.md`.
 
 ## Arquitetura e código
 
@@ -30,10 +30,10 @@ Antes de entregar: `python scripts/dev.py check`; aplicação iniciada: `python 
 - Nenhuma reserva fictícia para demonstrar contratos; dados sintéticos somente identificados em demo/testes.
 - Preserve tag `legacy/petland-2.0-2024-11-24` e histórico. Não force push, não reescreva história, não altere main, não descarte mudanças alheias. Repositórios locais ficam em `C:\Users\LUCASMARQUESMARQUES\Documents\GitHub`.
 - O worktree `petland-3.0` depende da pasta original `petland 2.0` para os metadados Git; não mova/remova a original.
-- Não fazer merge automático, deploy de produção ou criar recursos pagos. PRs de revisão estão autorizados. P03 parte de `b1b023e` em `petland-3.0-p03`, com base de PR `petland-3.0-p02` enquanto P02 não for integrada.
+- Não fazer merge automático, deploy de produção ou criar recursos pagos. PRs de revisão estão autorizados. P04 parte de `36e17e0` em `petland-3.0-p04`, com base de PR `petland-3.0-p03` enquanto P03 não for integrada.
 
 ## Conclusão e continuidade
 
-Respeite roadmap/gates. Decisões D01–D11 e recomendações complementares aprovadas no pedido P03; leia docs/product/decisions.md. P03 autorizada; P04 permanece próxima etapa. Parâmetros comerciais não aprovados não podem ser inventados. Não alterar decisões aprovadas silenciosamente. Registre escopo, RF/RNF, arquivos, implementação, verificações reais, limitações e próximo card em `docs/implementation/progress.md` e `docs/evidence`. Atualize README/runbooks junto ao código. UI isolada não conclui funcionalidade de negócio. Não declarar PetLand 3.0 completo por entregar P01/P02.
+Respeite roadmap/gates. Decisões D01–D11 e recomendações complementares aprovadas no pedido P03; P04 autorizada em P04-request.txt. Leia docs/product/decisions.md e ADR-003 antes de alterar agenda. Estabelecimento é sempre o primeiro lock em mutações críticas; não retirar exclusões de recurso/pet nem idempotência. Agenda começa desabilitada, sem horários/funcionários comerciais. P05 é a próxima etapa. Não alterar decisões aprovadas silenciosamente. Registre escopo, RF/RNF, arquivos, implementação, verificações reais, limitações e próximo card em `docs/implementation/progress.md` e `docs/evidence`. Atualize README/runbooks junto ao código. UI isolada não conclui funcionalidade de negócio.
 
 Se ocorrer problema de Docker, pare o trabalho e informe como o usuário pode ajustar. Não tente recuperar o Docker automaticamente.

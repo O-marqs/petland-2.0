@@ -26,3 +26,5 @@
 Funcionalidades futuras permanecem propostas até a fase correspondente. Os originais não foram substituídos por resumos. O progresso registra o estado verificável de cada fase.
 
 P03: [cadastros e catálogo](runbooks/catalogs.md), [evidências](evidence/P03.md), [ADR 0007](adr/0007-p03-customers-pets-catalog.md) e [pedido autorizado](implementation/P03-request.txt).
+
+P04: [agenda e avisos](runbooks/scheduling.md), [evidências](evidence/P04.md), [ADR 003](adr/0003-scheduling.md) e [pedido autorizado](implementation/P04-request.txt).

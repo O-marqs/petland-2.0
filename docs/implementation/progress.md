@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P03 — Clientes, pets e catálogo, implementada em 28/09/2026. P01/P02 preservadas; P04–P08 continuam pendentes. Veja evidências P03 para validações e limites.
+**Fase:** P04 — Núcleo da agenda, implementada em 28–29/09/2026. P01–P03 preservadas; P05–P08 continuam pendentes. Veja [evidências P04](../evidence/P04.md).
 
-**Branch:** `petland-3.0-p03`, criada de `b1b023e` da `petland-3.0-p02`. PR incremental com base P02; sem merge. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch:** `petland-3.0-p04`, criada de `36e17e08c353066d8828160b18250345b85c4e00` da `petland-3.0-p03`. PR incremental com base P03; sem merge. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -17,7 +17,11 @@
 | PL3-07 | Perfil mínimo, cadastro assistido e associação verificada; RF02 | Implementado; vínculo de uso único, e-mail confirmado e isolamento |
 | PL3-08 | Pets, referências, edição/arquivo; RF03/RNF01/04 | Implementado; propriedade A/B, FK raça/espécie, versão, preservação |
 | PL3-09 | Serviços/ofertas por porte e catálogo público; RF04/RF12 | Implementado; Decimal BRL, duração, compatibilidade, ativo/inativo, catálogo/landing/dashboard |
-| PL3-10 a PL3-21 | P04–P08 | Pendentes; agenda/atendimento/publicação não antecipados |
+| PL3-10 | Calendário, recursos, pausas/exceções; RF05 | Implementado; interseção loja/pessoa e impacto revalidado ao salvar |
+| PL3-11 | Disponibilidade e reserva; RF06/RNF06 | Implementado; lock, duas exclusões GiST, snapshots, idempotência e testes concorrentes |
+| PL3-12 | Jornada de agendamento; RF06/RNF04/06 | Implementado; resumo do servidor, confirmação, 409 sem perder escolhas, repetição após resposta perdida |
+| PL3-13 | Cancelar/reagendar; RF07 | Implementado; versão, prazo contratado, assistência, rollback, eventos e avisos SMTP persistentes |
+| PL3-14 a PL3-21 | P05–P08 | Pendentes; execução de atendimentos, indicadores e publicação |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -45,7 +49,7 @@ Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `
 
 Decisões D01–D11 respondidas no pedido P03; pontos incompletos seguem as recomendações por autorização expressa. Registro vigente em docs/product/decisions.md. D08 dispensa migração de dados legados; D10 adia publicação/provedor.
 
-Próximo card: **PL3-10**, fase P04, capacidade/funcionamento configuráveis por funcionários e horários, com atribuição pelo servidor. D03 exige resumo e confirmação do cliente; D04 sem taxas; duração/preço por porte alimentam snapshots de reservas. Comunicação de cancelamento/reagendamento faz parte da próxima entrega operacional. Não existe reserva ou disponibilidade simulada nesta P03.
+Próximo card: **PL3-14**, fase P05, agenda operacional e execução dos atendimentos. P04 entrega o núcleo consistente, a lista/detalhe de reservas e comunicação local. Expandir estados exige migração das exclusões, mantendo o protocolo do [ADR-003](../adr/0003-scheduling.md). D10 mantém publicação/provedor externo adiados.
 
 Não há impedimento ambiental local pendente. Não foram realizados merge, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
 
@@ -58,3 +62,11 @@ P02: 39 testes Python e 10 React aprovados; Playwright com 11 aprovados e um ski
 Módulos customers, pets e catalog; migration 0003_catalogs; reutilização pública de autenticação/CSRF/auditoria; API e contratos gerados; área do cliente e da equipe, formulário reutilizado, arquivo/restauração, convite de vínculo e catálogo público. Permissão catalog:manage incluída para EMPLOYEE conforme D07. Gestão de identidades continua ADMIN.
 
 Validado localmente: 55 testes Python (PostgreSQL obrigatório, migrations e concorrência do vínculo), 12 React (incluindo fragmento/StrictMode e versão do formulário), 15 E2E aprovados e um skip explícito do bootstrap singleton no projeto mobile. A jornada da equipe é executada uma vez e inclui viewport de celular. Tipos, lint, build, contratos, acessibilidade automatizada e atualização Compose aprovados. Evidências e limites em [P03](../evidence/P03.md). PR/CI são registrados no próprio PR; não houve merge, deploy ou alteração de main.
+
+## P04 — implementação e verificação
+
+Módulo scheduling, migration 0004_scheduling, coordenação pública com identity/pets/catalog/customers, buffers opcionais por oferta, worker de avisos e contratos gerados. UI em features/booking com configuração, disponibilidade, revisão, detalhe/histórico e comandos. EMPLOYEE recebe establishment:manage conforme D07.
+
+Validação local final: **77 Python + 12 React aprovados**, lint/tipos/arquitetura/contratos/build aprovados. **15 E2E aprovados + um skip explícito do bootstrap mobile**; a jornada ampliada da equipe foi repetida e aprovada após os ajustes finais, incluindo telas de 390/320 px. SMTP real capturado no Mailpit, disputa de vaga e perda de resposta após commit verificados. Compose final saudável; nenhuma falha de Docker. CI e commit exato são registrados no PR, sem merge.
+
+Fontes originais preservadas; alterações do checkout legado intactas. Evidências, caminhos e limites em [P04](../evidence/P04.md); execução em [agenda local](../runbooks/scheduling.md). O commit desta entrega pode ser localizado por `git log -1 -- docs/implementation/progress.md`.

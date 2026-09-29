@@ -2,14 +2,14 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P03 — Clientes, pets e catálogo.** Identidade, perfil comercial, cadastro assistido/vínculo por e-mail, pets com arquivo/restauração e serviços com preço/duração por porte usam API e PostgreSQL reais. Catálogo público e gestão de serviços pela equipe estão disponíveis. Agenda, reservas e atendimento ainda **não estão implementados**. Não há demonstração pública ou produção publicada; consulte o progresso para as evidências de validação da entrega.
+**Estado atual: P04 — Núcleo da agenda.** Identidade, clientes, pets, serviços, capacidade por pessoa, calendários e reservas usam API e PostgreSQL reais. Cliente revisa e confirma; cancelamento/reagendamento conservam histórico e geram avisos por e-mail local. A agenda começa fechada, sem expediente ou equipe semeados. Atendimento, indicadores e publicação ficam nas próximas fases; consulte as evidências.
 
 ## Executar localmente
 
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0-p03 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-p04 https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -21,6 +21,8 @@ python scripts/dev.py up
 - Catálogo público: http://localhost:5173/servicos
 - Cliente: http://localhost:5173/app/perfil e http://localhost:5173/app/pets
 - Equipe: http://localhost:5173/operacao/clientes e http://localhost:5173/operacao/servicos
+- Agenda da equipe: http://localhost:5173/operacao/agenda e http://localhost:5173/operacao/reservas
+- Agendar/acompanhar: http://localhost:5173/app/agendar e http://localhost:5173/app/reservas
 - Galeria interativa: http://localhost:5173/design-system
 - Cadastro/login: http://localhost:5173/criar-conta e http://localhost:5173/entrar
 - Caixa de e-mail local: http://localhost:8025 (Mailpit, sem entrega externa)
@@ -81,9 +83,12 @@ O histórico de [PetLand 2.0](https://github.com/O-marqs/petland-2.0) permanece 
 - [Índice da documentação e documentos oficiais integrais](docs/README.md)
 - [Progresso, aceite e próximo card](docs/implementation/progress.md)
 - [Resultados verificáveis e limitações P03](docs/evidence/P03.md)
+- [Resultados verificáveis e limites P04](docs/evidence/P04.md)
 - [Histórico e limitações P02](docs/evidence/P02.md) e [histórico P01](docs/evidence/P01.md)
 - [Decisões aprovadas e pendentes](docs/product/decisions.md)
 - [Arquitetura e decisões](docs/architecture/README.md)
 - [Orientações para próximas sessões](AGENTS.md)
 
-Próxima fase: **P04**, começando por **PL3-10** (capacidade e funcionamento configuráveis por funcionários/horários). Decisões D01–D11 e recomendações complementares estão registradas. Não há merge ou publicação automática.
+Configuração inicial: [runbook da agenda](docs/runbooks/scheduling.md). Consistência e limites: [ADR-003](docs/adr/0003-scheduling.md).
+
+Próxima fase: **P05**, começando por **PL3-14** (operação dos atendimentos). Não há merge ou publicação automática.

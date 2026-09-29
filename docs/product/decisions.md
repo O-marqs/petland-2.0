@@ -17,6 +17,6 @@ Registro atualizado em 28/09/2026 pelo pedido P03. Fontes originais permanecem �
 | D11 | Direção visual aprovada | Verde/marfim/terracota; cliente acolhedor, equipe mais compacta; revisão responsiva |
 | D12 | Migração histórica não se aplica, conforme D08 | Não importar hashes ou identidades legadas |
 
-P03 autorizada e gates D05/D06 resolvidos. D02/D03/D04 orientam a próxima fase; esta entrega não antecipa agendamento. Informações comerciais reais (preços, serviços, funcionários e horários) são configuradas pelo operador, sem inventar dados para preencher telas. A ausência de contato/endereço de uma loja real não é substituída por contato fictício.
+P03 e P04 autorizadas; gates D02–D06 resolvidos pelas respostas e recomendações delegadas. P04 implementa atribuição automática, confirmação explícita e parâmetros operacionais configuráveis conforme [ADR-003](../adr/0003-scheduling.md). Informações comerciais reais são configuradas pelo operador, sem inventar dados para preencher telas. A ausência de contato/endereço de uma loja real não é substituída por contato fictício.
 
 Detalhes da implementação em [ADR 0007](../adr/0007-p03-customers-pets-catalog.md) e [matriz de autorização](../architecture/authorization.md).
