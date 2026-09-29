@@ -1,24 +1,34 @@
 from datetime import date
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Header, Query, Request
 
 from petland.modules.identity.public import Actor
 from petland.modules.identity.public.http import HttpIdentity
+from petland.modules.scheduling.application.operations import Agenda, Metrics, OperationDetail
 from petland.modules.scheduling.application.service import Scheduling
 from petland.modules.scheduling.domain.models import Appointment, Availability, Resource
+from petland.modules.scheduling.domain.operations import AppointmentFilter
 from petland.modules.scheduling.presentation.schemas import (
+    AgendaResponse,
     AppointmentPage,
     AppointmentResponse,
     AssistedBookingInput,
+    AttendanceInput,
     AvailabilityResponse,
     BookingInput,
     ChangeInput,
     ConfigurationInput,
     DetailResponse,
+    EstablishmentResponse,
     EventResponse,
+    ExtensionInput,
     ImpactResponse,
+    MetricsResponse,
+    NoteInput,
+    OperationDetailResponse,
+    PublicNoteResponse,
     RescheduleInput,
     ResourceInput,
     ResourceResponse,
@@ -34,6 +44,93 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
     )
     User = Annotated[Actor, Depends(auth.actor)]
     Key = Annotated[UUID, Header(alias="Idempotency-Key")]
+
+    @router.get("/establishment", response_model=EstablishmentResponse)
+    def establishment() -> EstablishmentResponse:
+        return EstablishmentResponse.model_validate(service.establishment())
+
+    @router.get("/operations/agenda", response_model=AgendaResponse)
+    def agenda(
+        actor: User,
+        date_from: date | None = None,
+        date_to: date | None = None,
+        status: Literal["BOOKED", "ARRIVED", "IN_PROGRESS", "COMPLETED", "CANCELLED", "NO_SHOW"]
+        | None = None,
+        resource_id: UUID | None = None,
+        search: str = Query(default="", max_length=100),
+        offset: int = Query(default=0, ge=0, le=100000),
+        limit: int = Query(default=20, ge=1, le=100),
+    ) -> Agenda:
+        return service.operations.agenda(
+            actor,
+            date_from,
+            date_to,
+            AppointmentFilter(status=status, resource_id=resource_id, search=search.strip()),
+            offset,
+            limit,
+        )
+
+    @router.get("/operations/attendances/{appointment_id}", response_model=OperationDetailResponse)
+    def attendance(appointment_id: UUID, actor: User) -> OperationDetail:
+        return service.operations.detail(actor, appointment_id)
+
+    @router.post(
+        "/operations/attendances/{appointment_id}/transitions", response_model=AppointmentResponse
+    )
+    def transition(
+        appointment_id: UUID, body: AttendanceInput, actor: User, key: Key, request: Request
+    ) -> Appointment:
+        if body.summary and body.operation != "complete":
+            raise BusinessError("INVALID_BOOKING", 422)
+        return service.operations.command(
+            actor,
+            appointment_id,
+            body.operation,
+            body.version,
+            key,
+            request.state.request_id,
+            reason=body.reason,
+            body=body.summary,
+        )
+
+    @router.post(
+        "/operations/attendances/{appointment_id}/notes", response_model=AppointmentResponse
+    )
+    def note(
+        appointment_id: UUID, body: NoteInput, actor: User, key: Key, request: Request
+    ) -> Appointment:
+        return service.operations.command(
+            actor,
+            appointment_id,
+            "note",
+            body.version,
+            key,
+            request.state.request_id,
+            body=body.body,
+            visibility=body.visibility,
+        )
+
+    @router.post(
+        "/operations/attendances/{appointment_id}/extensions", response_model=AppointmentResponse
+    )
+    def extend(
+        appointment_id: UUID, body: ExtensionInput, actor: User, key: Key, request: Request
+    ) -> Appointment:
+        return service.operations.command(
+            actor,
+            appointment_id,
+            "extend",
+            body.version,
+            key,
+            request.state.request_id,
+            reason=body.reason,
+            until=body.until,
+            resource_id=body.resource_id,
+        )
+
+    @router.get("/management/metrics", response_model=MetricsResponse)
+    def metrics(actor: User, date_from: date, date_to: date) -> Metrics:
+        return service.operations.metrics(actor, date_from, date_to)
 
     @router.get("/operations/calendar", response_model=SettingsResponse)
     def settings(actor: User) -> SettingsResponse:
@@ -113,10 +210,21 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
             customer_id: UUID | None = None,
             offset: int = Query(default=0, ge=0),
             limit: int = Query(default=20, ge=1, le=100),
+            pet_id: UUID | None = None,
+            status: Literal["BOOKED", "ARRIVED", "IN_PROGRESS", "COMPLETED", "CANCELLED", "NO_SHOW"]
+            | None = None,
+            period: Literal["all", "upcoming", "history"] = "all",
         ) -> AppointmentPage:
             if customer_id and not assisted:
                 raise BusinessError("FORBIDDEN", 403)
-            items, total = service.appointments_page(actor, assisted, customer_id, offset, limit)
+            items, total = service.appointments_page(
+                actor,
+                assisted,
+                customer_id,
+                offset,
+                limit,
+                AppointmentFilter(pet_id=pet_id, status=status, period=period, now=service.clock()),
+            )
             return AppointmentPage(
                 items=[AppointmentResponse.model_validate(b) for b in items], total=total
             )
@@ -127,6 +235,10 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
             return DetailResponse(
                 appointment=AppointmentResponse.model_validate(appointment),
                 events=[EventResponse.model_validate(e) for e in events],
+                summaries=[
+                    PublicNoteResponse.model_validate(n)
+                    for n in service.public_notes(actor, assisted, appointment_id)
+                ],
             )
 
         @router.post(prefix + "/{appointment_id}/cancel", response_model=AppointmentResponse)

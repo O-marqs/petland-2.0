@@ -112,3 +112,17 @@ class UsersResponse(BaseModel):
     offset: int
     limit: int
     has_more: bool
+
+
+class AuditEventResponse(BaseModel):
+    id: UUID
+    actor_user_id: UUID | None
+    target_id: UUID | None
+    action: str
+    occurred_at: datetime
+    result: str
+
+
+class AuditPageResponse(BaseModel):
+    items: list[AuditEventResponse]
+    total: int

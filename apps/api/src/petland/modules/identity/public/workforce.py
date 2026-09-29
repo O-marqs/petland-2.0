@@ -43,3 +43,13 @@ def eligible_workers(session: Session) -> list[tuple[UUID, str]]:
             .order_by(UserRecord.display_name, UserRecord.id)
         )
     ]
+
+
+def actor_names(session: Session, ids: list[UUID]) -> dict[UUID, str]:
+    return dict(
+        session.execute(
+            select(UserRecord.id, UserRecord.display_name).where(UserRecord.id.in_(ids))
+        )
+        .tuples()
+        .all()
+    )

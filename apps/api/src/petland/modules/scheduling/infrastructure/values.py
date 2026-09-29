@@ -52,8 +52,12 @@ def appointment_value(value: dict[str, Any]) -> Appointment:
         "occupied_end_at",
         "created_at",
         "updated_at",
+        "arrived_at",
+        "started_at",
+        "completed_at",
+        "reserved_until",
     ):
-        if isinstance(data[name], str):
+        if isinstance(data.get(name), str):
             data[name] = datetime.fromisoformat(data[name])
     data["offer"] = offer_value(data["offer"])
     return Appointment(**data)

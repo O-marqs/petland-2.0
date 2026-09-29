@@ -8,8 +8,10 @@ from uuid import UUID
 from zoneinfo import ZoneInfo
 
 from petland.modules.identity.public import Actor
+from petland.modules.scheduling.application.operations import Operations
 from petland.modules.scheduling.application.ports import ScheduleStore
 from petland.modules.scheduling.domain.models import (
+    OPEN_STATUSES,
     Appointment,
     Availability,
     Configuration,
@@ -21,6 +23,7 @@ from petland.modules.scheduling.domain.models import (
     candidates,
     fits,
 )
+from petland.modules.scheduling.domain.operations import AppointmentFilter, Note
 from petland.shared.domain.errors import BusinessError
 
 
@@ -32,6 +35,7 @@ class Scheduling:
     ) -> None:
         self.store = store
         self.clock = clock
+        self.operations = Operations(store, clock)
 
     @staticmethod
     def scope(store: ScheduleStore, actor: Actor, customer_id: UUID | None) -> UUID:
@@ -48,6 +52,10 @@ class Scheduling:
         with self.store() as store:
             return store.configuration(), store.resources(), store.workers()
 
+    def establishment(self) -> Configuration:
+        with self.store() as store:
+            return store.configuration()
+
     def impact(
         self, store: ScheduleStore, config: Configuration, resources: list[Resource]
     ) -> list[UUID]:
@@ -58,7 +66,7 @@ class Scheduling:
         return [
             b.id
             for b in future
-            if b.status == "BOOKED"
+            if b.status in OPEN_STATUSES
             and (
                 not config.enabled
                 or previous.timezone != config.timezone
@@ -166,7 +174,13 @@ class Scheduling:
             )
 
     def appointments_page(
-        self, actor: Actor, assisted: bool, customer_id: UUID | None, offset: int, limit: int
+        self,
+        actor: Actor,
+        assisted: bool,
+        customer_id: UUID | None,
+        offset: int,
+        limit: int,
+        filters: AppointmentFilter | None = None,
     ) -> tuple[list[Appointment], int]:
         with self.store() as store:
             store.actor(actor.id).require("booking:assist" if assisted else "customer:own")
@@ -175,7 +189,14 @@ class Scheduling:
                 if assisted and customer_id is None
                 else store.customer_for(actor.id, customer_id)
             )
-            return store.appointments_page(owner, offset, limit)
+            return store.appointments_page(owner, offset, limit, filters)
+
+    def public_notes(self, actor: Actor, assisted: bool, appointment_id: UUID) -> list[Note]:
+        with self.store() as store:
+            store.actor(actor.id).require("booking:assist" if assisted else "customer:own")
+            owner = None if assisted else store.customer_for(actor.id, None)
+            store.get(appointment_id, owner)
+            return store.notes(appointment_id, False)
 
     def detail(
         self, actor: Actor, assisted: bool, appointment_id: UUID
@@ -184,7 +205,9 @@ class Scheduling:
             store.actor(actor.id).require("booking:assist" if assisted else "customer:own")
             owner = None if assisted else store.customer_for(actor.id, None)
             appointment = store.get(appointment_id, owner)
-            return appointment, store.events(appointment.id)
+            return appointment, [
+                e for e in store.events(appointment.id) if e.kind != "note_internal"
+            ]
 
     def command(
         self,
@@ -309,6 +332,9 @@ class Scheduling:
                 )
                 if original:
                     result.id, result.version = original.id, original.version + 1
+                result.no_show_grace_minutes = (
+                    original.no_show_grace_minutes if original else config.no_show_grace_minutes
+                )
             store.save(result)
             store.record(
                 Event(

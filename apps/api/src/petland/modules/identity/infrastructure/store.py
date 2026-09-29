@@ -9,7 +9,7 @@ from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session as DatabaseSession
 
-from petland.modules.identity.domain.models import AccountToken, Role, Session, User
+from petland.modules.identity.domain.models import AccountToken, AuditEvent, Role, Session, User
 from petland.modules.identity.infrastructure.models import (
     AuditRecord,
     LimitRecord,
@@ -24,6 +24,35 @@ from petland.modules.scheduling.public.coordination import lock_schedule, protec
 class PostgresIdentityStore:
     def __init__(self, session: DatabaseSession) -> None:
         self.db = session
+
+    def audit_page(
+        self,
+        start: datetime,
+        end: datetime,
+        action: str,
+        actor_id: UUID | None,
+        target_id: UUID | None,
+        offset: int,
+        limit: int,
+    ) -> tuple[list[AuditEvent], int]:
+        query = select(AuditRecord).where(
+            AuditRecord.occurred_at >= start, AuditRecord.occurred_at < end
+        )
+        if action:
+            query = query.where(AuditRecord.action == action)
+        if actor_id:
+            query = query.where(AuditRecord.actor_user_id == actor_id)
+        if target_id:
+            query = query.where(AuditRecord.target_id == target_id)
+        count = self.db.scalar(select(func.count()).select_from(query.subquery())) or 0
+        return [
+            AuditEvent(**{k: getattr(row, k) for k in AuditEvent.__dataclass_fields__})
+            for row in self.db.scalars(
+                query.order_by(AuditRecord.occurred_at.desc(), AuditRecord.id)
+                .offset(offset)
+                .limit(limit)
+            )
+        ], count
 
     def _user(self, row: UserRecord) -> User:
         roles = self.db.scalars(select(RoleRecord.role).where(RoleRecord.user_id == row.id)).all()
