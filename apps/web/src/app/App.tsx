@@ -12,6 +12,11 @@ const AccountLayout = lazy(() => import('../features/identity/AccountLayout'));
 const AccountPage = lazy(() => import('../features/identity/AccountPage'));
 const AreaPage = lazy(() => import('../features/identity/AreaPage'));
 const AccessPage = lazy(() => import('../features/identity/AccessPage'));
+const CustomersPage = lazy(() => import('../features/care/CustomersPage'));
+const PetsPage = lazy(() => import('../features/care/PetsPage'));
+const CatalogPage = lazy(() => import('../features/care/CatalogPage'));
+const ClaimPage = lazy(() => import('../features/care/ClaimPage'));
+const Dashboard = lazy(() => import('../features/care/Dashboard'));
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30000 } },
 });
@@ -30,6 +35,9 @@ export function App() {
           <Routes>
             <Route element={<PublicLayout />}>
               <Route index element={<HomePage />} />
+              <Route path="servicos" element={<CatalogPage />} />
+              <Route path="servicos/:serviceId" element={<CatalogPage />} />
+              <Route path="vincular-cadastro" element={<ClaimPage />} />
               <Route path="design-system" element={<DesignSystemPage />} />
               {[
                 'entrar',
@@ -44,7 +52,13 @@ export function App() {
               <Route path="*" element={<NotFoundPage />} />
             </Route>
             <Route element={<AccountLayout />}>
-              <Route path="app" element={<AreaPage />} />
+              <Route path="app" element={<Dashboard />} />
+              <Route path="app/perfil" element={<CustomersPage profile />} />
+              <Route path="app/pets" element={<PetsPage />} />
+              <Route path="operacao/clientes" element={<CustomersPage />} />
+              <Route path="operacao/clientes/:customerId" element={<CustomersPage />} />
+              <Route path="operacao/clientes/:customerId/pets" element={<PetsPage />} />
+              <Route path="operacao/servicos" element={<CatalogPage staff />} />
               <Route path="app/conta" element={<AccountPage />} />
               <Route path="operacao" element={<AreaPage />} />
               <Route path="gestao" element={<AreaPage />} />

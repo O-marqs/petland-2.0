@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { staffCare } from './care-helpers';
 
 // Synthetic, local-only demonstration identities. Never a production seed/default credential.
 const password = 'Passeio sintético no parque 2026!';
@@ -113,7 +114,7 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
 
 test('administrator provisions through email, invites employee, changes roles and disables access', async ({ page, request, browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Provisioning is a singleton; the customer journey runs on both sizes.');
-  test.setTimeout(120000);
+  test.setTimeout(180000);
   const csrf = await (await request.get('/api/v1/auth/csrf')).json();
   const check = await request.post('/api/v1/auth/login', { headers: { Origin: 'http://localhost:5173', 'X-CSRF-Token': csrf.csrf_token }, data: { email: adminEmail, password: adminPassword } });
   if (check.status() !== 200) {
@@ -147,6 +148,7 @@ test('administrator provisions through email, invites employee, changes roles an
     expect((await staff.request.get('/api/v1/management/users')).status()).toBe(403);
     await staff.setViewportSize({ width: 390, height: 844 });
     await accessibility(staff);
+    await staffCare(staff, request, browser);
     let refreshed = page.waitForResponse(response => response.url().includes('/api/v1/management/users') && response.status() === 200);
     await page.getByRole('button', { name: 'Atualizar lista' }).click();
     let listing = await (await refreshed).json();

@@ -85,8 +85,12 @@ export default function AccountLayout() {
                 Área do cliente
               </NavLink>
             )}
+            {customer && <NavLink to="/app/pets">Meus pets</NavLink>}
+            {customer && <NavLink to="/app/perfil">Meu cadastro</NavLink>}
+            {employee && <NavLink to="/operacao/clientes">Clientes e pets</NavLink>}
+            {employee && <NavLink to="/operacao/servicos">Serviços</NavLink>}
             {employee && (
-              <NavLink to="/operacao">
+              <NavLink to="/operacao" end>
                 <CalendarDays size={20} aria-hidden="true" />
                 Área da equipe
               </NavLink>

@@ -51,6 +51,16 @@ export default function AreaPage() {
           </Link>
         </section>
       )}
+      <section className="care-cards">
+        <Link className="dashboard-link" to="/operacao/clientes">
+          <h2>Clientes e pets</h2>
+          <p>Cadastros, contatos e informações para cuidar.</p>
+        </Link>
+        <Link className="dashboard-link" to="/operacao/servicos">
+          <h2>Serviços</h2>
+          <p>Configure preço e duração por porte.</p>
+        </Link>
+      </section>
       <EmptyState
         title={
           area === 'customer' ? 'Mais cuidado está a caminho.' : 'A operação está em construção.'
@@ -58,7 +68,7 @@ export default function AreaPage() {
       >
         {area === 'customer'
           ? 'Pets, catálogo e agendamentos serão disponibilizados nas próximas etapas. Sua conta já está criada e pode ser acessada normalmente.'
-          : 'Agenda, atendimentos, serviços e configurações serão disponibilizados nas próximas etapas. Esta área ainda não apresenta dados operacionais.'}
+          : 'Agenda e atendimentos estarão disponíveis nas próximas etapas. Você já pode gerenciar clientes, pets e serviços.'}
       </EmptyState>
     </>
   );

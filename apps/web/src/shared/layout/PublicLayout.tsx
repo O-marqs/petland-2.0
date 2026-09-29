@@ -27,6 +27,7 @@ export function PublicLayout() {
           <NavLink to="/" end>
             Início
           </NavLink>
+          <NavLink to="/servicos">Serviços</NavLink>
           <NavLink to="/entrar">Entrar</NavLink>
           <NavLink to="/criar-conta">Criar conta</NavLink>
         </nav>

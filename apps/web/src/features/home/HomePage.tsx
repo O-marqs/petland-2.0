@@ -80,7 +80,9 @@ export default function HomePage() {
               </div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <span className="planned-label">Planejado para as próximas etapas</span>
+              <span className="planned-label">
+                {number === '01' ? 'Disponível na sua área' : 'Planejado para as próximas etapas'}
+              </span>
             </article>
           ))}
         </div>
@@ -93,13 +95,23 @@ export default function HomePage() {
           <Badge>SEU ESPAÇO PETLAND</Badge>
           <h2 id="foundation-title">Seu cuidado começa com um acesso.</h2>
           <p>
-            Crie sua conta, confirme seu e-mail e acesse seu espaço com segurança. Pets, serviços e
-            agendamentos serão disponibilizados nas próximas entregas.
+            Crie sua conta, confirme seu e-mail e organize seus pets. Conheça os serviços e suas
+            condições por porte. O agendamento online chega em uma próxima etapa.
           </p>
         </div>
         <Link className="button button--secondary" to="/entrar">
           Acessar minha conta <ArrowRight size={18} aria-hidden="true" />
         </Link>
+      </section>
+      <section className="catalog-note">
+        <Sparkles size={32} aria-hidden="true" />
+        <div>
+          <h2>Cuidado com clareza, antes de escolher.</h2>
+          <p>Confira os serviços disponíveis, os portes atendidos, os preços e a duração.</p>
+          <Link className="button button--primary" to="/servicos">
+            Ver serviços
+          </Link>
+        </div>
       </section>
       <ConnectionStatus />
     </div>
