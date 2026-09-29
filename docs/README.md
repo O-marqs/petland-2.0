@@ -24,3 +24,5 @@
 - [Evidências P02](evidence/P02.md)
 
 Funcionalidades futuras permanecem propostas até a fase correspondente. Os originais não foram substituídos por resumos. O progresso registra o estado verificável de cada fase.
+
+P03: [cadastros e catálogo](runbooks/catalogs.md), [evidências](evidence/P03.md), [ADR 0007](adr/0007-p03-customers-pets-catalog.md) e [pedido autorizado](implementation/P03-request.txt).

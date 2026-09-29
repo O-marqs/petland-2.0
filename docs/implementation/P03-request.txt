@@ -1,0 +1,17 @@
+Pedido recebido em 28/09/2026. Transcrição das decisões fornecidas pelo usuário:
+
+D01: Seria um crm de pet shop para meu portifólio
+D02: Profissional não é escolhido pelo cliente e vaga depende de horários x funcionários que conseguem ser colocados no back office exemplo no back office coloca que tem 5 funcionários um banho demora seila 40 pequeno 1 hora médio e 1 hora e meia grandes sem tosa etc e ai vai preenchendo. precisa criar uma lógica que é estruturavel mudar no back office
+D03: Reserva tem uma dupla confirmação ne exemplo abre o resumo, tem certeza ai clica e reserva
+D04: por enquanto sem taxa nem nada
+D05: preços e tempo por tamanho e serviço
+D06: Pode pensar nos dados básicos como endereço contato e nome e email
+D07: Funcionário pode fazer tudo pelo back office mas tem que ter uma forma de comunicação com o cliente em caso de reagendamento ou cancelamento
+D08: Não existe banco vai criar do zero pode fazer tudo
+D09: Pode ser no mesmo repo
+D10: Por enquanto não vamos pensar nisso
+D11: Aprovada
+
+OS QUE NÃO FORAM RESPONDIDOS OU TOTALMENTE RESPONDIDOS SEGUIR RECOMENDAÇÃO, pode começar a P03
+
+Preferências anteriores mantidas: repositórios locais em C:\Users\LUCASMARQUESMARQUES\Documents\GitHub. Se houver problema de Docker, parar e explicar como ajustar para continuar.

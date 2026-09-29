@@ -23,3 +23,5 @@ Aceitas pelo pedido de P01, em 23/09/2026:
 - **ADR-010:** parâmetros comerciais do MVP — D02 a D06; D07 foi resolvida pelo pedido P02, com exceções comerciais ainda sujeitas a D04.
 
 Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. Não alterar silenciosamente o plano.
+
+- [0007 — Cadastros, pets e ofertas por porte](0007-p03-customers-pets-catalog.md): decisões do pedido P03, vínculo, propriedade, preços/duração e evolução para P04.

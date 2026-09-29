@@ -62,10 +62,10 @@ Auditoria de dependências: `pnpm audit --prod --audit-level high`; Python: `uv 
 - Readiness 503: iniciar o PostgreSQL e aplicar a migration com a URL de migrations. Processo vivo não comprova banco/schema prontos. O erro público não mostra detalhes de conexão.
 - Porta ocupada: pare apenas o processo desta aplicação; não encerre outros projetos indiscriminadamente. Não execute host e Compose ao mesmo tempo.
 - Credencial alterada após volume criado: variáveis POSTGRES_* só inicializam volume novo. Não apagar volume automaticamente; restaurar a configuração original ou executar procedimento explícito de troca de senha.
-- Nova migration: revisar DDL, atualizar SCHEMA_REVISION e testar upgrade/downgrade em banco efêmero; não usar autogenerate cegamente. P01 contém marcador técnico; P02 acrescenta seis tabelas de identidade.
+- Nova migration: revisar DDL, atualizar SCHEMA_REVISION e testar upgrade/downgrade em banco efêmero; não usar autogenerate cegamente. P01 contém marcador técnico; P02 acrescenta seis tabelas de identidade; P03 acrescenta clientes, vínculos, pets, referências e ofertas por porte.
 - Imagem antiga após alteração: `python scripts/dev.py up` reconstrói imagens. O modo Compose não monta todo o código; para hot reload de edição, use o modo host.
 - pnpm incorreto no PATH: confirmar `pnpm --version` = 10.34.5 e Node linha 22. Não alterar lockfile com outro gerenciador.
 
 ## Limites
 
-P02 entrega identidade real e SMTP local; consulte os [fluxos de identidade](identity.md). Não existe seed comercial, pets, reservas, atendimento, backup/restore operacional, deploy ou dados legados migrados. Essas entregas seguem seus gates. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.
+P03 entrega clientes/pets/catálogo, além da identidade e SMTP local; consulte os [fluxos de identidade](identity.md) e [cadastros](catalogs.md). Não existe seed comercial automático, reservas, atendimento, backup/restore operacional, deploy ou dados legados migrados. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.

@@ -1,6 +1,6 @@
 # D07 — autorização do MVP
 
-Aprovação: pedido integral em `docs/implementation/P02-request.txt`, recebido em 24/09/2026. O plano original permanece íntegro; esta matriz registra sua decisão posterior. Perfis fixos são associados à conta no servidor; selecionar uma área visual não altera privilégio.
+Aprovação inicial: pedido integral em `docs/implementation/P02-request.txt`, recebido em 24/09/2026. O plano original permanece íntegro; esta matriz registra sua decisão posterior. Perfis fixos são associados à conta no servidor; selecionar uma área visual não altera privilégio.
 
 | Ação | Cliente | Funcionário | Administrador | Fase |
 |---|---|---|---|---|
@@ -13,10 +13,11 @@ Aprovação: pedido integral em `docs/implementation/P02-request.txt`, recebido 
 | Consultar agenda operacional | Não | Sim, dados necessários à operação | Sim | P05 |
 | Chegada/início/conclusão | Não | Sim, transições válidas | Sim | P05 |
 | Notas internas | Não | Necessárias ao atendimento | Sim | P05 |
-| Funcionários/serviços/horários/capacidade/configuração | Não | Não | Gestão autorizada | P03–P05 |
-| Cancelamentos excepcionais, reagendamento assistido, falta e publicação de notas | Não aprovados por D07; dependem das respectivas políticas D04 | Não presumidos | Não presumidos | P04/P05 |
+| Serviços, preços/duração e ativação | Não | Sim, versão e auditoria | Sim | P03 |
+| Horários/capacidade/configuração operacional | Não | Sim, conforme D07/P03; implementação futura | Sim | P04/P05 |
+| Cancelamento/reagendamento assistidos | Próprios, pelas políticas | Sim, auditado e com comunicação ao cliente | Sim | P04/P05 |
 
-P02 implementa somente as três primeiras linhas. As demais capacidades estão identificadas na matriz/enum de permissões para orientar os módulos futuros, sem endpoints fictícios. Cada módulo futuro deve aplicar propriedade e projeção mínima além da capacidade do perfil. Notas internas nunca serão parte automática do schema público.
+P02 implementou as três primeiras linhas. O pedido P03 amplia EMPLOYEE com catalog:manage e entrega cadastro próprio/assistido, pets e serviços. As demais capacidades estão identificadas na matriz/enum de permissões para orientar os módulos futuros, sem endpoints fictícios. Cada módulo futuro deve aplicar propriedade e projeção mínima além da capacidade do perfil. Notas internas nunca serão parte automática do schema público.
 
 ## Enforcement
 
@@ -28,4 +29,4 @@ P02 implementa somente as três primeiras linhas. As demais capacidades estão i
 - Convite para endereço já cadastrado exige a senha atual dessa conta; nunca associa identidades apenas por coincidência de endereço. CUSTOMER existente é preservado ao adicionar EMPLOYEE. Aceitação revoga sessões anteriores.
 - Bootstrap é CLI operacional com acesso ao ambiente, somente quando não existe admin ativo. Não existe endpoint público nem senha inicial default. Link de uso único chega pela caixa configurada.
 
-O cadastro assistido e o vínculo `Customer` ↔ `User` pertencem a PL3-07. O nome exibido nesta fase é um dado básico da identidade; não cria perfil comercial, CPF, telefone, pet ou cadastro operacional por inferência.
+PL3-07 implementa o vínculo Customer ↔ User por convite de uso único, e-mail verificado coincidente e confirmação explícita. Criar identidade não cria perfil comercial automaticamente. Identificadores de tutor são derivados da conta no servidor para rotas próprias; busca operacional exige customer:assist. Raça/espécie e versões são verificadas na aplicação/banco; pets alheios retornam 404. Escritas comerciais geram auditoria na mesma transação. Ver ADR 0007.
