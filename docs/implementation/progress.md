@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P04 — Núcleo da agenda, implementada em 28–29/09/2026. P01–P03 preservadas; P05–P08 continuam pendentes. Veja [evidências P04](../evidence/P04.md).
+**Fase:** P05 — Operação e gestão, implementada em 29/09/2026. P01–P04 preservadas; P06–P08 continuam pendentes. Veja [evidências P05](../evidence/P05.md).
 
-**Branch:** `petland-3.0-p04`, criada de `36e17e08c353066d8828160b18250345b85c4e00` da `petland-3.0-p03`. PR incremental com base P03; sem merge. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch:** `petland-3.0-p05`, criada de `70bce180a1c1b5edc2d2e8aa5b5c561819b7a111` da `petland-3.0-p04`. PR incremental com base P04; sem merge. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -21,7 +21,11 @@
 | PL3-11 | Disponibilidade e reserva; RF06/RNF06 | Implementado; lock, duas exclusões GiST, snapshots, idempotência e testes concorrentes |
 | PL3-12 | Jornada de agendamento; RF06/RNF04/06 | Implementado; resumo do servidor, confirmação, 409 sem perder escolhas, repetição após resposta perdida |
 | PL3-13 | Cancelar/reagendar; RF07 | Implementado; versão, prazo contratado, assistência, rollback, eventos e avisos SMTP persistentes |
-| PL3-14 a PL3-21 | P05–P08 | Pendentes; execução de atendimentos, indicadores e publicação |
+| PL3-14 | Agenda e execução, RF08/RNF01/04/06 | Implementado; dia/semana/filtros, transições, instantes reais, falta, extensão e proteção de ocupação |
+| PL3-15 | Notas e histórico, RF09/RNF01 | Implementado; autoria, append-only, visibilidade explícita, resumo próprio sem notas internas |
+| PL3-16 | Gestão/configuração, RF10/RF07 | Implementado; impacto protege execução aberta, calendário até meia-noite, identificação pública e gestão existente integrada |
+| PL3-17 | Indicadores/auditoria, RF11 | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada |
+| PL3-18 a PL3-21 | P06–P08 | Pendentes; revisão transversal de qualidade, preparação e publicação conforme decisões futuras |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -49,7 +53,7 @@ Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `
 
 Decisões D01–D11 respondidas no pedido P03; pontos incompletos seguem as recomendações por autorização expressa. Registro vigente em docs/product/decisions.md. D08 dispensa migração de dados legados; D10 adia publicação/provedor.
 
-Próximo card: **PL3-14**, fase P05, agenda operacional e execução dos atendimentos. P04 entrega o núcleo consistente, a lista/detalhe de reservas e comunicação local. Expandir estados exige migração das exclusões, mantendo o protocolo do [ADR-003](../adr/0003-scheduling.md). D10 mantém publicação/provedor externo adiados.
+Próximo card: **PL3-18**, fase P06, revisão transversal de qualidade e UX. P05 entrega a execução e gestão usando o protocolo do [ADR-003](../adr/0003-scheduling.md) e as regras do [ADR-012](../adr/0012-p05-operations.md). A revisão completa de desempenho, segurança, teclado/leitor de tela e setup limpo pertence ao gate P06. D10 mantém publicação/provedor externo adiados.
 
 Não há impedimento ambiental local pendente. Não foram realizados merge, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
 
@@ -70,3 +74,11 @@ Módulo scheduling, migration 0004_scheduling, coordenação pública com identi
 Validação local final: **77 Python + 12 React aprovados**, lint/tipos/arquitetura/contratos/build aprovados. **15 E2E aprovados + um skip explícito do bootstrap mobile**; a jornada ampliada da equipe foi repetida e aprovada após os ajustes finais, incluindo telas de 390/320 px. SMTP real capturado no Mailpit, disputa de vaga e perda de resposta após commit verificados. Compose final saudável; nenhuma falha de Docker. CI e commit exato são registrados no PR, sem merge.
 
 Fontes originais preservadas; alterações do checkout legado intactas. Evidências, caminhos e limites em [P04](../evidence/P04.md); execução em [agenda local](../runbooks/scheduling.md). O commit desta entrega pode ser localizado por `git log -1 -- docs/implementation/progress.md`.
+
+## P05 — implementação e verificação
+
+Execução integrada ao módulo scheduling, migration 0005_operations e contratos gerados. Agenda hoje/semana, detalhe com chegada/início/conclusão/falta, extensão com proteção de pet/pessoa, notas privadas e resumos públicos, histórico filtrado, indicadores e auditoria ADMIN. Configuração protege atendimentos abertos vencidos e permite expediente até meia-noite; identidade/último administrador e comunicação de alterações preservam P02–P04.
+
+Validação final local: **93 Python + 12 React aprovados**, lint/tipos/arquitetura/contratos/build aprovados. **15 E2E aprovados + um skip explícito do bootstrap mobile**, com jornada completa até o histórico, payload privado protegido, gestão, calendário e revogação de acesso. Acessibilidade automatizada e reflow em celular incluídos. Compose saudável; sem problema de Docker. Regras e limites no [ADR-012](../adr/0012-p05-operations.md), [runbook](../runbooks/operations.md) e [evidências P05](../evidence/P05.md).
+
+PR incremental em rascunho sobre P04, sem merge. Resultado remoto e commit exato são registrados no PR. Próximo card PL3-18/P06; publicação continua adiada por D10.

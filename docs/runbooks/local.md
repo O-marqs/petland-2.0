@@ -68,4 +68,4 @@ Auditoria de dependências: `pnpm audit --prod --audit-level high`; Python: `uv 
 
 ## Limites
 
-P04 acrescenta [agenda, capacidade e reservas](scheduling.md), com avisos persistentes no SMTP local. Consulte também [identidade](identity.md) e [cadastros](catalogs.md). Não existe seed comercial automático, atendimento, backup/restore operacional, deploy ou dados legados migrados. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.
+P04 acrescenta [agenda, capacidade e reservas](scheduling.md), com avisos persistentes no SMTP local. P05 entrega [atendimento e gestão](operations.md), com notas privadas, resumos publicados, indicadores e auditoria. Consulte também [identidade](identity.md) e [cadastros](catalogs.md). Não existe seed comercial automático, backup/restore operacional, deploy ou dados legados migrados. Nunca usar `down --volumes` como comando de rotina: apagar dados não é necessário para parar a aplicação.

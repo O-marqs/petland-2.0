@@ -3,7 +3,7 @@
 1. Inicie pelo comando up do runbook local. O worker de avisos inicia com a API e usa a caixa Mailpit local.
 2. Administrador convida pessoas em Pessoas e acessos; cada pessoa aceita e confirma a conta.
 3. Cadastre serviços ativos com preço, duração e eventuais minutos de preparação/intervalo após por porte.
-4. Em Equipe e horários, adicione cada pessoa uma vez e marque seus serviços.
+4. Em Equipe e horários (`/operacao/configuracoes` desde P05), adicione cada pessoa uma vez e marque seus serviços.
 5. Configure o expediente da loja, pausas, datas especiais, fuso e prazos. Confira o impacto e salve com a agenda aberta.
 6. Cliente cadastra contato/pet, escolhe serviço/data/horário, revisa e confirma. A equipe usa Agendar um cuidado dentro do cadastro do cliente.
 7. Reservas exibem detalhe, histórico, reagendamento e cancelamento. Alterações geram avisos para o e-mail do cadastro.
