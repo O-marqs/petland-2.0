@@ -2,7 +2,7 @@ from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase
 
-SCHEMA_REVISION = "0003_catalogs"
+SCHEMA_REVISION = "0004_scheduling"
 
 
 class Base(DeclarativeBase):

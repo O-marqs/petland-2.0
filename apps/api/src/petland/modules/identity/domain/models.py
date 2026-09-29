@@ -23,6 +23,7 @@ ROLE_PERMISSIONS: dict[Role, frozenset[str]] = {
             "booking:assist",
             "notes:internal",
             "catalog:manage",
+            "establishment:manage",
         }
     ),
     Role.ADMIN: frozenset(

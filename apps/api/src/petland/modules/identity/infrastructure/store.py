@@ -18,6 +18,7 @@ from petland.modules.identity.infrastructure.models import (
     TokenRecord,
     UserRecord,
 )
+from petland.modules.scheduling.public.coordination import lock_schedule, protect_worker
 
 
 class PostgresIdentityStore:
@@ -43,6 +44,8 @@ class PostgresIdentityStore:
     ) -> User | None:
         if user_id is None and email is None:
             return None
+        if lock:
+            lock_schedule(self.db)
         if lock and email is not None:
             key = int.from_bytes(hashlib.sha256(email.encode()).digest()[:8], signed=True)
             self.db.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": key})
@@ -55,6 +58,8 @@ class PostgresIdentityStore:
         return self._user(row) if row else None
 
     def save_user(self, user: User) -> None:
+        if user.status != "ACTIVE" or not user.roles.intersection({Role.EMPLOYEE, Role.ADMIN}):
+            protect_worker(self.db, user.id)
         self.db.merge(
             UserRecord(
                 id=user.id,
@@ -100,6 +105,7 @@ class PostgresIdentityStore:
         )
 
     def lock_administration(self) -> None:
+        lock_schedule(self.db)
         self.db.execute(text("SELECT pg_advisory_xact_lock(726381920341)"))
 
     @staticmethod
@@ -162,6 +168,7 @@ class PostgresIdentityStore:
         )
 
     def token(self, digest: str) -> AccountToken | None:
+        lock_schedule(self.db)
         # Match user -> token ordering used by reissue/password change to avoid lock cycles.
         owner_id = self.db.scalar(
             select(TokenRecord.user_id).where(TokenRecord.token_digest == digest)

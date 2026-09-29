@@ -36,6 +36,18 @@ PUBLIC_ERRORS: dict[int, tuple[str, str]] = {
 }
 
 IDENTITY_ERRORS = {
+    "INVALID_CALENDAR": "Confira os horários, as pausas e os prazos da agenda.",
+    "INVALID_WORKER": "Selecione uma pessoa da equipe com conta ativa e e-mail confirmado.",
+    "RESOURCE_EXISTS": "Essa pessoa já está cadastrada na capacidade da agenda.",
+    "INVALID_BOOKING": "Confira os dados da reserva e informe o motivo da alteração.",
+    "CALENDAR_IMPACT": "A alteração afetaria reservas existentes. Revise o impacto e ajuste essas reservas primeiro.",
+    "FUTURE_BOOKINGS": "Existem reservas para este cadastro. Reagende ou cancele antes desta alteração.",
+    "OFFER_CHANGED": "O serviço ou a agenda mudou. Consulte os horários e revise o resumo novamente.",
+    "SLOT_UNAVAILABLE": "Esse horário não está mais disponível. Escolha outra opção.",
+    "BOOKING_CLOSED": "Esta reserva não aceita mais alterações.",
+    "CHANGE_WINDOW_CLOSED": "O prazo para alterar pela sua conta terminou. Entre em contato com a equipe.",
+    "IDEMPOTENCY_MISMATCH": "Essa tentativa já foi usada com outros dados. Inicie uma nova confirmação.",
+    "SCHEDULE_BUSY": "A agenda está ocupada no momento. Tente confirmar novamente.",
     "INVALID_CREDENTIALS": "E-mail ou senha inválidos.",
     "AUTH_REQUIRED": "Entre na sua conta para continuar.",
     "CSRF_REJECTED": "Sua sessão de segurança expirou. Atualize a página e tente novamente.",

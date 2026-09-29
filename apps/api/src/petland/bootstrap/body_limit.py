@@ -16,6 +16,13 @@ class BodyLimit:
             await self.app(scope, receive, send)
             return
         chunks: list[bytes] = []
+        maximum = (
+            65536
+            if scope["path"].startswith(
+                ("/api/v1/operations/calendar", "/api/v1/operations/resources")
+            )
+            else self.maximum
+        )
         size = 0
         while True:
             message = await receive()
@@ -23,7 +30,7 @@ class BodyLimit:
                 return
             chunk = message.get("body", b"")
             size += len(chunk)
-            if size > self.maximum:
+            if size > maximum:
                 await problem_response(Request(scope), 413)(scope, receive, send)
                 return
             chunks.append(chunk)

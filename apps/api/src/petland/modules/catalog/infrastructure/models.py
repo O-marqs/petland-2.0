@@ -32,8 +32,14 @@ class OptionRecord(Base):
         CheckConstraint("size IN ('SMALL','MEDIUM','LARGE')", name="size"),
         CheckConstraint("price >= 0 AND price <= 9999999.99", name="price"),
         CheckConstraint("duration_minutes BETWEEN 1 AND 1440", name="duration"),
+        CheckConstraint(
+            "buffer_before_minutes BETWEEN 0 AND 240 AND buffer_after_minutes BETWEEN 0 AND 240",
+            name="buffers",
+        ),
     )
     service_id: Mapped[UUID] = mapped_column(ForeignKey("services.id"), primary_key=True)
     size: Mapped[str] = mapped_column(String(16), primary_key=True)
     price: Mapped[Decimal] = mapped_column(Numeric(12, 2))
     duration_minutes: Mapped[int]
+    buffer_before_minutes: Mapped[int] = mapped_column(server_default="0")
+    buffer_after_minutes: Mapped[int] = mapped_column(server_default="0")

@@ -14,8 +14,10 @@ from petland.modules.catalog.infrastructure.models import (
     ServiceSpeciesRecord,
 )
 from petland.modules.identity.public.audit import record
+from petland.modules.identity.public.workforce import current_actor
 from petland.modules.pets.public import Size
 from petland.modules.pets.public.references import species_exist
+from petland.modules.scheduling.public.coordination import lock_schedule
 from petland.shared.domain.errors import BusinessError
 
 
@@ -25,6 +27,10 @@ class PostgresCatalog:
 
     def species_exist(self, species_ids: list[str]) -> bool:
         return species_exist(self.session, species_ids)
+
+    def authorize_write(self, actor_id: UUID) -> None:
+        lock_schedule(self.session)
+        current_actor(self.session, actor_id).require("catalog:manage")
 
     def values(self, rows: Sequence[ServiceRecord]) -> list[Service]:
         ids = [r.id for r in rows]
@@ -40,7 +46,13 @@ class PostgresCatalog:
             select(OptionRecord).where(OptionRecord.service_id.in_(ids)).order_by(OptionRecord.size)
         ):
             options[option.service_id].append(
-                Option(Size(option.size), option.price, option.duration_minutes)
+                Option(
+                    Size(option.size),
+                    option.price,
+                    option.duration_minutes,
+                    option.buffer_before_minutes,
+                    option.buffer_after_minutes,
+                )
             )
         return [
             Service(
@@ -58,6 +70,8 @@ class PostgresCatalog:
         ]
 
     def get(self, service_id: UUID, lock: bool = False) -> Service:
+        if lock:
+            lock_schedule(self.session)
         query = select(ServiceRecord).where(ServiceRecord.id == service_id)
         row = self.session.scalar(query.with_for_update(read=not lock))
         if not row:
@@ -123,6 +137,8 @@ class PostgresCatalog:
                     size=o.size,
                     price=o.price,
                     duration_minutes=o.duration_minutes,
+                    buffer_before_minutes=o.buffer_before_minutes,
+                    buffer_after_minutes=o.buffer_after_minutes,
                 )
                 for o in service.options
             ]

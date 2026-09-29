@@ -9,9 +9,11 @@ from sqlalchemy.orm import Session
 
 from petland.modules.customers.public.access import customer_for
 from petland.modules.identity.public.audit import record
+from petland.modules.identity.public.workforce import current_actor
 from petland.modules.pets.application.ports import PetStore
 from petland.modules.pets.domain.models import Breed, Pet, Species
 from petland.modules.pets.infrastructure.models import BreedRecord, PetRecord, SpeciesRecord
+from petland.modules.scheduling.public.coordination import lock_schedule, protect_pet
 from petland.shared.domain.errors import BusinessError
 
 
@@ -25,6 +27,12 @@ class PostgresPets:
 
     def customer_for(self, actor_id: UUID, assisted_id: UUID | None) -> UUID:
         return customer_for(self.session, actor_id, assisted_id)
+
+    def authorize_write(self, actor_id: UUID, assisted: bool) -> None:
+        lock_schedule(self.session)
+        current_actor(self.session, actor_id).require(
+            "customer:assist" if assisted else "customer:own"
+        )
 
     def species(self) -> list[Species]:
         return [
@@ -66,6 +74,8 @@ class PostgresPets:
         return [pet_value(row) for row in rows], total or 0
 
     def get(self, customer_id: UUID, pet_id: UUID, lock: bool = False) -> Pet:
+        if lock:
+            lock_schedule(self.session)
         query = select(PetRecord).where(
             PetRecord.customer_id == customer_id, PetRecord.id == pet_id
         )
@@ -75,6 +85,13 @@ class PostgresPets:
         return pet_value(row)
 
     def save(self, pet: Pet) -> None:
+        previous = self.session.get(PetRecord, pet.id)
+        if previous and (
+            previous.size != pet.size
+            or previous.species_id != pet.species_id
+            or (previous.archived_at is None and pet.archived_at is not None)
+        ):
+            protect_pet(self.session, pet.id)
         self.session.merge(PetRecord(**asdict(pet)))
         self.session.flush()
 

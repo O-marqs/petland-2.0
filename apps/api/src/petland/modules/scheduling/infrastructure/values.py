@@ -1,0 +1,59 @@
+import json
+from dataclasses import asdict
+from datetime import date, datetime
+from decimal import Decimal
+from typing import Any
+from uuid import UUID
+
+from petland.modules.scheduling.domain.models import (
+    Appointment,
+    Calendar,
+    Configuration,
+    Day,
+    ExceptionDay,
+    Offer,
+    Window,
+)
+
+
+def document(value: Any) -> dict[str, Any]:
+    result: dict[str, Any] = json.loads(json.dumps(asdict(value), default=str))
+    return result
+
+
+def calendar_value(value: dict[str, Any]) -> Calendar:
+    return Calendar(
+        [Day(d["weekday"], [Window(**w) for w in d["windows"]]) for d in value["weekly"]],
+        [
+            ExceptionDay(date.fromisoformat(d["date"]), [Window(**w) for w in d["windows"]])
+            for d in value["exceptions"]
+        ],
+    )
+
+
+def configuration_value(value: dict[str, Any]) -> Configuration:
+    return Configuration(**{**value, "calendar": calendar_value(value["calendar"])})
+
+
+def offer_value(value: dict[str, Any]) -> Offer:
+    return Offer(
+        **{**value, "service_id": UUID(value["service_id"]), "price": Decimal(value["price"])}
+    )
+
+
+def appointment_value(value: dict[str, Any]) -> Appointment:
+    data = dict(value)
+    for name in ("id", "customer_id", "pet_id", "service_id", "resource_id"):
+        data[name] = UUID(str(data[name]))
+    for name in (
+        "starts_at",
+        "ends_at",
+        "occupied_start_at",
+        "occupied_end_at",
+        "created_at",
+        "updated_at",
+    ):
+        if isinstance(data[name], str):
+            data[name] = datetime.fromisoformat(data[name])
+    data["offer"] = offer_value(data["offer"])
+    return Appointment(**data)

@@ -12,6 +12,8 @@ class Option:
     size: Size
     price: Decimal
     duration_minutes: int
+    buffer_before_minutes: int = 0
+    buffer_after_minutes: int = 0
 
 
 @dataclass
@@ -43,5 +45,7 @@ class Service:
                 or option.price > Decimal("9999999.99")
                 or option.price != option.price.quantize(Decimal("0.01"))
                 or not 1 <= option.duration_minutes <= 1440
+                or not 0 <= option.buffer_before_minutes <= 240
+                or not 0 <= option.buffer_after_minutes <= 240
             ):
                 raise BusinessError("INVALID_SERVICE", 422)

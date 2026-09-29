@@ -60,6 +60,7 @@ class Pets:
         actor.require("customer:assist" if customer_id else "customer:own")
         now = datetime.now(UTC)
         with self.store() as store:
+            store.authorize_write(actor.id, customer_id is not None)
             owner = store.customer_for(actor.id, customer_id)
             previous = store.get(owner, pet_id, lock=True) if pet_id else None
             if previous and previous.version != version:
@@ -103,6 +104,7 @@ class Pets:
     ) -> Pet:
         actor.require("customer:assist" if customer_id else "customer:own")
         with self.store() as store:
+            store.authorize_write(actor.id, customer_id is not None)
             owner = store.customer_for(actor.id, customer_id)
             pet = store.get(owner, pet_id, lock=True)
             if pet.version != version:

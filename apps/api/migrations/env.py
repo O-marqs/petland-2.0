@@ -6,6 +6,7 @@ from petland.modules.catalog.infrastructure import models as catalog_models  # n
 from petland.modules.customers.infrastructure import models as customer_models  # noqa: F401
 from petland.modules.identity.infrastructure import models  # noqa: F401
 from petland.modules.pets.infrastructure import models as pet_models  # noqa: F401
+from petland.modules.scheduling.infrastructure import models as schedule_models  # noqa: F401
 from petland.shared.database import Base, build_engine
 
 url = os.environ.get("MIGRATION_DATABASE_URL")

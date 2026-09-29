@@ -17,6 +17,8 @@ class ServiceOption(BaseModel):
     size: Size
     price: Decimal = Field(ge=0, le=Decimal("9999999.99"), max_digits=9, decimal_places=2)
     duration_minutes: int = Field(ge=1, le=1440, strict=True)
+    buffer_before_minutes: int = Field(default=0, ge=0, le=240, strict=True)
+    buffer_after_minutes: int = Field(default=0, ge=0, le=240, strict=True)
 
 
 class ServiceInput(BaseModel):

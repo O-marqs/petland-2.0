@@ -53,6 +53,7 @@ class Catalog:
         service = Service(name, description, species_ids, options, active, now, now)
         service.validate()
         with self.store() as store:
+            store.authorize_write(actor.id)
             if not store.species_exist(species_ids):
                 raise BusinessError("INVALID_REFERENCE", 422)
             if service_id:

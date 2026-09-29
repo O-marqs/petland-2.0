@@ -1,5 +1,6 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from threading import Event, Thread
 from time import perf_counter
 from uuid import uuid4
 
@@ -12,11 +13,16 @@ from petland.bootstrap.catalogs import include_catalogs
 from petland.bootstrap.errors import problem_response, problem_responses, register_handlers
 from petland.bootstrap.identity import build_identity
 from petland.bootstrap.logging import configure_logging
+from petland.bootstrap.scheduling import include_scheduling
 from petland.bootstrap.settings import Settings
 from petland.modules.customers.application.service import Customers
 from petland.modules.identity.application.service import IdentityService
 from petland.modules.identity.presentation.http.router import create_identity_router
 from petland.modules.identity.public.http import HttpIdentity
+from petland.modules.scheduling.infrastructure.notifications import (
+    AppointmentMailer,
+    notification_loop,
+)
 from petland.modules.system.application.readiness import CheckReadiness, ReadinessProbe
 from petland.modules.system.infrastructure.readiness import PostgresReadinessProbe
 from petland.modules.system.presentation.http.router import create_router
@@ -39,9 +45,24 @@ def create_app(
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        stop = Event()
+        mailer = AppointmentMailer(
+            configuration.smtp_host,
+            configuration.smtp_port,
+            configuration.smtp_sender,
+            configuration.smtp_starttls,
+            configuration.smtp_username,
+            configuration.smtp_password.get_secret_value() if configuration.smtp_password else None,
+        )
+        worker = Thread(target=notification_loop, args=(engine, mailer, stop), daemon=True)
+        if configuration.app_env != "test":
+            worker.start()
         try:
             yield
         finally:
+            stop.set()
+            if worker.is_alive():
+                worker.join(timeout=6)
             engine.dispose()
 
     local = configuration.app_env in {"development", "test"}
@@ -69,6 +90,9 @@ def create_app(
         configuration,
         HttpIdentity(identity_service, configuration.public_origin, not local),
         customers,
+    )
+    include_scheduling(
+        app, engine, HttpIdentity(identity_service, configuration.public_origin, not local)
     )
     register_handlers(app)
     app.add_middleware(BodyLimit)
