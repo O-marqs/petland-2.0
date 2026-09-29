@@ -3,7 +3,14 @@ from datetime import UTC, datetime, timedelta
 from uuid import UUID
 
 from petland.modules.identity.application.ports import Mailer, Passwords, Tokens, UnitOfWork
-from petland.modules.identity.domain.models import AccountToken, IdentityError, Role, Session, User
+from petland.modules.identity.domain.models import (
+    AccountToken,
+    AuditEvent,
+    IdentityError,
+    Role,
+    Session,
+    User,
+)
 
 
 class IdentityService:
@@ -35,6 +42,26 @@ class IdentityService:
                 )
         if counts[0] > maximum * 5 or (len(counts) > 1 and counts[1] > maximum):
             raise IdentityError("RATE_LIMITED", 429)
+
+    def audit_page(
+        self,
+        actor_id: UUID,
+        start: datetime,
+        end: datetime,
+        action: str,
+        author: UUID | None,
+        target: UUID | None,
+        offset: int,
+        limit: int,
+    ) -> tuple[list[AuditEvent], int]:
+        with self.uow() as work:
+            actor = work.store.user(user_id=actor_id)
+            if actor is None:
+                raise IdentityError("AUTH_REQUIRED", 401)
+            actor.require("audit:read")
+            if not timedelta(0) < end - start <= timedelta(days=31):
+                raise IdentityError("INVALID_PERIOD", 422)
+            return work.store.audit_page(start, end, action, author, target, offset, limit)
 
     def _session(self, user_id: UUID | None = None) -> tuple[str, Session]:
         now = self.clock()

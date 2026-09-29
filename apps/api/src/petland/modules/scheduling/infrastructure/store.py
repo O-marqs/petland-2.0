@@ -5,20 +5,27 @@ from datetime import UTC, datetime
 from uuid import UUID
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.orm import Session
 
 from petland.modules.catalog.public.booking import booking_service
 from petland.modules.customers.public.access import customer_for
-from petland.modules.customers.public.contact import customer_email
+from petland.modules.customers.public.contact import (
+    customer_contact,
+    customer_email,
+    customer_names,
+    matching_customer_ids,
+)
 from petland.modules.identity.public import Actor
 from petland.modules.identity.public.audit import record
-from petland.modules.identity.public.workforce import current_actor, eligible_workers
-from petland.modules.pets.public.booking import booking_pet
+from petland.modules.identity.public.workforce import actor_names, current_actor, eligible_workers
+from petland.modules.pets.public.booking import booking_pet, care_context
 from petland.modules.scheduling.application.ports import ScheduleStore
 from petland.modules.scheduling.domain.models import (
+    OCCUPYING,
+    OPEN_STATUSES,
     Appointment,
     Configuration,
     Event,
@@ -26,11 +33,13 @@ from petland.modules.scheduling.domain.models import (
     Resource,
     Worker,
 )
+from petland.modules.scheduling.domain.operations import AppointmentFilter, CareContext, Note
 from petland.modules.scheduling.infrastructure.models import (
     AppointmentRecord,
     ConfigurationRecord,
     EventRecord,
     IdempotencyRecord,
+    NoteRecord,
     OutboxRecord,
     ResourceRecord,
 )
@@ -53,6 +62,9 @@ class PostgresSchedule:
 
     def actor(self, actor_id: UUID) -> Actor:
         return current_actor(self.db, actor_id)
+
+    def actor_names(self, ids: list[UUID]) -> dict[UUID, str]:
+        return actor_names(self.db, ids)
 
     def customer_for(self, actor_id: UUID, assisted_id: UUID | None) -> UUID:
         return customer_for(self.db, actor_id, assisted_id)
@@ -142,25 +154,102 @@ class PostgresSchedule:
             for r in self.db.scalars(
                 select(AppointmentRecord).where(
                     AppointmentRecord.occupied_start_at < end,
-                    AppointmentRecord.occupied_end_at > start,
-                    AppointmentRecord.status == "BOOKED",
+                    or_(
+                        AppointmentRecord.occupied_end_at > start,
+                        AppointmentRecord.status.in_({"ARRIVED", "IN_PROGRESS"}),
+                    ),
+                    AppointmentRecord.status.in_(OCCUPYING),
                 )
             )
         ]
 
     def appointments_page(
-        self, customer_id: UUID | None, offset: int, limit: int
+        self,
+        customer_id: UUID | None,
+        offset: int,
+        limit: int,
+        filters: AppointmentFilter | None = None,
     ) -> tuple[list[Appointment], int]:
         query = select(AppointmentRecord)
         if customer_id is not None:
             query = query.where(AppointmentRecord.customer_id == customer_id)
+        f = filters or AppointmentFilter()
+        if f.start:
+            query = query.where(AppointmentRecord.starts_at >= f.start)
+        if f.end:
+            query = query.where(AppointmentRecord.starts_at < f.end)
+        if f.status:
+            query = query.where(AppointmentRecord.status == f.status)
+        if f.pet_id:
+            query = query.where(AppointmentRecord.pet_id == f.pet_id)
+        if f.resource_id:
+            query = query.where(AppointmentRecord.resource_id == f.resource_id)
+        if f.search:
+            query = query.where(
+                or_(
+                    AppointmentRecord.offer["pet_name"].astext.icontains(f.search, autoescape=True),
+                    AppointmentRecord.customer_id.in_(matching_customer_ids(f.search)),
+                )
+            )
+        if f.period == "upcoming":
+            query = query.where(
+                AppointmentRecord.status.in_(OPEN_STATUSES),
+                or_(
+                    AppointmentRecord.ends_at > f.now,
+                    AppointmentRecord.status.in_({"ARRIVED", "IN_PROGRESS"}),
+                ),
+            )
+        elif f.period == "history":
+            query = query.where(
+                or_(
+                    AppointmentRecord.status.not_in(OPEN_STATUSES),
+                    (AppointmentRecord.status == "BOOKED") & (AppointmentRecord.ends_at <= f.now),
+                )
+            )
         total = self.db.scalar(select(func.count()).select_from(query.subquery())) or 0
         rows = self.db.scalars(
-            query.order_by(AppointmentRecord.starts_at.desc(), AppointmentRecord.id)
+            query.order_by(
+                AppointmentRecord.starts_at
+                if f.period == "upcoming" or f.start
+                else AppointmentRecord.starts_at.desc(),
+                AppointmentRecord.id,
+            )
             .offset(offset)
             .limit(limit)
         )
         return [self.value(r) for r in rows], total
+
+    def period_appointments(self, start: datetime, end: datetime) -> list[Appointment]:
+        return [
+            self.value(r)
+            for r in self.db.scalars(
+                select(AppointmentRecord).where(
+                    AppointmentRecord.occupied_start_at < end,
+                    AppointmentRecord.occupied_end_at > start,
+                )
+            )
+        ]
+
+    def customer_names(self, ids: list[UUID]) -> dict[UUID, str]:
+        return customer_names(self.db, ids)
+
+    def context(self, appointment: Appointment) -> CareContext:
+        return CareContext(
+            *customer_contact(self.db, appointment.customer_id),
+            *care_context(self.db, appointment.customer_id, appointment.pet_id),
+        )
+
+    def notes(self, appointment_id: UUID, internal: bool) -> list[Note]:
+        query = select(NoteRecord).where(NoteRecord.appointment_id == appointment_id)
+        if not internal:
+            query = query.where(NoteRecord.visibility == "PUBLIC")
+        return [
+            Note(**{k: getattr(row, k) for k in Note.__dataclass_fields__})
+            for row in self.db.scalars(query.order_by(NoteRecord.occurred_at, NoteRecord.id))
+        ]
+
+    def add_note(self, note: Note) -> None:
+        self.db.add(NoteRecord(**asdict(note)))
 
     def get(self, appointment_id: UUID, customer_id: UUID | None) -> Appointment:
         query = select(AppointmentRecord).where(AppointmentRecord.id == appointment_id)
@@ -192,7 +281,10 @@ class PostgresSchedule:
             "book": "Reserva confirmada",
             "reschedule": "Reserva reagendada",
             "cancel": "Reserva cancelada",
+            "cancel_exception": "Reserva cancelada pela equipe",
         }
+        if event.kind not in labels:
+            return
         at = appointment.starts_at.astimezone(ZoneInfo(appointment.timezone)).strftime(
             "%d/%m/%Y às %H:%M"
         )

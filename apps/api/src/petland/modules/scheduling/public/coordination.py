@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from petland.modules.scheduling.infrastructure.models import (
@@ -23,8 +23,11 @@ def protect_pet(session: Session, pet_id: UUID) -> None:
         select(AppointmentRecord.id)
         .where(
             AppointmentRecord.pet_id == pet_id,
-            AppointmentRecord.status == "BOOKED",
-            AppointmentRecord.ends_at > datetime.now(UTC),
+            or_(
+                AppointmentRecord.status.in_({"ARRIVED", "IN_PROGRESS"}),
+                (AppointmentRecord.status == "BOOKED")
+                & (AppointmentRecord.ends_at > datetime.now(UTC)),
+            ),
         )
         .limit(1)
     ):
@@ -37,8 +40,11 @@ def protect_worker(session: Session, user_id: UUID) -> None:
         .join(ResourceRecord)
         .where(
             ResourceRecord.user_id == user_id,
-            AppointmentRecord.status == "BOOKED",
-            AppointmentRecord.ends_at > datetime.now(UTC),
+            or_(
+                AppointmentRecord.status.in_({"ARRIVED", "IN_PROGRESS"}),
+                (AppointmentRecord.status == "BOOKED")
+                & (AppointmentRecord.ends_at > datetime.now(UTC)),
+            ),
         )
         .limit(1)
     ):

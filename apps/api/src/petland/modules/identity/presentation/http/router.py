@@ -1,12 +1,16 @@
+from dataclasses import asdict
 from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query, Request, Response
+from pydantic import AwareDatetime
 
 from petland.modules.identity.application.service import IdentityService
 from petland.modules.identity.domain.models import User
 from petland.modules.identity.presentation.http.schemas import (
     AccountResponse,
+    AuditEventResponse,
+    AuditPageResponse,
     ChangePasswordInput,
     CsrfResponse,
     EmailInput,
@@ -215,6 +219,24 @@ def create_identity_router(service: IdentityService, origin: str, secure: bool) 
             None,
             body.status,
             request.state.request_id,
+        )
+
+    @router.get("/management/audit", response_model=AuditPageResponse)
+    def audit(
+        user: Actor,
+        start: AwareDatetime,
+        end: AwareDatetime,
+        action: str = Query(default="", max_length=64),
+        actor_id: UUID | None = None,
+        target_id: UUID | None = None,
+        offset: int = Query(default=0, ge=0, le=100000),
+        limit: int = Query(default=20, ge=1, le=100),
+    ) -> AuditPageResponse:
+        items, total = service.audit_page(
+            user.id, start, end, action, actor_id, target_id, offset, limit
+        )
+        return AuditPageResponse(
+            items=[AuditEventResponse(**asdict(e)) for e in items], total=total
         )
 
     return router

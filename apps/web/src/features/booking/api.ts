@@ -101,8 +101,18 @@ export const bookingApi = {
         )
       : result(await client.POST('/api/v1/me/appointments', { params, body }));
   },
-  async list(staff: boolean, offset: number, signal?: AbortSignal) {
-    const params = { query: { offset, limit: 20 } };
+  async list(
+    staff: boolean,
+    offset: number,
+    signal?: AbortSignal,
+    filters: {
+      customer_id?: string;
+      pet_id?: string;
+      status?: Appointment['status'];
+      period?: 'all' | 'upcoming' | 'history';
+    } = {},
+  ) {
+    const params = { query: { offset, limit: 20, ...filters } };
     return staff
       ? result(await client.GET('/api/v1/operations/appointments', { params, signal }))
       : result(await client.GET('/api/v1/me/appointments', { params, signal }));

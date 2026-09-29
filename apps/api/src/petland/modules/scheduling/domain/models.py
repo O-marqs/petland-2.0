@@ -70,6 +70,11 @@ class Configuration:
     change_cutoff_minutes: int = 0
     calendar: Calendar = field(default_factory=Calendar)
     version: int = 1
+    no_show_grace_minutes: int = 0
+    shop_name: str = "PetLand"
+    shop_phone: str = ""
+    shop_email: str = ""
+    shop_address: str = ""
 
     def validate(self) -> None:
         try:
@@ -82,6 +87,11 @@ class Configuration:
             or not 1 <= self.step_minutes <= 120
             or not 0 <= self.change_cutoff_minutes <= 525600
             or self.lead_minutes >= self.horizon_days * 1440
+            or not 0 <= self.no_show_grace_minutes <= 1440
+            or not 1 <= len(self.shop_name.strip()) <= 100
+            or len(self.shop_phone) > 30
+            or len(self.shop_email) > 254
+            or len(self.shop_address) > 300
         ):
             raise BusinessError("INVALID_CALENDAR", 422)
         self.calendar.validate()
@@ -164,6 +174,15 @@ class Appointment:
     id: UUID = field(default_factory=uuid4)
     status: str = "BOOKED"
     version: int = 1
+    no_show_grace_minutes: int = 0
+    arrived_at: datetime | None = None
+    started_at: datetime | None = None
+    completed_at: datetime | None = None
+    reserved_until: datetime | None = None
+
+    @property
+    def capacity_end(self) -> datetime:
+        return self.reserved_until or self.ends_at
 
 
 @dataclass
@@ -234,8 +253,10 @@ def allocate(
     end = start + timedelta(minutes=offer.duration_minutes)
     occupied_start = start - timedelta(minutes=offer.buffer_before_minutes)
     occupied_end = end + timedelta(minutes=offer.buffer_after_minutes)
-    occupied = [b for b in existing if b.status == "BOOKED" and b.id != ignore_id]
-    if any(b.pet_id == pet_id and overlaps(start, end, b.starts_at, b.ends_at) for b in occupied):
+    occupied = [b for b in existing if b.status in OCCUPYING and b.id != ignore_id]
+    if any(
+        b.pet_id == pet_id and overlaps(start, end, b.starts_at, b.capacity_end) for b in occupied
+    ):
         return None
     for resource in sorted(resources, key=lambda r: str(r.id)):
         if (
@@ -250,3 +271,8 @@ def allocate(
         ):
             return resource
     return None
+
+
+OCCUPYING = frozenset({"BOOKED", "ARRIVED", "IN_PROGRESS", "COMPLETED"})
+OPEN_STATUSES = frozenset({"BOOKED", "ARRIVED", "IN_PROGRESS"})
+STATUSES = OCCUPYING | {"CANCELLED", "NO_SHOW"}

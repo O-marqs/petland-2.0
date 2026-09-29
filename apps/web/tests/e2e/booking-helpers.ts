@@ -22,7 +22,7 @@ export async function staffScheduling(staff: Page, request: APIRequestContext, b
   const worker = await (await staff.request.get('/api/v1/auth/me')).json();
   const date = new Date(Date.now() + 14 * 86400000).toISOString().slice(0, 10);
   const resourceName = 'Equipe Agenda Sintética ' + Date.now();
-  await staff.goto('/operacao/agenda');
+  await staff.goto('/operacao/configuracoes');
   await staff.getByRole('button', { name: 'Adicionar pessoa', exact: true }).click();
   await staff.getByLabel('Pessoa da equipe (obrigatório)').selectOption(worker.id);
   await staff.getByLabel('Nome na agenda da equipe (obrigatório)').fill(resourceName);

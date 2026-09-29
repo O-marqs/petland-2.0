@@ -52,4 +52,16 @@ Calendário: GET/PUT `/operations/calendar`, POST `/operations/calendar/impact-p
 
 Conflitos: SLOT_UNAVAILABLE, OFFER_CHANGED, STALE_VERSION, CALENDAR_IMPACT, FUTURE_BOOKINGS, RESOURCE_EXISTS, IDEMPOTENCY_MISMATCH. Política: CHANGE_WINDOW_CLOSED/BOOKING_CLOSED. Transiente: SCHEDULE_BUSY (503), repetição explícita com mesma chave. Erros públicos não expõem SQL, conta alheia ou parâmetros internos.
 
-UUIDs externos; timestamps RFC3339; datas locais ISO; dinheiro string decimal + moeda BRL. Listagens paginam offset/limit, máximo 100. Não há endpoint de atendimento, notas, indicadores, pagamento ou troca de e-mail nesta fase.
+UUIDs externos; timestamps RFC3339; datas locais ISO; dinheiro string decimal + moeda BRL. Listagens paginam offset/limit, máximo 100. Pagamento e troca de e-mail continuam fora do escopo.
+
+## Operação e gestão P05
+
+- GET `/operations/agenda`: hoje por padrão; date_from/date_to inclusivas, até 31 dias, status/resource_id/search, offset/limit. Projeção mínima de cliente e pessoa; ações permitidas e alerta de atraso.
+- GET `/operations/attendances/{appointment_id}`: contexto de cuidado/contato, pessoa, notas protegidas e eventos com autores.
+- POST no mesmo prefixo, `/transitions`: version, operation (arrive/start/complete/no_show/cancel_exception), reason e summary opcional na conclusão. `/notes`: version/body/visibility INTERNAL ou PUBLIC. `/extensions`: version/reason/until RFC3339, resource_id opcional. Todos exigem Idempotency-Key e CSRF; retorno somente após commit.
+- GET `/me/appointments` e lista assistida: period all/upcoming/history, pet_id/status, customer_id somente na assistida. Detalhe público acrescenta summaries explicitamente PUBLIC; nunca notas internas ou dados de autores/recursos.
+- GET `/management/metrics`: ADMIN, date_from/date_to inclusivas no fuso da loja. Fórmulas e limites no ADR-012.
+- GET `/management/audit`: ADMIN, start/end RFC3339 semiabertos, até 31 dias, action/actor_id/target_id e paginação. Sem corpos ou credenciais.
+- GET `/establishment`: nome/telefone/e-mail/endereço/fuso públicos. Campos vêm da configuração versionada, com tolerância de falta adicional e preview de calendário preservado.
+
+Novos conflitos seguros: INVALID_TRANSITION, RESOURCE_IN_PROGRESS, INVALID_EXTENSION, EXTENSION_UNAVAILABLE. REASON_REQUIRED/INVALID_PERIOD orientam correção. Campos extras e instantes fornecidos como supostos horários reais são rejeitados.

@@ -13,11 +13,15 @@ Aprovação inicial: pedido integral em `docs/implementation/P02-request.txt`, r
 | Consultar agenda operacional | Não | Sim, dados necessários à operação | Sim | P05 |
 | Chegada/início/conclusão | Não | Sim, transições válidas | Sim | P05 |
 | Notas internas | Não | Necessárias ao atendimento | Sim | P05 |
+| Publicar resumo do cuidado | Não | Sim, campo/visibilidade explícitos | Sim | P05 |
+| Falta e extensão | Não | Sim, regras temporais e ocupação | Sim | P05 |
+| Cancelar por exceção BOOKED/ARRIVED | Não | Não | Sim, motivo obrigatório, antes de início real | P05 |
+| Indicadores agregados e auditoria | Não | Não | Sim, reporting:read/audit:read | P05 |
 | Serviços, preços/duração e ativação | Não | Sim, versão e auditoria | Sim | P03 |
 | Horários/capacidade/configuração operacional | Não | Sim, versão e impacto de reservas | Sim | P04 |
 | Cancelamento/reagendamento assistidos | Próprios, pelas políticas | Sim, auditado e com comunicação ao cliente | Sim | P04/P05 |
 
-P02 implementou as três primeiras linhas. O pedido P03 amplia EMPLOYEE com catalog:manage e entrega cadastro próprio/assistido, pets e serviços. As demais capacidades estão identificadas na matriz/enum de permissões para orientar os módulos futuros, sem endpoints fictícios. Cada módulo futuro deve aplicar propriedade e projeção mínima além da capacidade do perfil. Notas internas nunca serão parte automática do schema público.
+P02 implementou identidade; P03 ampliou EMPLOYEE com catalog:manage e entregou cadastro próprio/assistido, pets e serviços. P04 e P05 completam as capacidades da matriz para reservas, execução e gestão. Propriedade e projeção mínima são aplicadas além da capacidade do perfil. Notas internas não fazem parte do schema público.
 
 ## Enforcement
 
@@ -32,3 +36,5 @@ P02 implementou as três primeiras linhas. O pedido P03 amplia EMPLOYEE com cata
 PL3-07 implementa o vínculo Customer ↔ User por convite de uso único, e-mail verificado coincidente e confirmação explícita. Criar identidade não cria perfil comercial automaticamente. Identificadores de tutor são derivados da conta no servidor para rotas próprias; busca operacional exige customer:assist. Raça/espécie e versões são verificadas na aplicação/banco; pets alheios retornam 404. Escritas comerciais geram auditoria na mesma transação. Ver ADR 0007.
 
 P04 acrescenta establishment:manage ao funcionário, disponibilidade/reservas próprias e assistidas, cancelamento e reagendamento. Escritas de agenda revalidam o ator atual sob o lock do estabelecimento. Cliente nunca escolhe recurso, valor, duração, dono ou status. Mudanças de acesso que retiram uma pessoa da capacidade são bloqueadas enquanto houver reservas. Eventos públicos não expõem identificador do funcionário, credenciais ou mensagens de e-mail.
+
+P05 implementa operation:read, attendance:execute e notes:internal; reporting:read/audit:read são ADMIN. Nota interna nunca entra no schema cliente nem no evento público. Resumo PUBLIC é publicado deliberadamente. Cada mutação reconsulta o ator sob lock. Proteção de pet/equipe inclui atendimento aberto vencido. Gestão de contas permanece com reautenticação, versão e último administrador protegido; configurações comerciais continuam disponíveis à equipe conforme D07.

@@ -3,8 +3,14 @@ import { ArrowRight, HeartHandshake, CalendarDays, ClipboardCheck, Sparkles } fr
 import { Badge } from '../../shared/ui/Feedback';
 import { ConnectionStatus } from './ConnectionStatus';
 import { PetIllustration } from './PetIllustration';
+import { useQuery } from '@tanstack/react-query';
+import { operationsApi } from '../booking/operations-api';
 
 export default function HomePage() {
+  const shop = useQuery({
+    queryKey: ['schedule', 'establishment'],
+    queryFn: ({ signal }) => operationsApi.establishment(signal),
+  });
   return (
     <div className="container">
       <section className="hero" aria-labelledby="hero-title">
@@ -48,7 +54,7 @@ export default function HomePage() {
             <h2 id="journey-title">O cuidado tem um caminho.</h2>
           </div>
           <p>
-            Estamos construindo uma jornada que aproxima
+            Uma jornada que aproxima
             <br className="desktop-only" /> você, seu pet e a equipe.
           </p>
         </div>
@@ -80,9 +86,7 @@ export default function HomePage() {
               </div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <span className="planned-label">
-                {number === '01' ? 'Disponível na sua área' : 'Planejado para as próximas etapas'}
-              </span>
+              <span className="planned-label">Disponível na sua área</span>
             </article>
           ))}
         </div>
@@ -114,6 +118,16 @@ export default function HomePage() {
         </div>
       </section>
       <ConnectionStatus />
+      {shop.data && (shop.data.shop_phone || shop.data.shop_email || shop.data.shop_address) && (
+        <section className="catalog-note">
+          <div>
+            <h2>Fale com {shop.data.shop_name}</h2>
+            {shop.data.shop_phone && <p>Telefone: {shop.data.shop_phone}</p>}
+            {shop.data.shop_email && <p>E-mail: {shop.data.shop_email}</p>}
+            {shop.data.shop_address && <p>Endereço: {shop.data.shop_address}</p>}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

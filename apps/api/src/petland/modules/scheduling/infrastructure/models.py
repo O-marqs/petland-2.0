@@ -31,7 +31,18 @@ class AppointmentRecord(Base):
     __tablename__ = "appointments"
     __table_args__ = (
         ForeignKeyConstraint(["pet_id", "customer_id"], ["pets.id", "pets.customer_id"]),
-        CheckConstraint("status IN ('BOOKED','CANCELLED')", name="status"),
+        CheckConstraint(
+            "status IN ('BOOKED','ARRIVED','IN_PROGRESS','COMPLETED','CANCELLED','NO_SHOW')",
+            name="status",
+        ),
+        CheckConstraint(
+            "reserved_until IS NULL OR (reserved_until >= ends_at AND reserved_until <= occupied_end_at)",
+            name="extension",
+        ),
+        CheckConstraint(
+            "(started_at IS NULL OR (arrived_at IS NOT NULL AND started_at >= arrived_at)) AND (completed_at IS NULL OR (started_at IS NOT NULL AND completed_at >= started_at))",
+            name="actual_times",
+        ),
         CheckConstraint(
             "occupied_start_at <= starts_at AND starts_at < ends_at AND ends_at <= occupied_end_at",
             name="interval",
@@ -39,14 +50,14 @@ class AppointmentRecord(Base):
         ExcludeConstraint(
             ("resource_id", "="),
             (text("tstzrange(occupied_start_at, occupied_end_at, '[)')"), "&&"),
-            where=text("status = 'BOOKED'"),
+            where=text("status IN ('BOOKED','ARRIVED','IN_PROGRESS','COMPLETED')"),
             name="appointments_resource_overlap",
             using="gist",
         ),
         ExcludeConstraint(
             ("pet_id", "="),
-            (text("tstzrange(starts_at, ends_at, '[)')"), "&&"),
-            where=text("status = 'BOOKED'"),
+            (text("tstzrange(starts_at, COALESCE(reserved_until, ends_at), '[)')"), "&&"),
+            where=text("status IN ('BOOKED','ARRIVED','IN_PROGRESS','COMPLETED')"),
             name="appointments_pet_overlap",
             using="gist",
         ),
@@ -67,6 +78,22 @@ class AppointmentRecord(Base):
     version: Mapped[int]
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    no_show_grace_minutes: Mapped[int] = mapped_column(server_default="0")
+    arrived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    reserved_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class NoteRecord(Base):
+    __tablename__ = "appointment_notes"
+    __table_args__ = (CheckConstraint("visibility IN ('INTERNAL','PUBLIC')", name="visibility"),)
+    id: Mapped[UUID] = mapped_column(primary_key=True)
+    appointment_id: Mapped[UUID] = mapped_column(ForeignKey("appointments.id"), index=True)
+    actor_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    body: Mapped[str] = mapped_column(String(2000))
+    visibility: Mapped[str] = mapped_column(String(16))
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
 
 class EventRecord(Base):
@@ -84,7 +111,7 @@ class EventRecord(Base):
 class IdempotencyRecord(Base):
     __tablename__ = "booking_idempotency"
     actor_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), primary_key=True)
-    operation: Mapped[str] = mapped_column(String(20), primary_key=True)
+    operation: Mapped[str] = mapped_column(String(40), primary_key=True)
     key: Mapped[UUID] = mapped_column(primary_key=True)
     signature: Mapped[str] = mapped_column(String(64))
     response: Mapped[dict[str, Any]] = mapped_column(JSONB)

@@ -57,6 +57,11 @@ class ConfigurationInput(Input):
     change_cutoff_minutes: int = Field(ge=0, le=525600, strict=True)
     calendar: CalendarInput
     version: int = Field(ge=1)
+    no_show_grace_minutes: int = Field(default=0, ge=0, le=1440, strict=True)
+    shop_name: str = Field(default="PetLand", min_length=1, max_length=100)
+    shop_phone: str = Field(default="", max_length=30)
+    shop_email: str = Field(default="", max_length=254)
+    shop_address: str = Field(default="", max_length=300)
 
     def value(self) -> Configuration:
         return Configuration(**{**self.model_dump(), "calendar": self.calendar.value()})
@@ -156,10 +161,15 @@ class AppointmentResponse(Input):
     offer: OfferResponse
     timezone: str
     change_cutoff_minutes: int
-    status: Literal["BOOKED", "CANCELLED"]
+    status: Literal["BOOKED", "ARRIVED", "IN_PROGRESS", "COMPLETED", "CANCELLED", "NO_SHOW"]
     version: int
     created_at: datetime
     updated_at: datetime
+    no_show_grace_minutes: int
+    arrived_at: datetime | None
+    started_at: datetime | None
+    completed_at: datetime | None
+    reserved_until: datetime | None
 
 
 class EventResponse(Input):
@@ -174,8 +184,98 @@ class EventResponse(Input):
 class DetailResponse(Input):
     appointment: AppointmentResponse
     events: list[EventResponse]
+    summaries: list["PublicNoteResponse"] = Field(default_factory=list)
 
 
 class AppointmentPage(Input):
     items: list[AppointmentResponse]
     total: int
+
+
+class PublicNoteResponse(Input):
+    id: UUID
+    body: str
+    occurred_at: datetime
+
+
+class NoteResponse(PublicNoteResponse):
+    actor_id: UUID
+    visibility: Literal["PUBLIC", "INTERNAL"]
+
+
+class OperationEventResponse(EventResponse):
+    actor_id: UUID
+
+
+class CareContextResponse(Input):
+    customer_name: str
+    phone: str
+    email: str
+    pet_name: str
+    species: str
+    care_notes: str
+
+
+class OperationItemResponse(Input):
+    appointment: AppointmentResponse
+    customer_name: str
+    resource_name: str
+    resource_id: UUID
+    allowed_actions: list[str]
+    overdue: bool
+
+
+class OperationDetailResponse(Input):
+    item: OperationItemResponse
+    context: CareContextResponse
+    events: list[OperationEventResponse]
+    notes: list[NoteResponse]
+    authors: dict[UUID, str]
+
+
+class AgendaResponse(Input):
+    items: list[OperationItemResponse]
+    total: int
+    date_from: date
+    date_to: date
+    timezone: str
+    calculated_at: datetime
+
+
+class AttendanceInput(Input):
+    version: int = Field(ge=1, strict=True)
+    operation: Literal["arrive", "start", "complete", "no_show", "cancel_exception"]
+    reason: str = Field(default="", max_length=500)
+    summary: str = Field(default="", max_length=2000)
+
+
+class NoteInput(Input):
+    version: int = Field(ge=1, strict=True)
+    body: str = Field(min_length=1, max_length=2000)
+    visibility: Literal["INTERNAL", "PUBLIC"]
+
+
+class ExtensionInput(ChangeInput):
+    until: AwareDatetime
+    resource_id: UUID | None = None
+
+
+class MetricsResponse(Input):
+    date_from: date
+    date_to: date
+    timezone: str
+    calculated_at: datetime
+    total: int
+    by_status: dict[str, int]
+    by_service: dict[str, int]
+    occupied_minutes: float
+    available_minutes: float
+    occupancy_percent: float | None
+
+
+class EstablishmentResponse(Input):
+    shop_name: str
+    shop_phone: str
+    shop_email: str
+    shop_address: str
+    timezone: str

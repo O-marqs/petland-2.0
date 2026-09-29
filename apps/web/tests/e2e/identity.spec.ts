@@ -114,7 +114,7 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
 
 test('administrator provisions through email, invites employee, changes roles and disables access', async ({ page, request, browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Provisioning is a singleton; the customer journey runs on both sizes.');
-  test.setTimeout(300000);
+  test.setTimeout(420000); // Includes real-time appointment arrival/start/completion in P05.
   const csrf = await (await request.get('/api/v1/auth/csrf')).json();
   const check = await request.post('/api/v1/auth/login', { headers: { Origin: 'http://localhost:5173', 'X-CSRF-Token': csrf.csrf_token }, data: { email: adminEmail, password: adminPassword } });
   if (check.status() !== 200) {
@@ -149,13 +149,22 @@ test('administrator provisions through email, invites employee, changes roles an
     await staff.setViewportSize({ width: 390, height: 844 });
     await accessibility(staff);
     await staffCare(staff, request, browser);
-    let refreshed = page.waitForResponse(response => response.url().includes('/api/v1/management/users') && response.status() === 200);
+    await page.goto('/gestao');
+    await expect(page.getByRole('heading', { name: 'Ocupação da agenda', exact: true })).toBeVisible();
+    await accessibility(page);
+    await page.screenshot({ path: 'test-results/p05-management-desktop.png', fullPage: true });
+    await page.goto('/gestao/auditoria');
+    await expect(page.getByText('appointment.complete', { exact: true }).first()).toBeVisible();
+    await accessibility(page);
+    await page.goto('/gestao/acessos');
+    await expect(page.getByRole('button', { name: /^Gerenciar / }).first()).toBeVisible();
     await page.getByRole('button', { name: 'Atualizar lista' }).click();
-    let listing = await (await refreshed).json();
-    for (let i = 0; i < 5 && !listing.items.some((user: { email: string }) => user.email === staffEmail) && listing.has_more; i++) {
-      refreshed = page.waitForResponse(response => response.url().includes('/api/v1/management/users') && response.status() === 200);
+    const target = page.getByRole('button', { name: `Gerenciar ${staffName}`, exact: true });
+    // Follow the rendered pagination, including on a local database reused across runs.
+    for (let i = 0; i < 50 && !(await target.count()); i++) {
+      const firstName = await page.getByRole('button', { name: /^Gerenciar / }).first().getAttribute('aria-label');
       await page.getByRole('button', { name: 'Próxima', exact: true }).click();
-      listing = await (await refreshed).json();
+      await expect(page.getByRole('button', { name: /^Gerenciar / }).first()).not.toHaveAttribute('aria-label', firstName!);
     }
     await expect(page.getByRole('button', { name: `Gerenciar ${staffName}` })).toBeVisible();
     await page.getByRole('button', { name: `Gerenciar ${staffName}` }).click();

@@ -3,10 +3,20 @@ from types import TracebackType
 from typing import Protocol, Self
 from uuid import UUID
 
-from petland.modules.identity.domain.models import AccountToken, Session, User
+from petland.modules.identity.domain.models import AccountToken, AuditEvent, Session, User
 
 
 class IdentityStore(Protocol):
+    def audit_page(
+        self,
+        start: datetime,
+        end: datetime,
+        action: str,
+        actor_id: UUID | None,
+        target_id: UUID | None,
+        offset: int,
+        limit: int,
+    ) -> tuple[list[AuditEvent], int]: ...
     def user(
         self, *, user_id: UUID | None = None, email: str | None = None, lock: bool = False
     ) -> User | None: ...

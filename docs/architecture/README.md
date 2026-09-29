@@ -1,13 +1,13 @@
-# Arquitetura implementada — P01/P02
+# Arquitetura implementada — P01–P05
 
-RF13; RNF05/07/09. Monorepo e monólito modular, FastAPI síncrono com psycopg/SQLAlchemy. Veja plano integral §§9–16 e ADR-001/002/005/007/011.
+RF13; RNF05/07/09. Monorepo e monólito modular, FastAPI síncrono com psycopg/SQLAlchemy. Veja plano integral §§9–16 e ADR-001/002/003/005/007/011/012.
 
 ```mermaid
 flowchart LR
   Browser[React / TanStack Query] -->|mesma origem /api| Proxy[Vite local]
   Proxy --> HTTP[Presentation: router e schemas]
-  HTTP --> UC[Application: saúde e casos de uso de identidade]
-  UC --> Domain[Domain: conta, papéis, sessão e tokens]
+  HTTP --> UC[Application: identidade, cadastros, agenda e operação]
+  UC --> Domain[Domain: contas, pets, serviços e atendimentos]
   DBAdapter[Infrastructure: PostgresReadinessProbe / PostgresUnitOfWork] -. implementa ports .-> UC
   DBAdapter --> DB[(PostgreSQL)]
   Mail[Infrastructure: SmtpMailer] -. implementa port .-> UC
@@ -16,11 +16,11 @@ flowchart LR
   Bootstrap --> DBAdapter
 ```
 
-`system` é um módulo técnico mínimo com consulta operacional verdadeira. `identity` implementa contas, papéis, sessões, tokens e casos de uso de autorização. Domínio/aplicação dependem apenas de Python e ports; adapters concretos ficam em infraestrutura e são compostos no bootstrap. O verificador de arquitetura inclui testes negativos com imports proibidos. Não há motor de agenda ou pets nesta fase.
+`system` é um módulo técnico mínimo com consulta operacional verdadeira. `identity` implementa contas, papéis, sessões, tokens e autorização; `customers`, `pets` e `catalog` preservam seus cadastros. `scheduling` concentra calendário, reservas e execução; gestão agrega leituras protegidas sem criar um módulo de BI. Domínio/aplicação dependem apenas de Python e ports; adapters concretos ficam em infraestrutura e são compostos no bootstrap. O verificador de arquitetura inclui testes negativos com imports proibidos.
 
 O engine tem pool limitado, pre-ping, connect/pool/statement timeouts e descarte no lifespan. Endpoints de I/O bloqueante usam `def`. Falha do banco não derruba liveness. Readiness lê a revisão Alembic e exige correspondência exata; indisponibilidade, schema ausente, revisão incompatível ou permissão insuficiente resultam em 503 sem DSN.
 
-O baseline `0001_foundation` contém zero DDL de negócio. `0002_identity` cria identidade; `0003_catalogs` acrescenta clientes/pets/ofertas; `0004_scheduling` acrescenta calendário, recursos, reservas, eventos, idempotência e outbox. A cadeia Alembic é exercitada no PostgreSQL com upgrade, repetição, downgrade e comparação com metadata. Estados de execução de atendimento serão P05.
+O baseline `0001_foundation` contém zero DDL de negócio. `0002_identity` cria identidade; `0003_catalogs` acrescenta clientes/pets/ofertas; `0004_scheduling` acrescenta calendário, recursos, reservas, eventos, idempotência e outbox. `0005_operations` acrescenta execução, instantes reais, extensão e notas com visibilidade, preservando as exclusões de ocupação. A cadeia Alembic é exercitada no PostgreSQL com upgrade, repetição, downgrade e comparação com metadata. O downgrade P05 recusa descartar atendimentos/notas existentes; veja [ADR-012](../adr/0012-p05-operations.md).
 
 O usuário runtime `petland_app` não é superuser e recebe privilégios por tabela: escrita de identidade, leitura/inserção de auditoria e nenhuma permissão DDL. A credencial de migrations é separada. O administrador local do container é exclusivo de desenvolvimento. Não há migration no startup da API.
 

@@ -104,6 +104,14 @@ def test_validation_errors_omit_input_values(settings):
 def test_contract_only_exposes_implemented_endpoints(settings):
     paths = create_app(settings, Probe()).openapi()["paths"]
     assert set(paths) == {
+        "/api/v1/establishment",
+        "/api/v1/operations/agenda",
+        "/api/v1/operations/attendances/{appointment_id}",
+        "/api/v1/operations/attendances/{appointment_id}/transitions",
+        "/api/v1/operations/attendances/{appointment_id}/notes",
+        "/api/v1/operations/attendances/{appointment_id}/extensions",
+        "/api/v1/management/metrics",
+        "/api/v1/management/audit",
         "/api/v1/operations/calendar",
         "/api/v1/operations/calendar/impact-preview",
         "/api/v1/operations/resources",

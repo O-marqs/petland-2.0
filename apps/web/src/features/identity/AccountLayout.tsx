@@ -89,7 +89,8 @@ export default function AccountLayout() {
             {customer && <NavLink to="/app/agendar">Agendar um cuidado</NavLink>}
             {customer && <NavLink to="/app/reservas">Minhas reservas</NavLink>}
             {employee && <NavLink to="/operacao/reservas">Reservas</NavLink>}
-            {employee && <NavLink to="/operacao/agenda">Equipe e horários</NavLink>}
+            {employee && <NavLink to="/operacao/agenda">Agenda</NavLink>}
+            {employee && <NavLink to="/operacao/configuracoes">Equipe e horários</NavLink>}
             {customer && <NavLink to="/app/perfil">Meu cadastro</NavLink>}
             {employee && <NavLink to="/operacao/clientes">Clientes e pets</NavLink>}
             {employee && <NavLink to="/operacao/servicos">Serviços</NavLink>}
@@ -102,9 +103,10 @@ export default function AccountLayout() {
             {admin && (
               <NavLink to="/gestao" end>
                 <LayoutGrid size={20} aria-hidden="true" />
-                Administração
+                Visão geral
               </NavLink>
             )}
+            {admin && <NavLink to="/gestao/auditoria">Auditoria</NavLink>}
             {admin && (
               <NavLink to="/gestao/acessos">
                 <ShieldCheck size={20} aria-hidden="true" />

@@ -28,6 +28,8 @@ ROLE_PERMISSIONS: dict[Role, frozenset[str]] = {
     ),
     Role.ADMIN: frozenset(
         {
+            "reporting:read",
+            "audit:read",
             "account:self",
             "operation:read",
             "attendance:execute",
@@ -44,6 +46,16 @@ ROLE_PERMISSIONS: dict[Role, frozenset[str]] = {
 
 class IdentityError(BusinessError):
     pass
+
+
+@dataclass
+class AuditEvent:
+    id: UUID
+    actor_user_id: UUID | None
+    target_id: UUID | None
+    action: str
+    occurred_at: datetime
+    result: str
 
 
 @dataclass
