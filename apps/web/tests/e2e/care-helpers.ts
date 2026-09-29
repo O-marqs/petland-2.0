@@ -1,6 +1,7 @@
 import { expect, type APIRequestContext, type Browser, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { staffScheduling } from './booking-helpers';
+import { staffAttendance } from './attendance-helpers';
 
 export const syntheticPassword = 'Passeio sintético no parque 2026!';
 const mailbox = process.env.MAILPIT_URL ?? 'http://127.0.0.1:8025';
@@ -151,6 +152,7 @@ export async function staffCare(staff: Page, request: APIRequestContext, browser
   await expect(staff.getByText('90 min', { exact: true })).toBeVisible();
   await accessible(staff);
   await staffScheduling(staff, request, browser, service, customerUrl.split('/').at(-1)!, email);
+  await staffAttendance(staff, browser, customerUrl.split('/').at(-1)!, email);
   await staff.goto('/operacao/servicos');
   await staff.getByRole('button', { name: 'Editar ' + name, exact: true }).click();
   await staff.getByLabel('Serviço ativo no catálogo público').uncheck();

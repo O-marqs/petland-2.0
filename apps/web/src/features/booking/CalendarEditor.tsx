@@ -48,12 +48,29 @@ function Windows({
             label={'Fim — ' + label + ' ' + (i + 1)}
             type="time"
             required
-            value={time(w.end)}
+            disabled={w.end === 1440}
+            value={time(w.end === 1440 ? 0 : w.end)}
             onChange={(e) =>
               e.target.value &&
               change(values.map((v, j) => (j === i ? { ...v, end: minutes(e.target.value) } : v)))
             }
           />
+          <label className="care-check">
+            <input
+              type="checkbox"
+              checked={w.end === 1440}
+              onChange={(e) =>
+                change(
+                  values.map((v, j) => (j === i ? { ...v, end: e.target.checked ? 1440 : -1 } : v)),
+                )
+              }
+            />
+            Terminar à meia-noite
+            <span className="sr-only">
+              {' '}
+              — {label}, período {i + 1}
+            </span>
+          </label>
           <Button
             variant="secondary"
             aria-label={'Remover período ' + (i + 1) + ' de ' + label}

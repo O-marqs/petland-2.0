@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { bookingApi, dateTime, money, type Appointment } from './api';
 import { BookingWizard } from './BookingPage';
@@ -7,6 +7,8 @@ import { Failure, Pages } from './Feedback';
 import { Button } from '../../shared/ui/Button';
 import { TextArea } from '../../shared/ui/Select';
 import { Alert, Badge, Skeleton } from '../../shared/ui/Feedback';
+import { statusLabels, eventLabels } from './operations-api';
+import { Select } from '../../shared/ui/Select';
 
 function Detail({ id, staff }: { id: string; staff: boolean }) {
   const cache = useQueryClient();
@@ -52,7 +54,7 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
       <span className="eyebrow">CUIDADO AGENDADO</span>
       <h1>{a.offer.pet_name}</h1>
       <section className="identity-card">
-        <Badge>{a.status === 'BOOKED' ? 'Confirmada' : 'Cancelada'}</Badge>
+        <Badge>{statusLabels[a.status]}</Badge>
         <h2>{a.offer.service_name}</h2>
         <p>{dateTime(a.starts_at, a.timezone)}</p>
         <p>
@@ -66,6 +68,12 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
           . Sem taxa.
         </p>
         <p>Cancelamentos e reagendamentos geram um aviso para o e-mail do cadastro.</p>
+        {staff && (
+          <Link className="button button--primary" to={'/operacao/atendimentos/' + a.id}>
+            Abrir atendimento
+          </Link>
+        )}
+        {a.completed_at && <p>Concluído em {dateTime(a.completed_at, a.timezone)}.</p>}
         {a.status === 'BOOKED' && new Date(a.starts_at) > new Date() && !cancel && (
           <div className="care-actions">
             <Button onClick={() => setReschedule(a)}>Reagendar</Button>
@@ -129,18 +137,23 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
           </form>
         )}
       </section>
+      {!!detail.data.summaries?.length && (
+        <section className="identity-card">
+          <h2>Resumo do cuidado</h2>
+          {detail.data.summaries?.map((n) => (
+            <article key={n.id}>
+              <p className="preserve-lines">{n.body}</p>
+              <small>{dateTime(n.occurred_at, a.timezone)}</small>
+            </article>
+          ))}
+        </section>
+      )}
       <section className="identity-card">
         <h2>Histórico desta reserva</h2>
         <ol className="booking-history">
           {detail.data.events.map((event) => (
             <li key={event.id}>
-              <strong>
-                {{
-                  book: 'Reserva confirmada',
-                  reschedule: 'Reserva reagendada',
-                  cancel: 'Reserva cancelada',
-                }[event.kind] || event.kind}
-              </strong>
+              <strong>{eventLabels[event.kind] || event.kind}</strong>
               <span>{dateTime(event.occurred_at, a.timezone)}</span>
               {event.reason && <p>{event.reason}</p>}
               <small>Horário registrado: {dateTime(event.starts_at, a.timezone)}</small>
@@ -153,10 +166,20 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
 }
 export default function AppointmentsPage({ staff = false }: { staff?: boolean }) {
   const { appointmentId } = useParams();
-  const [offset, setOffset] = useState(0);
+  const [params, setParams] = useSearchParams();
+  const offset = Math.max(0, Number(params.get('pagina')) || 0) * 20;
+  const setOffset = (value: number) =>
+    setParams({ ...Object.fromEntries(params), pagina: String(value / 20) });
+  const period = (params.get('periodo') || 'all') as 'all' | 'upcoming' | 'history';
+  const filters = {
+    period,
+    customer_id: staff ? params.get('cliente') || undefined : undefined,
+    pet_id: params.get('pet') || undefined,
+    status: (params.get('status') || undefined) as Appointment['status'] | undefined,
+  };
   const list = useQuery({
-    queryKey: ['schedule', 'appointments', staff, offset],
-    queryFn: ({ signal }) => bookingApi.list(staff, offset, signal),
+    queryKey: ['schedule', 'appointments', staff, offset, filters],
+    queryFn: ({ signal }) => bookingApi.list(staff, offset, signal, filters),
     enabled: !appointmentId,
   });
   const base = staff ? '/operacao/reservas' : '/app/reservas';
@@ -166,6 +189,42 @@ export default function AppointmentsPage({ staff = false }: { staff?: boolean })
       <span className="eyebrow">{staff ? 'CUIDADOS DA LOJA' : 'A PRÓXIMA VISITA'}</span>
       <h1>{staff ? 'Reservas da equipe' : 'Minhas reservas'}</h1>
       <p>Consulte os horários confirmados e acompanhe as alterações.</p>
+      <div className="care-actions" aria-label="Período das reservas">
+        {[
+          ['all', 'Todas'],
+          ['upcoming', 'Próximos cuidados'],
+          ['history', 'Histórico'],
+        ].map(([id, label]) => (
+          <Button
+            key={id}
+            variant="secondary"
+            aria-pressed={period === id}
+            onClick={() => setParams({ ...Object.fromEntries(params), periodo: id, pagina: '0' })}
+          >
+            {label}
+          </Button>
+        ))}
+      </div>
+      <Select
+        label="Filtrar situação"
+        value={filters.status || ''}
+        onChange={(e) =>
+          setParams({ ...Object.fromEntries(params), status: e.target.value, pagina: '0' })
+        }
+      >
+        <option value="">Todas as situações</option>
+        {Object.entries(statusLabels).map(([id, label]) => (
+          <option key={id} value={id}>
+            {label}
+          </option>
+        ))}
+      </Select>
+      {(filters.customer_id || filters.pet_id) && (
+        <p>
+          Exibindo somente o cadastro selecionado.{' '}
+          <Link to={base}>Ver todos os cadastros permitidos</Link>
+        </p>
+      )}
       <div className="care-actions">
         <Link className="button button--primary" to={staff ? '/operacao/clientes' : '/app/agendar'}>
           {staff ? 'Escolher cliente para agendar' : 'Agendar um cuidado'}
@@ -188,7 +247,7 @@ export default function AppointmentsPage({ staff = false }: { staff?: boolean })
           <div className="care-grid">
             {list.data.items.map((a) => (
               <article className="identity-card" key={a.id}>
-                <Badge>{a.status === 'BOOKED' ? 'Confirmada' : 'Cancelada'}</Badge>
+                <Badge>{statusLabels[a.status]}</Badge>
                 <h2>{a.offer.pet_name}</h2>
                 <p>{a.offer.service_name}</p>
                 <strong>{dateTime(a.starts_at, a.timezone)}</strong>

@@ -10,7 +10,9 @@ const NotFoundPage = lazy(() => import('../features/system/NotFoundPage'));
 const AuthPage = lazy(() => import('../features/identity/AuthPage'));
 const AccountLayout = lazy(() => import('../features/identity/AccountLayout'));
 const AccountPage = lazy(() => import('../features/identity/AccountPage'));
-const AreaPage = lazy(() => import('../features/identity/AreaPage'));
+const OperationsPage = lazy(() => import('../features/booking/OperationsPage'));
+const AttendancePage = lazy(() => import('../features/booking/AttendancePage'));
+const ManagementPage = lazy(() => import('../features/booking/ManagementPage'));
 const AccessPage = lazy(() => import('../features/identity/AccessPage'));
 const CustomersPage = lazy(() => import('../features/care/CustomersPage'));
 const PetsPage = lazy(() => import('../features/care/PetsPage'));
@@ -63,15 +65,18 @@ export function App() {
               <Route path="app/reservas/:appointmentId" element={<AppointmentsPage />} />
               <Route path="operacao/reservas" element={<AppointmentsPage staff />} />
               <Route path="operacao/reservas/:appointmentId" element={<AppointmentsPage staff />} />
-              <Route path="operacao/agenda" element={<CalendarPage />} />
+              <Route path="operacao/agenda" element={<OperationsPage />} />
+              <Route path="operacao/configuracoes" element={<CalendarPage />} />
+              <Route path="operacao/atendimentos/:appointmentId" element={<AttendancePage />} />
               <Route path="operacao/clientes/:customerId/agendar" element={<BookingPage />} />
               <Route path="operacao/clientes" element={<CustomersPage />} />
               <Route path="operacao/clientes/:customerId" element={<CustomersPage />} />
               <Route path="operacao/clientes/:customerId/pets" element={<PetsPage />} />
               <Route path="operacao/servicos" element={<CatalogPage staff />} />
               <Route path="app/conta" element={<AccountPage />} />
-              <Route path="operacao" element={<AreaPage />} />
-              <Route path="gestao" element={<AreaPage />} />
+              <Route path="operacao" element={<OperationsPage />} />
+              <Route path="gestao" element={<ManagementPage />} />
+              <Route path="gestao/auditoria" element={<ManagementPage audit />} />
               <Route path="gestao/acessos" element={<AccessPage />} />
             </Route>
           </Routes>

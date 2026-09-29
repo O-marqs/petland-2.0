@@ -1,0 +1,231 @@
+.operations-page {
+  display: grid;
+  gap: 24px;
+  min-width: 0;
+}
+.operations-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.operations-heading > svg {
+  flex-shrink: 0;
+  color: var(--brand-700);
+}
+.operations-page h1 {
+  margin-block: 8px 12px;
+}
+.operations-page .identity-card {
+  margin: 0;
+  min-width: 0;
+}
+.operations-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 20px;
+  align-items: end;
+}
+.operations-filter-grid > small {
+  grid-column: 1 / -1;
+}
+.operations-filter-grid .field {
+  margin: 0;
+  min-width: 0;
+}
+.operations-page input[type='date'] {
+  min-width: 0;
+  max-width: 100%;
+}
+.agenda-filters {
+  display: grid;
+  gap: 20px;
+}
+.agenda-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.agenda-row {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--brand-700);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.agenda-row--in_progress {
+  background: var(--brand-50);
+}
+.agenda-row--cancelled,
+.agenda-row--no_show {
+  border-left-color: var(--muted);
+}
+.agenda-time {
+  display: grid;
+  gap: 8px;
+  color: var(--brand-900);
+}
+.agenda-time strong {
+  font-size: 24px;
+}
+.agenda-time span {
+  font-size: 14px;
+  color: var(--muted);
+}
+.agenda-care h2 {
+  margin: 8px 0;
+  font-size: 20px;
+}
+.agenda-care p {
+  margin: 8px 0;
+}
+.agenda-care > span:last-child {
+  color: var(--muted);
+  font-size: 14px;
+}
+.attendance-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.operation-timeline {
+  background: var(--brand-50);
+}
+.operation-timeline small,
+.operation-notes small {
+  overflow-wrap: anywhere;
+}
+.care-context {
+  background: var(--canvas);
+}
+.operation-notes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 20px;
+}
+.operation-notes > li {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.preserve-lines {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.operation-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 16px;
+}
+.operation-facts dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.operation-fact {
+  display: contents;
+}
+.operation-warning {
+  color: var(--warning);
+  font-weight: 600;
+}
+.operation-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.metric-card {
+  border-radius: 16px;
+  background: var(--brand-50);
+  padding: 24px 20px;
+  display: grid;
+  gap: 12px;
+}
+.metric-card strong,
+.metric-value {
+  color: var(--brand-700);
+  font-size: 32px;
+  font-family: Manrope, sans-serif;
+}
+.service-counts {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 20px;
+}
+.service-counts li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(80px, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+}
+.service-counts meter {
+  width: 100%;
+  accent-color: var(--brand-700);
+}
+.operation-action {
+  border: 2px solid var(--brand-700);
+}
+@media (max-width: 1100px) {
+  .attendance-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .agenda-row {
+    grid-template-columns: 70px minmax(0, 1fr);
+  }
+  .agenda-row > a {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .operation-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .operations-heading > svg {
+    display: none;
+  }
+  .operations-filter-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .operations-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .agenda-row {
+    padding: 16px;
+    gap: 16px;
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+  .agenda-row > a {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+  .operation-facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .operation-facts dd {
+    margin-bottom: 12px;
+  }
+  .metric-card {
+    padding: 16px;
+  }
+  .service-counts li {
+    gap: 12px;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .service-counts meter {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}

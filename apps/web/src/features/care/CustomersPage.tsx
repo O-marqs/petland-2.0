@@ -144,6 +144,11 @@ export function CustomerForm({
           >
             Agendar um cuidado
           </Link>
+          <p>
+            <Link to={staff ? '/operacao/reservas?cliente=' + existing.id : '/app/reservas'}>
+              Histórico de cuidados do cliente
+            </Link>
+          </p>
           {staff && !existing.linked && (
             <div className="care-stack">
               <p>

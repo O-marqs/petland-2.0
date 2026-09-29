@@ -355,6 +355,17 @@ export default function PetsPage() {
                         {p.care_notes || 'Nenhum cuidado adicional informado.'}
                       </p>
                       <div className="care-actions">
+                        <Link
+                          to={
+                            (customerId
+                              ? '/operacao/reservas?cliente=' + customerId + '&'
+                              : '/app/reservas?') +
+                            'pet=' +
+                            p.id
+                          }
+                        >
+                          Histórico de {p.name}
+                        </Link>
                         {!p.archived_at && (
                           <Button
                             variant="secondary"

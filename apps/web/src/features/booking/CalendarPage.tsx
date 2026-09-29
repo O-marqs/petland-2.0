@@ -58,6 +58,15 @@ function ConfigurationForm({ initial, done }: { initial: Config; done: () => voi
           />
           <div className="care-form-grid">
             <Input
+              label="Tolerância para registrar falta (minutos)"
+              type="number"
+              min={0}
+              max={1440}
+              required
+              hint="Vale para novas reservas. Zero permite registrar falta a partir do horário agendado; nunca de forma automática."
+              {...form.register('no_show_grace_minutes', { valueAsNumber: true, required: true })}
+            />
+            <Input
               label="Antecedência mínima para reservar (minutos)"
               type="number"
               min={0}
@@ -92,6 +101,21 @@ function ConfigurationForm({ initial, done }: { initial: Config; done: () => voi
               {...form.register('change_cutoff_minutes', { valueAsNumber: true, required: true })}
             />
           </div>
+          <h3>Identificação e contato público</h3>
+          <Input
+            label="Nome da loja"
+            required
+            maxLength={100}
+            {...form.register('shop_name', { required: true })}
+          />
+          <Input label="Telefone da loja" maxLength={30} {...form.register('shop_phone')} />
+          <Input
+            label="E-mail da loja"
+            type="email"
+            maxLength={254}
+            {...form.register('shop_email')}
+          />
+          <Input label="Endereço da loja" maxLength={300} {...form.register('shop_address')} />
           <CalendarEditor
             value={calendar}
             change={(next) => {
