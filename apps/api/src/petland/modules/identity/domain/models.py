@@ -3,6 +3,8 @@ from datetime import datetime
 from enum import StrEnum
 from uuid import UUID, uuid4
 
+from petland.shared.domain.errors import BusinessError
+
 
 class Role(StrEnum):
     CUSTOMER = "CUSTOMER"
@@ -20,6 +22,7 @@ ROLE_PERMISSIONS: dict[Role, frozenset[str]] = {
             "customer:assist",
             "booking:assist",
             "notes:internal",
+            "catalog:manage",
         }
     ),
     Role.ADMIN: frozenset(
@@ -38,11 +41,8 @@ ROLE_PERMISSIONS: dict[Role, frozenset[str]] = {
 }
 
 
-class IdentityError(Exception):
-    def __init__(self, code: str, status: int = 400) -> None:
-        self.code = code
-        self.status = status
-        super().__init__(code)
+class IdentityError(BusinessError):
+    pass
 
 
 @dataclass

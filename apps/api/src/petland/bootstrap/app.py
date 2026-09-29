@@ -8,12 +8,15 @@ from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
 
 from petland.bootstrap.body_limit import BodyLimit
+from petland.bootstrap.catalogs import include_catalogs
 from petland.bootstrap.errors import problem_response, problem_responses, register_handlers
 from petland.bootstrap.identity import build_identity
 from petland.bootstrap.logging import configure_logging
 from petland.bootstrap.settings import Settings
+from petland.modules.customers.application.service import Customers
 from petland.modules.identity.application.service import IdentityService
 from petland.modules.identity.presentation.http.router import create_identity_router
+from petland.modules.identity.public.http import HttpIdentity
 from petland.modules.system.application.readiness import CheckReadiness, ReadinessProbe
 from petland.modules.system.infrastructure.readiness import PostgresReadinessProbe
 from petland.modules.system.presentation.http.router import create_router
@@ -24,6 +27,7 @@ def create_app(
     settings: Settings | None = None,
     probe: ReadinessProbe | None = None,
     identity: IdentityService | None = None,
+    customers: Customers | None = None,
 ) -> FastAPI:
     configuration = settings or Settings()
     logger = configure_logging(configuration.log_level)
@@ -51,12 +55,20 @@ def create_app(
         responses=problem_responses(),
     )
     app.include_router(create_router(CheckReadiness(probe or PostgresReadinessProbe(engine))))
+    identity_service = identity or build_identity(engine, configuration)
     app.include_router(
         create_identity_router(
-            identity or build_identity(engine, configuration),
+            identity_service,
             configuration.public_origin,
             not local,
         )
+    )
+    include_catalogs(
+        app,
+        engine,
+        configuration,
+        HttpIdentity(identity_service, configuration.public_origin, not local),
+        customers,
     )
     register_handlers(app)
     app.add_middleware(BodyLimit)

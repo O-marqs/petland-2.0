@@ -2,7 +2,7 @@ from sqlalchemy import MetaData, create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase
 
-SCHEMA_REVISION = "0002_identity"
+SCHEMA_REVISION = "0003_catalogs"
 
 
 class Base(DeclarativeBase):

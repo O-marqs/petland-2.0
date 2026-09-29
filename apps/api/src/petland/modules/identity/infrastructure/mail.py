@@ -21,6 +21,7 @@ class SmtpMailer:
 
     def send(self, email: str, purpose: str, token: str) -> None:
         route, title = {
+            "customer-claim": ("vincular-cadastro", "Vincule seu cadastro PetLand"),
             "verify": ("verificar-email", "Confirme seu e-mail"),
             "reset": ("redefinir-senha", "Redefina sua senha"),
             "invite": ("aceitar-convite", "Seu convite para a equipe PetLand"),

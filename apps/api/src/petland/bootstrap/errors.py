@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from starlette.exceptions import HTTPException
 from starlette.responses import JSONResponse
 
-from petland.modules.identity.domain.models import IdentityError
+from petland.shared.domain.errors import BusinessError
 
 
 class Problem(BaseModel):
@@ -45,7 +45,13 @@ IDENTITY_ERRORS = {
     "FORBIDDEN": "Sua conta não tem permissão para esta ação.",
     "REAUTHENTICATION_FAILED": "Não foi possível confirmar sua senha atual.",
     "LAST_ADMIN": "É necessário manter pelo menos um administrador ativo.",
-    "STALE_VERSION": "Esta conta foi alterada. Atualize a lista antes de tentar novamente.",
+    "STALE_VERSION": "Este registro foi alterado. Recarregue os dados antes de tentar novamente.",
+    "PROFILE_EXISTS": "Sua conta já tem um cadastro. Procure a equipe para revisar o vínculo.",
+    "LINKED_EMAIL": "O e-mail de um cadastro vinculado é o e-mail da conta e não pode ser alterado aqui.",
+    "INVALID_REFERENCE": "Confira a espécie, a raça e os portes selecionados.",
+    "INVALID_PET": "Confira o nome, o porte e a data de nascimento do pet.",
+    "INVALID_SERVICE": "Informe preço e duração válidos para cada porte oferecido.",
+    "PET_ARCHIVED": "Restaure o pet antes de editar suas informações.",
     "ROLES_REQUIRED": "Selecione pelo menos um perfil.",
     "BOOTSTRAP_CLOSED": "O primeiro administrador já foi provisionado.",
     "RATE_LIMITED": "Muitas tentativas. Aguarde 15 minutos antes de tentar novamente.",
@@ -82,8 +88,8 @@ def problem_response(
 
 
 def register_handlers(app: FastAPI) -> None:
-    @app.exception_handler(IdentityError)
-    async def identity_error(request: Request, exc: IdentityError) -> JSONResponse:
+    @app.exception_handler(BusinessError)
+    async def identity_error(request: Request, exc: BusinessError) -> JSONResponse:
         return problem_response(
             request,
             exc.status,
