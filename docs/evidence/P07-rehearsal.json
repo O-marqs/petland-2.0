@@ -1,0 +1,354 @@
+{
+  "executed_at": "2026-10-01T17:55:37.885087+00:00",
+  "fixture": "petland-p07-synthetic-v1",
+  "seed_idempotent": true,
+  "backup": {
+    "file": "20261001T175432-815bd2c9dcb746209322fd09aff68658.plbackup",
+    "sha256": "f6644f6ea66eb8d70e94e5b9a68518ef1b43b6248ef8200aec4ce943e76a1638",
+    "bytes": 135544,
+    "seconds": 0.643,
+    "created_at": "2026-10-01T17:54:32.012579+00:00",
+    "source": "petland_reset_b5251a7c6b514bd8bfe351b7f0bf37ec_demo",
+    "tables": {
+      "petland_ops.demo_manifest": {
+        "rows": 1,
+        "sha256": "0c5fd92fdeac3ea6f49bf4cbfca97d639f6afeecb4e0324ad9ba9a6da2791bbb"
+      },
+      "public.account_tokens": {
+        "rows": 3,
+        "sha256": "03e56161cf9ad0e1c1443b9894b96b47b9f5c9156479764a19207be969fda5a5"
+      },
+      "public.alembic_version": {
+        "rows": 1,
+        "sha256": "942985cea3f10da3acb64918cbf27ca853108b719874a7ee3bf44ab8cd2fe622"
+      },
+      "public.appointment_events": {
+        "rows": 13,
+        "sha256": "7fafc40ccf24e94129df065c84809fe85fe226ab69582bf81c888842b3bd735c"
+      },
+      "public.appointment_notes": {
+        "rows": 2,
+        "sha256": "0b500969813cd2f7b58815d9b17b4816132b1bcf4f3ad179e8101aeb2c439841"
+      },
+      "public.appointment_outbox": {
+        "rows": 2,
+        "sha256": "4c941b317b03ee76b241613fb8d616d60852ca4687c6e69d6d1c392f35121207"
+      },
+      "public.appointments": {
+        "rows": 7,
+        "sha256": "44c4abe7bea159b01ab91f327289182a76cbfedcf7a042ac923135f8d6f8b434"
+      },
+      "public.audit_events": {
+        "rows": 44,
+        "sha256": "68da4b16503683cd02dcba6cd6c73bedb425a7e1a73020f8dc3b0c7529234a43"
+      },
+      "public.booking_idempotency": {
+        "rows": 2,
+        "sha256": "03d07bd63383ccda05dd1fa51352ae616f255909cecb97157f884bb9dffc7feb"
+      },
+      "public.breeds": {
+        "rows": 6,
+        "sha256": "7765b09d4d937223b899685f867716388778fd9fafb60eeb310c672160701751"
+      },
+      "public.customer_claims": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "public.customers": {
+        "rows": 2,
+        "sha256": "84568bd704e4d7c517316d5416e7ad7657150eacbf1f66c69990d2da7bb02838"
+      },
+      "public.identity_rate_limits": {
+        "rows": 17,
+        "sha256": "ef11982c00a67c66ea024572534c5623ee56354e402e0bd722b251801ecd27bd"
+      },
+      "public.pets": {
+        "rows": 4,
+        "sha256": "f7745f42971ab1c35742fb96e815478fb08e8d3fa554f0423cfc694b9bfa5fcf"
+      },
+      "public.schedule_configuration": {
+        "rows": 1,
+        "sha256": "d65074315c9ef963664b234549e9050135a9c04003179f81f7d0f7ec27014600"
+      },
+      "public.schedule_resources": {
+        "rows": 2,
+        "sha256": "7620308870af87dfa409103b2084d5f5f61d8fe4b98a4c1e3624d858da2d1292"
+      },
+      "public.service_options": {
+        "rows": 9,
+        "sha256": "80bfb1ac4e98fb8d78f5e455eacb44040002e0a771bd00309638914631716e6a"
+      },
+      "public.service_species": {
+        "rows": 6,
+        "sha256": "fb0cda302bb73c5946534007fb143fa7b51b52a5855865f3a7a7e47aae22821c"
+      },
+      "public.services": {
+        "rows": 3,
+        "sha256": "f1d780e50dcf1c7405441ea5e16c1851036256bddd8bd314cc8d7e42c4dce4d9"
+      },
+      "public.sessions": {
+        "rows": 45,
+        "sha256": "da355527116d87f1185e4133cd27f495a563687a90305f5283e3796525d2ae4f"
+      },
+      "public.species": {
+        "rows": 2,
+        "sha256": "d2821c27f047c09224f20eea34c9b9d227536795df359a858c591c92771175e1"
+      },
+      "public.user_roles": {
+        "rows": 7,
+        "sha256": "21599be796df70505e157ba66ae6e831136ca0d241062aa343e39040ae68be58"
+      },
+      "public.users": {
+        "rows": 7,
+        "sha256": "532d765f0103bf366a2888f69351ce1cc1b1bff8bd755b7fb8c70c598b51f275"
+      }
+    },
+    "schema_revision": "0006_hardening"
+  },
+  "restore": {
+    "target": "petland_recovery_f607d1a8f39c4eaf9e64f9f9e4fe9bfa_demo",
+    "seconds": 1.328,
+    "tables": {
+      "petland_ops.demo_manifest": {
+        "rows": 1,
+        "sha256": "0c5fd92fdeac3ea6f49bf4cbfca97d639f6afeecb4e0324ad9ba9a6da2791bbb"
+      },
+      "public.account_tokens": {
+        "rows": 3,
+        "sha256": "03e56161cf9ad0e1c1443b9894b96b47b9f5c9156479764a19207be969fda5a5"
+      },
+      "public.alembic_version": {
+        "rows": 1,
+        "sha256": "942985cea3f10da3acb64918cbf27ca853108b719874a7ee3bf44ab8cd2fe622"
+      },
+      "public.appointment_events": {
+        "rows": 13,
+        "sha256": "7fafc40ccf24e94129df065c84809fe85fe226ab69582bf81c888842b3bd735c"
+      },
+      "public.appointment_notes": {
+        "rows": 2,
+        "sha256": "0b500969813cd2f7b58815d9b17b4816132b1bcf4f3ad179e8101aeb2c439841"
+      },
+      "public.appointment_outbox": {
+        "rows": 2,
+        "sha256": "4c941b317b03ee76b241613fb8d616d60852ca4687c6e69d6d1c392f35121207"
+      },
+      "public.appointments": {
+        "rows": 7,
+        "sha256": "44c4abe7bea159b01ab91f327289182a76cbfedcf7a042ac923135f8d6f8b434"
+      },
+      "public.audit_events": {
+        "rows": 44,
+        "sha256": "68da4b16503683cd02dcba6cd6c73bedb425a7e1a73020f8dc3b0c7529234a43"
+      },
+      "public.booking_idempotency": {
+        "rows": 2,
+        "sha256": "03d07bd63383ccda05dd1fa51352ae616f255909cecb97157f884bb9dffc7feb"
+      },
+      "public.breeds": {
+        "rows": 6,
+        "sha256": "7765b09d4d937223b899685f867716388778fd9fafb60eeb310c672160701751"
+      },
+      "public.customer_claims": {
+        "rows": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "public.customers": {
+        "rows": 2,
+        "sha256": "84568bd704e4d7c517316d5416e7ad7657150eacbf1f66c69990d2da7bb02838"
+      },
+      "public.identity_rate_limits": {
+        "rows": 17,
+        "sha256": "ef11982c00a67c66ea024572534c5623ee56354e402e0bd722b251801ecd27bd"
+      },
+      "public.pets": {
+        "rows": 4,
+        "sha256": "f7745f42971ab1c35742fb96e815478fb08e8d3fa554f0423cfc694b9bfa5fcf"
+      },
+      "public.schedule_configuration": {
+        "rows": 1,
+        "sha256": "d65074315c9ef963664b234549e9050135a9c04003179f81f7d0f7ec27014600"
+      },
+      "public.schedule_resources": {
+        "rows": 2,
+        "sha256": "7620308870af87dfa409103b2084d5f5f61d8fe4b98a4c1e3624d858da2d1292"
+      },
+      "public.service_options": {
+        "rows": 9,
+        "sha256": "80bfb1ac4e98fb8d78f5e455eacb44040002e0a771bd00309638914631716e6a"
+      },
+      "public.service_species": {
+        "rows": 6,
+        "sha256": "fb0cda302bb73c5946534007fb143fa7b51b52a5855865f3a7a7e47aae22821c"
+      },
+      "public.services": {
+        "rows": 3,
+        "sha256": "f1d780e50dcf1c7405441ea5e16c1851036256bddd8bd314cc8d7e42c4dce4d9"
+      },
+      "public.sessions": {
+        "rows": 45,
+        "sha256": "da355527116d87f1185e4133cd27f495a563687a90305f5283e3796525d2ae4f"
+      },
+      "public.species": {
+        "rows": 2,
+        "sha256": "d2821c27f047c09224f20eea34c9b9d227536795df359a858c591c92771175e1"
+      },
+      "public.user_roles": {
+        "rows": 7,
+        "sha256": "21599be796df70505e157ba66ae6e831136ca0d241062aa343e39040ae68be58"
+      },
+      "public.users": {
+        "rows": 7,
+        "sha256": "532d765f0103bf366a2888f69351ce1cc1b1bff8bd755b7fb8c70c598b51f275"
+      }
+    },
+    "reconciled": true,
+    "backup_age_seconds": 3.833,
+    "activation_and_smoke_seconds": 31.682
+  },
+  "source_smoke": {
+    "passed": true,
+    "tls_verified": true,
+    "smtp_starttls_verified": true,
+    "profiles": 3,
+    "static_deep_links": 6,
+    "ownership_private_notes_and_capacity": true,
+    "persistent_booking_idempotency": true
+  },
+  "restored_smoke": {
+    "passed": true,
+    "tls_verified": true,
+    "smtp_starttls_verified": true,
+    "profiles": 3,
+    "static_deep_links": 6,
+    "ownership_private_notes_and_capacity": true,
+    "persistent_booking_idempotency": true
+  },
+  "return_to_source_smoke": {
+    "passed": true,
+    "tls_verified": true,
+    "smtp_starttls_verified": true,
+    "profiles": 3,
+    "static_deep_links": 6,
+    "ownership_private_notes_and_capacity": true,
+    "persistent_booking_idempotency": true
+  },
+  "browser": {
+    "source": {
+      "phase": "source",
+      "browser": "Chromium",
+      "checks": [
+        {
+          "profile": "customer_a",
+          "route": "/app/pets",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "employee",
+          "route": "/operacao/agenda",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "admin",
+          "route": "/gestao/acessos",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        }
+      ],
+      "passed": true
+    },
+    "recovery": {
+      "phase": "recovery",
+      "browser": "Chromium",
+      "checks": [
+        {
+          "profile": "customer_a",
+          "route": "/app/pets",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "employee",
+          "route": "/operacao/agenda",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "admin",
+          "route": "/gestao/acessos",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        }
+      ],
+      "passed": true
+    },
+    "return": {
+      "phase": "return",
+      "browser": "Chromium",
+      "checks": [
+        {
+          "profile": "customer_a",
+          "route": "/app/pets",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "employee",
+          "route": "/operacao/agenda",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        },
+        {
+          "profile": "admin",
+          "route": "/gestao/acessos",
+          "reflow_320": true,
+          "secure_httponly_cookies": true,
+          "errors": [],
+          "violations": [],
+          "csp": []
+        }
+      ],
+      "passed": true
+    }
+  },
+  "source_preserved": true,
+  "images": {
+    "api": {
+      "image_id": "sha256:6455298943f7693923d106d5cf71aa8055a64cac7cb562b86c503ed2d977ee14",
+      "revision": "e90e17af095f-work"
+    },
+    "web": {
+      "image_id": "sha256:dfb86b0f52acbf46c08d5930c7ca7104724dc04a93ecc866623f6abb90460b95",
+      "revision": "e90e17af095f-work"
+    }
+  },
+  "external_publish": false,
+  "off_host_backup": false,
+  "rpo_rto": "Observed rehearsal durations only; no production SLA or off-host recovery guarantee."
+}

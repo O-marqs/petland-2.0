@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06]
+    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07]
 permissions:
   contents: read
 concurrency:
@@ -56,6 +56,7 @@ jobs:
         run: |
           uv export --project apps/api --frozen --no-dev --no-emit-project --format requirements-txt -o /tmp/petland-requirements.txt
           uv run --project apps/api pip-audit -r /tmp/petland-requirements.txt --disable-pip --no-deps
+          uv run --project apps/api pip-audit
           pnpm audit --prod --audit-level high
       - name: RNF02 isolated API benchmark, 100k appointments and 20 sessions
         run: |
@@ -90,3 +91,33 @@ jobs:
       - name: Stop test environment
         if: always()
         run: python3 scripts/dev.py down
+  operations:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: { version: '0.12.18', python-version: '3.13' }
+      - run: uv sync --project apps/api --frozen
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
+      - name: Isolated TLS staging and single migration job
+        run: |
+          python3 scripts/dev.py staging-init
+          python3 scripts/dev.py staging-up
+      - name: Synthetic seed and reset preserve the previous database
+        run: |
+          python3 scripts/dev.py seed-demo
+          python3 scripts/dev.py reset-demo --confirm petland_demo
+      - name: Authenticated backup, isolated restore, three profiles and return
+        run: |
+          python3 scripts/dev.py rehearse
+          cat .local/staging/rehearsal.json
+      - name: Stop isolated staging, preserve volume
+        if: always()
+        run: python3 scripts/dev.py staging-down

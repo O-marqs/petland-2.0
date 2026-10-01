@@ -2,14 +2,14 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P06 — Revisão de qualidade em validação.** Agenda diária/semanal, chegada, início, conclusão, falta e extensão usam API e PostgreSQL reais. Notas internas são separadas dos resumos publicados para o cliente. Histórico, indicadores de agenda e auditoria administrativa completam a operação. Identidade, cadastros e motor de reservas P02–P04 permanecem. A agenda começa fechada, sem expediente/equipe semeados; publicação externa continua adiada.
+**Estado atual: P07 — Dados e ensaio operacional local.** P06 integrada pelo usuário no PR #6. Demonstração isolada com dados fictícios, servidor estático/HTTPS, seed/reset e backup criptografado com restore reconciliado. Agenda, atendimento, privacidade e gestão P02–P06 preservados. O desenvolvimento começa sem expediente/equipe semeados; a demo é iniciada explicitamente em outro banco. Publicação externa permanece adiada e aceite humano com leitor de tela continua pendente.
 
 ## Executar localmente
 
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0-p06 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-p07 https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -62,6 +62,20 @@ python scripts/dev.py e2e
 
 Medições com 100 mil agendamentos, laboratório mobile e roteiro de leitor de tela: [qualidade P06](docs/runbooks/quality.md).
 
+## Demonstração e recuperação local
+
+Esta rotina requer as ferramentas no host descritas em **Desenvolver e validar**, além do Docker ativo.
+
+```sh
+python scripts/dev.py staging-init
+python scripts/dev.py staging-up
+python scripts/dev.py seed-demo
+pnpm --filter @petland/web exec playwright install chromium
+python scripts/dev.py rehearse
+```
+
+Aplicação estática em **https://localhost:8443**, com certificado local de teste; credenciais aleatórias em `.local/staging/accounts.json`, ignorado pelo Git. A demo exibe seu caráter fictício. `rehearse` verifica os três perfis, criptografa backup, restaura em banco novo, confere todas as tabelas e retorna à origem preservada. Parar com `staging-down`, sem apagar volume. Não substitui backup fora da máquina ou um deploy público. [Acesso, certificados, reset, backup/restore e incidentes P07](docs/runbooks/operations-recovery.md).
+
 Detalhes, comandos individuais e resolução de problemas: [execução local](docs/runbooks/local.md).
 
 ## Organização
@@ -90,6 +104,7 @@ O histórico de [PetLand 2.0](https://github.com/O-marqs/petland-2.0) permanece 
 - [Resultados verificáveis e limites P04](docs/evidence/P04.md)
 - [Resultados verificáveis e limites P05](docs/evidence/P05.md)
 - [Medições, regressão e limites P06](docs/evidence/P06.md)
+- [Ensaio operacional e limites P07](docs/evidence/P07.md)
 - [Histórico e limitações P02](docs/evidence/P02.md) e [histórico P01](docs/evidence/P01.md)
 - [Decisões aprovadas e pendentes](docs/product/decisions.md)
 - [Arquitetura e decisões](docs/architecture/README.md)
@@ -99,4 +114,4 @@ Configuração inicial: [runbook da agenda](docs/runbooks/scheduling.md). Consis
 
 Execução e gestão: [runbook P05](docs/runbooks/operations.md), [estados, privacidade e fórmulas](docs/adr/0012-p05-operations.md).
 
-Fase atual: **P06 / PL3-18**, com regressão e medições locais aprovadas. Revisão/CI e aceite humano com leitor de tela permanecem pendentes; P07 não foi iniciada. Não há merge ou publicação automática.
+Fase atual: **P07 / PL3-19–20**, autorizada após merge P06. Migração histórica dispensada por D08/D12; provedor, backup fora do host e publicação continuam condicionados a D10. P08 não iniciada. Não há merge ou publicação automática.

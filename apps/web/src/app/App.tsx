@@ -30,6 +30,12 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        {import.meta.env.VITE_DEMO_MODE === 'true' && (
+          <aside className="demo-notice" aria-label="Ambiente de demonstração">
+            Demonstração de portfólio · Dados fictícios. Os agendamentos não representam
+            atendimentos reais.
+          </aside>
+        )}
         <Suspense
           fallback={
             <div className="container loading-page">

@@ -50,9 +50,24 @@ def main() -> None:
             "bootstrap-admin",
             "prune-identity",
             "benchmark",
+            "staging-init",
+            "staging-up",
+            "staging-down",
+            "staging-renew-certs",
+            "seed-demo",
+            "reset-demo",
+            "backup-demo",
+            "restore-demo",
+            "activate-demo",
+            "smoke-demo",
+            "rehearse",
         ],
     )
     parser.add_argument("--email", help="Destination of the first administrator invitation")
+    parser.add_argument("--reference-date", help="Synthetic demo reference date, YYYY-MM-DD")
+    parser.add_argument("--backup", help="Authenticated encrypted P07 archive")
+    parser.add_argument("--confirm", help="Exact isolated demo database name for reset")
+    parser.add_argument("--target", help="Reconciled isolated demo database to activate")
     arguments = parser.parse_args()
     command = arguments.command
     if command == "init":
@@ -77,7 +92,37 @@ def main() -> None:
         str(ROOT / "infra/compose/compose.yaml"),
     ]
     api = ROOT / "apps/api"
-    if command == "install":
+    operations = {
+        "staging-init": "init",
+        "staging-up": "up",
+        "staging-down": "down",
+        "staging-renew-certs": "renew-certs",
+        "seed-demo": "seed-demo",
+        "reset-demo": "reset-demo",
+        "backup-demo": "backup",
+        "restore-demo": "restore",
+        "activate-demo": "activate",
+        "smoke-demo": "smoke",
+        "rehearse": "rehearse",
+    }
+    if command in operations:
+        options = []
+        for option in ["reference_date", "backup", "confirm", "target"]:
+            if value := getattr(arguments, option):
+                options.extend(["--" + option.replace("_", "-"), value])
+        run(
+            "uv",
+            "run",
+            "--project",
+            str(api),
+            "--frozen",
+            "python",
+            str(ROOT / "scripts/operations.py"),
+            operations[command],
+            *options,
+            env=env,
+        )
+    elif command == "install":
         run("uv", "sync", "--frozen", cwd=api, env=env)
         run("pnpm", "install", "--frozen-lockfile", env=env)
     elif command == "db":
