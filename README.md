@@ -2,7 +2,7 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P08 — candidata 3.0.0-rc.1 e case de portfólio.** P07 integrada pelo usuário no PR #7. Uma loja, dados fictícios, três perfis e reserva/atendimento completos. Demonstração isolada em HTTPS e backup autenticado com recuperação comprovada. O desenvolvimento começa sem expediente/equipe semeados; demo é iniciada explicitamente em outro banco. Aceite final e leitor de tela pendentes; publicação externa adiada por D10. Candidata preparada para revisão, sem release estável/tag automática.
+**Estado atual: P08 integrada — candidata 3.0.0-rc.1 e case de portfólio; primeiro acesso corrigido para revisão.** Uma loja, dados fictícios, três perfis e reserva/atendimento completos. Demonstração isolada em HTTPS e backup autenticado com recuperação comprovada. O desenvolvimento começa sem expediente/equipe semeados; demo é iniciada explicitamente em outro banco. Aceite final e leitor de tela pendentes; publicação externa adiada por D10. Candidata preparada para revisão, sem release estável/tag automática.
 
 [Case: problema, antes/depois e escolhas de engenharia](docs/case/README.md) · [Vídeo de três jornadas, 3 min 05 s](docs/case/media/petland-3.0-demo.webm) · [Transcrição](docs/case/transcript.md) · [Qualidade e métricas](docs/release/quality-report.md)
 
@@ -15,7 +15,7 @@ Cliente cadastra pet, confere resumo e confirma. Equipe registra chegada/início
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0-p08 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-onboarding-fix https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -41,6 +41,8 @@ python scripts/dev.py up
 Parar preservando o banco: `python scripts/dev.py down`. A configuração Compose desta entrega é de **desenvolvimento**, com Vite, não uma receita de produção.
 
 Para confirmar cadastro/recuperar senha, abra a mensagem no Mailpit e siga seu link. Primeiro administrador: `python scripts/dev.py bootstrap-admin --email administrador-sintetico@example.com`, seguido da aceitação por e-mail. Não existe senha default nem cadastro público de ADMIN. [Fluxos de identidade](docs/runbooks/identity.md). Para clientes/pets/catálogo, consulte o [guia P03](docs/runbooks/catalogs.md).
+
+Para testar começando com uma conta nova, siga o [roteiro de cliente e funcionário](docs/runbooks/manual-acceptance.md). Cadastro de acesso → confirmação do e-mail → cadastro de contato → pet → resumo/confirmar reserva. No staging HTTPS local, as mensagens ficam em http://localhost:8026; no desenvolvimento, em http://localhost:8025. As telas mostram a caixa correspondente e o próximo passo. Não há entrega externa de e-mail neste ambiente.
 
 ## Desenvolver e validar
 

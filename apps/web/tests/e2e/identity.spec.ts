@@ -58,12 +58,44 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
   await page.getByLabel('Confirmar senha (obrigatório)').fill(password);
   await page.getByRole('button', { name: 'Criar minha conta' }).click();
   await expect(page.getByText('Pronto para o próximo passo')).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Confira seu e-mail para continuar.' }),
+  ).toBeFocused();
+  await expect(page.getByRole('link', { name: 'Abrir e-mails de teste' })).toHaveAttribute(
+    'href',
+    'http://127.0.0.1:8025',
+  );
   const verification = await emailLink(request, email, 'Confirme');
-  await page.goto(verification);
-  await expect(page).toHaveURL(/verificar-email$/);
-  await page.getByRole('button', { name: 'Confirmar e-mail' }).click();
-  await expect(page.getByText('E-mail confirmado. Você já pode entrar na sua conta.')).toBeVisible();
   await login(page, email);
+  await expect(page).toHaveURL(/\/app\/conta$/);
+  expect((await page.request.get('/api/v1/me/pets')).status()).toBe(403);
+  await page.getByRole('button', { name: 'Já confirmei meu e-mail' }).click();
+  await expect(page.getByText('A confirmação ainda está pendente')).toBeVisible();
+  // Confirmation in a second tab must unlock the original tab only after a real server refresh.
+  const confirmation = await page.context().newPage();
+  await confirmation.goto(verification);
+  await expect(confirmation).toHaveURL(/verificar-email$/);
+  await confirmation.getByRole('button', { name: 'Confirmar e-mail' }).click();
+  await expect(confirmation.getByRole('link', { name: 'Continuar para minha área' })).toBeVisible();
+  await confirmation.close();
+  await page.getByRole('button', { name: 'Já confirmei meu e-mail' }).click();
+  await expect(page).toHaveURL(/\/app$/);
+  await page.goto('/app/agendar');
+  await expect(
+    page.getByRole('heading', { name: 'Complete seu cadastro para agendar' }),
+  ).toBeVisible();
+  await page.getByRole('link', { name: 'Completar meu cadastro', exact: true }).click();
+  await page.getByRole('button', { name: 'Salvar cadastro' }).click();
+  await page.getByRole('link', { name: 'Ver pets', exact: true }).click();
+  await page.getByRole('button', { name: 'Adicionar pet' }).click();
+  await page.getByLabel('Nome do pet (obrigatório)').fill('Pet sintético da nova conta');
+  await page.getByLabel('Espécie (obrigatório)').selectOption('DOG');
+  await page.getByRole('button', { name: 'Salvar pet', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Pet sintético da nova conta', exact: true }),
+  ).toBeVisible();
+  await page.goto('/servicos');
+  await page.getByRole('link', { name: 'Minha área', exact: true }).click();
   await expect(page).toHaveURL(/\/app$/);
   await page.getByRole('link', { name: 'Minha conta', exact: true }).first().click();
   await expect(page.getByText(email, { exact: true })).toBeVisible();

@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08]
+    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08, petland-3.0-onboarding-fix]
 permissions:
   contents: read
 concurrency:
@@ -122,6 +122,8 @@ jobs:
         run: |
           python3 scripts/dev.py rehearse
           cat .local/staging/rehearsal.json
+      - name: New-account UI, confirmation, pet, reservation and staff communication
+        run: node apps/web/scripts/onboarding-staging.mjs
       - name: Stop isolated staging, preserve volume
         if: always()
         run: python3 scripts/dev.py staging-down

@@ -1,4 +1,4 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,8 +8,8 @@ import { Button } from '../../shared/ui/Button';
 import { Input } from '../../shared/ui/Input';
 import { errorMessage } from '../../shared/lib/api';
 import { identityApi, type Account, type Session } from './api';
-import { roleLabels } from './account';
-import { VerificationResend } from './AuthPage';
+import { accountDestination, roleLabels } from './account';
+import { VerificationPending } from './VerificationPending';
 
 const passwordSchema = z
   .object({
@@ -53,14 +53,11 @@ export default function AccountPage() {
             </dd>
           </div>
         </dl>
-        {!user.email_verified && (
-          <>
-            <Alert title="Falta confirmar seu e-mail">
-              Abra a mensagem enviada para seu endereço e confirme sua conta. Você pode solicitar um
-              novo link abaixo.
-            </Alert>
-            <VerificationResend email={user.email} />
-          </>
+        {!user.email_verified && <VerificationPending email={user.email} />}
+        {user.email_verified && (
+          <Link className="button button--primary" to={accountDestination(user)}>
+            Ir para minha área
+          </Link>
         )}
       </section>
       <div className="security-grid">

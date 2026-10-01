@@ -1,0 +1,5 @@
+Pedido humano de 01/10/2026, após P08 integrada:
+
+"meu objetivo era tentar fazer todos os casos de uso mas só consegui cadastro e login simples e o cadastro não levou para nenhyuma tela inicial disso e ainda não consegui criar um pet ou agendar um serviço e não consegui receber nada no email"
+
+Contexto: o usuário vai testar pessoalmente como cliente e funcionário. Corrigir/reproduzir a jornada de uma conta nova, explicar a caixa local de SMTP e disponibilizar roteiro de teste. Manter verificação real, associação explícita do cadastro de contato, permissões e dados existentes. Não implica configuração de provedor externo, promoção automática para main, merge ou aceite de release.

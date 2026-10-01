@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P08 — candidata 3.0.0-rc.1 e case, em revisão em 01/10/2026. P07 integrada pelo usuário no PR #7; P01–P07 preservadas. P08 expressamente autorizada. Aceite final de produto e sonoro humano pendentes; publicação externa permanece adiada por D10.
+**Fase:** P08 integrada no PR #8; correção do primeiro acesso em revisão em 01/10/2026. Candidata 3.0.0-rc.1 e case preservados. Aceite final de produto e sonoro humano pendentes; publicação externa permanece adiada por D10.
 
-**Branch:** `petland-3.0-p08`, criada de `3dde06b133a53a1b704eb6f5113a01a85d5a741e` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch atual:** `petland-3.0-onboarding-fix`, criada do merge P08 `3fba52725d5a6e77fd87b40a2e166a0a436f64df` na `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -111,3 +111,11 @@ Cadastro e reserva UI → chegada/nota privada/início/conclusão UI → histór
 Check completo local: 114 Python + 15 React, lint/tipos/contratos/build/migrations/arquitetura/scan. Player verificado a 1280/320 px: duração real, legendas, capítulos, links locais, axe/reflow e ausência de erro JavaScript. O servidor padrão sem ranges não permitia saltar capítulos; preview dedicado fixa loopback/pasta pública e ranges, agora exercitado na CI. `release.py` confere versões/artefatos, empacota árvore Git limpa com hashes/gates e verifica sem extrair; não publica, tagueia ou concede aceite.
 
 Evidências em [P08](../evidence/P08.md), [case](../case/README.md) e [qualidade](../release/quality-report.md). CI/pacote do commit exato ficam registrados no PR. Próximo gate: revisão humana de produto/leitor de tela e decisão D10 antes de release estável/publicação. Candidata não é serviço comercial nem alegação de recuperação após perda do host.
+
+## Correção do primeiro acesso após P08
+
+P08 integrada pelo usuário no PR #8, merge `3fba527`; correção em `petland-3.0-onboarding-fix` com PR incremental sobre P04. [Pedido humano](Onboarding-request.txt): conta recém-cadastrada sem orientação para confirmar e-mail, criar pet e agendar.
+
+Reproduzido: cadastro/SMTP local e login reais funcionavam; faltavam indicação da caixa local, sequência contato/pet/reserva e pré-requisito claro no agendamento. Corrigidos conclusão/foco do cadastro, caixa de e-mails de teste, atualização da confirmação, links para área atual, primeiros passos do dashboard e guarda de contato no agendamento. Segurança/API/schema/agenda mantidos. [Roteiro manual](../runbooks/manual-acceptance.md), [evidência e limites](../evidence/Onboarding.md).
+
+Check completo: 114 Python + 18 React; E2E 15 aprovados + skip mobile previsto. Conta criada pela interface no HTTPS local confirmou mensagem, salvou contato/pet, reservou e conferiu persistência. Funcionário acessou a mesma reserva, reagendou/cancelou; quatro avisos SMTP capturados. Nove checkpoints com axe/reflow aprovados. CI repete a nova jornada de staging; resultado do commit exato registrado no PR. Nenhum aceite humano ou merge automático concedido. Próximo passo: teste pessoal do usuário com cliente/funcionário, mantendo D10 e leitor de tela pendentes.

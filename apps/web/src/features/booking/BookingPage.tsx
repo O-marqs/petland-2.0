@@ -18,6 +18,8 @@ import { Input } from '../../shared/ui/Input';
 import { Select, TextArea } from '../../shared/ui/Select';
 import { Alert, Skeleton } from '../../shared/ui/Feedback';
 import { ApiError } from '../../shared/lib/api';
+import { careApi } from '../care/api';
+import { LocalEmailNotice } from '../../shared/ui/LocalEmailNotice';
 
 type Review = { availability: Availability; body: Booking; key: string; reason: string };
 
@@ -103,6 +105,7 @@ export function BookingWizard({
           {money(confirmed.offer.price)}
         </p>
         <p>O aviso será enviado para o e-mail do cadastro.</p>
+        <LocalEmailNotice />
         <Button onClick={() => navigate(base + '/' + confirmed.id)}>Ver minha reserva</Button>
       </section>
     );
@@ -345,5 +348,25 @@ export function BookingWizard({
 
 export default function BookingPage() {
   const { customerId } = useParams();
+  const profile = useQuery({
+    queryKey: ['care', 'customer', 'me'],
+    queryFn: ({ signal }) => careApi.profile(signal),
+    enabled: !customerId,
+  });
+  if (!customerId) {
+    if (profile.isPending) return <Skeleton label="Carregando cadastro" />;
+    if (profile.isError)
+      return <Failure error={profile.error} retry={() => void profile.refetch()} />;
+    if (!profile.data)
+      return (
+        <section className="identity-card">
+          <h1>Complete seu cadastro para agendar</h1>
+          <p>Primeiro, salve seus dados de contato. Depois, adicione um pet e escolha o cuidado.</p>
+          <Link className="button button--primary" to="/app/perfil">
+            Completar meu cadastro
+          </Link>
+        </section>
+      );
+  }
   return <BookingWizard customerId={customerId} staff={!!customerId} />;
 }

@@ -17,6 +17,7 @@ vi.mock('./api', () => ({
     verify: vi.fn(),
     reset: vi.fn(),
     acceptInvitation: vi.fn(),
+    me: vi.fn(),
   },
 }));
 
@@ -37,10 +38,36 @@ function setup(path: string) {
 }
 beforeEach(() => {
   vi.resetAllMocks();
+  vi.mocked(identityApi.me).mockResolvedValue(null);
   window.history.replaceState(null, '', '/');
 });
 
 describe('identity forms', () => {
+  it('guides registration without creating a session or claiming the account exists', async () => {
+    const message = 'Se for possível cadastrar este endereço, enviaremos a confirmação.';
+    vi.mocked(identityApi.register).mockResolvedValue({ message });
+    setup('/criar-conta');
+    await userEvent.type(screen.getByLabelText('Seu nome (obrigatório)'), 'Pessoa sintética');
+    await userEvent.type(screen.getByLabelText('E-mail (obrigatório)'), 'pessoa@example.com');
+    await userEvent.type(
+      screen.getByLabelText('Senha (obrigatório)', { exact: true }),
+      'Senha sintética para teste',
+    );
+    await userEvent.type(
+      screen.getByLabelText('Confirmar senha (obrigatório)'),
+      'Senha sintética para teste',
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Criar minha conta' }));
+    const heading = await screen.findByRole('heading', {
+      name: 'Confira seu e-mail para continuar.',
+    });
+    await waitFor(() => expect(heading).toHaveFocus());
+    expect(screen.getByText(message)).toBeVisible();
+    expect(screen.getByText('Adicione seu pet e escolha um serviço para agendar.')).toBeVisible();
+    expect(identityApi.login).not.toHaveBeenCalled();
+    expect(identityApi.me).not.toHaveBeenCalled();
+  });
+
   it('validates and focuses the first invalid field before requesting registration', async () => {
     setup('/criar-conta');
     await userEvent.click(screen.getByRole('button', { name: 'Criar minha conta' }));

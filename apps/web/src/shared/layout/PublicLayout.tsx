@@ -1,10 +1,10 @@
-import { Suspense } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { PawPrint } from 'lucide-react';
 import { RouteFocus } from './RouteFocus';
 import { Skeleton } from '../ui/Feedback';
 
-export function PublicLayout() {
+export function PublicLayout({ accountLinks }: { accountLinks?: ReactNode }) {
   const { pathname } = useLocation();
   return (
     <>
@@ -24,8 +24,12 @@ export function PublicLayout() {
             Início
           </NavLink>
           <NavLink to="/servicos">Serviços</NavLink>
-          <NavLink to="/entrar">Entrar</NavLink>
-          <NavLink to="/criar-conta">Criar conta</NavLink>
+          {accountLinks ?? (
+            <>
+              <NavLink to="/entrar">Entrar</NavLink>
+              <NavLink to="/criar-conta">Criar conta</NavLink>
+            </>
+          )}
         </nav>
       </header>
       <main id="main" tabIndex={-1} className="public-main">

@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PublicLayout } from '../shared/layout/PublicLayout';
 import { Skeleton } from '../shared/ui/Feedback';
+import { localEmailUrl } from '../shared/lib/local-email';
+import { PublicAccountLinks } from '../features/identity/PublicAccountLinks';
 
 const HomePage = lazy(() => import('../features/home/HomePage'));
 const DesignSystemPage = lazy(() => import('../features/design-system/DesignSystemPage'));
@@ -27,13 +29,19 @@ const queryClient = new QueryClient({
 });
 
 export function App() {
+  const emailUrl = localEmailUrl();
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         {import.meta.env.VITE_DEMO_MODE === 'true' && (
           <aside className="demo-notice" aria-label="Ambiente de demonstração">
             Demonstração de portfólio · Dados fictícios. Os agendamentos não representam
-            atendimentos reais.
+            atendimentos reais.{' '}
+            {emailUrl && (
+              <a href={emailUrl} target="_blank" rel="noopener noreferrer">
+                E-mails de teste
+              </a>
+            )}
           </aside>
         )}
         <Suspense
@@ -44,7 +52,7 @@ export function App() {
           }
         >
           <Routes>
-            <Route element={<PublicLayout />}>
+            <Route element={<PublicLayout accountLinks={<PublicAccountLinks />} />}>
               <Route index element={<HomePage />} />
               <Route path="servicos" element={<CatalogPage />} />
               <Route path="servicos/:serviceId" element={<CatalogPage />} />

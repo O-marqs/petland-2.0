@@ -31,6 +31,22 @@ export default function Dashboard() {
         <h1>Olá, {account.display_name.split(' ')[0]}.</h1>
         <p>Um lugar para seus companheiros e os cuidados de cada dia.</p>
       </header>
+      {!profile.isPending && !profile.isError && (!profile.data || pets.data?.total === 0) && (
+        <section className="identity-card">
+          <h2>Comece por aqui</h2>
+          <ol className="onboarding-steps" aria-label="Primeiros passos">
+            <li>
+              {profile.data ? 'Cadastro de contato completo.' : 'Complete seu cadastro de contato.'}
+            </li>
+            <li>Adicione seu primeiro pet.</li>
+            <li>Escolha o serviço, confira o resumo e confirme sua reserva.</li>
+          </ol>
+          {!profile.data && <p>Se a equipe já fez seu cadastro, peça o link de vínculo.</p>}
+          <Link className="button button--primary" to={profile.data ? '/app/pets' : '/app/perfil'}>
+            {profile.data ? 'Adicionar meu primeiro pet' : 'Completar meu cadastro'}
+          </Link>
+        </section>
+      )}
       {profile.data && (
         <section className="identity-card">
           <h2>Próximo cuidado</h2>
@@ -79,18 +95,7 @@ export default function Dashboard() {
         <Skeleton label="Carregando cadastro" />
       ) : profile.isError ? (
         <LoadError error={profile.error} retry={() => void profile.refetch()} />
-      ) : !profile.data ? (
-        <section className="identity-card">
-          <h2>Vamos nos conhecer?</h2>
-          <p>
-            Complete seu cadastro de contato antes de adicionar o primeiro pet. Se a equipe já fez
-            seu cadastro, peça o link de vínculo.
-          </p>
-          <Link className="button button--secondary" to="/app/perfil">
-            Completar meu cadastro
-          </Link>
-        </section>
-      ) : (
+      ) : !profile.data ? null : (
         <section className="care-stack">
           <div className="care-toolbar">
             <h2>Seus pets</h2>

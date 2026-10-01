@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from '../../shared/lib/validation';
@@ -12,6 +12,7 @@ import { errorMessage } from '../../shared/lib/api';
 import { PetIllustration } from '../home/PetIllustration';
 import { identityApi } from './api';
 import { accountDestination } from './account';
+import { LocalEmailNotice } from '../../shared/ui/LocalEmailNotice';
 
 type Mode = 'login' | 'register' | 'forgot' | 'verify' | 'reset' | 'invite';
 const modes: Record<string, Mode> = {
@@ -69,6 +70,17 @@ function AuthForm({ mode }: { mode: Mode }) {
     () => new URLSearchParams(window.location.hash.slice(1)).get('token') ?? '',
   );
   const [message, setMessage] = useState('');
+  const heading = useRef<HTMLHeadingElement>(null);
+  const confirmedAccount = useQuery({
+    queryKey: ['identity', 'me'],
+    queryFn: ({ signal }) => identityApi.me(signal),
+    enabled: mode === 'verify' && !!message,
+    retry: false,
+    staleTime: 0,
+  });
+  useEffect(() => {
+    if (message) heading.current?.focus();
+  }, [message]);
   const emailRequired = ['login', 'register', 'forgot'].includes(mode);
   const passwordRequired = ['login', 'register', 'reset', 'invite'].includes(mode);
   const newPassword = ['register', 'reset'].includes(mode);
@@ -187,15 +199,38 @@ function AuthForm({ mode }: { mode: Mode }) {
         <span className="eyebrow">
           <ShieldCheck size={18} aria-hidden="true" /> SEU ESPAÇO PETLAND
         </span>
-        <h1 id="auth-title">{title}</h1>
-        <p>{description}</p>
+        <h1 id="auth-title" tabIndex={-1} ref={heading}>
+          {message && mode === 'register' ? 'Confira seu e-mail para continuar.' : title}
+        </h1>
+        <p>
+          {message && mode === 'register'
+            ? 'Confirme seu e-mail e entre na sua área para cadastrar pets e reservar cuidados.'
+            : description}
+        </p>
         {message ? (
           <>
             <Alert tone="success" title="Pronto para o próximo passo">
               {message}
             </Alert>
-            <Link className="button button--primary" to="/entrar">
-              Ir para o login
+            {['register', 'forgot'].includes(mode) && <LocalEmailNotice />}
+            {mode === 'register' && (
+              <ol className="onboarding-steps">
+                <li>Abra o e-mail e confirme seu endereço.</li>
+                <li>Entre na sua área e complete seu cadastro de contato.</li>
+                <li>Adicione seu pet e escolha um serviço para agendar.</li>
+              </ol>
+            )}
+            <Link
+              className="button button--primary"
+              to={
+                mode === 'verify' && confirmedAccount.data?.email_verified
+                  ? accountDestination(confirmedAccount.data)
+                  : '/entrar'
+              }
+            >
+              {mode === 'verify' && confirmedAccount.data?.email_verified
+                ? 'Continuar para minha área'
+                : 'Ir para o login'}
             </Link>
           </>
         ) : (
@@ -276,6 +311,7 @@ function AuthForm({ mode }: { mode: Mode }) {
           </>
         )}
         {mode === 'verify' && <VerificationResend />}
+        {mode === 'verify' && !message && <LocalEmailNotice />}
         {mode === 'reset' && !message && (
           <Link className="text-link" to="/recuperar-acesso">
             Solicitar novo link
