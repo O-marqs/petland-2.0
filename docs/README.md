@@ -30,3 +30,7 @@ P03: [cadastros e catálogo](runbooks/catalogs.md), [evidências](evidence/P03.m
 P04: [agenda e avisos](runbooks/scheduling.md), [evidências](evidence/P04.md), [ADR 003](adr/0003-scheduling.md) e [pedido autorizado](implementation/P04-request.txt).
 
 P05: [operação e gestão](runbooks/operations.md), [evidências](evidence/P05.md), [ADR 012](adr/0012-p05-operations.md) e [pedido autorizado](implementation/P05-request.txt).
+
+P06: [qualidade e medições](runbooks/quality.md), [evidências](evidence/P06.md) e [ADR 013](adr/0013-p06-hardening.md).
+
+P07: [demo e recuperação](runbooks/operations-recovery.md), [evidências](evidence/P07.md), [ADR 014](adr/0014-p07-operations.md) e [autorização](implementation/P07-request.txt).

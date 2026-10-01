@@ -14,7 +14,14 @@ dependencies = [
   "email-validator>=2.2,<3",
 ]
 [dependency-groups]
-dev = ["pytest>=8,<10", "httpx>=0.28,<1", "ruff>=0.11,<1", "mypy>=1.15,<2", "pip-audit>=2.8,<3"]
+dev = [
+    "pytest>=8,<10",
+    "httpx>=0.28,<1",
+    "ruff>=0.11,<1",
+    "mypy>=1.15,<2",
+    "pip-audit>=2.8,<3",
+    "cryptography>=46,<51",
+]
 [build-system]
 requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"

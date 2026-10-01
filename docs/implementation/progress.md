@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P06 — Qualidade e UX, em validação em 01/10/2026. P05 integrada pelo usuário no PR #5; P01–P05 preservadas. P07–P08 não iniciadas. Veja [evidências P06](../evidence/P06.md).
+**Fase:** P07 — Dados e ensaio operacional local, em validação em 01/10/2026. P06 integrada pelo usuário no PR #6; P01–P06 preservadas. Aceite sonoro humano P06 pendente; avanço P07 expressamente autorizado. P08 não iniciada.
 
-**Branch:** `petland-3.0-p06`, criada de `679eae5529598b39151a1cacf6462a5db134166b` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch:** `petland-3.0-p07`, criada de `e90e17af095ffa15b13601f25448232d84f36286` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -25,8 +25,10 @@
 | PL3-15 | Notas e histórico, RF09/RNF01 | Implementado; autoria, append-only, visibilidade explícita, resumo próprio sem notas internas |
 | PL3-16 | Gestão/configuração, RF10/RF07 | Implementado; impacto protege execução aberta, calendário até meia-noite, identificação pública e gestão existente integrada |
 | PL3-17 | Indicadores/auditoria, RF11 | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada |
-| PL3-18 | P06, RNF01–04/06/07 | Implementado; regressão e medições locais aprovadas, revisão/CI e aceite humano com leitor de tela pendentes |
-| PL3-19 a PL3-21 | P07–P08 | Pendentes; preparação e publicação conforme decisões futuras |
+| PL3-18 | P06, RNF01–04/06/07 | Integrado pelo usuário; CI/medições aprovadas, aceite humano com leitor de tela ainda pendente |
+| PL3-19 | Mapeamento/migração condicionais | Dispensados por D08/D12; nenhum MySQL acessado ou histórico importado |
+| PL3-20 | Dados/ensaio operacional P07 | Demo, seed/reset, TLS, backup/restore e três perfis verificados localmente; CI/revisão pendentes, publicação externa adiada por D10 |
+| PL3-21 | P08, release/case | Pendente; não iniciar automaticamente |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -54,7 +56,7 @@ Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `
 
 Decisões D01–D11 respondidas no pedido P03; pontos incompletos seguem as recomendações por autorização expressa. Registro vigente em docs/product/decisions.md. D08 dispensa migração de dados legados; D10 adia publicação/provedor.
 
-Card atual: **PL3-18**, fase P06, revisão transversal de qualidade e UX. P05 entrega a execução e gestão usando o protocolo do [ADR-003](../adr/0003-scheduling.md) e as regras do [ADR-012](../adr/0012-p05-operations.md). A revisão completa de desempenho, segurança, teclado/leitor de tela e setup limpo pertence ao gate P06. D10 mantém publicação/provedor externo adiados. Não iniciar P07 automaticamente.
+Card atual: **PL3-19–20**, fase P07 autorizada em [P07-request.txt](P07-request.txt). Continuidade após merge P06 não comprova aceite sonoro humano; essa pendência acompanha o release. Dados sintéticos e ensaio local seguem [ADR-014](../adr/0014-p07-operations.md). D08/D12 dispensam migração; D10 mantém provedor, publicação e backup externo adiados. Não iniciar P08 automaticamente.
 
 Docker recuperado após reinício autorizado do Windows em 30/09/2026; em 01/10/2026 os serviços voltaram saudáveis, preservando volumes e dados. A falha anterior do backend OTel/socket residual não reapareceu. Saltos de relógio WSL de cerca de cinco segundos foram observados; a sincronização duplicada do Ubuntu foi desabilitada e o horário alinhado ao Windows. Correções menores persistiram; não há prova de estabilidade absoluta nem de que toda contenção veio do relógio. A rodada final confirmou todas as 200 reservas, sem erros de leitura/escrita. Procedimento e reversão no [runbook de qualidade](../runbooks/quality.md). Não foram realizados reset de fábrica, merge automático, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
 
@@ -90,4 +92,12 @@ Segurança, foco/títulos, carregamento acessível, estabilidade visual, agrega�
 
 Medição API normal com 100 mil agendamentos e 20 sessões: todas as leituras abaixo de 400 ms no p95 e 200 reservas confirmadas, p95 **775,91 ms** (meta 800 ms). Laboratório web: **9/9 amostras aprovadas**, LCP máximo 2028 ms, INP máximo 88 ms, CLS máximo 0,00119. Metas e timeouts mantidos; resultados e limites de ambiente no [registro P06](../evidence/P06.md). CI repete a carga API em Linux limpo, independentemente do relógio WSL local.
 
-Entrega para revisão em PR P06 em rascunho sobre P04; acompanhar CI do commit exato e registrar resultado remoto no próprio PR. **Aceite sonoro humano com leitor de tela nos três perfis continua pendente**; o gate P06 permanece aberto e P07 não foi iniciada. Ver [roteiro de aceite](../runbooks/quality.md).
+P06 integrada pelo usuário no [PR #6](https://github.com/O-marqs/petland-2.0/pull/6), merge `e90e17a`. [CI do commit `1607cbe` aprovada](https://github.com/O-marqs/petland-2.0/actions/runs/36894412439): checks/browser, carga Linux com reserva p95 427,37 ms e leituras até 215,35 ms, 15 E2E + skip mobile previsto. **Aceite humano com leitor de tela continua pendente**; usuário autorizou explicitamente avançar P07. Ver [roteiro de aceite](../runbooks/quality.md).
+
+## P07 — dados e ensaio operacional local
+
+Demo sintética isolada, transação de seed e UUIDs estáveis, reset preservando origem, servidor estático com TLS, imagem identificável, PostgreSQL verify-full, SMTP STARTTLS, cookies Secure/HttpOnly e proxy sem cache da API. Ferramentas offline recusam produção/bancos fora do namespace e não expõem credenciais. D08/D12 dispensam dados históricos; não declarar migração executada.
+
+Backup custom autenticado/criptografado e restore em banco novo, contagens/digests de todas as tabelas, ACLs e duas exclusões GiST conferidos. Cópia ativada e três perfis verificados no navegador a 320 px, depois retorno à origem. Cadastro/SMTP, capacidade, propriedade, notas privadas e idempotência persistida também verificados na cópia. CI adicionada para repetir o ensaio completo em ambiente limpo.
+
+Verificação final local aprovada: 114 testes Python + 15 React no check completo, 15 E2E + 1 skip mobile previsto, auditorias sem vulnerabilidade conhecida e nove verificações de perfis no staging. Falha de startup do destino restaura o apontamento anterior e tenta reiniciar a origem; cenário de falha verificado em teste. Resultados e limitações em [P07](../evidence/P07.md), reprodução em [runbook de recuperação](../runbooks/operations-recovery.md). Próximo passo: PR em rascunho sobre P04 e CI do commit exato. Backup continua no mesmo host; retenção/cópia externa, RPO/RTO produtivos, publicação e P08 dependem de D10 e aceite futuro. Fontes, histórico e alterações do legado preservados.

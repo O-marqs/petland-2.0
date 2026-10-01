@@ -19,7 +19,7 @@ Aceitas pelo pedido de P01, em 23/09/2026:
 
 ## Propostas ainda condicionadas
 
-- **ADR-008:** hospedagem/backup — D10; Compose local não é deploy de produção.
+- **ADR-008:** hospedagem externa — D10; backup/restore local ensaiado no ADR-014, sem deploy de produção.
 - **ADR-009:** dados e retenção — D06/D08/D12.
 
 Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. Não alterar silenciosamente o plano.
@@ -28,3 +28,4 @@ Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. 
 - [0012 — Operação e gestão P05](0012-p05-operations.md): estados, atrasos, notas, privacidade, histórico, indicadores e auditoria.
 
 - [0013 — Hardening e verificação P06](0013-p06-hardening.md): agregações, índices, proteção HTTP, foco e medições reproduzíveis.
+- [0014 — Dados e recuperação P07](0014-p07-operations.md): demo isolada, servidor estático/TLS, backup autenticado e restore reconciliado; limites D08/D10/D12.
