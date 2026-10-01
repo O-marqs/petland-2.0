@@ -228,6 +228,10 @@
 .catalog-note {
   margin-top: var(--space-8);
 }
+.catalog-results {
+  min-height: 24rem;
+  align-content: start;
+}
 .dashboard-pets {
   list-style: none;
   padding: 0;

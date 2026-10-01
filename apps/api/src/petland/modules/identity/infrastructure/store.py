@@ -54,8 +54,11 @@ class PostgresIdentityStore:
             )
         ], count
 
-    def _user(self, row: UserRecord) -> User:
-        roles = self.db.scalars(select(RoleRecord.role).where(RoleRecord.user_id == row.id)).all()
+    def _user(self, row: UserRecord, roles: list[str] | None = None) -> User:
+        if roles is None:
+            roles = list(
+                self.db.scalars(select(RoleRecord.role).where(RoleRecord.user_id == row.id))
+            )
         return User(
             row.email,
             row.display_name,
@@ -83,7 +86,14 @@ class PostgresIdentityStore:
             if user_id
             else select(UserRecord).where(UserRecord.normalized_email == email)
         )
-        row = self.db.scalar(query.with_for_update() if lock else query)
+        if not lock:
+            rows = self.db.execute(query.add_columns(RoleRecord.role).outerjoin(RoleRecord)).all()
+            return (
+                self._user(rows[0][0], [role for _, role in rows if role is not None])
+                if rows
+                else None
+            )
+        row = self.db.scalar(query.with_for_update())
         return self._user(row) if row else None
 
     def save_user(self, user: User) -> None:
@@ -108,15 +118,18 @@ class PostgresIdentityStore:
         self.db.flush()
 
     def users(self, offset: int, limit: int) -> list[User]:
-        return [
-            self._user(row)
-            for row in self.db.scalars(
-                select(UserRecord)
-                .order_by(UserRecord.created_at, UserRecord.id)
-                .offset(offset)
-                .limit(limit)
-            )
-        ]
+        rows = self.db.scalars(
+            select(UserRecord)
+            .order_by(UserRecord.created_at, UserRecord.id)
+            .offset(offset)
+            .limit(limit)
+        ).all()
+        roles: dict[UUID, list[str]] = {row.id: [] for row in rows}
+        for user_id, role in self.db.execute(
+            select(RoleRecord.user_id, RoleRecord.role).where(RoleRecord.user_id.in_(roles))
+        ):
+            roles[user_id].append(role)
+        return [self._user(row, roles[row.id]) for row in rows]
 
     def admin_count(self) -> int:
         return (
@@ -153,6 +166,20 @@ class PostgresIdentityStore:
     def session(self, digest: str) -> Session | None:
         row = self.db.scalar(select(SessionRecord).where(SessionRecord.token_digest == digest))
         return self._session(row) if row else None
+
+    def authenticated_session(self, digest: str) -> tuple[User, Session] | None:
+        rows = self.db.execute(
+            select(SessionRecord, UserRecord, RoleRecord.role)
+            .join(UserRecord, SessionRecord.user_id == UserRecord.id)
+            .outerjoin(RoleRecord, RoleRecord.user_id == UserRecord.id)
+            .where(SessionRecord.token_digest == digest)
+        ).all()
+        if not rows:
+            return None
+        return (
+            self._user(rows[0][1], [role for _, _, role in rows if role is not None]),
+            self._session(rows[0][0]),
+        )
 
     def sessions(self, user_id: UUID) -> list[Session]:
         return [

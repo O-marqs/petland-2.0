@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+from typing import Any
 from uuid import UUID
 
 from sqlalchemy import or_, select
@@ -12,10 +13,13 @@ from petland.modules.scheduling.infrastructure.models import (
 from petland.shared.domain.errors import BusinessError
 
 
-def lock_schedule(session: Session) -> None:
-    session.execute(
-        select(ConfigurationRecord.id).where(ConfigurationRecord.id == 1).with_for_update()
+def lock_schedule(session: Session, shared: bool = False) -> dict[str, Any]:
+    data: dict[str, Any] = session.execute(
+        select(ConfigurationRecord.data)
+        .where(ConfigurationRecord.id == 1)
+        .with_for_update(read=shared)
     ).scalar_one()
+    return data
 
 
 def protect_pet(session: Session, pet_id: UUID) -> None:

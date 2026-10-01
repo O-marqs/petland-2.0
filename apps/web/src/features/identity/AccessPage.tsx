@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from '../../shared/lib/validation';
 import { Alert, Badge, EmptyState, Skeleton } from '../../shared/ui/Feedback';
 import { Button } from '../../shared/ui/Button';
 import { Input } from '../../shared/ui/Input';

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PawPrint, LogOut, UserRound, LayoutGrid, CalendarDays, ShieldCheck } from 'lucide-react';
@@ -7,10 +7,11 @@ import { identityApi } from './api';
 import { Alert, Skeleton } from '../../shared/ui/Feedback';
 import { Button } from '../../shared/ui/Button';
 import { errorMessage } from '../../shared/lib/api';
+import { RouteFocus } from '../../shared/layout/RouteFocus';
 
 export default function AccountLayout() {
   const account = useAccount();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const logout = useMutation({
@@ -20,20 +21,17 @@ export default function AccountLayout() {
       navigate('/entrar', { replace: true });
     },
   });
-  useEffect(() => {
-    document.title = 'Sua área · PetLand';
-    document.getElementById('main')?.focus();
-    window.scrollTo(0, 0);
-  }, [pathname]);
   if (account.isPending)
     return (
-      <main className="container loading-page">
+      <main id="main" tabIndex={-1} className="container loading-page">
         <Skeleton label="Carregando sua conta" />
       </main>
     );
   if (account.isError)
     return (
-      <main className="container loading-page">
+      <main id="main" tabIndex={-1} className="container loading-page">
+        <RouteFocus />
+        <h1>Sua conta</h1>
         <Alert tone="error" title="Não foi possível carregar sua conta">
           {errorMessage(account.error)}
         </Alert>
@@ -41,7 +39,7 @@ export default function AccountLayout() {
       </main>
     );
   if (!account.data)
-    return <Navigate to={`/entrar?next=${encodeURIComponent(pathname)}`} replace />;
+    return <Navigate to={`/entrar?next=${encodeURIComponent(pathname + search)}`} replace />;
   const user = account.data;
   const customer = user.email_verified && user.roles.includes('CUSTOMER');
   const employee =
@@ -121,13 +119,16 @@ export default function AccountLayout() {
           <p>Um cuidado mais próximo, a cada etapa.</p>
         </aside>
         <main id="main" tabIndex={-1} className="area-content">
+          <RouteFocus />
           {logout.isError && (
             <Alert tone="error" title="Não foi possível sair">
               {errorMessage(logout.error)}
             </Alert>
           )}
           {allowed ? (
-            <Outlet context={user} />
+            <Suspense key={pathname} fallback={<Skeleton label="Carregando página" />}>
+              <Outlet context={user} />
+            </Suspense>
           ) : (
             <>
               <h1>Acesso indisponível</h1>

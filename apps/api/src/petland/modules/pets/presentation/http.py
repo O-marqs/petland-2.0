@@ -68,7 +68,7 @@ def pet_router(service: Pets, auth: HttpIdentity) -> APIRouter:
     def own_list(
         actor: User,
         archived: bool = False,
-        offset: int = Query(default=0, ge=0),
+        offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> PetPage:
         items, total = service.list(actor, None, archived, offset, limit)
@@ -99,7 +99,7 @@ def pet_router(service: Pets, auth: HttpIdentity) -> APIRouter:
         customer_id: UUID,
         actor: User,
         archived: bool = False,
-        offset: int = Query(default=0, ge=0),
+        offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> PetPage:
         items, total = service.list(actor, customer_id, archived, offset, limit)

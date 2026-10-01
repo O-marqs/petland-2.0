@@ -2,14 +2,14 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P05 — Operação e gestão.** Agenda diária/semanal, chegada, início, conclusão, falta e extensão usam API e PostgreSQL reais. Notas internas são separadas dos resumos publicados para o cliente. Histórico, indicadores de agenda e auditoria administrativa completam a operação. Identidade, cadastros e motor de reservas P02–P04 permanecem. A agenda começa fechada, sem expediente/equipe semeados; publicação externa continua adiada.
+**Estado atual: P06 — Revisão de qualidade em validação.** Agenda diária/semanal, chegada, início, conclusão, falta e extensão usam API e PostgreSQL reais. Notas internas são separadas dos resumos publicados para o cliente. Histórico, indicadores de agenda e auditoria administrativa completam a operação. Identidade, cadastros e motor de reservas P02–P04 permanecem. A agenda começa fechada, sem expediente/equipe semeados; publicação externa continua adiada.
 
 ## Executar localmente
 
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0-p05 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-p06 https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -60,6 +60,8 @@ python scripts/dev.py e2e
 
 `check` verifica Ruff, formatação, mypy, dependências entre camadas, arquivos/segredos do estado ativo, ESLint, TypeScript, formatação web, contratos gerados, build, testes Python e React. O PostgreSQL de testes é separado, efêmero e usa a porta 55433; nenhum teste de migration usa o banco de desenvolvimento. `e2e` instala Chromium e testa navegação, comunicação real, falha/recuperação, formulário, reflow e acessibilidade automatizada em desktop e celular.
 
+Medições com 100 mil agendamentos, laboratório mobile e roteiro de leitor de tela: [qualidade P06](docs/runbooks/quality.md).
+
 Detalhes, comandos individuais e resolução de problemas: [execução local](docs/runbooks/local.md).
 
 ## Organização
@@ -87,6 +89,7 @@ O histórico de [PetLand 2.0](https://github.com/O-marqs/petland-2.0) permanece 
 - [Resultados verificáveis e limitações P03](docs/evidence/P03.md)
 - [Resultados verificáveis e limites P04](docs/evidence/P04.md)
 - [Resultados verificáveis e limites P05](docs/evidence/P05.md)
+- [Medições, regressão e limites P06](docs/evidence/P06.md)
 - [Histórico e limitações P02](docs/evidence/P02.md) e [histórico P01](docs/evidence/P01.md)
 - [Decisões aprovadas e pendentes](docs/product/decisions.md)
 - [Arquitetura e decisões](docs/architecture/README.md)
@@ -96,4 +99,4 @@ Configuração inicial: [runbook da agenda](docs/runbooks/scheduling.md). Consis
 
 Execução e gestão: [runbook P05](docs/runbooks/operations.md), [estados, privacidade e fórmulas](docs/adr/0012-p05-operations.md).
 
-Próxima fase: **P06 / PL3-18**, revisão transversal de qualidade e UX. Não há merge ou publicação automática.
+Fase atual: **P06 / PL3-18**, com regressão e medições locais aprovadas. Revisão/CI e aceite humano com leitor de tela permanecem pendentes; P07 não foi iniciada. Não há merge ou publicação automática.

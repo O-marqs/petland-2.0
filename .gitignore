@@ -17,6 +17,7 @@ playwright-report/
 test-results/
 .tools/
 .local/
+.local-*
 *.log
 .DS_Store
 Thumbs.db

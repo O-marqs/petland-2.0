@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from '../../shared/lib/validation';
 import { Cat, Dog, Plus, PawPrint } from 'lucide-react';
 import { careApi, sizes, sizeLabels, type Pet, type PetInput } from './api';
 import { LoadError, Pagination, SaveError } from './Feedback';

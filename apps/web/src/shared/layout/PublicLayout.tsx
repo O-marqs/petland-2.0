@@ -1,15 +1,11 @@
-import { useEffect } from 'react';
+import { Suspense } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { PawPrint } from 'lucide-react';
+import { RouteFocus } from './RouteFocus';
+import { Skeleton } from '../ui/Feedback';
 
 export function PublicLayout() {
   const { pathname } = useLocation();
-  useEffect(() => {
-    document.title =
-      pathname === '/design-system' ? 'Componentes · PetLand' : 'PetLand · Cuidado que conecta';
-    document.getElementById('main')?.focus();
-    window.scrollTo(0, 0);
-  }, [pathname]);
   return (
     <>
       <a className="skip-link" href="#main">
@@ -32,8 +28,18 @@ export function PublicLayout() {
           <NavLink to="/criar-conta">Criar conta</NavLink>
         </nav>
       </header>
-      <main id="main" tabIndex={-1}>
-        <Outlet />
+      <main id="main" tabIndex={-1} className="public-main">
+        <RouteFocus />
+        <Suspense
+          key={pathname}
+          fallback={
+            <div className="container loading-page">
+              <Skeleton label="Carregando página" />
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <footer className="public-footer container">
         <Link className="brand" to="/">
