@@ -1,0 +1,26 @@
+{
+  "commit": "3cc3f898cde896b80fed587bf8c06f4aa46742f6",
+  "mode": "isolated historical HTML, not a functional legacy flow",
+  "adaptations": [
+    "fixed synthetic options/date and disabled links/forms",
+    "scripts and external stylesheets removed; system font fallback",
+    "empty flash messages and visible provenance label",
+    "only the historical static image is copied"
+  ],
+  "mysql_accessed": false,
+  "legacy_application_executed": false,
+  "sources": [
+    {
+      "source": "static/images/logo.jpeg.jpeg",
+      "sha256": "914eeeb586107b9b6f1477629172a16901b2f2f05d197d3408481a88b17d07be"
+    },
+    {
+      "source": "templates/telalogin_cliente.html",
+      "sha256": "b373251cfe225af1fb132f8d851b6b08317472d685f30946d22b75fb106e2df8"
+    },
+    {
+      "source": "templates/telagendamento.html",
+      "sha256": "69fb8bed04a237b83457bdef2dd548ed145d9269cc02e4f4ff641d876229969f"
+    }
+  ]
+}

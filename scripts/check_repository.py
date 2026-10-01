@@ -30,7 +30,7 @@ for name in set(files):
         or "__pycache__" in path.parts
     ):
         errors.append(f"Forbidden versioned artifact: {name}")
-    if path.suffix not in {".png", ".pdf", ".woff2"}:
+    if path.suffix not in {".png", ".pdf", ".woff2", ".webm"}:
         text = path.read_text(encoding="utf-8", errors="replace")
         if any(re.search(pattern, text) for pattern in patterns):
             errors.append(f"Possible secret in {name} (value withheld)")

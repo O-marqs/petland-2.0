@@ -1,0 +1,178 @@
+{
+  "captured_at": "2026-10-01T19:10:37.175Z",
+  "version": "3.0.0-rc.1",
+  "origin": "https://localhost:8443",
+  "database": "petland_reset_46046370313f4153bc3c841aec78444c_demo",
+  "synthetic": true,
+  "preparation": "Ordinary API: synthetic five-minute service, minute steps and full-day exception; passwords never filmed. Future impact target booked by customer API.",
+  "fake_clock": false,
+  "stories": [
+    "customer: create pet, review and confirm",
+    "employee: arrive, private note, start and complete",
+    "customer: public history without private note",
+    "admin: indicators, non-mutating blocked impact and audit"
+  ],
+  "duration_seconds": 185.01,
+  "appointment_id": "d23e94b4-14ae-4530-a9dc-53042b4936ae",
+  "future_appointment_id": "80ba1998-1951-443f-9560-091a9ff4031a",
+  "chapters": [
+    {
+      "at_seconds": 1.9,
+      "caption": "PetLand 3.0: demonstração local, dados fictícios e perfis reais.",
+      "screenshot": "after-home.png"
+    },
+    {
+      "at_seconds": 8.82,
+      "caption": "Acesso com sessão do servidor; credenciais geradas ficam fora do vídeo.",
+      "screenshot": "after-session-entry.png"
+    },
+    {
+      "at_seconds": 16.71,
+      "caption": "Cliente cadastra Nala. Espécie e porte orientam os serviços; raça e nascimento são opcionais.",
+      "screenshot": "after-pet-form.png"
+    },
+    {
+      "at_seconds": 25.07,
+      "caption": "Resumo do servidor: serviço, preço e duração. O cliente confirma; a equipe é atribuída automaticamente.",
+      "screenshot": "after-booking-review.png"
+    },
+    {
+      "at_seconds": 40.57,
+      "caption": "Reserva persistida. Repetição e disputa de última vaga são verificadas na suíte concorrente.",
+      "screenshot": "after-booking-confirmed.png"
+    },
+    {
+      "at_seconds": 48.52,
+      "caption": "Equipe consulta a agenda e abre o atendimento da reserva feita pelo cliente.",
+      "screenshot": "after-employee-agenda.png"
+    },
+    {
+      "at_seconds": 56.34,
+      "caption": "Chegada e nota interna registradas. Iniciar depende do horário real da reserva.",
+      "screenshot": "after-employee-arrival.png"
+    },
+    {
+      "at_seconds": 101.34,
+      "caption": "Transição válida: chegou para em atendimento. Os instantes são definidos pelo servidor.",
+      "screenshot": "after-employee-started.png"
+    },
+    {
+      "at_seconds": 107.97,
+      "caption": "Atendimento concluído; apenas o resumo deliberadamente publicado será mostrado ao cliente.",
+      "screenshot": "after-employee-completed.png"
+    },
+    {
+      "at_seconds": 115.89,
+      "caption": "O cliente vê o histórico concluído e o resumo público. A nota interna não está no payload.",
+      "screenshot": "after-customer-history.png"
+    },
+    {
+      "at_seconds": 122.15,
+      "caption": "A mesma reserva a 320 px: conteúdo legível, sem rolagem horizontal nos critérios exercitados.",
+      "screenshot": "after-customer-mobile.png"
+    },
+    {
+      "at_seconds": 130.31,
+      "caption": "Administrador consulta indicadores derivados dos dados. Métricas da demo não representam uma loja real.",
+      "screenshot": "after-admin-management.png"
+    },
+    {
+      "at_seconds": 139.01,
+      "caption": "Fechar o dia com reserva futura revela impacto e bloqueia salvar. A reserva existente continua válida.",
+      "screenshot": "after-admin-impact.png"
+    },
+    {
+      "at_seconds": 150.27,
+      "caption": "Eventos rastreáveis. Backup restaurado em 23 tabelas na P07; publicação externa e aceite humano seguem pendentes.",
+      "screenshot": "after-admin-audit.png"
+    }
+  ],
+  "checks": [
+    {
+      "name": "after-home",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-session-entry",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-pet-form",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-booking-review",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-booking-confirmed",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-employee-agenda",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-employee-arrival",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-employee-started",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-employee-completed",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-customer-history",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-customer-mobile",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-admin-management",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-admin-impact",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    },
+    {
+      "name": "after-admin-audit",
+      "axe_violations": 0,
+      "horizontal_overflow": false
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "source_base_commit": "3dde06b133a53a1b704eb6f5113a01a85d5a741e",
+  "build_state": "P08 working tree before review commit",
+  "images": {
+    "api": {
+      "image_id": "sha256:c26f072e000b9e31a12f665f72d2c87e649c8e6c5ef12ed61973960048ffd9a5",
+      "revision": "3dde06b133a5-work"
+    },
+    "web": {
+      "image_id": "sha256:9ae88965e5d2e8a9389b73352662ed2e13179f927cfcbdc682fd8200bde895cf",
+      "revision": "3dde06b133a5-work"
+    }
+  },
+  "postprocessing": "Lossless WebM container remux, codec copy; no cuts, acceleration, overlay or audio",
+  "media_duration_seconds": 185.12
+}

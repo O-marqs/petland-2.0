@@ -1,0 +1,39 @@
+{
+  "version": "3.0.0-rc.1",
+  "python_version": "3.0.0rc1",
+  "status": "candidate_for_review",
+  "schema_revision": "0006_hardening",
+  "legacy_commit": "3cc3f898cde896b80fed587bf8c06f4aa46742f6",
+  "p07_merge": "3dde06b133a53a1b704eb6f5113a01a85d5a741e",
+  "production_ready": false,
+  "stable_release_published": false,
+  "gates": {
+    "final_product_acceptance": "pending_human_review",
+    "screen_reader_acceptance": "pending_human_review",
+    "external_provider_and_publication": "deferred_by_D10",
+    "off_host_backup_and_key_custody": "deferred_by_D10",
+    "production_RPO_RTO": "deferred_by_D10",
+    "historical_import": "dispensed_by_D08_D12"
+  },
+  "assets": [
+    "docs/case/README.md",
+    "docs/case/index.html",
+    "docs/case/transcript.md",
+    "docs/case/media/before-login.png",
+    "docs/case/media/before-booking.png",
+    "docs/case/media/before-provenance.json",
+    "docs/case/media/after-login.png",
+    "docs/case/media/after-booking-review.png",
+    "docs/case/media/after-employee-completed.png",
+    "docs/case/media/after-customer-mobile.png",
+    "docs/case/media/after-admin-impact.png",
+    "docs/case/media/petland-3.0-demo.webm",
+    "docs/case/media/petland-3.0-demo.vtt",
+    "docs/case/media/capture.json",
+    "docs/architecture/data-model.md",
+    "docs/architecture/release-diagrams.md",
+    "docs/release/quality-report.md",
+    "docs/release/3.0.0-rc.1.md",
+    "docs/runbooks/release.md"
+  ]
+}

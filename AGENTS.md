@@ -2,7 +2,7 @@
 
 ## Objetivo e fontes
 
-Uma loja, demonstração de portfólio, três perfis. Leia `docs/implementation/progress.md` antes de trabalhar; não recrie entregas concluídas. Fontes oficiais: `docs/product/PetLand_3.0_Plano_Consolidado.md` (principal técnica) e `docs/ux/PetLand_3.0_Caderno_UX.pdf` (visual). Preserve esses arquivos íntegros. Autorizações em `docs/implementation/P01-request.txt`, `P02-request.txt`, `P03-request.txt`, `P04-request.txt`, `P05-request.txt`, `P06-request.txt` e `P07-request.txt`; decisões atuais em `docs/product/decisions.md` e `docs/adr/README.md`.
+Uma loja, demonstração de portfólio, três perfis. Leia `docs/implementation/progress.md` antes de trabalhar; não recrie entregas concluídas. Fontes oficiais: `docs/product/PetLand_3.0_Plano_Consolidado.md` (principal técnica) e `docs/ux/PetLand_3.0_Caderno_UX.pdf` (visual). Preserve esses arquivos íntegros. Autorizações em `docs/implementation/P01-request.txt` a `P08-request.txt`; decisões atuais em `docs/product/decisions.md` e `docs/adr/README.md`.
 
 ## Arquitetura e código
 
@@ -39,3 +39,5 @@ Respeite roadmap/gates. Decisões D01–D11 e recomendações complementares apr
 P07 expressamente autorizada após merge P06 `e90e17a`; trabalho em `petland-3.0-p07`, base do PR `petland-3.0-p04`. Leia `P07-request.txt`, ADR-014 e runbook operations-recovery antes de alterar ferramentas offline. A autorização de avanço prevalece sobre a orientação anterior de não iniciar P07 automaticamente. Aceite humano com leitor de tela permanece pendente; não inventar aprovação. D08/D12 dispensam importação histórica; D10 adia publicação/provedor externo. Demo somente em namespace/banco/volume isolados, nunca semear desenvolvimento ou produção. Reset/restore não sobrescrevem origem; ativar cópia somente após reconciliação. Não imprimir/versionar senhas, chaves, tokens ou dump em claro. P08 não começa automaticamente.
 
 Em caso de problema de Docker, a orientação inicial era parar e informar o ajuste. O usuário posteriormente autorizou expressamente a recuperação local do Docker/WSL e o reinício do computador para retomar o trabalho. Essa autorização prevalece: diagnosticar e recuperar os serviços preservando volumes, imagens e dados; não fazer reset de fábrica ou apagar dados.
+
+P08 expressamente autorizada após merge P07 `3dde06b`; branch `petland-3.0-p08`, base do PR P04. Autorização prevalece sobre a orientação anterior de não começar P08 automaticamente. Candidata 3.0.0-rc.1 para revisão, conforme ADR-015: ler case, candidate.json e runbook release. Preservar proveniência histórica e distinguir template isolado de fluxo legado; depois/vídeo somente da aplicação real com dados fictícios identificados. Preview serve só pasta pública no loopback; não expor raiz/.local. Ferramentas de release não concedem aceite. Gates humano final/leitor de tela e D10 permanecem pendentes, sem tag/release estável/publicação automática ou expansão de escopo presumida.
