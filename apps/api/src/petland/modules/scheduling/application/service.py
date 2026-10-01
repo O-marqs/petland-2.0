@@ -44,8 +44,7 @@ class Scheduling:
 
     @staticmethod
     def live_resources(store: ScheduleStore) -> list[Resource]:
-        workers = {w.id for w in store.workers()}
-        return [r for r in store.resources() if r.active and r.user_id in workers]
+        return store.resources(eligible_only=True)
 
     def settings(self, actor: Actor) -> tuple[Configuration, list[Resource], list[Worker]]:
         actor.require("establishment:manage")
@@ -296,12 +295,15 @@ class Scheduling:
                 config = store.configuration()
                 if configuration_version != config.version:
                     raise BusinessError("OFFER_CHANGED", 409)
-                store.validate_pet(owner, pet_id, offer)
+                if operation != "book":
+                    store.validate_pet(owner, pet_id, offer)
                 day = starts_at.astimezone(ZoneInfo(config.timezone)).date()
                 if starts_at not in candidates(config, day, now):
                     raise BusinessError("SLOT_UNAVAILABLE", 409)
                 existing = store.appointments(
-                    starts_at - timedelta(days=2), starts_at + timedelta(days=2)
+                    starts_at - timedelta(minutes=offer.buffer_before_minutes),
+                    starts_at
+                    + timedelta(minutes=offer.duration_minutes + offer.buffer_after_minutes),
                 )
                 resource = allocate(
                     config,

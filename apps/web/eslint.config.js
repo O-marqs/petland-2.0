@@ -17,5 +17,6 @@ export default tseslint.config(
       'no-restricted-imports': ['error', { patterns: ['**/features/*/internal/*'] }],
     },
   },
+  { files: ['scripts/*.mjs'], languageOptions: { globals: { ...globals.browser, ...globals.node, webVitals: 'readonly' } } },
   { files: ['src/shared/ui/**/*.{ts,tsx}'], rules: { 'no-restricted-imports': ['error', { patterns: ['**/features/**', '**/app/**'] }] } },
 );

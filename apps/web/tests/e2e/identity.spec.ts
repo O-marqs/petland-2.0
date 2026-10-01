@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { expect, test, type APIRequestContext, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { staffCare } from './care-helpers';
+import { keyboardAndSemantics } from './hardening-helpers';
 
 // Synthetic, local-only demonstration identities. Never a production seed/default credential.
 const password = 'Passeio sintético no parque 2026!';
@@ -66,6 +67,7 @@ test('customer signs up, verifies actual SMTP message, logs in, recovers and rev
   await expect(page).toHaveURL(/\/app$/);
   await page.getByRole('link', { name: 'Minha conta', exact: true }).first().click();
   await expect(page.getByText(email, { exact: true })).toBeVisible();
+  await keyboardAndSemantics(page, 'customer');
   await expect(page.getByText('Esta sessão', { exact: true })).toBeVisible();
   await accessibility(page);
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
@@ -128,6 +130,7 @@ test('administrator provisions through email, invites employee, changes roles an
   await login(page, adminEmail, adminPassword);
   await page.goto('/gestao/acessos');
   await accessibility(page);
+  await keyboardAndSemantics(page, 'admin');
   const staffEmail = `p02-equipe-${Date.now()}@example.com`;
   await page.getByLabel('E-mail da pessoa convidada (obrigatório)').fill(staffEmail);
   await page.getByLabel('Sua senha atual (obrigatório)').fill(adminPassword);
@@ -145,6 +148,7 @@ test('administrator provisions through email, invites employee, changes roles an
     await expect(staff.getByText('Convite aceito. Entre para acessar sua área.')).toBeVisible();
     await login(staff, staffEmail);
     await expect(staff).toHaveURL(/operacao$/);
+    await keyboardAndSemantics(staff, 'employee');
     expect((await staff.request.get('/api/v1/management/users')).status()).toBe(403);
     await staff.setViewportSize({ width: 390, height: 844 });
     await accessibility(staff);
@@ -162,9 +166,8 @@ test('administrator provisions through email, invites employee, changes roles an
     const target = page.getByRole('button', { name: `Gerenciar ${staffName}`, exact: true });
     // Follow the rendered pagination, including on a local database reused across runs.
     for (let i = 0; i < 50 && !(await target.count()); i++) {
-      const firstName = await page.getByRole('button', { name: /^Gerenciar / }).first().getAttribute('aria-label');
       await page.getByRole('button', { name: 'Próxima', exact: true }).click();
-      await expect(page.getByRole('button', { name: /^Gerenciar / }).first()).not.toHaveAttribute('aria-label', firstName!);
+      await expect(page.getByText(`Página ${i + 2}`, { exact: true })).toBeVisible();
     }
     await expect(page.getByRole('button', { name: `Gerenciar ${staffName}` })).toBeVisible();
     await page.getByRole('button', { name: `Gerenciar ${staffName}` }).click();

@@ -1,0 +1,108 @@
+{
+  "measured_at": "2026-10-01T16:13:56.905126+00:00",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "processor": "",
+  "logical_cpus": 12,
+  "python": "3.13.15",
+  "api_workers": 2,
+  "sql_profile": false,
+  "dataset": {
+    "appointments": 100000,
+    "customers": 2000,
+    "pets": 2000,
+    "employees": 5,
+    "historical_days": 1000,
+    "audit_records": 100000,
+    "completed_percent": 80,
+    "cancelled_percent": 10,
+    "no_show_percent": 10
+  },
+  "method": "Local uvicorn workers as reported, default DB pool 5+5 per worker, HTTP keep-alive, 20 distinct sessions per scenario; closed-loop, 3 read warmups, nearest-rank percentiles; login/CSRF setup and SMTP delivery excluded; booking commits include outbox.",
+  "results": {
+    "catalog": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 131.3,
+      "p95_ms": 179.96,
+      "max_ms": 250.1,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "customer_history": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 185.01,
+      "p95_ms": 262.99,
+      "max_ms": 352.65,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "staff_agenda": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 216.85,
+      "p95_ms": 304.8,
+      "max_ms": 367.88,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "admin_metrics_month": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 201.33,
+      "p95_ms": 259.99,
+      "max_ms": 331.65,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "admin_audit_month": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 176.07,
+      "p95_ms": 265.09,
+      "max_ms": 305.31,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "booking": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 440.05,
+      "p95_ms": 775.91,
+      "max_ms": 1091.59,
+      "statuses": {
+        "201": 200
+      },
+      "errors": {},
+      "target_ms": 800,
+      "warmup_errors": 0,
+      "passed": true
+    }
+  },
+  "passed": true
+}

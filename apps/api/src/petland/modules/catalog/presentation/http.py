@@ -54,7 +54,7 @@ def catalog_router(service: Catalog, auth: HttpIdentity) -> APIRouter:
     def public_list(
         species_id: str | None = Query(default=None, max_length=16),
         size: Size | None = None,
-        offset: int = Query(default=0, ge=0),
+        offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> ServicePage:
         items, total = service.search(None, species_id, size, offset, limit)
@@ -67,7 +67,7 @@ def catalog_router(service: Catalog, auth: HttpIdentity) -> APIRouter:
     @router.get("/operations/services", response_model=ServicePage)
     def staff_list(
         actor: User,
-        offset: int = Query(default=0, ge=0),
+        offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> ServicePage:
         items, total = service.search(actor, None, None, offset, limit)

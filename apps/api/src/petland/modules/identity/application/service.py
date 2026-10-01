@@ -95,11 +95,11 @@ class IdentityService:
     def authenticate(self, raw: str | None) -> tuple[User, Session]:
         now = self.clock()
         with self.uow() as work:
-            session = work.store.session(self.tokens.digest(raw)) if raw else None
-            if not session or not session.valid(now) or session.user_id is None:
+            context = work.store.authenticated_session(self.tokens.digest(raw)) if raw else None
+            if not context:
                 raise IdentityError("AUTH_REQUIRED", 401)
-            user = work.store.user(user_id=session.user_id)
-            if not user or user.status != "ACTIVE":
+            user, session = context
+            if not session.valid(now) or user.status != "ACTIVE":
                 raise IdentityError("AUTH_REQUIRED", 401)
             session.last_seen_at = now
             session.idle_expires_at = min(session.expires_at, now + timedelta(minutes=30))

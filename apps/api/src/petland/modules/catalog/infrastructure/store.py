@@ -72,11 +72,39 @@ class PostgresCatalog:
     def get(self, service_id: UUID, lock: bool = False) -> Service:
         if lock:
             lock_schedule(self.session)
-        query = select(ServiceRecord).where(ServiceRecord.id == service_id)
-        row = self.session.scalar(query.with_for_update(read=not lock))
-        if not row:
+        rows = self.session.execute(
+            select(ServiceRecord, OptionRecord, ServiceSpeciesRecord.species_id)
+            .outerjoin(OptionRecord)
+            .outerjoin(ServiceSpeciesRecord)
+            .where(ServiceRecord.id == service_id)
+            .order_by(OptionRecord.size, ServiceSpeciesRecord.species_id)
+            .with_for_update(read=not lock, of=ServiceRecord)
+        ).all()
+        if not rows:
             raise BusinessError("NOT_FOUND", 404)
-        return self.values([row])[0]
+        row = rows[0][0]
+        options = {
+            option.size: Option(
+                Size(option.size),
+                option.price,
+                option.duration_minutes,
+                option.buffer_before_minutes,
+                option.buffer_after_minutes,
+            )
+            for _, option, _ in rows
+            if option is not None
+        }
+        return Service(
+            row.name,
+            row.description,
+            sorted({species for _, _, species in rows if species is not None}),
+            list(options.values()),
+            row.active,
+            row.created_at,
+            row.updated_at,
+            row.id,
+            row.version,
+        )
 
     def list(
         self, public: bool, species_id: str | None, size: Size | None, offset: int, limit: int

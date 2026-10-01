@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from '../../shared/lib/validation';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { Button } from '../../shared/ui/Button';
 import { Input } from '../../shared/ui/Input';

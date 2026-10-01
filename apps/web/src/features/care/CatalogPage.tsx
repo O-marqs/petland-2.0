@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z } from '../../shared/lib/validation';
 import { Clock3, Plus, Sparkles } from 'lucide-react';
 import {
   careApi,
@@ -384,64 +384,68 @@ export default function CatalogPage({ staff = false }: { staff?: boolean }) {
           {species.isError && (
             <LoadError error={species.error} retry={() => void species.refetch()} />
           )}
-          {list.isPending ? (
-            <Skeleton label="Carregando serviços" />
-          ) : list.isError ? (
-            <LoadError error={list.error} retry={() => void list.refetch()} />
-          ) : (
-            <>
-              {list.data.items.length === 0 ? (
-                <EmptyState
-                  title={
-                    staff ? 'Seu catálogo começa aqui.' : 'Nenhum serviço disponível neste momento.'
-                  }
-                >
-                  {staff
-                    ? 'Cadastre os serviços com preço e duração por porte. Ative-os para exibir no catálogo.'
-                    : speciesId || size
-                      ? 'Tente outra espécie ou porte.'
-                      : 'Os serviços aparecerão aqui quando forem disponibilizados pela equipe.'}
-                </EmptyState>
-              ) : (
-                <ul className="care-cards service-cards">
-                  {list.data.items.map((s) => (
-                    <li className="service-card" key={s.id}>
-                      <div className="pet-card-top">
-                        <span className="service-mark">
-                          <Sparkles aria-hidden="true" />
-                        </span>
-                        {staff && <Badge>{s.active ? 'ATIVO' : 'INATIVO'}</Badge>}
-                      </div>
-                      <h2>{s.name}</h2>
-                      <p>{s.description || 'Condições para cada porte, com clareza.'}</p>
-                      <small>
-                        {s.species_ids
-                          .map((id) => species.data?.find((x) => x.id === id)?.name || id)
-                          .join(' · ')}
-                      </small>
-                      <Prices service={s} />
-                      {staff ? (
-                        <Button
-                          variant="secondary"
-                          onClick={() => {
-                            setEditor(s);
-                            setSaved(false);
-                          }}
-                        >
-                          Editar {s.name}
-                        </Button>
-                      ) : (
-                        <Link className="button button--secondary" to={'/servicos/' + s.id}>
-                          Ver detalhes de {s.name}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Pagination offset={offset} total={list.data.total} change={setOffset} />
-            </>
-          )}
+          <div className="care-stack catalog-results" aria-busy={list.isFetching}>
+            {list.isPending ? (
+              <Skeleton label="Carregando serviços" />
+            ) : list.isError ? (
+              <LoadError error={list.error} retry={() => void list.refetch()} />
+            ) : (
+              <>
+                {list.data.items.length === 0 ? (
+                  <EmptyState
+                    title={
+                      staff
+                        ? 'Seu catálogo começa aqui.'
+                        : 'Nenhum serviço disponível neste momento.'
+                    }
+                  >
+                    {staff
+                      ? 'Cadastre os serviços com preço e duração por porte. Ative-os para exibir no catálogo.'
+                      : speciesId || size
+                        ? 'Tente outra espécie ou porte.'
+                        : 'Os serviços aparecerão aqui quando forem disponibilizados pela equipe.'}
+                  </EmptyState>
+                ) : (
+                  <ul className="care-cards service-cards">
+                    {list.data.items.map((s) => (
+                      <li className="service-card" key={s.id}>
+                        <div className="pet-card-top">
+                          <span className="service-mark">
+                            <Sparkles aria-hidden="true" />
+                          </span>
+                          {staff && <Badge>{s.active ? 'ATIVO' : 'INATIVO'}</Badge>}
+                        </div>
+                        <h2>{s.name}</h2>
+                        <p>{s.description || 'Condições para cada porte, com clareza.'}</p>
+                        <small>
+                          {s.species_ids
+                            .map((id) => species.data?.find((x) => x.id === id)?.name || id)
+                            .join(' · ')}
+                        </small>
+                        <Prices service={s} />
+                        {staff ? (
+                          <Button
+                            variant="secondary"
+                            onClick={() => {
+                              setEditor(s);
+                              setSaved(false);
+                            }}
+                          >
+                            Editar {s.name}
+                          </Button>
+                        ) : (
+                          <Link className="button button--secondary" to={'/servicos/' + s.id}>
+                            Ver detalhes de {s.name}
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <Pagination offset={offset} total={list.data.total} change={setOffset} />
+              </>
+            )}
+          </div>
           {!staff && (
             <div className="catalog-note">
               <PawNote />

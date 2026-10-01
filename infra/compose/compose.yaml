@@ -35,6 +35,7 @@ services:
       DATABASE_URL: postgresql+psycopg://petland_app:${APP_DATABASE_PASSWORD}@postgres:5432/petland
       PUBLIC_ORIGIN: http://localhost:5173
       SMTP_HOST: mailpit
+      WEB_CONCURRENCY: "2"
     ports: ["127.0.0.1:8000:8000"]
     depends_on:
       mailpit: { condition: service_started }
@@ -55,6 +56,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+  benchmark:
+    profiles: [quality]
+    build: { context: ../.., dockerfile: infra/docker/benchmark.Dockerfile }
+    environment:
+      APP_ENV: test
+      TEST_DATABASE_URL: postgresql+psycopg://petland_test:${TEST_DATABASE_PASSWORD}@test-postgres:5432/petland_test
+    volumes: ["../../.local/benchmarks:/evidence"]
+    depends_on:
+      test-postgres: { condition: service_healthy }
   test-postgres:
     image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
     profiles: [quality]

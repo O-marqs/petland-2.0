@@ -120,7 +120,7 @@ def customer_router(service: Customers, auth: HttpIdentity) -> APIRouter:
     def search(
         actor: User,
         q: str = Query(default="", max_length=100),
-        offset: int = Query(default=0, ge=0),
+        offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> CustomerPage:
         items, total = service.search(actor, q.strip(), offset, limit)

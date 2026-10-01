@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05]
+    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06]
 permissions:
   contents: read
 concurrency:
@@ -57,6 +57,10 @@ jobs:
           uv export --project apps/api --frozen --no-dev --no-emit-project --format requirements-txt -o /tmp/petland-requirements.txt
           uv run --project apps/api pip-audit -r /tmp/petland-requirements.txt --disable-pip --no-deps
           pnpm audit --prod --audit-level high
+      - name: RNF02 isolated API benchmark, 100k appointments and 20 sessions
+        run: |
+          uv run --project apps/api python scripts/benchmark_api.py --output /tmp/petland-api-benchmark.json
+          python -c "from pathlib import Path; print(Path('/tmp/petland-api-benchmark.json').read_text())"
   browser:
     needs: checks
     runs-on: ubuntu-latest

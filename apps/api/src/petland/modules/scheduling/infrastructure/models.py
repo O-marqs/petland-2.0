@@ -2,7 +2,15 @@ from datetime import datetime
 from typing import Any
 from uuid import UUID
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, ForeignKeyConstraint, String, text
+from sqlalchemy import (
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    ForeignKeyConstraint,
+    Index,
+    String,
+    text,
+)
 from sqlalchemy.dialects.postgresql import JSONB, ExcludeConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -30,6 +38,13 @@ class ResourceRecord(Base):
 class AppointmentRecord(Base):
     __tablename__ = "appointments"
     __table_args__ = (
+        Index("ix_appointments_occupied_end", "occupied_end_at"),
+        Index(
+            "ix_appointments_open_start",
+            "occupied_start_at",
+            postgresql_where=text("status IN ('ARRIVED','IN_PROGRESS')"),
+        ),
+        Index("ix_appointments_customer_time", "customer_id", text("starts_at DESC"), "id"),
         ForeignKeyConstraint(["pet_id", "customer_id"], ["pets.id", "pets.customer_id"]),
         CheckConstraint(
             "status IN ('BOOKED','ARRIVED','IN_PROGRESS','COMPLETED','CANCELLED','NO_SHOW')",

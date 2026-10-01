@@ -26,3 +26,5 @@ Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. 
 
 - [0007 — Cadastros, pets e ofertas por porte](0007-p03-customers-pets-catalog.md): decisões do pedido P03, vínculo, propriedade, preços/duração e evolução para P04.
 - [0012 — Operação e gestão P05](0012-p05-operations.md): estados, atrasos, notas, privacidade, histórico, indicadores e auditoria.
+
+- [0013 — Hardening e verificação P06](0013-p06-hardening.md): agregações, índices, proteção HTTP, foco e medições reproduzíveis.

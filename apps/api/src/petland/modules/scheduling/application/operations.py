@@ -1,6 +1,5 @@
 import hashlib
 import json
-from collections import Counter
 from collections.abc import Callable
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, replace
@@ -11,7 +10,6 @@ from zoneinfo import ZoneInfo
 from petland.modules.identity.public import Actor
 from petland.modules.scheduling.application.ports import ScheduleStore
 from petland.modules.scheduling.domain.models import (
-    OCCUPYING,
     STATUSES,
     Appointment,
     Event,
@@ -336,33 +334,20 @@ class Operations:
     def metrics(self, actor: Actor, first: date, last: date) -> Metrics:
         with self.store() as store:
             store.actor(actor.id).require("reporting:read")
-            store.lock()
+            store.lock(shared=True)
             config = store.configuration()
             start, end = self.interval(config.timezone, first, last)
-            rows = store.period_appointments(start, end)
-            cohort = [a for a in rows if start <= a.starts_at < end]
-            workers = {w.id for w in store.workers()}
-            capacity = available_minutes(
-                config, [r for r in store.resources() if r.user_id in workers], start, end
-            )
-            occupied = sum(
-                max(
-                    0,
-                    (min(end, a.occupied_end_at) - max(start, a.occupied_start_at)).total_seconds()
-                    / 60,
-                )
-                for a in rows
-                if a.status in OCCUPYING
-            )
-            counts = Counter(a.status for a in cohort)
+            totals = store.period_totals(start, end)
+            capacity = available_minutes(config, store.resources(eligible_only=True), start, end)
+            occupied = totals.occupied_minutes
             return Metrics(
                 first,
                 last,
                 config.timezone,
                 self.clock(),
-                len(cohort),
-                {state: counts[state] for state in sorted(STATUSES)},
-                dict(Counter(a.offer.service_name for a in cohort)),
+                totals.total,
+                {state: totals.by_status.get(state, 0) for state in sorted(STATUSES)},
+                totals.by_service,
                 occupied,
                 capacity,
                 round(100 * occupied / capacity, 2) if capacity else None,

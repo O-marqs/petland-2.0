@@ -49,6 +49,7 @@ def main() -> None:
             "e2e",
             "bootstrap-admin",
             "prune-identity",
+            "benchmark",
         ],
     )
     parser.add_argument("--email", help="Destination of the first administrator invitation")
@@ -117,6 +118,9 @@ def main() -> None:
         )
     elif command == "up":
         run(*compose, "up", "-d", "--build", "--wait", "web", env=env)
+    elif command == "benchmark":
+        run(*compose, "--profile", "quality", "up", "-d", "--wait", "test-postgres", env=env)
+        run(*compose, "--profile", "quality", "run", "--rm", "--build", "benchmark", env=env)
     elif command == "down":
         run(*compose, "--profile", "quality", "down", env=env)
     elif command == "migrate":

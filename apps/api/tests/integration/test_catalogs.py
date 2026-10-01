@@ -271,11 +271,19 @@ def test_catalog_public_offers_filter_exact_money_inactivation_and_versions(crm,
     assert client.get(public).json()["total"] == 0
     assert client.get(public + "/" + service["id"]).status_code == 404
     assert mutate(client, "PUT", path, {**SERVICE, "version": 1}).status_code == 409
-    assert mutate(client, "PUT", path, {**SERVICE, "version": 2}).status_code == 200
+    assert (
+        mutate(
+            client, "PUT", path, {**SERVICE, "species_ids": ["DOG", "CAT"], "version": 2}
+        ).status_code
+        == 200
+    )
     account(crm, "customer@example.com")
     assert client.get("/api/v1/operations/services").status_code == 403
     assert mutate(client, "POST", "/operations/services", SERVICE).status_code == 403
-    assert client.get(public + "/" + service["id"]).status_code == 200
+    detail = client.get(public + "/" + service["id"]).json()
+    assert detail["species_ids"] == ["CAT", "DOG"]
+    assert len(detail["options"]) == 2
+    assert {o["price"] for o in detail["options"]} == {"80.25", "120.50"}
     with identity_engine.connect() as conn:
         assert (
             conn.execute(

@@ -1,7 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import CheckConstraint, ForeignKey, Index, String
+from sqlalchemy import CheckConstraint, ForeignKey, Index, String, text
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.types import DateTime
 
@@ -58,7 +58,10 @@ class TokenRecord(Base):
 
 class AuditRecord(Base):
     __tablename__ = "audit_events"
-    __table_args__ = (Index("ix_audit_events_target_time", "target_id", "occurred_at"),)
+    __table_args__ = (
+        Index("ix_audit_events_target_time", "target_id", "occurred_at"),
+        Index("ix_audit_events_time", text("occurred_at DESC"), "id"),
+    )
     id: Mapped[UUID] = mapped_column(primary_key=True)
     actor_user_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"), index=True)
     target_id: Mapped[UUID | None]

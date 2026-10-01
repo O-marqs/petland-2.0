@@ -47,6 +47,7 @@ O script carrega `.env` sem exibir valores e preserva overrides explícitos do p
 | `python scripts/dev.py web` | Vite com proxy de mesma origem |
 | `python scripts/dev.py lint` | Lint, format, tipos, arquitetura, estado ativo, contratos e build |
 | `python scripts/dev.py test` | PostgreSQL de teste + pytest obrigatório + Vitest |
+| `python scripts/dev.py benchmark` | Mede leituras/reservas com 100 mil agendamentos em banco efêmero isolado |
 | `python scripts/dev.py check` | Lint e testes completos |
 | `python scripts/dev.py e2e` | Instala Chromium e executa Playwright contra aplicação já iniciada |
 | `python scripts/dev.py bootstrap-admin --email pessoa@example.com` | Emite convite inicial, apenas enquanto não há administrador ativo e verificado |

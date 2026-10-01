@@ -208,7 +208,7 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
         def list_appointments(
             actor: User,
             customer_id: UUID | None = None,
-            offset: int = Query(default=0, ge=0),
+            offset: int = Query(default=0, ge=0, le=100000),
             limit: int = Query(default=20, ge=1, le=100),
             pet_id: UUID | None = None,
             status: Literal["BOOKED", "ARRIVED", "IN_PROGRESS", "COMPLETED", "CANCELLED", "NO_SHOW"]

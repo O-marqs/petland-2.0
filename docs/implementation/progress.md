@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P05 — Operação e gestão, implementada em 29/09/2026. P01–P04 preservadas; P06–P08 continuam pendentes. Veja [evidências P05](../evidence/P05.md).
+**Fase:** P06 — Qualidade e UX, em validação em 01/10/2026. P05 integrada pelo usuário no PR #5; P01–P05 preservadas. P07–P08 não iniciadas. Veja [evidências P06](../evidence/P06.md).
 
-**Branch:** `petland-3.0-p05`, criada de `70bce180a1c1b5edc2d2e8aa5b5c561819b7a111` da `petland-3.0-p04`. PR incremental com base P04; sem merge. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch:** `petland-3.0-p06`, criada de `679eae5529598b39151a1cacf6462a5db134166b` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -25,7 +25,8 @@
 | PL3-15 | Notas e histórico, RF09/RNF01 | Implementado; autoria, append-only, visibilidade explícita, resumo próprio sem notas internas |
 | PL3-16 | Gestão/configuração, RF10/RF07 | Implementado; impacto protege execução aberta, calendário até meia-noite, identificação pública e gestão existente integrada |
 | PL3-17 | Indicadores/auditoria, RF11 | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada |
-| PL3-18 a PL3-21 | P06–P08 | Pendentes; revisão transversal de qualidade, preparação e publicação conforme decisões futuras |
+| PL3-18 | P06, RNF01–04/06/07 | Implementado; regressão e medições locais aprovadas, revisão/CI e aceite humano com leitor de tela pendentes |
+| PL3-19 a PL3-21 | P07–P08 | Pendentes; preparação e publicação conforme decisões futuras |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -53,9 +54,9 @@ Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `
 
 Decisões D01–D11 respondidas no pedido P03; pontos incompletos seguem as recomendações por autorização expressa. Registro vigente em docs/product/decisions.md. D08 dispensa migração de dados legados; D10 adia publicação/provedor.
 
-Próximo card: **PL3-18**, fase P06, revisão transversal de qualidade e UX. P05 entrega a execução e gestão usando o protocolo do [ADR-003](../adr/0003-scheduling.md) e as regras do [ADR-012](../adr/0012-p05-operations.md). A revisão completa de desempenho, segurança, teclado/leitor de tela e setup limpo pertence ao gate P06. D10 mantém publicação/provedor externo adiados.
+Card atual: **PL3-18**, fase P06, revisão transversal de qualidade e UX. P05 entrega a execução e gestão usando o protocolo do [ADR-003](../adr/0003-scheduling.md) e as regras do [ADR-012](../adr/0012-p05-operations.md). A revisão completa de desempenho, segurança, teclado/leitor de tela e setup limpo pertence ao gate P06. D10 mantém publicação/provedor externo adiados. Não iniciar P07 automaticamente.
 
-Não há impedimento ambiental local pendente. Não foram realizados merge, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
+Docker recuperado após reinício autorizado do Windows em 30/09/2026; em 01/10/2026 os serviços voltaram saudáveis, preservando volumes e dados. A falha anterior do backend OTel/socket residual não reapareceu. Saltos de relógio WSL de cerca de cinco segundos foram observados; a sincronização duplicada do Ubuntu foi desabilitada e o horário alinhado ao Windows. Correções menores persistiram; não há prova de estabilidade absoluta nem de que toda contenção veio do relógio. A rodada final confirmou todas as 200 reservas, sem erros de leitura/escrita. Procedimento e reversão no [runbook de qualidade](../runbooks/quality.md). Não foram realizados reset de fábrica, merge automático, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
 
 Entrega anterior P01: `a6912886b2155a56a93c12b4b053eef7f6751ea2`. [CI desse commit aprovado](https://github.com/O-marqs/petland-2.0/actions/runs/35990830904), incluindo os jobs `checks` e `browser`. [PR #1 em rascunho](https://github.com/O-marqs/petland-2.0/pull/1), sem merge.
 
@@ -82,3 +83,11 @@ Execução integrada ao módulo scheduling, migration 0005_operations e contrato
 Validação final local: **93 Python + 12 React aprovados**, lint/tipos/arquitetura/contratos/build aprovados. **15 E2E aprovados + um skip explícito do bootstrap mobile**, com jornada completa até o histórico, payload privado protegido, gestão, calendário e revogação de acesso. Acessibilidade automatizada e reflow em celular incluídos. Compose saudável; sem problema de Docker. Regras e limites no [ADR-012](../adr/0012-p05-operations.md), [runbook](../runbooks/operations.md) e [evidências P05](../evidence/P05.md).
 
 PR incremental em rascunho sobre P04, sem merge. Resultado remoto e commit exato são registrados no PR. Próximo card PL3-18/P06; publicação continua adiada por D10.
+
+## P06 — implementação e verificação
+
+Segurança, foco/títulos, carregamento acessível, estabilidade visual, agregação/índices e redução de consultas implementados. `python scripts/dev.py check` aprovado: **101 Python + 15 React**, tipos, lint, contratos, arquitetura, migrations e build. Auditorias de dependências aprovadas. Compose final saudável e **15 E2E aprovados + um skip explícito do bootstrap mobile**, incluindo SMTP real, três perfis, jornada até histórico, dados privados, teclado e reflow. Fontes oficiais, main, tag e alterações do checkout legado conferidas e preservadas.
+
+Medição API normal com 100 mil agendamentos e 20 sessões: todas as leituras abaixo de 400 ms no p95 e 200 reservas confirmadas, p95 **775,91 ms** (meta 800 ms). Laboratório web: **9/9 amostras aprovadas**, LCP máximo 2028 ms, INP máximo 88 ms, CLS máximo 0,00119. Metas e timeouts mantidos; resultados e limites de ambiente no [registro P06](../evidence/P06.md). CI repete a carga API em Linux limpo, independentemente do relógio WSL local.
+
+Entrega para revisão em PR P06 em rascunho sobre P04; acompanhar CI do commit exato e registrar resultado remoto no próprio PR. **Aceite sonoro humano com leitor de tela nos três perfis continua pendente**; o gate P06 permanece aberto e P07 não foi iniciada. Ver [roteiro de aceite](../runbooks/quality.md).
