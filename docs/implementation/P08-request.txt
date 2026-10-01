@@ -1,0 +1,4 @@
+Autorização direta: "pode seguir para p08 então", em 01/10/2026.
+P07 integrada pelo usuário no PR #7; merge 3dde06b133a53a1b704eb6f5113a01a85d5a741e na petland-3.0-p04.
+P08 / PL3-21: preparar candidato 3.0.0-rc.1, case, antes/depois com proveniência, vídeo de jornadas reais, diagramas e relatório de qualidade, documentação e PR de revisão.
+Avanço de fase não declara aceite humano com leitor de tela nem revoga D10. Publicação/provedor externo, dados reais, tag/release estável e promoção continuam condicionados ao aceite final concreto. Não fazer merge automático, não alterar main/tag/legado ou fontes originais. Repositórios em Documents/GitHub. Autorizações anteriores de recuperação do Docker/WSL continuam vigentes.

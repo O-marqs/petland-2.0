@@ -2,9 +2,9 @@
 
 ## Estado desta entrega
 
-**Fase:** P07 — Dados e ensaio operacional local, em validação em 01/10/2026. P06 integrada pelo usuário no PR #6; P01–P06 preservadas. Aceite sonoro humano P06 pendente; avanço P07 expressamente autorizado. P08 não iniciada.
+**Fase:** P08 — candidata 3.0.0-rc.1 e case, em revisão em 01/10/2026. P07 integrada pelo usuário no PR #7; P01–P07 preservadas. P08 expressamente autorizada. Aceite final de produto e sonoro humano pendentes; publicação externa permanece adiada por D10.
 
-**Branch:** `petland-3.0-p07`, criada de `e90e17af095ffa15b13601f25448232d84f36286` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Branch:** `petland-3.0-p08`, criada de `3dde06b133a53a1b704eb6f5113a01a85d5a741e` da `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
 | Card | Escopo / requisitos | Estado e evidência |
 |---|---|---|
@@ -27,8 +27,8 @@
 | PL3-17 | Indicadores/auditoria, RF11 | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada |
 | PL3-18 | P06, RNF01–04/06/07 | Integrado pelo usuário; CI/medições aprovadas, aceite humano com leitor de tela ainda pendente |
 | PL3-19 | Mapeamento/migração condicionais | Dispensados por D08/D12; nenhum MySQL acessado ou histórico importado |
-| PL3-20 | Dados/ensaio operacional P07 | Demo, seed/reset, TLS, backup/restore e três perfis verificados localmente; CI/revisão pendentes, publicação externa adiada por D10 |
-| PL3-21 | P08, release/case | Pendente; não iniciar automaticamente |
+| PL3-20 | Dados/ensaio operacional P07 | PR #7 integrado; checks/browser/operations aprovados; demo e restore comprovados, publicação externa adiada D10 |
+| PL3-21 | P08, release/case | Candidata, case, antes/depois, vídeo, diagramas e pacote local preparados; aceite final/publicação estável pendentes |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -56,7 +56,7 @@ Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `
 
 Decisões D01–D11 respondidas no pedido P03; pontos incompletos seguem as recomendações por autorização expressa. Registro vigente em docs/product/decisions.md. D08 dispensa migração de dados legados; D10 adia publicação/provedor.
 
-Card atual: **PL3-19–20**, fase P07 autorizada em [P07-request.txt](P07-request.txt). Continuidade após merge P06 não comprova aceite sonoro humano; essa pendência acompanha o release. Dados sintéticos e ensaio local seguem [ADR-014](../adr/0014-p07-operations.md). D08/D12 dispensam migração; D10 mantém provedor, publicação e backup externo adiados. Não iniciar P08 automaticamente.
+Card atual: **PL3-21**, fase P08 autorizada em [P08-request.txt](P08-request.txt), sobre P07 integrada. Continuidade não comprova aceite sonoro/final humano. [ADR-015](../adr/0015-p08-release-case.md) mantém candidata explícita e [procedimento de revisão](../runbooks/release.md). D08/D12 dispensam migração; D10 mantém provedor, publicação e backup externo adiados. Não publicar/taguear/promover ou iniciar escopo adicional automaticamente.
 
 Docker recuperado após reinício autorizado do Windows em 30/09/2026; em 01/10/2026 os serviços voltaram saudáveis, preservando volumes e dados. A falha anterior do backend OTel/socket residual não reapareceu. Saltos de relógio WSL de cerca de cinco segundos foram observados; a sincronização duplicada do Ubuntu foi desabilitada e o horário alinhado ao Windows. Correções menores persistiram; não há prova de estabilidade absoluta nem de que toda contenção veio do relógio. A rodada final confirmou todas as 200 reservas, sem erros de leitura/escrita. Procedimento e reversão no [runbook de qualidade](../runbooks/quality.md). Não foram realizados reset de fábrica, merge automático, deploy, migração histórica, acesso ao MySQL ou criação de recurso pago.
 
@@ -100,4 +100,14 @@ Demo sintética isolada, transação de seed e UUIDs estáveis, reset preservand
 
 Backup custom autenticado/criptografado e restore em banco novo, contagens/digests de todas as tabelas, ACLs e duas exclusões GiST conferidos. Cópia ativada e três perfis verificados no navegador a 320 px, depois retorno à origem. Cadastro/SMTP, capacidade, propriedade, notas privadas e idempotência persistida também verificados na cópia. CI adicionada para repetir o ensaio completo em ambiente limpo.
 
-Verificação final local aprovada: 114 testes Python + 15 React no check completo, 15 E2E + 1 skip mobile previsto, auditorias sem vulnerabilidade conhecida e nove verificações de perfis no staging. Falha de startup do destino restaura o apontamento anterior e tenta reiniciar a origem; cenário de falha verificado em teste. Resultados e limitações em [P07](../evidence/P07.md), reprodução em [runbook de recuperação](../runbooks/operations-recovery.md). Próximo passo: PR em rascunho sobre P04 e CI do commit exato. Backup continua no mesmo host; retenção/cópia externa, RPO/RTO produtivos, publicação e P08 dependem de D10 e aceite futuro. Fontes, histórico e alterações do legado preservados.
+Verificação final local aprovada: 114 testes Python + 15 React no check completo, 15 E2E + 1 skip mobile previsto, auditorias sem vulnerabilidade conhecida e nove verificações de perfis no staging. Falha de startup do destino restaura o apontamento anterior e tenta reiniciar a origem; cenário de falha verificado em teste. [CI P07 aprovada](https://github.com/O-marqs/petland-2.0/actions/runs/36905134678): checks/browser/operations, 23 tabelas reconciliadas; merge pelo usuário no PR #7 (`3dde06b`). Resultados e limitações em [P07](../evidence/P07.md), reprodução no runbook. Backup continua no mesmo host; retenção/cópia externa, RPO/RTO produtivos e publicação dependem de D10. Fontes, histórico e alterações do legado preservados.
+
+## P08 — candidata e case de revisão
+
+Versões npm/OpenAPI/factory `3.0.0-rc.1` e Python `3.0.0rc1`, contratos regenerados; nenhuma mudança de schema ou regra comercial. Case com problema/decisões/trade-offs/limites, antes histórico isolado do commit preservado, depois real, vídeo integral de 185,12 segundos sem áudio, WebVTT/transcrição, diagramas de contexto/containers/transação e DER/dicionário. Dados/identidades/serviço fictícios e preparação declarada, sem relógio simulado ou senhas filmadas.
+
+Cadastro e reserva UI → chegada/nota privada/início/conclusão UI → histórico público → gestão/impacto/auditoria: mesma reserva conferida na API; nota interna ausente do payload cliente; impacto não altera configuração/reserva. Quatorze checkpoints de captura aprovados. Origens/reset preservados, demonstração retornou ao banco anterior; smoke real novamente aprovado.
+
+Check completo local: 114 Python + 15 React, lint/tipos/contratos/build/migrations/arquitetura/scan. Player verificado a 1280/320 px: duração real, legendas, capítulos, links locais, axe/reflow e ausência de erro JavaScript. O servidor padrão sem ranges não permitia saltar capítulos; preview dedicado fixa loopback/pasta pública e ranges, agora exercitado na CI. `release.py` confere versões/artefatos, empacota árvore Git limpa com hashes/gates e verifica sem extrair; não publica, tagueia ou concede aceite.
+
+Evidências em [P08](../evidence/P08.md), [case](../case/README.md) e [qualidade](../release/quality-report.md). CI/pacote do commit exato ficam registrados no PR. Próximo gate: revisão humana de produto/leitor de tela e decisão D10 antes de release estável/publicação. Candidata não é serviço comercial nem alegação de recuperação após perda do host.

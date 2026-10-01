@@ -1,0 +1,57 @@
+WEBVTT
+
+1
+00:00:01.900 --> 00:00:08.820
+PetLand 3.0: demonstração local, dados fictícios e perfis reais.
+
+2
+00:00:08.820 --> 00:00:16.710
+Acesso com sessão do servidor; credenciais geradas ficam fora do vídeo.
+
+3
+00:00:16.710 --> 00:00:25.070
+Cliente cadastra Nala. Espécie e porte orientam os serviços; raça e nascimento são opcionais.
+
+4
+00:00:25.070 --> 00:00:40.570
+Resumo do servidor: serviço, preço e duração. O cliente confirma; a equipe é atribuída automaticamente.
+
+5
+00:00:40.570 --> 00:00:48.520
+Reserva persistida. Repetição e disputa de última vaga são verificadas na suíte concorrente.
+
+6
+00:00:48.520 --> 00:00:56.340
+Equipe consulta a agenda e abre o atendimento da reserva feita pelo cliente.
+
+7
+00:00:56.340 --> 00:01:41.340
+Chegada e nota interna registradas. Iniciar depende do horário real da reserva.
+
+8
+00:01:41.340 --> 00:01:47.970
+Transição válida: chegou para em atendimento. Os instantes são definidos pelo servidor.
+
+9
+00:01:47.970 --> 00:01:55.890
+Atendimento concluído; apenas o resumo deliberadamente publicado será mostrado ao cliente.
+
+10
+00:01:55.890 --> 00:02:02.150
+O cliente vê o histórico concluído e o resumo público. A nota interna não está no payload.
+
+11
+00:02:02.150 --> 00:02:10.310
+A mesma reserva a 320 px: conteúdo legível, sem rolagem horizontal nos critérios exercitados.
+
+12
+00:02:10.310 --> 00:02:19.010
+Administrador consulta indicadores derivados dos dados. Métricas da demo não representam uma loja real.
+
+13
+00:02:19.010 --> 00:02:30.270
+Fechar o dia com reserva futura revela impacto e bloqueia salvar. A reserva existente continua válida.
+
+14
+00:02:30.270 --> 00:03:05.010
+Eventos rastreáveis. Backup restaurado em 23 tabelas na P07; publicação externa e aceite humano seguem pendentes.

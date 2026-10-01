@@ -1,4 +1,6 @@
-# Arquitetura implementada — P01–P05
+# Arquitetura implementada — candidata P08
+
+[Contexto, containers de staging e transação](release-diagrams.md), [DER/dicionário](data-model.md). O proxy Vite abaixo é de desenvolvimento; staging P07 usa Nginx/TLS e frontend estático, conforme ADR-014. A candidata P08 mantém as regras/containers e acrescenta documentação/artefatos de revisão, sem mudança de schema.
 
 RF13; RNF05/07/09. Monorepo e monólito modular, FastAPI síncrono com psycopg/SQLAlchemy. Veja plano integral §§9–16 e ADR-001/002/003/005/007/011/012.
 

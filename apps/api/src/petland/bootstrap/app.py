@@ -68,7 +68,7 @@ def create_app(
     local = configuration.app_env in {"development", "test"}
     app = FastAPI(
         title="PetLand API",
-        version="0.1.0",
+        version="3.0.0-rc.1",
         lifespan=lifespan,
         docs_url="/api/docs" if local else None,
         redoc_url=None,

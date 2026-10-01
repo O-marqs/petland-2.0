@@ -2,14 +2,20 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P07 — Dados e ensaio operacional local.** P06 integrada pelo usuário no PR #6. Demonstração isolada com dados fictícios, servidor estático/HTTPS, seed/reset e backup criptografado com restore reconciliado. Agenda, atendimento, privacidade e gestão P02–P06 preservados. O desenvolvimento começa sem expediente/equipe semeados; a demo é iniciada explicitamente em outro banco. Publicação externa permanece adiada e aceite humano com leitor de tela continua pendente.
+**Estado atual: P08 — candidata 3.0.0-rc.1 e case de portfólio.** P07 integrada pelo usuário no PR #7. Uma loja, dados fictícios, três perfis e reserva/atendimento completos. Demonstração isolada em HTTPS e backup autenticado com recuperação comprovada. O desenvolvimento começa sem expediente/equipe semeados; demo é iniciada explicitamente em outro banco. Aceite final e leitor de tela pendentes; publicação externa adiada por D10. Candidata preparada para revisão, sem release estável/tag automática.
+
+[Case: problema, antes/depois e escolhas de engenharia](docs/case/README.md) · [Vídeo de três jornadas, 3 min 05 s](docs/case/media/petland-3.0-demo.webm) · [Transcrição](docs/case/transcript.md) · [Qualidade e métricas](docs/release/quality-report.md)
+
+![Resumo real antes de confirmar uma reserva, com pet, serviço fictício, preço e duração](docs/case/media/after-booking-review.png)
+
+Cliente cadastra pet, confere resumo e confirma. Equipe registra chegada/início/conclusão e publica resumo, preservando notas internas. Administração consulta indicadores e verifica impacto antes de mudar expediente. [Notas da candidata](docs/release/3.0.0-rc.1.md), [diagramas](docs/architecture/release-diagrams.md) e [DER](docs/architecture/data-model.md). Capturas do “antes” são templates históricos isolados, identificados no case; não representam fluxo legado executado.
 
 ## Executar localmente
 
 Requisitos: **Git**, **Docker com Compose v2** e **Python 3.11+** para o comando de desenvolvimento. O caminho somente Docker instala Python 3.13, Node 22 e dependências dentro das imagens.
 
 ```sh
-git clone --branch petland-3.0-p07 https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-p08 https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -78,6 +84,18 @@ Aplicação estática em **https://localhost:8443**, com certificado local de te
 
 Detalhes, comandos individuais e resolução de problemas: [execução local](docs/runbooks/local.md).
 
+## Revisar a candidata e assistir ao case
+
+```sh
+python scripts/release.py check
+# Depois de commit e árvore limpa, pacote local com hashes/gates:
+python scripts/release.py bundle
+# Player local com legendas; servir somente a pasta pública:
+python scripts/portfolio_preview.py
+```
+
+Player em http://127.0.0.1:8780/, sem áudio, com WebVTT/transcrição e capítulos. Nenhum segredo ou banco acompanha o ZIP; staging e antes histórico exigem clone Git. [Revisão, regravação, empacotamento e promoção](docs/runbooks/release.md). CI do commit de cada candidata fica nos checks/descrição do PR; métricas P06/P07 conservam seus ambientes/datas, sem alegação de ganho percentual frente ao 2.0.
+
 ## Organização
 
 ```text
@@ -114,4 +132,4 @@ Configuração inicial: [runbook da agenda](docs/runbooks/scheduling.md). Consis
 
 Execução e gestão: [runbook P05](docs/runbooks/operations.md), [estados, privacidade e fórmulas](docs/adr/0012-p05-operations.md).
 
-Fase atual: **P07 / PL3-19–20**, autorizada após merge P06. Migração histórica dispensada por D08/D12; provedor, backup fora do host e publicação continuam condicionados a D10. P08 não iniciada. Não há merge ou publicação automática.
+Fase atual: **P08 / PL3-21**, candidata e case autorizados após merge P07. Migração histórica dispensada por D08/D12; aceite final e leitor de tela pendentes. Provedor, backup fora do host e publicação continuam condicionados a D10. Não há merge ou publicação automática.

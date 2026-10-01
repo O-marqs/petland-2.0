@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07]
+    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08]
 permissions:
   contents: read
 concurrency:
@@ -44,6 +44,8 @@ jobs:
       - run: uv run --directory apps/api mypy
       - run: uv run --project apps/api python scripts/check_architecture.py
       - run: python scripts/check_repository.py
+      - name: Review candidate, versions and portfolio media
+        run: python scripts/release.py check
       - name: Unit, HTTP and real PostgreSQL migrations
         run: uv run --directory apps/api pytest
       - run: pnpm lint
@@ -106,6 +108,8 @@ jobs:
       - run: uv sync --project apps/api --frozen
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
+      - name: Public portfolio player, captions, chapters and local links
+        run: node apps/web/scripts/verify-portfolio.mjs
       - name: Isolated TLS staging and single migration job
         run: |
           python3 scripts/dev.py staging-init

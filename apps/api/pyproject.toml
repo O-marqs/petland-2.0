@@ -1,7 +1,7 @@
 [project]
 name = "petland-api"
-version = "0.1.0"
-description = "PetLand 3.0 modular monolith — P01 foundation"
+version = "3.0.0rc1"
+description = "PetLand 3.0 — CRM de pet shop e demonstração de portfólio"
 requires-python = ">=3.13,<3.14"
 dependencies = [
   "fastapi>=0.115,<1",

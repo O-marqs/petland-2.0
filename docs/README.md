@@ -1,5 +1,9 @@
 # Documentação PetLand 3.0
 
+- [Case P08 e jornadas filmadas](case/README.md), [player local](case/index.html), [transcrição](case/transcript.md).
+- [Notas 3.0.0-rc.1](release/3.0.0-rc.1.md), [qualidade/rastreabilidade](release/quality-report.md), [revisão e promoção](runbooks/release.md).
+- [Contexto/containers/transação](architecture/release-diagrams.md), [DER/dicionário](architecture/data-model.md).
+
 ## Fontes oficiais preservadas
 
 - [Plano consolidado integral](product/PetLand_3.0_Plano_Consolidado.md): produto, RF/RNF, RB01–RB22, arquitetura, dados, contratos e roadmap.
