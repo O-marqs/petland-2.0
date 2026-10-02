@@ -58,6 +58,15 @@ function ConfigurationForm({ initial, done }: { initial: Config; done: () => voi
           />
           <div className="care-form-grid">
             <Input
+              label="Lembrete antes do horário (minutos)"
+              type="number"
+              min={0}
+              max={10080}
+              required
+              hint="Zero desativa. 1440 envia com 24 horas de antecedência. Vale para novas reservas e reagendamentos; uma reserva feita dentro dessa janela já recebe a confirmação."
+              {...form.register('reminder_minutes', { valueAsNumber: true, required: true })}
+            />
+            <Input
               label="Tolerância para registrar falta (minutos)"
               type="number"
               min={0}
@@ -343,6 +352,12 @@ export default function CalendarPage() {
           As próximas consultas de horário usarão essa configuração.
         </Alert>
       )}
+      <div className="care-actions">
+        <Link className="button button--secondary" to="/operacao/escala">
+          Organizar equipe por data
+        </Link>
+        <Link to="/operacao/capacidade">Banheiras, mesas e capacidade física</Link>
+      </div>
       {resource ? (
         <ResourceForm
           initial={resource === 'new' ? undefined : resource}

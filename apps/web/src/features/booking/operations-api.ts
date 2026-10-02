@@ -19,6 +19,7 @@ export const actionLabels: Record<string, string> = {
   no_show: 'Registrar falta',
   cancel_exception: 'Cancelar por exceção',
   extend: 'Estender atendimento',
+  transfer: 'Transferir responsável',
   note: 'Salvar anotação',
 };
 export const eventLabels: Record<string, string> = {
@@ -31,6 +32,7 @@ export const eventLabels: Record<string, string> = {
   no_show: 'Falta registrada',
   cancel_exception: 'Cancelamento excepcional',
   extend: 'Tempo reservado ampliado',
+  transfer: 'Responsável transferido',
   note_internal: 'Nota interna adicionada',
   note_public: 'Resumo publicado para o cliente',
 };
@@ -51,6 +53,7 @@ export const operationsApi = {
       search?: string;
       resource_id?: string;
       offset?: number;
+      mine?: boolean;
     },
     signal?: AbortSignal,
   ) {
@@ -66,6 +69,49 @@ export const operationsApi = {
       await client.GET('/api/v1/operations/attendances/{appointment_id}', {
         params: { path: { appointment_id: id } },
         signal,
+      }),
+    );
+  },
+  async dashboard(date?: string, mine = true, signal?: AbortSignal) {
+    return result(
+      await client.GET('/api/v1/operations/dashboard', {
+        params: { query: { date, mine } },
+        signal,
+      }),
+    );
+  },
+  async roster(day: string, signal?: AbortSignal) {
+    return result(
+      await client.GET('/api/v1/operations/roster/{day}', { params: { path: { day } }, signal }),
+    );
+  },
+  async previewRoster(day: string, body: S['RosterInput']) {
+    return result(
+      await client.POST('/api/v1/operations/roster/{day}/impact-preview', {
+        params: { path: { day } },
+        body,
+      }),
+    );
+  },
+  async saveRoster(day: string, body: S['RosterInput']) {
+    return result(
+      await client.PUT('/api/v1/operations/roster/{day}', { params: { path: { day } }, body }),
+    );
+  },
+  async pools(signal?: AbortSignal) {
+    return result(await client.GET('/api/v1/operations/capacity', { signal }));
+  },
+  async previewPools(body: S['PoolsInput']) {
+    return result(await client.POST('/api/v1/operations/capacity/impact-preview', { body }));
+  },
+  async savePools(body: S['PoolsInput']) {
+    return result(await client.PUT('/api/v1/operations/capacity', { body }));
+  },
+  async transfer(id: string, body: S['TransferInput'], key: string) {
+    return result(
+      await client.POST('/api/v1/operations/attendances/{appointment_id}/transfer', {
+        params: { path: { appointment_id: id }, header: { 'Idempotency-Key': key } },
+        body,
       }),
     );
   },

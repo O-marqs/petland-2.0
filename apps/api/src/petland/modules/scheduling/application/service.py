@@ -14,16 +14,27 @@ from petland.modules.scheduling.domain.models import (
     OPEN_STATUSES,
     Appointment,
     Availability,
+    CapacityPool,
     Configuration,
     Event,
     Resource,
     Slot,
+    StaffDay,
+    StaffShift,
     Worker,
     allocate,
     candidates,
     fits,
+    physical_fits,
+    worker_windows,
 )
-from petland.modules.scheduling.domain.operations import AppointmentFilter, Note
+from petland.modules.scheduling.domain.operations import (
+    AppointmentFilter,
+    Communication,
+    Note,
+    Roster,
+    RosterRow,
+)
 from petland.shared.domain.errors import BusinessError
 
 
@@ -72,6 +83,9 @@ class Scheduling:
                 or (r := by_id.get(b.resource_id)) is None
                 or b.service_id not in r.service_ids
                 or not fits(config, r, b.occupied_start_at, b.occupied_end_at)
+                or not physical_fits(
+                    config, future, b.service_id, b.occupied_start_at, b.occupied_end_at, b.id
+                )
             )
         ]
 
@@ -83,6 +97,10 @@ class Scheduling:
             store.lock()
             store.actor(actor.id).require("establishment:manage")
             current = store.configuration()
+            # These are edited through separate versioned workflows, never erased by the shop form.
+            value = replace(
+                value, staff_days=current.staff_days, capacity_pools=current.capacity_pools
+            )
             if current.version != value.version:
                 raise BusinessError("STALE_VERSION", 409)
             impacted = self.impact(store, value, self.live_resources(store))
@@ -92,6 +110,101 @@ class Scheduling:
                 store.save_configuration(replace(value, version=value.version + 1))
                 store.audit(actor.id, UUID(int=1), "calendar.updated", request_id)
             return impacted
+
+    def roster(self, actor: Actor, day: date) -> Roster:
+        with self.store() as store:
+            store.actor(actor.id).require("establishment:manage")
+            config = store.configuration()
+            saved = next((r for r in config.staff_days if r.date == day), None)
+            return Roster(
+                day,
+                config.version,
+                config.timezone,
+                saved is not None,
+                saved.reason if saved else "",
+                [
+                    RosterRow(r.id, r.name, worker_windows(config, r, day))
+                    for r in store.resources(eligible_only=True)
+                    if r.active
+                ],
+            )
+
+    def set_roster(
+        self,
+        actor: Actor,
+        day: date,
+        shifts: list[StaffShift] | None,
+        reason: str,
+        version: int,
+        request_id: str,
+        preview: bool = False,
+    ) -> list[UUID]:
+        with self.store() as store:
+            store.lock()
+            store.actor(actor.id).require("establishment:manage")
+            config = store.configuration()
+            if config.version != version:
+                raise BusinessError("STALE_VERSION", 409)
+            if not reason.strip() or len(reason) > 500:
+                raise BusinessError("REASON_REQUIRED", 422)
+            resources = self.live_resources(store)
+            if shifts is not None and any(
+                s.resource_id not in {r.id for r in resources} for s in shifts
+            ):
+                raise BusinessError("INVALID_WORKER", 422)
+            days = [r for r in config.staff_days if r.date != day]
+            if shifts is not None:
+                days.append(StaffDay(day, shifts, reason.strip()))
+            value = replace(config, staff_days=days)
+            value.validate()
+            impacted = self.impact(store, value, resources)
+            if not preview:
+                if impacted:
+                    raise BusinessError("CALENDAR_IMPACT", 409)
+                store.save_configuration(replace(value, version=config.version + 1))
+                store.audit(actor.id, UUID(int=1), "roster.updated", request_id)
+            return impacted
+
+    def pools(self, actor: Actor) -> tuple[int, list[CapacityPool]]:
+        with self.store() as store:
+            store.actor(actor.id).require("establishment:manage")
+            config = store.configuration()
+            return config.version, config.capacity_pools
+
+    def set_pools(
+        self,
+        actor: Actor,
+        pools: list[CapacityPool],
+        version: int,
+        request_id: str,
+        preview: bool = False,
+    ) -> list[UUID]:
+        with self.store() as store:
+            store.lock()
+            store.actor(actor.id).require("establishment:manage")
+            config = store.configuration()
+            if version != config.version:
+                raise BusinessError("STALE_VERSION", 409)
+            value = replace(config, capacity_pools=pools)
+            value.validate()
+            for pool in pools:
+                store.validate_services(pool.service_ids)
+            impacted = self.impact(store, value, self.live_resources(store))
+            if not preview:
+                if impacted:
+                    raise BusinessError("CALENDAR_IMPACT", 409)
+                store.save_configuration(replace(value, version=config.version + 1))
+                store.audit(actor.id, UUID(int=1), "capacity.updated", request_id)
+            return impacted
+
+    def communications(
+        self, actor: Actor, assisted: bool, appointment_id: UUID
+    ) -> list[Communication]:
+        with self.store() as store:
+            store.actor(actor.id).require("booking:assist" if assisted else "customer:own")
+            owner = None if assisted else store.customer_for(actor.id, None)
+            store.get(appointment_id, owner)
+            return store.communications(appointment_id)
 
     def resource(
         self, actor: Actor, value: Resource, request_id: str, existing_id: UUID | None = None
@@ -205,7 +318,9 @@ class Scheduling:
             owner = None if assisted else store.customer_for(actor.id, None)
             appointment = store.get(appointment_id, owner)
             return appointment, [
-                e for e in store.events(appointment.id) if e.kind != "note_internal"
+                e
+                for e in store.events(appointment.id)
+                if e.kind not in {"note_internal", "transfer"}
             ]
 
     def command(
@@ -305,6 +420,17 @@ class Scheduling:
                     starts_at
                     + timedelta(minutes=offer.duration_minutes + offer.buffer_after_minutes),
                 )
+                load = store.planned_load(
+                    datetime.combine(
+                        day, datetime.min.time(), tzinfo=ZoneInfo(config.timezone)
+                    ).astimezone(UTC),
+                    datetime.combine(
+                        day + timedelta(days=1),
+                        datetime.min.time(),
+                        tzinfo=ZoneInfo(config.timezone),
+                    ).astimezone(UTC),
+                    appointment_id,
+                )
                 resource = allocate(
                     config,
                     self.live_resources(store),
@@ -313,6 +439,7 @@ class Scheduling:
                     offer,
                     starts_at,
                     appointment_id,
+                    load,
                 )
                 if resource is None:
                     raise BusinessError("SLOT_UNAVAILABLE", 409)

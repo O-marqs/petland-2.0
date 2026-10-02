@@ -50,6 +50,7 @@ export default function ManagementPage({ audit = false }: { audit?: boolean }) {
         </p>
       </header>
       <nav className="care-actions" aria-label="Gestão">
+        <Link to="/operacao">Hoje na PetLand</Link>
         <Link to="/gestao">Visão geral</Link>
         <Link to="/operacao/agenda">Abrir agenda</Link>
         <Link to="/gestao/acessos">Pessoas e acessos</Link>
@@ -220,6 +221,119 @@ export default function ManagementPage({ audit = false }: { audit?: boolean }) {
               </ul>
             )}
             <p>Atualizado em {dateTime(metrics.data.calculated_at, metrics.data.timezone)}.</p>
+          </section>
+          <section className="performance-section">
+            <span className="eyebrow">ENTENDER PARA ORGANIZAR</span>
+            <h2>Cuidados por pessoa</h2>
+            <p>
+              {metrics.data.completed_pets} pet(s) e {metrics.data.completed_customers} cliente(s)
+              distintos com atendimento concluído no recorte. Cada cuidado conta para o responsável
+              no momento da conclusão; o tempo total não é dividido entre pessoas que assumiram
+              etapas.
+            </p>
+            <p>
+              Datas seguem o início agendado. Médias usam somente concluídos com horários reais;
+              atraso mede início real menos previsto. Estes dados ajudam a planejar capacidade, sem
+              classificar pessoas.
+            </p>
+            {!metrics.data.staff.length ? (
+              <p>Nenhuma pessoa ou atendimento neste recorte.</p>
+            ) : (
+              metrics.data.staff.map((person) => (
+                <article className="performance-person" key={person.resource_id}>
+                  <div className="care-toolbar">
+                    <h3>{person.name}</h3>
+                    <Link to={'/operacao/agenda?pessoa=' + person.resource_id + '&data=' + first}>
+                      Consultar agenda →
+                    </Link>
+                  </div>
+                  <dl className="performance-facts">
+                    {[
+                      ['Reservas', person.total],
+                      ['Concluídos', person.completed],
+                      ['Cancelados', person.cancelled],
+                      ['Não compareceram', person.no_show],
+                      [
+                        'Duração real média',
+                        person.average_actual_minutes === null
+                          ? 'Sem registros'
+                          : person.average_actual_minutes.toLocaleString('pt-BR') + ' min',
+                      ],
+                      [
+                        'Atraso médio de início',
+                        person.average_delay_minutes === null
+                          ? 'Sem registros'
+                          : person.average_delay_minutes.toLocaleString('pt-BR') + ' min',
+                      ],
+                      [
+                        'Real menos previsto',
+                        person.average_deviation_minutes === null
+                          ? 'Sem registros'
+                          : person.average_deviation_minutes.toLocaleString('pt-BR') + ' min',
+                      ],
+                      [
+                        'Minutos reservados / capacidade atual',
+                        Math.round(person.occupied_minutes) +
+                          ' / ' +
+                          Math.round(person.available_minutes),
+                      ],
+                    ].map(([label, value]) => (
+                      <div key={label}>
+                        <dt>{label}</dt>
+                        <dd>{value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  {!!Object.keys(person.by_service).length && (
+                    <p>
+                      Concluídos:{' '}
+                      {Object.entries(person.by_service)
+                        .map(([name, count]) => `${name}: ${count}`)
+                        .join(' · ')}
+                    </p>
+                  )}
+                </article>
+              ))
+            )}
+          </section>
+          <section className="performance-section">
+            <h2>Previsto e realizado por serviço</h2>
+            <p>
+              Compare as médias dos mesmos cuidados concluídos para revisar a duração do catálogo.
+              Reservas canceladas ou ainda abertas não entram nas médias.
+            </p>
+            {!metrics.data.services.length ? (
+              <p>Nenhum serviço no período.</p>
+            ) : (
+              <ul className="service-performance-list">
+                {metrics.data.services.map((service) => (
+                  <li key={service.service_id + service.name}>
+                    <h3>{service.name}</h3>
+                    <span>
+                      {service.completed} concluído(s) de {service.total} reserva(s)
+                    </span>
+                    <dl>
+                      <div>
+                        <dt>Previsão média</dt>
+                        <dd>
+                          {service.average_planned_minutes === null
+                            ? 'Sem registros'
+                            : service.average_planned_minutes.toLocaleString('pt-BR') + ' min'}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Duração real média</dt>
+                        <dd>
+                          {service.average_actual_minutes === null
+                            ? 'Sem registros'
+                            : service.average_actual_minutes.toLocaleString('pt-BR') + ' min'}
+                        </dd>
+                      </div>
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         </>
       )}

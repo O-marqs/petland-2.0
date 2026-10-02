@@ -13,6 +13,9 @@ const AuthPage = lazy(() => import('../features/identity/AuthPage'));
 const AccountLayout = lazy(() => import('../features/identity/AccountLayout'));
 const AccountPage = lazy(() => import('../features/identity/AccountPage'));
 const OperationsPage = lazy(() => import('../features/booking/OperationsPage'));
+const OperationsDashboard = lazy(() => import('../features/booking/OperationsDashboard'));
+const RosterPage = lazy(() => import('../features/booking/RosterPage'));
+const CapacityPage = lazy(() => import('../features/booking/CapacityPage'));
 const AttendancePage = lazy(() => import('../features/booking/AttendancePage'));
 const ManagementPage = lazy(() => import('../features/booking/ManagementPage'));
 const AccessPage = lazy(() => import('../features/identity/AccessPage'));
@@ -88,7 +91,9 @@ export function App() {
               <Route path="operacao/clientes/:customerId/pets" element={<PetsPage />} />
               <Route path="operacao/servicos" element={<CatalogPage staff />} />
               <Route path="app/conta" element={<AccountPage />} />
-              <Route path="operacao" element={<OperationsPage />} />
+              <Route path="operacao" element={<OperationsDashboard />} />
+              <Route path="operacao/escala" element={<RosterPage />} />
+              <Route path="operacao/capacidade" element={<CapacityPage />} />
               <Route path="gestao" element={<ManagementPage />} />
               <Route path="gestao/auditoria" element={<ManagementPage audit />} />
               <Route path="gestao/acessos" element={<AccessPage />} />

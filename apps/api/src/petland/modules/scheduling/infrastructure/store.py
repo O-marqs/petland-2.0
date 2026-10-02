@@ -2,11 +2,11 @@ import logging
 from collections.abc import Iterator
 from contextlib import contextmanager
 from dataclasses import asdict
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from uuid import UUID
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import case, func, or_, select
+from sqlalchemy import Float, case, func, literal, or_, select, tuple_, update
 from sqlalchemy.engine import Engine
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.orm import Session
@@ -39,7 +39,16 @@ from petland.modules.scheduling.domain.models import (
     Resource,
     Worker,
 )
-from petland.modules.scheduling.domain.operations import AppointmentFilter, CareContext, Note
+from petland.modules.scheduling.domain.operations import (
+    Analytics,
+    AppointmentFilter,
+    CareContext,
+    Communication,
+    Note,
+    PreviousCare,
+    ServiceMetric,
+    StaffMetric,
+)
 from petland.modules.scheduling.infrastructure.models import (
     AppointmentRecord,
     ConfigurationRecord,
@@ -146,7 +155,10 @@ class PostgresSchedule:
     def validate_resource(self, value: Resource) -> None:
         if value.active and value.user_id not in {w.id for w in self.workers()}:
             raise BusinessError("INVALID_WORKER", 422)
-        for service_id in value.service_ids:
+        self.validate_services(value.service_ids)
+
+    def validate_services(self, ids: list[UUID]) -> None:
+        for service_id in ids:
             booking_service(self.db, service_id)
 
     def save_resource(self, value: Resource) -> None:
@@ -279,11 +291,217 @@ class PostgresSchedule:
     def customer_names(self, ids: list[UUID]) -> dict[UUID, str]:
         return customer_names(self.db, ids)
 
-    def context(self, appointment: Appointment) -> CareContext:
-        return CareContext(
-            *customer_contact(self.db, appointment.customer_id),
-            *care_context(self.db, appointment.customer_id, appointment.pet_id),
+    def planned_load(
+        self, start: datetime, end: datetime, ignore_id: UUID | None
+    ) -> dict[UUID, float]:
+        a = AppointmentRecord
+        query = (
+            select(
+                a.resource_id,
+                func.sum(func.extract("epoch", a.occupied_end_at - a.occupied_start_at)),
+            )
+            .where(a.starts_at >= start, a.starts_at < end, a.status.in_(OCCUPYING))
+            .group_by(a.resource_id)
         )
+        if ignore_id is not None:
+            query = query.where(a.id != ignore_id)
+        return {id: float(seconds) for id, seconds in self.db.execute(query)}
+
+    def analytics(self, start: datetime, end: datetime, details: bool = True) -> Analytics:
+        a = AppointmentRecord
+        cohort = (a.starts_at >= start) & (a.starts_at < end)
+        complete = (
+            (a.status == "COMPLETED") & a.started_at.is_not(None) & a.completed_at.is_not(None)
+        )
+        duration = func.extract("epoch", a.completed_at - a.started_at) / 60
+        delay = func.greatest(0, func.extract("epoch", a.started_at - a.starts_at) / 60)
+        planned = a.offer["duration_minutes"].astext.cast(Float)
+        occupied = (
+            func.extract(
+                "epoch",
+                func.least(end, a.occupied_end_at) - func.greatest(start, a.occupied_start_at),
+            )
+            / 60
+        )
+        service_name = a.offer["service_name"].astext
+        # One bounded aggregate scan for the report. Daily dashboard uses only worker groups.
+        group = func.grouping(a.resource_id, a.service_id, service_name) if details else literal(3)
+        query = (
+            select(
+                group,
+                a.resource_id,
+                a.service_id if details else literal(None),
+                service_name if details else literal(None),
+                func.max(ResourceRecord.name),
+                func.count(),
+                func.sum(case((a.status == "COMPLETED", 1), else_=0)),
+                func.sum(case((a.status == "CANCELLED", 1), else_=0)),
+                func.sum(case((a.status == "NO_SHOW", 1), else_=0)),
+                func.avg(case((complete, duration))) if details else literal(None),
+                func.avg(case((complete, delay))) if details else literal(None),
+                func.avg(case((complete, duration - planned))) if details else literal(None),
+                func.sum(case((a.status.in_(OCCUPYING), occupied), else_=0)),
+                func.avg(case((complete, planned))) if details else literal(None),
+                func.count(func.distinct(case((a.status == "COMPLETED", a.pet_id))))
+                if details
+                else literal(0),
+                func.count(func.distinct(case((a.status == "COMPLETED", a.customer_id))))
+                if details
+                else literal(0),
+            )
+            .join(ResourceRecord, ResourceRecord.id == a.resource_id)
+            .where(cohort)
+        )
+        query = (
+            query.group_by(
+                func.grouping_sets(
+                    tuple_(a.resource_id),
+                    tuple_(a.resource_id, service_name),
+                    tuple_(a.service_id, service_name),
+                    tuple_(),
+                )
+            )
+            if details
+            else query.group_by(a.resource_id)
+        )
+
+        def number(value: object) -> float | None:
+            return round(float(str(value)), 2) if value is not None else None
+
+        workers: dict[UUID, StaffMetric] = {}
+        services = []
+        counts: dict[UUID, dict[str, int]] = {}
+        pets, customers = 0, 0
+        for (
+            mask,
+            resource_id,
+            service_id,
+            name,
+            person,
+            total,
+            completed,
+            cancelled,
+            missing,
+            actual,
+            late,
+            deviation,
+            used,
+            expected,
+            unique_pets,
+            unique_customers,
+        ) in self.db.execute(query):
+            if mask == 3:
+                workers[resource_id] = StaffMetric(
+                    resource_id,
+                    person,
+                    total,
+                    completed,
+                    cancelled,
+                    missing,
+                    number(actual),
+                    number(late),
+                    number(deviation),
+                    float(used or 0),
+                )
+            elif mask == 2 and completed:
+                counts.setdefault(resource_id, {})[name] = completed
+            elif mask == 4:
+                services.append(
+                    ServiceMetric(
+                        service_id, name, total, completed, number(expected), number(actual)
+                    )
+                )
+            elif mask == 7:
+                pets, customers = unique_pets, unique_customers
+        for r in self.resources(eligible_only=True):
+            if r.id not in workers:
+                workers[r.id] = StaffMetric(r.id, r.name, 0, 0, 0, 0, None, None, None, 0)
+        for resource_id, counts_by_service in counts.items():
+            workers[resource_id].by_service = counts_by_service
+        return Analytics(
+            sorted(workers.values(), key=lambda w: (w.name.casefold(), str(w.resource_id))),
+            sorted(services, key=lambda s: s.name.casefold()),
+            pets,
+            customers,
+        )
+
+    def attention(self, start: datetime, end: datetime, now: datetime) -> list[Appointment]:
+        a = AppointmentRecord
+        late_care = (a.status.in_({"ARRIVED", "IN_PROGRESS"})) & (a.occupied_end_at <= now)
+        waiting = (
+            (a.starts_at >= start)
+            & (a.starts_at < end)
+            & (a.starts_at <= now)
+            & (a.status.in_({"BOOKED", "ARRIVED"}))
+        )
+        return [
+            self.value(row)
+            for row in self.db.scalars(
+                select(a)
+                .where(late_care | waiting)
+                .order_by(case((late_care, 0), else_=1), a.starts_at, a.id)
+                .limit(12)
+            )
+        ]
+
+    def previous_care(self, appointment: Appointment) -> list[PreviousCare]:
+        a = AppointmentRecord
+        rows = self.db.execute(
+            select(a, ResourceRecord.name)
+            .join(ResourceRecord, ResourceRecord.id == a.resource_id)
+            .where(
+                a.pet_id == appointment.pet_id,
+                a.id != appointment.id,
+                a.status == "COMPLETED",
+                a.completed_at.is_not(None),
+                a.completed_at < appointment.starts_at,
+            )
+            .order_by(a.completed_at.desc(), a.id)
+            .limit(3)
+        )
+        result = []
+        for row, name in rows:
+            notes = [
+                Note(**{k: getattr(n, k) for k in Note.__dataclass_fields__})
+                for n in self.db.scalars(
+                    select(NoteRecord)
+                    .where(NoteRecord.appointment_id == row.id)
+                    .order_by(NoteRecord.occurred_at.desc(), NoteRecord.id)
+                    .limit(5)
+                )
+            ]
+            actual = (
+                (row.completed_at - row.started_at).total_seconds() / 60 if row.started_at else None
+            )
+            result.append(
+                PreviousCare(
+                    row.id,
+                    row.offer["service_name"],
+                    name,
+                    row.completed_at,
+                    round(actual, 2) if actual is not None else None,
+                    list(reversed(notes)),
+                )
+            )
+        return result
+
+    def communications(self, appointment_id: UUID) -> list[Communication]:
+        return [
+            Communication(**{k: getattr(row, k) for k in Communication.__dataclass_fields__})
+            for row in self.db.scalars(
+                select(OutboxRecord)
+                .where(OutboxRecord.appointment_id == appointment_id)
+                .order_by(OutboxRecord.created_at, OutboxRecord.id)
+                .limit(100)
+            )
+        ]
+
+    def context(self, appointment: Appointment) -> CareContext:
+        name, phone, email = customer_contact(self.db, appointment.customer_id)
+        pet, species, care, allergies, handling, version = care_context(
+            self.db, appointment.customer_id, appointment.pet_id
+        )
+        return CareContext(name, phone, email, pet, species, care, allergies, handling, version)
 
     def notes(self, appointment_id: UUID, internal: bool) -> list[Note]:
         query = select(NoteRecord).where(NoteRecord.appointment_id == appointment_id)
@@ -332,7 +550,27 @@ class PostgresSchedule:
             "reschedule": "Reserva reagendada",
             "cancel": "Reserva cancelada",
             "cancel_exception": "Reserva cancelada pela equipe",
+            "complete": "Seu pet ficou pronto",
         }
+        if event.kind in {
+            "reschedule",
+            "cancel",
+            "cancel_exception",
+            "arrive",
+            "start",
+            "complete",
+            "no_show",
+        }:
+            self.db.execute(
+                update(OutboxRecord)
+                .where(
+                    OutboxRecord.appointment_id == appointment.id,
+                    OutboxRecord.kind == "reminder",
+                    OutboxRecord.delivered_at.is_(None),
+                    OutboxRecord.suppressed_at.is_(None),
+                )
+                .values(suppressed_at=event.occurred_at)
+            )
         if event.kind not in labels:
             return
         at = appointment.starts_at.astimezone(ZoneInfo(appointment.timezone)).strftime(
@@ -347,14 +585,49 @@ class PostgresSchedule:
                 appointment_id=appointment.id,
                 recipient=recipient,
                 subject=f"PetLand — {labels[event.kind]}",
-                body=f"{labels[event.kind]}\nPet: {appointment.offer.pet_name}\nServiço: {appointment.offer.service_name}\nHorário: {at} ({appointment.timezone})\nMotivo: {event.reason or 'Reserva confirmada pelo responsável.'}\nReferência: {appointment.id}\nPara dúvidas, entre em contato com a equipe pelo contato habitual.",
+                body=(
+                    f"{labels[event.kind]}\nPet: {appointment.offer.pet_name}\nServiço: {appointment.offer.service_name}\nHorário agendado: {at} ({appointment.timezone})\n"
+                    + (
+                        f"Concluído: {appointment.completed_at.astimezone(ZoneInfo(appointment.timezone)).strftime('%d/%m/%Y às %H:%M')}\nConsulte o resumo do cuidado na sua área.\n"
+                        if event.kind == "complete" and appointment.completed_at
+                        else f"Motivo: {event.reason or 'Confirmação da reserva.'}\n"
+                    )
+                    + f"Referência: {appointment.id}\nConsulte a reserva pela sua área para acompanhar o cuidado."
+                ),
                 created_at=event.occurred_at,
                 available_at=event.occurred_at,
                 delivered_at=None,
                 attempts=0,
                 lease_until=None,
+                kind=event.kind,
+                scheduled_start_at=None,
+                suppressed_at=None,
             )
         )
+        config = self.configuration()
+        if event.kind in {"book", "reschedule"} and config.reminder_minutes:
+            due = appointment.starts_at - timedelta(minutes=config.reminder_minutes)
+            # A booking made inside the reminder window already receives confirmation.
+            if due > event.occurred_at:
+                from uuid import uuid4
+
+                self.db.add(
+                    OutboxRecord(
+                        id=uuid4(),
+                        appointment_id=appointment.id,
+                        recipient=recipient,
+                        subject="PetLand — Lembrete do cuidado",
+                        body=f"Lembrete do cuidado de {appointment.offer.pet_name}\nServiço: {appointment.offer.service_name}\nHorário: {at} ({appointment.timezone})\nReferência: {appointment.id}\nSe precisar, reagende ou cancele pela sua área dentro da política informada.",
+                        created_at=event.occurred_at,
+                        available_at=due,
+                        delivered_at=None,
+                        attempts=0,
+                        lease_until=None,
+                        kind="reminder",
+                        scheduled_start_at=appointment.starts_at,
+                        suppressed_at=None,
+                    )
+                )
 
     def replay(
         self, actor_id: UUID, operation: str, key: UUID, signature: str

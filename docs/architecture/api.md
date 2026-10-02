@@ -2,6 +2,8 @@
 
 Fonte executável: [`packages/api-contract/openapi.json`](../../packages/api-contract/openapi.json), exportada da factory real sem conectar ao banco. `schema.d.ts` é gerado com openapi-typescript; `createApiClient` usa openapi-fetch com esses tipos. Lockfile fixa as versões; CI detecta divergência sem editar silenciosamente o contrato.
 
+Incremento operacional: GET `/operations/dashboard` (data/minha equipe), GET/PUT `/operations/roster/{day}` e POST de prévia, GET/PUT `/operations/capacity` e POST de prévia, POST `/operations/attendances/{id}/transfer`. Todos exigem identidade/papel; mutações usam CSRF, versão e transferência usa idempotência. Agenda aceita `mine`; UI pessoal por padrão, API preserva o padrão coletivo para clientes anteriores. Início aceita `care_version` para confirmar alertas atuais; detalhe interno reúne contexto anterior/transferência/avisos, público só projeta resumo e estado da comunicação. Métricas acrescem pessoa/serviço/instantes reais e pets/clientes únicos. [Regras](../adr/0016-operational-evolution.md).
+
 | Implementado | Resultado |
 |---|---|
 | GET `/api/v1/health/live` | 200 `{"status":"ok"}` independente do DB |

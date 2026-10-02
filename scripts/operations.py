@@ -322,6 +322,8 @@ def backup():
     try:
         source = active_database()
         marker, before = manifest(engine), fingerprints(engine)
+        with engine.connect() as db:
+            schema_revision = db.scalar(text("SELECT version_num FROM alembic_version"))
         started = time.monotonic()
         dump = compose(
             "exec",
@@ -343,7 +345,7 @@ def backup():
         payload = {
             "format": "petland-p07-backup-v1",
             "created_at": datetime.now(UTC).isoformat(),
-            "schema_revision": SCHEMA_REVISION,
+            "schema_revision": schema_revision,
             "source": source,
             "fixture": marker,
             "tables": before,
@@ -363,7 +365,7 @@ def backup():
             "created_at": payload["created_at"],
             "source": source,
             "tables": before,
-            "schema_revision": SCHEMA_REVISION,
+            "schema_revision": schema_revision,
         }
         target.with_suffix(".json").write_text(json.dumps(info, indent=2))
         print("Authenticated encrypted backup created; key and archive stored separately.")

@@ -9,6 +9,7 @@ import { TextArea } from '../../shared/ui/Select';
 import { Alert, Badge, Skeleton } from '../../shared/ui/Feedback';
 import { statusLabels, eventLabels } from './operations-api';
 import { Select } from '../../shared/ui/Select';
+import { CommunicationHistory } from './CommunicationHistory';
 
 function Detail({ id, staff }: { id: string; staff: boolean }) {
   const cache = useQueryClient();
@@ -22,6 +23,7 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
   const detail = useQuery({
     queryKey: ['schedule', 'detail', staff, id],
     queryFn: ({ signal }) => bookingApi.detail(staff, id, signal),
+    refetchInterval: 30000,
   });
   const mutation = useMutation({
     mutationFn: (value: NonNullable<typeof cancel>) =>
@@ -160,6 +162,9 @@ function Detail({ id, staff }: { id: string; staff: boolean }) {
             </li>
           ))}
         </ol>
+      </section>
+      <section className="identity-card">
+        <CommunicationHistory messages={detail.data.communications || []} timezone={a.timezone} />
       </section>
     </section>
   );

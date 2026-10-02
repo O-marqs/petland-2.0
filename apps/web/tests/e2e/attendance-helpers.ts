@@ -34,6 +34,8 @@ export async function staffAttendance(
     species_id: 'DOG',
     size: 'SMALL',
     care_notes: 'Sensibilidade ao secador — dado sintético.',
+    allergies: 'Usar apenas shampoo hipoalergênico — restrição sintética.',
+    handling_notes: 'Secador baixo — preferência sintética.',
   });
   const actor = await (await staff.request.get('/api/v1/auth/me')).json();
   let settings = await (await staff.request.get('/api/v1/operations/calendar')).json();
@@ -119,6 +121,7 @@ export async function staffAttendance(
       )
       .toBe(1);
     await staff.getByRole('button', { name: 'Iniciar atendimento', exact: true }).click();
+    await staff.getByLabel('Li as alergias e restrições críticas atuais deste pet antes de iniciar.').check();
     await staff.getByRole('button', { name: 'Confirmar ação', exact: true }).click();
     await expect(staff.getByText('Em atendimento', { exact: true })).toBeVisible();
     await staff.getByRole('button', { name: 'Concluir atendimento', exact: true }).click();

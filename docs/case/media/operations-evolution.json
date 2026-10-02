@@ -1,0 +1,29 @@
+{
+  "captured_at": "2026-10-02T02:49:29.667Z",
+  "origin": "https://localhost:8443/operacao?data=2026-10-03&escopo=equipe",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "method": "Read-only business capture after synthetic employee login; real HTTPS local app and persisted fictitious data. No mockup.",
+  "passed": true,
+  "source_kind": "working_tree_snapshot",
+  "parent_commit": "18c8945f23b46538b368592953eb5f3bc83e96ca",
+  "source_sha256": {
+    "apps/web/src/features/booking/OperationsDashboard.tsx": "927a55c896e00f936ab2c1b43c960fb5b34b20a2ee62b3dfc7f83fa6fac8aa65",
+    "apps/web/src/shared/styles/operational.css": "53c4d478119945b15ae8c2fa02543fc735f627c2bff576a09186e112352cb54d",
+    "apps/web/src/features/identity/AccountLayout.tsx": "638ab48e80ce66b343f4402054f70209edf1c78381f4283d6968abc65647222d",
+    "apps/web/src/main.tsx": "cf641fd8ed3368f368f39a94f8566711ff59294cb9b16ed7440a9d8ef2631753",
+    "apps/api/src/petland/modules/scheduling/application/operations.py": "d2c7d45e2933a414fa9631aa5b876eda380f4b27b430442043f99fdcedbc7ff8",
+    "apps/api/src/petland/modules/scheduling/infrastructure/store.py": "2457fb59b66b057addf2b5888566b70277516f7cc5ab572d4626f0453daaafbf"
+  },
+  "image": "operations-dashboard.webp",
+  "image_sha256": "c9eb572260fccbc5159ed608d6f5a54b824bbd7abdf34c13d92066462e1a7a1e",
+  "image_dimensions": {
+    "width": 1440,
+    "height": 1536
+  },
+  "encoding": "PNG screenshot encoded as WebP quality 90; no content alteration",
+  "synthetic": true,
+  "prior_p08_media": "preserved unchanged as historical evidence"
+}

@@ -30,3 +30,4 @@ Mudanças exigem nova decisão documentada, incluindo motivo, impacto e testes. 
 - [0013 — Hardening e verificação P06](0013-p06-hardening.md): agregações, índices, proteção HTTP, foco e medições reproduzíveis.
 - [0014 — Dados e recuperação P07](0014-p07-operations.md): demo isolada, servidor estático/TLS, backup autenticado e restore reconciliado; limites D08/D10/D12.
 - [0015 — Candidata e case P08](0015-p08-release-case.md): versão de revisão, proveniência antes/depois, vídeo real, pacote local e gates explícitos.
+- [0016 — Evolução operacional](0016-operational-evolution.md): escala coletiva, pools físicos, transferência, alertas críticos, contexto anterior, comunicação e atribuição de indicadores.

@@ -129,3 +129,13 @@ PostgreSQL confirma 5 → 3 → 5 pessoas em dias adjacentes. Formulário carreg
 Check 115 Python + 18 React; E2E com novo build: 15 aprovados + skip singleton previsto. Staging TLS preservou mesma demo; 16 checkpoints da revisão, onboarding com 4 avisos SMTP e player aprovados. Desempenho final 9/9: LCP 2424 ms, INP 56 ms, CLS 0,0011783. Primeira rodada/falha de classificação do 401 esperado registrada, sem relaxar metas. [Evidência](../evidence/Product-review.md). PR #9 incremental em rascunho sobre P04; checks do commit exato registrados no PR. Próximo gate: revisão humana; escala coletiva/transferência são recomendações para priorização. D10, leitor de tela e aceite final pendentes.
 
 Na CI, corrigidos seletor do título visível no ensaio móvel e período padrão da auditoria (UTC, separado do dia da loja nas métricas). Dois testes de regressão na passagem de data elevam a suite React a 20 aprovados; lint/tipos/build aprovados. Ensaios locais dos três perfis e retorno à área correta passaram. Falhas e correções registradas na evidência; aguardar os checks do commit final antes de declarar a candidata aprovada.
+
+## Evolução operacional autorizada
+
+[Pedido humano](Operations-evolution-request.md) permite implementar prioridades e exercer julgamento de produto. Incremento sobre `18c8945`, separado na branch `petland-3.0-operations-evolution`; PR incremental sobre onboarding-fix, sem merge/main/publicação. [ADR-016](../adr/0016-operational-evolution.md), [matriz](../product/functional-gap-analysis.md), [uso](../runbooks/operational-evolution.md).
+
+Entregues painel diário pessoal/equipe/pendências/carga, escala coletiva por data com impacto, pools físicos com concorrência, transferência independente e histórico, alergias com confirmação atual, contexto de cuidados anteriores, lembrete/aviso de pronto e indicadores por responsável final. Mantidos contrato, privacidade, idempotência, exclusões e D02/D03/D04/D10. Migration 0007 preserva dados e recusa downgrade destrutivo; backup captura revisão real do banco. Case recebe captura separada, preservando vídeo P08.
+
+Check final local: 125 Python + 20 React. E2E 15 aprovados + skip singleton; revisão 16 checkpoints, novos fluxos HTTPS/SMTP reais e reflow/axe. Primeira carga reprovou metas e motivou agregações; resultado final/CI do commit exato no PR, sem mascarar falha inicial. [Evidência](../evidence/Operations-evolution.md).
+
+Próximo gate: teste pessoal de tutor/funcionário/gerente, leitor de tela e D10. Reserva em grupo, serviço alterado durante execução, férias por intervalo, lote, recepção em tela única, recorrência e rateio de esforço continuam lacunas explícitas, sem declarar todas as dores concluídas.
