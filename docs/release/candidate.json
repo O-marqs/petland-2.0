@@ -57,6 +57,7 @@
     "docs/architecture/overview.md",
     "docs/architecture/non-functional-requirements.md",
     "docs/evidence/Documentation-review.md",
+    "docs/evidence/Documentation-review-api-ci-attempt-1.json",
     "docs/evidence/Operations-evolution-api-ci-pr.json",
     "docs/evidence/Operations-evolution-api-ci-push.json",
     "docs/evidence/Operations-evolution-api-current-local.json",

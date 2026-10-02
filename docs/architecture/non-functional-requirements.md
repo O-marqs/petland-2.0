@@ -32,6 +32,8 @@
 
 Fontes: [Linux push](../evidence/Operations-evolution-api-ci-push.json), [Linux PR](../evidence/Operations-evolution-api-ci-pr.json), [local final](../evidence/Operations-evolution-api-current-local.json). JSONs Linux são extraídos dos logs de CI daquela referência com hash/origem; não são uma execução nova. O [JSON local anterior](../evidence/Operations-evolution-api-local.json) continua como medição da revisão `a4c2630`, sem sobrescrita. P06/P07 conservam seus próprios arquivos.
 
+**Nova CI da revisão documental, registrada separadamente:** em `2b20295`, a [execução 37032702419](https://github.com/O-marqs/petland-2.0/actions/runs/37032702419) passou 6/7 cenários; gestão mensal teve p95 **402,96 ms — FAIL** diante da mesma meta de 400 ms. Todas as respostas continuaram 200/201 sem erros. Os [sete registros extraídos do log](../evidence/Documentation-review-api-ci-attempt-1.json) preservam SHA/origem/instantes; a tabela acima continua sendo o snapshot funcional anterior. A fonte funcional não mudou; variação do runner é hipótese, não causa comprovada. Repetição/novos checks devem ser consultados no PR #11, sem apagar esta reprovação ou flexibilizar metas.
+
 As otimizações limitaram agregação SQL, separaram distinct global e compartilharam conversões de calendário **somente dentro da requisição**, sem cache persistente/relaxar metas. Não comparar hosts para inferir ganho percentual frente ao 2.0. Uma tentativa de CI operations falhou ao buscar imagem do Docker Hub; repetição somente do job falho passou, sem alterar código/checks.
 
 ## Decisões ainda pendentes

@@ -79,6 +79,8 @@ A primeira passagem de lint encontrou quatro variáveis sem uso no novo script d
 
 Benchmarks API/web e rehearsal de recovery citados em RNFs continuam vinculados à revisão que os produziu. Não foi executada nova carga manual local para esta documentação. A CI do PR mantém seus ensaios automáticos; resultados do novo commit devem ser consultados nos checks do PR, sem substituir as medições anteriores. O bundle local foi verificado com 394 arquivos e manifesto/checksums, sem publicação. Nenhuma dessas verificações concede aceite humano, certificação de acessibilidade ou aprovação de produção.
 
+**Falha real da nova CI:** a [execução 37032702419](https://github.com/O-marqs/petland-2.0/actions/runs/37032702419), em `2b20295`, aprovou documentação, lint/tipos/contratos/build, testes e advisories, mas reprovou gestão mensal com p95 **402,96 ms** contra **400 ms**. Demais seis cenários aprovados; sem erro de resposta. Browser/recovery ficaram skipped por dependência desse job, não aprovados. [Registros observados](Documentation-review-api-ci-attempt-1.json) preservam a falha separada das medições anteriores. Uma nova execução com a mesma fonte funcional confere repetibilidade; não há otimização funcional, meta relaxada ou declaração de causa comprovada nesta revisão. Resultado final dos checks deve ser consultado no PR #11.
+
 ## Pendências de produto / operação
 
 Aceite humano dos três perfis/leitor de tela; lacunas da [matriz](../product/functional-gap-analysis.md); limites de [performance/recuperação](../architecture/non-functional-requirements.md); D10/publicação/SMTP externo/off-host/SLO-RPO-RTO. Nenhum merge ou release publicado por esta revisão. Documentação preparada para revisão humana, sem declaração automática de produto finalizado.

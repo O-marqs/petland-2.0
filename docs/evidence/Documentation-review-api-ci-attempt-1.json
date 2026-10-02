@@ -1,0 +1,142 @@
+{
+  "provenance": {
+    "new_measurement": true,
+    "source": "Seven scenario records extracted verbatim from completed GitHub Actions job log; full report was not printed after failure",
+    "run_url": "https://github.com/O-marqs/petland-2.0/actions/runs/37032702419",
+    "job_id": 110923653219,
+    "head": "2b20295676aa8f0b94489b7c321fdfcd17337a40",
+    "functional_reference": "25495230b75e06ef61b52b8751c76ef9b280dfd1",
+    "raw_job_log_sha256": "8db2157cc3d12c8c73562cbd14107804c6769ce50f7ab29dd7a6cdbd6bb35e00",
+    "historical_measurements_replaced": false
+  },
+  "records": [
+    {
+      "recorded_at": "2026-10-02T16:21:04.7605832Z",
+      "scenario": "catalog",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 56.37,
+        "p95_ms": 100.98,
+        "max_ms": 169.1,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:06.9416062Z",
+      "scenario": "customer_history",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 119.78,
+        "p95_ms": 214.09,
+        "max_ms": 355.15,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:09.3195292Z",
+      "scenario": "staff_agenda",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 132.94,
+        "p95_ms": 202.02,
+        "max_ms": 257.53,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:13.4838287Z",
+      "scenario": "admin_metrics_month",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 280.94,
+        "p95_ms": 402.96,
+        "max_ms": 556.41,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": false
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:16.9785910Z",
+      "scenario": "staff_daily_dashboard",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 194.01,
+        "p95_ms": 314.97,
+        "max_ms": 381.11,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:19.0056005Z",
+      "scenario": "admin_audit_month",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 111.97,
+        "p95_ms": 191.14,
+        "max_ms": 223.87,
+        "statuses": {
+          "200": 200
+        },
+        "errors": {},
+        "target_ms": 400,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    },
+    {
+      "recorded_at": "2026-10-02T16:21:22.8504224Z",
+      "scenario": "booking",
+      "result": {
+        "samples": 200,
+        "concurrency": 20,
+        "p50_ms": 330.99,
+        "p95_ms": 495.41,
+        "max_ms": 648.29,
+        "statuses": {
+          "201": 200
+        },
+        "errors": {},
+        "target_ms": 800,
+        "warmup_errors": 0,
+        "passed": true
+      }
+    }
+  ],
+  "passed": false,
+  "limitation": "Observed latency exceeded the unchanged target; runner variance is a hypothesis, not a proven cause. No functional optimization or threshold relaxation in this documentation review."
+}
