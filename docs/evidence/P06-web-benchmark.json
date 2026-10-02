@@ -1,0 +1,953 @@
+{
+  "measured_at": "2026-10-01T16:26:11.593Z",
+  "browser": "Playwright Chromium",
+  "browser_version": "153.0.8010.12",
+  "web_vitals": "6.2.2",
+  "method": "Production build, Pixel 7 viewport, cold cache per run, 4x CPU slowdown, 150ms latency, 1.6Mbps down/750kbps up. Three runs per entry page. Real keyboard/click interactions; INP is limited to these lab interactions, not field data. No authentication submissions or writes.",
+  "samples": [
+    {
+      "route": "/",
+      "run": 1,
+      "LCP": 1632,
+      "CLS": 0.0011849738764091783,
+      "INP": 72,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011849738764091783,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a aria-current=\"page\" class=\"active\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 184.859375,
+                "y": 73.28125,
+                "width": 211.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.859375
+              },
+              "current": {
+                "x": 169.96875,
+                "y": 73.28125,
+                "width": 227.21875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.96875
+              }
+            },
+            {
+              "node": "<a class=\"text-link\" href=\"/entrar\" data-discover=\"true\">Já tenho uma conta</a>",
+              "previous": {
+                "x": 219.890625,
+                "y": 443.125,
+                "width": 127,
+                "height": 44,
+                "top": 443.125,
+                "right": 346.890625,
+                "bottom": 487.125,
+                "left": 219.890625
+              },
+              "current": {
+                "x": 228.03125,
+                "y": 442.125,
+                "width": 133,
+                "height": 44,
+                "top": 442.125,
+                "right": 361.03125,
+                "bottom": 486.125,
+                "left": 228.03125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            },
+            {
+              "node": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" str",
+              "previous": {
+                "x": 161.890625,
+                "y": 456.125,
+                "width": 18,
+                "height": 18,
+                "top": 456.125,
+                "right": 179.890625,
+                "bottom": 474.125,
+                "left": 161.890625
+              },
+              "current": {
+                "x": 169.03125,
+                "y": 455.125,
+                "width": 18,
+                "height": 18,
+                "top": 455.125,
+                "right": 187.03125,
+                "bottom": 473.125,
+                "left": 169.03125
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "start": 2490,
+          "duration": 72,
+          "input_delay": 7.200000002980232,
+          "processing": 1.2999999970197678,
+          "presentation": 63.5
+        },
+        {
+          "name": "pointerdown",
+          "start": 2490,
+          "duration": 72,
+          "input_delay": 7.200000002980232,
+          "processing": 1.2999999970197678,
+          "presentation": 63.5
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/",
+      "run": 2,
+      "LCP": 1596,
+      "CLS": 0.0011849738764091783,
+      "INP": 72,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011849738764091783,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a aria-current=\"page\" class=\"active\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 184.859375,
+                "y": 73.28125,
+                "width": 211.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.859375
+              },
+              "current": {
+                "x": 169.96875,
+                "y": 73.28125,
+                "width": 227.21875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.96875
+              }
+            },
+            {
+              "node": "<a class=\"text-link\" href=\"/entrar\" data-discover=\"true\">Já tenho uma conta</a>",
+              "previous": {
+                "x": 219.890625,
+                "y": 443.125,
+                "width": 127,
+                "height": 44,
+                "top": 443.125,
+                "right": 346.890625,
+                "bottom": 487.125,
+                "left": 219.890625
+              },
+              "current": {
+                "x": 228.03125,
+                "y": 442.125,
+                "width": 133,
+                "height": 44,
+                "top": 442.125,
+                "right": 361.03125,
+                "bottom": 486.125,
+                "left": 228.03125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            },
+            {
+              "node": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" str",
+              "previous": {
+                "x": 161.890625,
+                "y": 456.125,
+                "width": 18,
+                "height": 18,
+                "top": 456.125,
+                "right": 179.890625,
+                "bottom": 474.125,
+                "left": 161.890625
+              },
+              "current": {
+                "x": 169.03125,
+                "y": 455.125,
+                "width": 18,
+                "height": 18,
+                "top": 455.125,
+                "right": 187.03125,
+                "bottom": 473.125,
+                "left": 169.03125
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "start": 2465.4000000059605,
+          "duration": 72,
+          "input_delay": 7.9000000059604645,
+          "processing": 1.3999999910593033,
+          "presentation": 62.70000000298023
+        },
+        {
+          "name": "pointerup",
+          "start": 2465.4000000059605,
+          "duration": 72,
+          "input_delay": 10.5,
+          "processing": 0.5999999940395355,
+          "presentation": 60.900000005960464
+        },
+        {
+          "name": "click",
+          "start": 2465.4000000059605,
+          "duration": 72,
+          "input_delay": 11.900000005960464,
+          "processing": 8.099999994039536,
+          "presentation": 52
+        },
+        {
+          "name": "pointerdown",
+          "start": 2465.4000000059605,
+          "duration": 72,
+          "input_delay": 7.9000000059604645,
+          "processing": 1.3999999910593033,
+          "presentation": 62.70000000298023
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/",
+      "run": 3,
+      "LCP": 1612,
+      "CLS": 0.0011849738764091783,
+      "INP": 64,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011849738764091783,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a aria-current=\"page\" class=\"active\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 184.859375,
+                "y": 73.28125,
+                "width": 211.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.859375
+              },
+              "current": {
+                "x": 169.96875,
+                "y": 73.28125,
+                "width": 227.21875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.96875
+              }
+            },
+            {
+              "node": "<a class=\"text-link\" href=\"/entrar\" data-discover=\"true\">Já tenho uma conta</a>",
+              "previous": {
+                "x": 219.890625,
+                "y": 443.125,
+                "width": 127,
+                "height": 44,
+                "top": 443.125,
+                "right": 346.890625,
+                "bottom": 487.125,
+                "left": 219.890625
+              },
+              "current": {
+                "x": 228.03125,
+                "y": 442.125,
+                "width": 133,
+                "height": 44,
+                "top": 442.125,
+                "right": 361.03125,
+                "bottom": 486.125,
+                "left": 228.03125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            },
+            {
+              "node": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" str",
+              "previous": {
+                "x": 161.890625,
+                "y": 456.125,
+                "width": 18,
+                "height": 18,
+                "top": 456.125,
+                "right": 179.890625,
+                "bottom": 474.125,
+                "left": 161.890625
+              },
+              "current": {
+                "x": 169.03125,
+                "y": 455.125,
+                "width": 18,
+                "height": 18,
+                "top": 455.125,
+                "right": 187.03125,
+                "bottom": 473.125,
+                "left": 169.03125
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "start": 2501.7999999970198,
+          "duration": 64,
+          "input_delay": 6.700000002980232,
+          "processing": 3.3999999910593033,
+          "presentation": 53.900000005960464
+        },
+        {
+          "name": "pointerdown",
+          "start": 2501.7999999970198,
+          "duration": 64,
+          "input_delay": 6.700000002980232,
+          "processing": 3.3999999910593033,
+          "presentation": 53.900000005960464
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/entrar",
+      "run": 1,
+      "LCP": 1928,
+      "CLS": 0.0011737538384678893,
+      "INP": 64,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011737538384678893,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"true\">Serviços</a><a aria-",
+              "previous": {
+                "x": 184.53125,
+                "y": 73.28125,
+                "width": 211.46875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.53125
+              },
+              "current": {
+                "x": 169.828125,
+                "y": 73.28125,
+                "width": 227.359375,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.828125
+              }
+            },
+            {
+              "previous": {
+                "x": 15,
+                "y": 818.71875,
+                "width": 381,
+                "height": 17,
+                "top": 818.71875,
+                "right": 396,
+                "bottom": 835.71875,
+                "left": 15
+              },
+              "current": {
+                "x": 16,
+                "y": 819.71875,
+                "width": 380,
+                "height": 17,
+                "top": 819.71875,
+                "right": 396,
+                "bottom": 836.71875,
+                "left": 16
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "target": "<button type=\"submit\" class=\"button button--primary \">Entrar<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" strok",
+          "start": 2810.2000000029802,
+          "duration": 64,
+          "input_delay": 11.399999991059303,
+          "processing": 2.1000000089406967,
+          "presentation": 50.5
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/entrar",
+      "run": 2,
+      "LCP": 1980,
+      "CLS": 0.0011737538384678893,
+      "INP": 88,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011737538384678893,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"true\">Serviços</a><a aria-",
+              "previous": {
+                "x": 184.53125,
+                "y": 73.28125,
+                "width": 211.46875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.53125
+              },
+              "current": {
+                "x": 169.828125,
+                "y": 73.28125,
+                "width": 227.359375,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.828125
+              }
+            },
+            {
+              "previous": {
+                "x": 15,
+                "y": 818.71875,
+                "width": 381,
+                "height": 17,
+                "top": 818.71875,
+                "right": 396,
+                "bottom": 835.71875,
+                "left": 15
+              },
+              "current": {
+                "x": 16,
+                "y": 819.71875,
+                "width": 380,
+                "height": 17,
+                "top": 819.71875,
+                "right": 396,
+                "bottom": 836.71875,
+                "left": 16
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "target": "<button type=\"submit\" class=\"button button--primary \">Entrar<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" strok",
+          "start": 2808.2000000029802,
+          "duration": 88,
+          "input_delay": 12.299999997019768,
+          "processing": 3.9000000059604645,
+          "presentation": 71.79999999701977
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/entrar",
+      "run": 3,
+      "LCP": 1888,
+      "CLS": 0.0011737538384678893,
+      "INP": 72,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0011737538384678893,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a class=\"\" href=\"/servicos\" data-discover=\"true\">Serviços</a><a aria-",
+              "previous": {
+                "x": 184.53125,
+                "y": 73.28125,
+                "width": 211.46875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 184.53125
+              },
+              "current": {
+                "x": 169.828125,
+                "y": 73.28125,
+                "width": 227.359375,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.828125
+              }
+            },
+            {
+              "previous": {
+                "x": 15,
+                "y": 818.71875,
+                "width": 381,
+                "height": 17,
+                "top": 818.71875,
+                "right": 396,
+                "bottom": 835.71875,
+                "left": 15
+              },
+              "current": {
+                "x": 16,
+                "y": 819.71875,
+                "width": 380,
+                "height": 17,
+                "top": 819.71875,
+                "right": 396,
+                "bottom": 836.71875,
+                "left": 16
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "pointerdown",
+          "target": "<button type=\"submit\" class=\"button button--primary \">Entrar<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" strok",
+          "start": 2748.2000000029802,
+          "duration": 72,
+          "input_delay": 11.099999994039536,
+          "processing": 3.4000000059604645,
+          "presentation": 57.5
+        },
+        {
+          "name": "pointerup",
+          "target": "<button type=\"submit\" class=\"button button--primary \">Entrar<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" strok",
+          "start": 2748.2000000029802,
+          "duration": 72,
+          "input_delay": 21.700000002980232,
+          "processing": 0.7999999970197678,
+          "presentation": 49.5
+        },
+        {
+          "name": "click",
+          "target": "<button type=\"submit\" class=\"button button--primary \">Entrar<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" strok",
+          "start": 2748.2000000029802,
+          "duration": 72,
+          "input_delay": 23,
+          "processing": 31.299999997019768,
+          "presentation": 17.700000002980232
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/servicos",
+      "run": 1,
+      "LCP": 1992,
+      "CLS": 0.0008195974933776976,
+      "INP": 56,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0008195974933776976,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a aria-current=\"page\" class=\"active\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 183.859375,
+                "y": 73.28125,
+                "width": 212.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 183.859375
+              },
+              "current": {
+                "x": 169.3125,
+                "y": 73.28125,
+                "width": 227.875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.3125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "keydown",
+          "target": "<select id=\"_r_1_\" aria-invalid=\"false\"><option value=\"\">Todos os portes</option><option value=\"SMALL\">Pequeno</option><option value=\"MEDIUM\">Médio</option><opt",
+          "start": 2955.9000000059605,
+          "duration": 56,
+          "input_delay": 3.2999999970197678,
+          "processing": 0.7999999970197678,
+          "presentation": 51.900000005960464
+        },
+        {
+          "name": "keypress",
+          "target": "<select id=\"_r_1_\" aria-invalid=\"false\"><option value=\"\">Todos os portes</option><option value=\"SMALL\">Pequeno</option><option value=\"MEDIUM\">Médio</option><opt",
+          "start": 2955.9000000059605,
+          "duration": 56,
+          "input_delay": 4.0999999940395355,
+          "processing": 31.599999994039536,
+          "presentation": 20.30000001192093
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/servicos",
+      "run": 2,
+      "LCP": 1904,
+      "CLS": 0.0008195974933776976,
+      "INP": 48,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0008195974933776976,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a aria-current=\"page\" class=\"active\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 183.859375,
+                "y": 73.28125,
+                "width": 212.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 183.859375
+              },
+              "current": {
+                "x": 169.3125,
+                "y": 73.28125,
+                "width": 227.875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.3125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "keydown",
+          "target": "<select id=\"_r_0_\" aria-invalid=\"false\"><option value=\"\">Todas as espécies</option><option value=\"DOG\">Cachorro</option><option value=\"CAT\">Gato</option></selec",
+          "start": 2714.0999999940395,
+          "duration": 48,
+          "input_delay": 4,
+          "processing": 0.9000000059604645,
+          "presentation": 43.099999994039536
+        },
+        {
+          "name": "keypress",
+          "target": "<select id=\"_r_0_\" aria-invalid=\"false\"><option value=\"\">Todas as espécies</option><option value=\"DOG\">Cachorro</option><option value=\"CAT\">Gato</option></selec",
+          "start": 2714.0999999940395,
+          "duration": 48,
+          "input_delay": 5,
+          "processing": 36.599999994039536,
+          "presentation": 6.4000000059604645
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    {
+      "route": "/servicos",
+      "run": 3,
+      "LCP": 2028,
+      "CLS": 0.0008195974933776976,
+      "INP": 48,
+      "violations": [],
+      "shifts": [
+        {
+          "value": 0.0008195974933776976,
+          "sources": [
+            {
+              "node": "<nav aria-label=\"Navegação principal\"><a class=\"\" href=\"/\" data-discover=\"true\">Início</a><a aria-current=\"page\" class=\"active\" href=\"/servicos\" data-discover=\"",
+              "previous": {
+                "x": 183.859375,
+                "y": 73.28125,
+                "width": 212.140625,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 396,
+                "bottom": 118.46875,
+                "left": 183.859375
+              },
+              "current": {
+                "x": 169.3125,
+                "y": 73.28125,
+                "width": 227.875,
+                "height": 45.1875,
+                "top": 73.28125,
+                "right": 397.1875,
+                "bottom": 118.46875,
+                "left": 169.3125
+              }
+            },
+            {
+              "previous": {
+                "x": 16,
+                "y": 28.1875,
+                "width": 380,
+                "height": 15,
+                "top": 28.1875,
+                "right": 396,
+                "bottom": 43.1875,
+                "left": 16
+              },
+              "current": {
+                "x": 16,
+                "y": 29.1875,
+                "width": 380,
+                "height": 15,
+                "top": 29.1875,
+                "right": 396,
+                "bottom": 44.1875,
+                "left": 16
+              }
+            }
+          ]
+        }
+      ],
+      "interactions": [
+        {
+          "name": "keydown",
+          "target": "<select id=\"_r_0_\" aria-invalid=\"false\"><option value=\"\">Todas as espécies</option><option value=\"DOG\">Cachorro</option><option value=\"CAT\">Gato</option></selec",
+          "start": 2851.3999999910593,
+          "duration": 48,
+          "input_delay": 4.4000000059604645,
+          "processing": 1,
+          "presentation": 42.599999994039536
+        },
+        {
+          "name": "keypress",
+          "target": "<select id=\"_r_0_\" aria-invalid=\"false\"><option value=\"\">Todas as espécies</option><option value=\"DOG\">Cachorro</option><option value=\"CAT\">Gato</option></selec",
+          "start": 2851.3999999910593,
+          "duration": 48,
+          "input_delay": 5.4000000059604645,
+          "processing": 28.5,
+          "presentation": 14.099999994039536
+        }
+      ],
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

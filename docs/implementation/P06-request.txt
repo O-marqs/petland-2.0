@@ -1,0 +1,5 @@
+Autorização do usuário: "dei o merge pode seguir para p06". Continuidade: "continue de onde parou" em 30/09/2026.
+P05 integrada pelo usuário no PR #5; base confirmada 679eae5529598b39151a1cacf6462a5db134166b na branch petland-3.0-p04.
+Escopo PL3-18/P06: hardening, desempenho mensurado, acessibilidade e responsividade nos três perfis, segurança e runbooks. PR de revisão autorizado; sem merge, deploy, dados reais ou recursos pagos. Se Docker apresentar problema, parar e explicar o ajuste.
+
+Autorização posterior para recuperar Docker/WSL e reiniciar o computador: "Consegue ajustar o docker pra mim? Eu estou longe do pc" e "Eu não consigo estou longe do pc abra você e execute tem total permissão ajuste isso para seguirmos". Continuidade reafirmada em 01/10/2026. Preservar volumes e dados; não fazer reset de fábrica.

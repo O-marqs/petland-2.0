@@ -1,0 +1,324 @@
+.care-stack {
+  display: grid;
+  gap: var(--space-6);
+}
+.care-public {
+  padding-block: var(--space-12);
+}
+.care-narrow {
+  max-width: 720px;
+  display: grid;
+  gap: var(--space-6);
+}
+.care-toolbar,
+.care-actions,
+.pet-card-top {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.care-toolbar,
+.pet-card-top {
+  justify-content: space-between;
+}
+.care-toolbar > form {
+  display: flex;
+  align-items: end;
+  gap: var(--space-3);
+  flex: 1;
+  max-width: 600px;
+}
+.care-toolbar .field {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.catalog-filters .field {
+  margin: 0;
+}
+.care-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr));
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+}
+.pet-card,
+.service-card,
+.dashboard-link {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.pet-card h2,
+.service-card h2 {
+  font-size: 1.5rem;
+}
+.pet-card p,
+.service-card p,
+.care-note {
+  color: var(--muted);
+}
+.pet-mark,
+.service-mark,
+.care-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  background: var(--brand-50);
+  color: var(--brand-700);
+  flex-shrink: 0;
+}
+.pet-mark svg {
+  width: 32px;
+  height: 32px;
+}
+.service-mark {
+  background: var(--canvas);
+}
+.pet-notes {
+  white-space: pre-wrap;
+  flex: 1;
+  font-size: var(--text-sm);
+}
+.care-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.care-list > li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: var(--surface);
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.care-list li > div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.care-list h2 {
+  font-size: 1.125rem;
+}
+.care-list p,
+.care-list small {
+  color: var(--muted);
+}
+.care-row-link {
+  padding: var(--space-3);
+}
+.care-form-grid,
+.catalog-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+.catalog-filters {
+  max-width: 650px;
+  padding: var(--space-6);
+  background: var(--brand-50);
+  border-radius: var(--radius-card);
+}
+.care-fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.care-fieldset legend {
+  font-weight: 700;
+  padding-inline: var(--space-2);
+}
+.care-check {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  min-height: 44px;
+}
+.care-check input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--brand-700);
+  flex-shrink: 0;
+}
+.service-option-edit {
+  display: grid;
+  gap: var(--space-3);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+.service-prices {
+  margin: 0;
+  display: grid;
+  gap: var(--space-4);
+  flex: 1;
+}
+.service-prices > div {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+.service-prices dd {
+  margin: 0;
+  display: grid;
+  text-align: right;
+  gap: var(--space-1);
+}
+.service-prices dd span {
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+  align-items: center;
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.service-detail {
+  max-width: 720px;
+}
+.care-confirm {
+  padding: var(--space-4);
+  background: var(--canvas);
+  border-radius: var(--radius-control);
+  display: grid;
+  gap: var(--space-4);
+}
+.care-welcome,
+.catalog-note {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+  padding: var(--space-8);
+  border-radius: var(--radius-feature);
+  background: var(--brand-50);
+}
+.care-welcome > div,
+.catalog-note > div {
+  display: grid;
+  gap: var(--space-6);
+}
+.care-welcome h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+.welcome-paw {
+  min-width: 96px;
+  width: 140px;
+  height: 140px;
+  color: var(--brand-700);
+  opacity: 0.25;
+  transform: rotate(-12deg);
+}
+.catalog-note {
+  margin-top: var(--space-8);
+}
+.catalog-results {
+  min-height: 24rem;
+  align-content: start;
+}
+.dashboard-pets {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+.dashboard-pets li {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}
+.dashboard-pets li > div {
+  flex: 1;
+}
+.dashboard-pets a {
+  padding: var(--space-3);
+}
+.dashboard-link {
+  color: var(--text);
+  text-decoration: none;
+}
+.dashboard-link:hover {
+  border-color: var(--brand-700);
+  background: var(--brand-50);
+}
+.care-editor {
+  scroll-margin-top: var(--space-6);
+}
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  padding: var(--space-3);
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+}
+.field textarea {
+  resize: vertical;
+}
+.field [aria-invalid='true'] {
+  border-color: var(--danger);
+}
+@media (max-width: 640px) {
+  .care-form-grid,
+  .catalog-filters {
+    grid-template-columns: 1fr;
+  }
+  .care-toolbar,
+  .care-toolbar > form {
+    align-items: stretch;
+    width: 100%;
+  }
+  .care-toolbar > form {
+    flex-basis: 100%;
+  }
+  .care-list > li {
+    flex-wrap: wrap;
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+  .care-list .care-avatar {
+    display: none;
+  }
+  .care-welcome,
+  .catalog-note {
+    padding: var(--space-6);
+    gap: var(--space-4);
+  }
+  .welcome-paw {
+    display: none;
+  }
+  .care-actions .button {
+    flex: 1;
+  }
+  .public-header {
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .public-header nav {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+}

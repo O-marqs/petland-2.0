@@ -1,0 +1,1 @@
+"""PetLand modular monolith."""

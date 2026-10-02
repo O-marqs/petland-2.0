@@ -1,0 +1,77 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:12.129
+PetLand 3.0: uma jornada de tutor, equipe e gestão. Ambiente local, dados fictícios.
+
+2
+00:00:12.130 --> 00:00:22.519
+Conta demo verificada e contato preparado. A área do tutor orienta pet, reserva e acompanhamento.
+
+3
+00:00:22.520 --> 00:00:31.579
+Nala é cadastrada pela interface, com porte, alergia e preferência. São dados fictícios persistidos.
+
+4
+00:00:31.580 --> 00:00:42.189
+O catálogo apresenta serviços e portes. O serviço da captura usa duração fictícia de cinco minutos.
+
+5
+00:00:42.190 --> 00:00:50.119
+A disponibilidade considera loja, pessoas aptas, duração, bloqueios e recurso físico. O tutor escolhe o horário.
+
+6
+00:00:50.120 --> 00:01:00.189
+Preço e duração aparecem no resumo. Abrir o resumo ainda não cria a reserva; o tutor precisa confirmar.
+
+7
+00:01:00.190 --> 00:01:10.069
+A confirmação grava a reserva. Uma pessoa apta é atribuída pelo servidor, conforme a regra de produto.
+
+8
+00:01:10.070 --> 00:01:20.219
+O painel reúne próximos cuidados, agenda, pendências e carga. A mesma Nala aparece para a equipe.
+
+9
+00:01:20.220 --> 00:01:28.559
+A reserva do tutor é a mesma na agenda da loja. O funcionário abre seu atendimento.
+
+10
+00:01:28.560 --> 00:01:37.829
+A alergia acompanha o pet. A equipe tem contexto de cuidado e registra as ações com autoria.
+
+11
+00:01:37.830 --> 00:02:38.019
+A equipe transfere o cuidado com motivo. Horário, preço e duração contratados permanecem iguais.
+
+12
+00:02:38.020 --> 00:02:47.389
+Início liberado pelo relógio real do servidor. A equipe confirma que leu as restrições atuais.
+
+13
+00:02:47.390 --> 00:02:56.919
+Conclusão e resumo são registrados. O aviso de pronto é verificado no Mailpit local, sem envio externo.
+
+14
+00:02:56.920 --> 00:03:07.909
+O histórico mostra o cuidado concluído e o resumo publicado. A nota interna permanece privada.
+
+15
+00:03:07.910 --> 00:03:19.319
+Indicadores vêm dos atendimentos persistidos. Atribuição pelo responsável final; números da demo são fictícios.
+
+16
+00:03:19.320 --> 00:03:29.519
+Escala coletiva salva para uma única data: pessoas e períodos definidos, com prévia e confirmação.
+
+17
+00:03:29.520 --> 00:03:39.749
+O recurso físico limita serviços simultâneos. Uma banheira pode ser o limite mesmo com duas pessoas livres.
+
+18
+00:03:39.750 --> 00:03:50.199
+A prévia identifica a reserva afetada e bloqueia salvar. Ninguém perde seu horário silenciosamente.
+
+19
+00:03:50.200 --> 00:04:00.160
+Ações mantêm autoria e histórico. Aceite humano, publicação e SMTP externo continuam pendentes.

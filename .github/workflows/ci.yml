@@ -1,0 +1,137 @@
+name: PetLand quality
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+        env:
+          POSTGRES_USER: petland_test
+          POSTGRES_PASSWORD: ephemeral-ci-only
+          POSTGRES_DB: petland_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd "pg_isready -U petland_test -d petland_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      APP_ENV: test
+      REQUIRE_INTEGRATION: '1'
+      TEST_DATABASE_URL: postgresql+psycopg://petland_test:ephemeral-ci-only@127.0.0.1:5432/petland_test
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: { version: '0.12.18', python-version: '3.13' }
+      - run: uv sync --project apps/api --frozen
+      - run: pnpm install --frozen-lockfile
+      - name: Python lint and formatting
+        run: |
+          uv run --project apps/api ruff check --config apps/api/pyproject.toml apps/api scripts
+          uv run --project apps/api ruff format --check --config apps/api/pyproject.toml apps/api scripts
+      - run: uv run --directory apps/api mypy
+      - run: uv run --project apps/api python scripts/check_architecture.py
+      - run: python scripts/check_repository.py
+      - name: Review documentation, diagrams, candidate and portfolio media
+        run: |
+          python scripts/check_documentation.py
+          python scripts/render_architecture.py --check
+          python scripts/release.py check
+          python -m unittest discover -s scripts -p 'test_release.py'
+      - name: Unit, HTTP and real PostgreSQL migrations
+        run: uv run --directory apps/api pytest
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm format:check
+      - run: pnpm contracts:check
+      - run: pnpm test
+      - run: pnpm build
+      - name: Dependency advisories
+        run: |
+          uv export --project apps/api --frozen --no-dev --no-emit-project --format requirements-txt -o /tmp/petland-requirements.txt
+          uv run --project apps/api pip-audit -r /tmp/petland-requirements.txt --disable-pip --no-deps
+          uv run --project apps/api pip-audit
+          pnpm audit --prod --audit-level high
+      - name: RNF02 isolated API benchmark, 100k appointments and 20 sessions
+        run: |
+          uv run --project apps/api python scripts/benchmark_api.py --output /tmp/petland-api-benchmark.json
+          python -c "from pathlib import Path; print(Path('/tmp/petland-api-benchmark.json').read_text())"
+  browser:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - run: pnpm install --frozen-lockfile
+      - run: python3 scripts/dev.py init
+      - name: Clean Compose startup and migration job
+        run: python3 scripts/dev.py up
+      - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - name: Browser failure context
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for path in Path('apps/web/test-results').glob('*/error-context.md'):
+              content = path.read_text()
+              print(path.name, re.sub(r'([#?]token=)[^\s)]+', r'\1[redacted]', content))
+          PY
+      - name: Stop test environment
+        if: always()
+        run: python3 scripts/dev.py down
+  operations:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.0.0
+        with: { node-version: '22' }
+      - uses: pnpm/action-setup@v6.1.0
+        with: { version: '10.34.5' }
+      - uses: astral-sh/setup-uv@v10.2.0
+        with: { version: '0.12.18', python-version: '3.13' }
+      - run: uv sync --project apps/api --frozen
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @petland/web exec playwright install --with-deps chromium
+      - name: Public portfolio player, captions, chapters and local links
+        run: node apps/web/scripts/verify-portfolio.mjs
+      - name: Isolated TLS staging and single migration job
+        run: |
+          python3 scripts/dev.py staging-init
+          python3 scripts/dev.py staging-up
+      - name: Synthetic seed and reset preserve the previous database
+        run: |
+          python3 scripts/dev.py seed-demo
+          python3 scripts/dev.py reset-demo --confirm petland_demo
+      - name: Authenticated backup, isolated restore, three profiles and return
+        run: |
+          python3 scripts/dev.py rehearse
+          cat .local/staging/rehearsal.json
+      - name: New-account UI, confirmation, pet, reservation and staff communication
+        run: node apps/web/scripts/onboarding-staging.mjs
+      - name: Daily roster, physical capacity, transfer, critical care, reporting and actual SMTP
+        run: node apps/web/scripts/operations-evolution-staging.mjs
+      - name: Visual reflow, accessible navigation and role boundaries
+        run: node apps/web/scripts/review-staging.mjs
+      - name: Stop isolated staging, preserve volume
+        if: always()
+        run: python3 scripts/dev.py staging-down

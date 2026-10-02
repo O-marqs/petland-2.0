@@ -1,0 +1,689 @@
+Atue como:
+
+- Principal Software Architect
+- Solution Architect
+- Senior Product Manager
+- Senior Product Designer
+- UX/UI Lead
+- Senior Technical Writer
+- Staff Backend Engineer
+- Staff Frontend Engineer
+
+Você está trabalhando no repositório:
+
+https://github.com/O-marqs/petland-2.0
+
+O PetLand 3.0 chegou ao estágio final do projeto de portfólio.
+
+O estado funcional mais recente está na evolução operacional correspondente ao PR #10 / branch `petland-3.0-operations-evolution` e seus predecessores.
+
+IMPORTANTE:
+
+1. Antes de modificar qualquer arquivo, analise o HEAD atual, PRs incrementais, documentação existente e código implementado.
+2. Não presuma que documentos antigos representam o estado atual.
+3. Código executável, migrations, contratos OpenAPI e testes são a fonte primária da verdade.
+4. Preserve documentos históricos quando eles representarem corretamente uma etapa anterior.
+5. Não reescreva evidências antigas como se tivessem sido produzidas pela versão atual.
+6. Não invente testes, pesquisas com usuários, métricas, funcionalidades ou decisões.
+7. Não faça merge.
+8. Não publique release.
+9. Não altere regras de negócio ou funcionalidades apenas para simplificar a documentação.
+10. Se encontrar inconsistência entre documentação e implementação, corrija a documentação atual e registre a diferença quando necessário.
+
+====================================================
+OBJETIVO
+====================================================
+
+Transformar a documentação atual em uma documentação final de portfólio do:
+
+PETLAND 3.0
+
+O repositório deve conseguir responder claramente, para alguém que nunca viu o projeto:
+
+- Qual problema o produto resolve?
+- Quem são seus usuários?
+- Quais jornadas existem?
+- Qual é o escopo funcional final?
+- Quais decisões de produto foram tomadas?
+- Como a UX evoluiu?
+- Qual é a identidade visual final?
+- Como o sistema está arquitetado?
+- Quais padrões arquiteturais utiliza?
+- Como frontend, backend e banco se relacionam?
+- Como os módulos internos se relacionam?
+- Como os dados são modelados?
+- Como concorrência e consistência são protegidas?
+- Como segurança funciona?
+- Quais RNFs foram considerados?
+- O que foi medido?
+- Quais são os limites atuais?
+- Quais decisões foram conscientemente adiadas?
+- Como executar e validar o projeto?
+
+A documentação final deve distinguir claramente:
+
+CURRENT STATE
+estado final implementado
+
+de
+
+HISTORY / DISCOVERY
+documentos produzidos durante P01-P10 e decisões anteriores.
+
+====================================================
+1. PRIMEIRO: AUDITORIA DOCUMENTAL
+====================================================
+
+Antes das alterações, faça um inventário de:
+
+- README principal;
+- docs/README.md;
+- docs/product;
+- docs/ux;
+- docs/architecture;
+- docs/adr;
+- docs/runbooks;
+- docs/release;
+- docs/evidence;
+- docs/implementation;
+- OpenAPI;
+- migrations;
+- estrutura dos módulos backend;
+- estrutura frontend;
+- infraestrutura Compose/staging;
+- testes;
+- CI.
+
+Identifique:
+
+- documentos desatualizados;
+- referências para P08 que deveriam representar o estado final;
+- funcionalidades marcadas como ausentes mas implementadas no PR #10;
+- branches antigas usadas em instruções de clone;
+- números de testes defasados;
+- schema revisions antigas;
+- screenshots históricas apresentadas como atuais;
+- diagramas desatualizados;
+- links quebrados;
+- documentos duplicados ou conflitantes.
+
+Não apague evidência histórica válida.
+
+====================================================
+2. PRODUCT OVERVIEW FINAL
+====================================================
+
+Crie um documento curto e atual, por exemplo:
+
+docs/product/product-overview.md
+
+Ele será a principal visão de produto para recrutadores.
+
+Inclua:
+
+- visão;
+- problema;
+- público;
+- três perfis:
+  - cliente/tutor;
+  - funcionário;
+  - administrador/gestão;
+- principais jornadas;
+- funcionalidades finais;
+- regras importantes;
+- capacidades operacionais;
+- decisões de produto relevantes;
+- funcionalidades deliberadamente fora do escopo;
+- limitações atuais;
+- evolução do PetLand 2.0 → 3.0.
+
+Não transforme isso em um PRD gigante.
+
+O documento deve ser legível em aproximadamente 5 minutos.
+
+Preserve o `PetLand_3.0_Plano_Consolidado.md` como documento de discovery original.
+
+Deixe explícito que o plano consolidado representa o raciocínio inicial e que `product-overview.md` representa o produto final implementado.
+
+====================================================
+3. ATUALIZAR A DOCUMENTAÇÃO DE UX
+====================================================
+
+A UX foi significativamente modificada depois de P08, especialmente na revisão visual, onboarding e evolução operacional.
+
+A documentação final precisa representar:
+
+- identidade visual atual;
+- home atual;
+- fluxo de primeiro acesso;
+- cadastro → confirmação → perfil → pet → reserva;
+- área do tutor;
+- área operacional;
+- painel diário;
+- agenda;
+- escala;
+- capacidade física;
+- atendimento;
+- contexto do pet;
+- transferência;
+- gestão;
+- indicadores;
+- administração;
+- comportamento mobile;
+- navegação final;
+- design system efetivamente utilizado.
+
+Preserve:
+
+docs/ux/PetLand_3.0_Caderno_UX.pdf
+
+como documento histórico/original de discovery, caso ele represente a concepção inicial.
+
+NÃO altere silenciosamente um PDF histórico.
+
+Crie uma documentação final separada, por exemplo:
+
+docs/ux/PetLand_3.0_UX_Final.md
+
+e, se existir uma forma reprodutível no repositório para gerar PDF, gere também:
+
+docs/ux/PetLand_3.0_UX_Final.pdf
+
+Caso não exista uma forma segura/reprodutível, mantenha Markdown como source of truth e não invente um processo de PDF.
+
+A documentação UX final deve conter:
+
+- princípios;
+- arquitetura de navegação;
+- user flows;
+- design foundations;
+- componentes;
+- padrões de feedback;
+- loading/error/empty states;
+- responsividade;
+- acessibilidade;
+- decisões mobile;
+- decisões de menu superior vs lateral;
+- comparação antes/depois;
+- limitações;
+- links para screenshots/evidências reais.
+
+Não alegar pesquisa com usuários ou validação que não aconteceu.
+
+====================================================
+4. DESIGN SYSTEM
+====================================================
+
+Atualize:
+
+docs/ux/design-system.md
+
+para o estado realmente implementado.
+
+Confira diretamente:
+
+- tokens CSS;
+- componentes compartilhados;
+- tipografia;
+- cores;
+- espaçamento;
+- radius;
+- controles;
+- feedback;
+- formulários;
+- navegação;
+- responsividade;
+- acessibilidade;
+- motion/reduced-motion.
+
+Remova afirmações antigas de P01 se não representarem mais o produto.
+
+Diferencie:
+
+foundation
+components
+patterns
+layouts
+accessibility
+
+Sempre apontando para código real.
+
+====================================================
+5. ARQUITETURA — VISÃO FINAL
+====================================================
+
+Crie ou reformule uma visão principal:
+
+docs/architecture/overview.md
+
+Ela deve funcionar como Architecture Overview do PetLand 3.0.
+
+Estruture usando conceitos próximos ao C4:
+
+C4 L1 — System Context
+
+Mostrar:
+
+- tutor;
+- funcionário;
+- administrador;
+- PetLand;
+- SMTP;
+- banco;
+- operações externas relevantes.
+
+C4 L2 — Containers
+
+Mostrar:
+
+- React;
+- Nginx;
+- FastAPI;
+- PostgreSQL;
+- notification/outbox processing;
+- SMTP;
+- migration job;
+- backup/recovery tooling.
+
+C4 L3 — Backend Components
+
+Mostrar módulos:
+
+- system;
+- identity;
+- customers;
+- pets;
+- catalog;
+- scheduling;
+
+e:
+
+- domain;
+- application;
+- infrastructure;
+- presentation;
+- public contracts;
+- bootstrap/composition root.
+
+Explique explicitamente:
+
+- modular monolith;
+- arquitetura hexagonal / Ports & Adapters;
+- layered architecture interna;
+- princípios de DDD;
+- dependency inversion;
+- contratos públicos entre módulos;
+- architecture fitness functions.
+
+Não chamar de microservices.
+
+Não alegar DDD “puro”.
+
+Use uma descrição tecnicamente precisa, por exemplo:
+
+“Modular Monolith with Hexagonal Architecture and pragmatic DDD principles.”
+
+====================================================
+6. DIAGRAMAS EDITÁVEIS
+====================================================
+
+Hoje existem diagramas Mermaid versionados.
+
+Preserve-os.
+
+Além disso, crie uma pasta:
+
+docs/architecture/diagrams/
+
+Crie um único arquivo Draw.io editável, por exemplo:
+
+PetLand_3.0_Architecture.drawio
+
+com páginas:
+
+01-System-Context
+02-Containers
+03-Backend-Modules
+04-Booking-Transaction
+05-Security-Trust-Boundaries
+06-Data-Flow
+07-Deployment-Staging
+
+Se for possível exportar de forma determinística, gere SVGs para leitura direta no GitHub:
+
+system-context.svg
+containers.svg
+backend-modules.svg
+booking-transaction.svg
+security-boundaries.svg
+data-flow.svg
+deployment.svg
+
+Não substituir Mermaid obrigatoriamente.
+
+Draw.io será a representação visual editável e Mermaid continuará sendo documentação versionável em texto.
+
+Os dois devem ser coerentes.
+
+Não é necessário conectar ou publicar em Miro.
+
+Os diagramas devem poder ser posteriormente importados ou reproduzidos em uma ferramenta visual, sem que Miro seja dependência do projeto.
+
+====================================================
+7. MODELAGEM DE DADOS
+====================================================
+
+Atualize:
+
+docs/architecture/data-model.md
+
+conforme migration atual.
+
+Confirmar:
+
+- revision atual;
+- tabelas;
+- relações;
+- FKs;
+- constraints;
+- GiST exclusion constraints;
+- idempotency;
+- audit;
+- outbox;
+- configuração;
+- resource/capacity;
+- transferências;
+- campos de cuidado;
+- comunicação.
+
+Diferencie:
+
+- integridade do banco;
+- invariantes do domínio;
+- snapshots;
+- dados históricos;
+- JSONB utilizado deliberadamente.
+
+Não redesenhar schema sem necessidade.
+
+====================================================
+8. ARQUITETURA DE SOLUÇÃO E LIMITES
+====================================================
+
+Acrescente ao Architecture Overview uma seção:
+
+Current Deployment Model
+
+Descrever honestamente o estado atual:
+
+- staging local;
+- Nginx;
+- API;
+- PostgreSQL single-node;
+- Mailpit;
+- backup local;
+- TLS local;
+- migrations separadas.
+
+Criar outra seção:
+
+Production Evolution — Not Implemented
+
+Apenas como arquitetura de referência, não como capacidade existente.
+
+Pode citar, dependendo de requisitos futuros:
+
+- managed PostgreSQL;
+- Multi-AZ;
+- PITR;
+- off-host backup;
+- PgBouncer;
+- múltiplas instâncias de API;
+- observabilidade;
+- SMTP externo;
+- load balancer;
+- SLO/RPO/RTO.
+
+Deixar visualmente evidente:
+
+CURRENT
+
+vs
+
+POSSIBLE PRODUCTION EVOLUTION
+
+Não implementar essas tecnologias.
+
+====================================================
+9. RNFs
+====================================================
+
+Consolide os requisitos não funcionais implementados e medidos.
+
+Inclua:
+
+- segurança;
+- performance;
+- concorrência;
+- consistência;
+- acessibilidade;
+- responsividade;
+- recoverability;
+- maintainability;
+- observabilidade existente;
+- testabilidade.
+
+Distinguir:
+
+Target
+Measurement
+Evidence
+Limitation
+
+Não declarar produção ou escala não testada.
+
+Não dizer “suporta 1000 usuários” se isso não foi medido.
+
+Registrar corretamente os benchmarks existentes.
+
+====================================================
+10. ADR INDEX
+====================================================
+
+Atualize:
+
+docs/adr/README.md
+
+para que seja fácil descobrir:
+
+- decisão;
+- status;
+- motivo;
+- consequência.
+
+Não obrigue o leitor a abrir todos os ADRs para descobrir o que existe.
+
+Criar uma tabela resumida com:
+
+ADR
+Título
+Status
+Área
+Resumo
+Link
+
+====================================================
+11. DOCUMENTATION INDEX
+====================================================
+
+Reestruture:
+
+docs/README.md
+
+como portal de documentação.
+
+Separar:
+
+START HERE
+
+- Product Overview
+- Architecture Overview
+- Case Study
+- Quick Start
+
+PRODUCT
+
+UX
+
+ARCHITECTURE
+
+ENGINEERING
+
+RUNBOOKS
+
+HISTORY / EVIDENCE
+
+Um recrutador não deve precisar navegar por 100+ arquivos para entender o projeto.
+
+====================================================
+12. README PRINCIPAL
+====================================================
+
+O README deverá ser atualizado somente depois das demais documentações.
+
+Os primeiros blocos devem responder rapidamente:
+
+PETLAND 3.0
+
+- o que é;
+- problema;
+- resultado;
+- stack;
+- arquitetura;
+- screenshot;
+- vídeo;
+- quick start.
+
+Adicionar uma seção curta:
+
+Technical Highlights
+
+Incluindo somente fatos implementados, como:
+
+- Modular Monolith;
+- Hexagonal Architecture;
+- pragmatic DDD;
+- typed OpenAPI contracts;
+- PostgreSQL transactional consistency;
+- GiST exclusion constraints;
+- optimistic + pessimistic concurrency;
+- idempotency;
+- transactional outbox;
+- RBAC/contextual authorization;
+- Argon2id;
+- CI;
+- architecture tests;
+- PostgreSQL integration tests;
+- E2E;
+- performance validation;
+- backup/restore rehearsal.
+
+Adicionar uma trilha:
+
+5 minutes
+15 minutes
+Technical deep dive
+Run locally
+
+Exemplo:
+
+5 minutos:
+README + vídeo
+
+15 minutos:
+Case + Product Overview + Architecture Overview
+
+Deep dive:
+ADRs + Data Model + Security + Quality Report
+
+Run:
+Quick Start
+
+====================================================
+13. NÃO COLOCAR NO README
+====================================================
+
+Evitar transformar o README em histórico P01-P10.
+
+Detalhes das fases devem permanecer em implementation/evidence.
+
+O README deve representar o produto, não o processo inteiro de desenvolvimento.
+
+====================================================
+14. SCREENSHOTS
+====================================================
+
+Audite screenshots atuais.
+
+Identifique:
+
+CURRENT
+HISTORICAL
+
+Não chamar captura P08 de estado final se a tela mudou depois.
+
+Se o ambiente puder ser iniciado deterministicamente, capture novamente somente telas necessárias para a documentação atual:
+
+- home;
+- tutor;
+- reserva;
+- operação/dashboard;
+- escala;
+- capacidade;
+- atendimento;
+- gestão.
+
+Não substituir evidências históricas.
+
+Use arquivos claramente identificados como final/current.
+
+====================================================
+15. VALIDAÇÃO
+====================================================
+
+Depois das alterações:
+
+- validar links Markdown;
+- validar referências;
+- conferir Mermaid;
+- conferir XML Draw.io;
+- conferir imagens;
+- rodar formatter/linter relevante;
+- executar `python scripts/dev.py check` se o ambiente permitir;
+- executar verificadores do release;
+- não modificar código funcional desnecessariamente.
+
+====================================================
+16. ENTREGA
+====================================================
+
+No final, responda com:
+
+1. arquivos criados;
+2. arquivos atualizados;
+3. documentos mantidos como históricos;
+4. inconsistências encontradas e corrigidas;
+5. arquitetura final documentada;
+6. UX final documentada;
+7. diagramas adicionados;
+8. itens ainda pendentes;
+9. checks executados;
+10. links para os documentos principais.
+
+Não faça merge.
+
+Não publique release.
+
+Não declare PetLand finalizado automaticamente.
+
+Apenas prepare uma versão documental coerente para revisão humana.

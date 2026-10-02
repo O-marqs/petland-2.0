@@ -1,0 +1,119 @@
+{
+  "duration_seconds": 240.16,
+  "chapters": [
+    {
+      "at_seconds": 1.93,
+      "title": "O cuidado começa aqui",
+      "caption": "PetLand 3.0: uma jornada de tutor, equipe e gestão. Ambiente local, dados fictícios.",
+      "screenshot": "final-home.webp"
+    },
+    {
+      "at_seconds": 12.13,
+      "title": "Primeiros passos com contexto",
+      "caption": "Conta demo verificada e contato preparado. A área do tutor orienta pet, reserva e acompanhamento.",
+      "screenshot": "final-customer-dashboard.webp"
+    },
+    {
+      "at_seconds": 22.52,
+      "title": "O pet vem com seu contexto",
+      "caption": "Nala é cadastrada pela interface, com porte, alergia e preferência. São dados fictícios persistidos.",
+      "screenshot": "final-pet.webp"
+    },
+    {
+      "at_seconds": 31.58,
+      "title": "Um cuidado com preço claro",
+      "caption": "O catálogo apresenta serviços e portes. O serviço da captura usa duração fictícia de cinco minutos.",
+      "screenshot": "final-services.webp"
+    },
+    {
+      "at_seconds": 42.19,
+      "title": "Uma vaga real",
+      "caption": "A disponibilidade considera loja, pessoas aptas, duração, bloqueios e recurso físico. O tutor escolhe o horário.",
+      "screenshot": "final-availability.webp"
+    },
+    {
+      "at_seconds": 50.12,
+      "title": "Revisar antes de reservar",
+      "caption": "Preço e duração aparecem no resumo. Abrir o resumo ainda não cria a reserva; o tutor precisa confirmar.",
+      "screenshot": "final-booking.webp"
+    },
+    {
+      "at_seconds": 60.19,
+      "title": "Reserva confirmada",
+      "caption": "A confirmação grava a reserva. Uma pessoa apta é atribuída pelo servidor, conforme a regra de produto.",
+      "screenshot": "final-confirmation.webp"
+    },
+    {
+      "at_seconds": 70.07,
+      "title": "O que a equipe faz hoje",
+      "caption": "O painel reúne próximos cuidados, agenda, pendências e carga. A mesma Nala aparece para a equipe.",
+      "screenshot": "final-operations-dashboard.webp"
+    },
+    {
+      "at_seconds": 80.22,
+      "title": "Da agenda ao atendimento",
+      "caption": "A reserva do tutor é a mesma na agenda da loja. O funcionário abre seu atendimento.",
+      "screenshot": "final-agenda.webp"
+    },
+    {
+      "at_seconds": 88.56,
+      "title": "Contexto crítico antes de começar",
+      "caption": "A alergia acompanha o pet. A equipe tem contexto de cuidado e registra as ações com autoria.",
+      "screenshot": "final-attendance.webp"
+    },
+    {
+      "at_seconds": 97.83,
+      "title": "Trocar a pessoa, preservar o combinado",
+      "caption": "A equipe transfere o cuidado com motivo. Horário, preço e duração contratados permanecem iguais.",
+      "screenshot": "final-transfer.webp"
+    },
+    {
+      "at_seconds": 158.02,
+      "title": "Leitura atual e início real",
+      "caption": "Início liberado pelo relógio real do servidor. A equipe confirma que leu as restrições atuais.",
+      "screenshot": "final-attendance-started.webp"
+    },
+    {
+      "at_seconds": 167.39,
+      "title": "Concluir e comunicar",
+      "caption": "Conclusão e resumo são registrados. O aviso de pronto é verificado no Mailpit local, sem envio externo.",
+      "screenshot": "final-attendance-completed.webp"
+    },
+    {
+      "at_seconds": 176.92,
+      "title": "O tutor sabe o que aconteceu",
+      "caption": "O histórico mostra o cuidado concluído e o resumo publicado. A nota interna permanece privada.",
+      "screenshot": "final-customer-history.webp"
+    },
+    {
+      "at_seconds": 187.91,
+      "title": "A operação vira informação",
+      "caption": "Indicadores vêm dos atendimentos persistidos. Atribuição pelo responsável final; números da demo são fictícios.",
+      "screenshot": "final-management.webp"
+    },
+    {
+      "at_seconds": 199.32,
+      "title": "Um dia diferente, sem refazer a semana",
+      "caption": "Escala coletiva salva para uma única data: pessoas e períodos definidos, com prévia e confirmação.",
+      "screenshot": "final-roster.webp"
+    },
+    {
+      "at_seconds": 209.52,
+      "title": "Equipe livre não basta",
+      "caption": "O recurso físico limita serviços simultâneos. Uma banheira pode ser o limite mesmo com duas pessoas livres.",
+      "screenshot": "final-capacity.webp"
+    },
+    {
+      "at_seconds": 219.75,
+      "title": "Mudar com responsabilidade",
+      "caption": "A prévia identifica a reserva afetada e bloqueia salvar. Ninguém perde seu horário silenciosamente.",
+      "screenshot": "final-impact.webp"
+    },
+    {
+      "at_seconds": 230.2,
+      "title": "História e limites explícitos",
+      "caption": "Ações mantêm autoria e histórico. Aceite humano, publicação e SMTP externo continuam pendentes.",
+      "screenshot": "final-audit.webp"
+    }
+  ]
+}

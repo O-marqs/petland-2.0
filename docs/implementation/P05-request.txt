@@ -1,0 +1,3 @@
+Pedido atual: Pode ir para o p05.
+P05 — Operação e gestão, cards PL3-14 a PL3-17. Continuidade da P04 em 70bce180a1c1b5edc2d2e8aa5b5c561819b7a111.
+Continuam as decisões D01–D11 e a autorização de seguir recomendações nos pontos não respondidos. Repositórios locais em Documents/GitHub. Parar se ocorrer problema de Docker. Sem merge automático, publicação ou recursos pagos.

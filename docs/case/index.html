@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="PetLand 3.0, case de produto e engenharia de Lucas Marques. Tutor, equipe e gestão em uma jornada real, com evidências e limites."
+    />
+    <title>PetLand 3.0 · Case final · Lucas Marques</title>
+    <link rel="stylesheet" href="final.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Pular para o conteúdo</a>
+    <div class="wrap">
+      <nav aria-label="Navegação do case">
+        <a class="brand" href="#main">PetLand.</a>
+        <div class="nav-links">
+          <a href="#demo">Jornada</a><a href="#engineering">Engenharia</a
+          ><a href="#evidence">Evidências</a><a href="README.md">Case completo</a>
+        </div>
+      </nav>
+      <main id="main">
+        <header>
+          <span class="eyebrow">Lucas Marques · Produto, arquitetura e engenharia</span>
+          <h1>O cuidado do pet.<br />Uma operação <em>inteira.</em></h1>
+          <div>
+            <p class="intro">
+              Do primeiro horário ao pet pronto para buscar. Uma plataforma que conecta tutor,
+              equipe e gestão, com contexto e histórico.
+            </p>
+            <p class="small">
+              Release final de portfólio · 3.0.0 · Demo local com dados
+              fictícios · Aceite humano pendente.
+            </p>
+          </div>
+        </header>
+        <div class="actions">
+          <a href="#demo">Assistir à jornada final</a
+          ><a href="presentation-script.md">Roteiro de apresentação</a
+          ><a href="https://github.com/O-marqs/petland/tree/main"
+            >Explorar o projeto</a
+          >
+        </div>
+        <figure class="cover">
+          <img
+            src="media/final/final-home.webp"
+            width="1280"
+            height="900"
+            alt="Home final do PetLand: retrato de pets, tipografia editorial e convite para agendar cuidado"
+            fetchpriority="high"
+          />
+          <figcaption>
+            Aplicação real · Origem f3d70a2 · Identidade de pet shop · Fotografia de marca gerada,
+            identificada na documentação.
+          </figcaption>
+        </figure>
+        <section aria-labelledby="problem-title">
+          <span class="eyebrow">01 · Problema e diagnóstico</span>
+          <h2 id="problem-title">Um horário vazio<br />não é uma vaga.</h2>
+          <div class="split">
+            <div>
+              <p class="lead">
+                O tutor quer previsibilidade. A equipe precisa de contexto. O gestor precisa mudar o
+                dia sem perder o que já foi combinado.
+              </p>
+              <p>
+                O 2.0 expressava a intenção de autoatendimento, mas misturava rotas, SQL e regras.
+                Disponibilidade por contagem e contratos divergentes não comprovavam uma reserva
+                segura sob concorrência.
+              </p>
+              <p>
+                <a
+                  href="https://github.com/O-marqs/petland/blob/f3d70a2cce07d587351eadaa66864b7c1ae4444a/docs/migration/baseline.md"
+                  >Ler o diagnóstico preservado</a
+                >
+              </p>
+            </div>
+            <figure>
+              <img
+                src="media/before-booking.png"
+                width="1280"
+                height="900"
+                loading="lazy"
+                alt="Template de agendamento do PetLand 2.0, com seletores e aviso de renderização isolada"
+              />
+              <figcaption>
+                Antes: template isolado de 3cc3f89, com links/forms inativos e dados fictícios.
+                Legado/MySQL não executados.
+                <a href="media/before-provenance.json">Adaptações e hashes</a>.
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+        <section aria-labelledby="decision-title">
+          <span class="eyebrow">02 · Decisões de produto</span>
+          <h2 id="decision-title">O combinado precisa<br />continuar valendo.</h2>
+          <ol class="decisions">
+            <li>
+              <span class="number" aria-hidden="true">01</span>
+              <h3>Uma vaga real</h3>
+              <p>
+                Loja aberta, pessoa apta, escala, duração, bloqueios e recurso físico. Profissional
+                atribuído pelo servidor; horário escolhido pelo tutor.
+              </p>
+            </li>
+            <li>
+              <span class="number" aria-hidden="true">02</span>
+              <h3>Um cuidado contínuo</h3>
+              <p>
+                Resumo antes de confirmar. Alergias antes de iniciar. Transferência com motivo.
+                Histórico, preço e duração preservados.
+              </p>
+            </li>
+            <li>
+              <span class="number" aria-hidden="true">03</span>
+              <h3>Um dia compreensível</h3>
+              <p>
+                Painel diário, equipe de uma única data e prévia de impacto. Indicadores com
+                atribuição explícita, sem ranking automático.
+              </p>
+            </li>
+          </ol>
+          <p class="small">
+            Uma loja, três perfis, um pet/serviço por reserva e sem taxas. Personas são hipóteses,
+            sem alegação de pesquisa com lojas reais.
+            <a
+              href="https://github.com/O-marqs/petland/blob/f3d70a2cce07d587351eadaa66864b7c1ae4444a/docs/product/decisions.md"
+              >Decisões e limites</a
+            >.
+          </p>
+        </section>
+        <section id="demo" class="film" aria-labelledby="demo-title">
+          <span class="eyebrow">03 · A experiência final</span>
+          <h2 id="demo-title">A mesma Nala.<br />Três perspectivas.</h2>
+          <p>
+            Uma jornada contínua de cerca de quatro minutos: tutor reserva, equipe cuida, gestão
+            ajusta a operação. Sem áudio, com legendas e transcrição; relógio real do servidor.
+          </p>
+          <video
+            id="demo-video"
+            controls
+            preload="metadata"
+            poster="media/final/final-home.webp"
+            aria-label="Jornada final do PetLand: tutor, equipe e gestão"
+          >
+            <source src="media/final/petland-final-demo.webm" type="video/webm" />
+            <track
+              src="media/final/petland-final-demo.vtt"
+              kind="captions"
+              srclang="pt-BR"
+              label="Português"
+              default
+            />
+            Seu navegador não reproduz WebM.
+            <a href="media/final/petland-final-demo.webm">Baixe o vídeo</a> ou
+            <a href="final-transcript.md">leia a transcrição</a>.
+          </video>
+          <div class="chapters" id="chapters" aria-label="Capítulos do vídeo"></div>
+          <p class="small">
+            <a href="final-transcript.md">Transcrição completa</a> ·
+            <a href="media/final/petland-final-demo.vtt">Legendas WebVTT</a> ·
+            <a href="media/final/petland-final-demo.webm">Baixar vídeo final</a> ·
+            <a href="media/final/capture.json">Proveniência</a>
+          </p>
+          <details>
+            <summary>Ler a jornada sem reproduzir o vídeo</summary>
+            <ol id="transcript-inline" class="transcript-list"></ol>
+            <noscript
+              ><p>Leia a <a href="final-transcript.md">transcrição em texto</a>.</p></noscript
+            >
+          </details>
+          <p class="note">
+            Preparação: contas demo verificadas/contato pronto, serviço fictício de cinco minutos/R$
+            40, duas pessoas aptas, passo de um minuto e expediente excepcional. Reserva futura via
+            API comum do tutor para o impacto. SMTP verificado no Mailpit local; nenhum envio
+            externo alegado.
+          </p>
+        </section>
+        <section aria-labelledby="experience-title">
+          <span class="eyebrow">04 · Do fluxo ao produto</span>
+          <h2 id="experience-title">Contexto para quem cuida.<br />Autonomia para quem espera.</h2>
+          <div class="journey">
+            <div>
+              <span class="number" aria-hidden="true">01</span>
+              <h3>Tutor · O próximo passo aparece</h3>
+              <p>
+                O início contextualiza contato, pet e reserva. O preço chega antes da confirmação.
+                Depois, o tutor acompanha o status e o resumo publicado.
+              </p>
+            </div>
+            <figure>
+              <a href="media/final/final-booking.webp"
+                ><img
+                  src="media/final/final-booking.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Resumo final da reserva de Nala, com preço, duração e confirmação explícita"
+              /></a>
+              <figcaption>
+                Escolher o horário abre o resumo. Confirmar é uma segunda ação.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="journey">
+            <div>
+              <span class="number" aria-hidden="true">02</span>
+              <h3>Equipe · O dia tem contexto</h3>
+              <p>
+                Painel diário e agenda levam ao mesmo cuidado. Alergias/preferências acompanham
+                Nala; a leitura crítica é confirmada antes do início. Transferir conserva o
+                combinado.
+              </p>
+            </div>
+            <figure>
+              <a href="media/final/final-operations-dashboard.webp"
+                ><img
+                  src="media/final/final-operations-dashboard.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Painel operacional final com os próximos cuidados, pendências e distribuição da equipe"
+              /></a>
+              <figcaption>
+                A agenda vem da reserva persistida, com dados sintéticos identificados.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="gallery">
+            <figure>
+              <a href="media/final/final-attendance.webp"
+                ><img
+                  src="media/final/final-attendance.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Atendimento de Nala com alerta de alergia e contexto de cuidado"
+              /></a>
+              <figcaption>
+                <strong>Restrições presentes</strong>O contexto do pet acompanha a execução.
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="media/final/final-roster.webp"
+                ><img
+                  src="media/final/final-roster.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Escala coletiva salva para uma data, com uma pessoa indisponível"
+              /></a>
+              <figcaption>
+                <strong>Um dia diferente</strong>Equipe e períodos configurados para uma única data.
+              </figcaption>
+            </figure>
+            <figure>
+              <a href="media/final/final-capacity.webp"
+                ><img
+                  src="media/final/final-capacity.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Configuração final de recurso físico compartilhado com uma banheira"
+              /></a>
+              <figcaption>
+                <strong>Capacidade física</strong>Pessoas livres não eliminam o limite do recurso.
+              </figcaption>
+            </figure>
+          </div>
+          <div class="journey">
+            <div>
+              <span class="number" aria-hidden="true">03</span>
+              <h3>Gestão · Mudar com responsabilidade</h3>
+              <p>
+                Concluídos, duração e carga ajudam a revisar a operação. Uma prévia identifica
+                reservas afetadas e bloqueia salvar a escala incompatível; o histórico permanece.
+              </p>
+            </div>
+            <figure>
+              <a href="media/final/final-management.webp"
+                ><img
+                  src="media/final/final-management.webp"
+                  width="1280"
+                  loading="lazy"
+                  alt="Indicadores finais de gestão com cuidados e duração por pessoa"
+              /></a>
+              <figcaption>
+                Números da demonstração, atribuição pelo responsável final.
+                <a href="media/final/final-impact.webp">Ver a prévia bloqueada</a>.
+              </figcaption>
+            </figure>
+          </div>
+        </section>
+        <section id="engineering" aria-labelledby="engineering-title">
+          <span class="eyebrow">05 · Modernização e arquitetura</span>
+          <h2 id="engineering-title">Engineering Highlights</h2>
+          <p class="lead">A interface acolhe. A transação protege.</p>
+          <ol class="flow" aria-label="Arquitetura da interface à persistência">
+            <li>
+              <span class="eyebrow">Interface</span><strong>React</strong>
+              <p>TypeScript · TanStack Query · RHF/Zod</p>
+              <ul>
+                <li><b>OpenAPI</b> → tipos gerados</li>
+                <li>Estado remoto e erros claros</li>
+                <li>Tokens e fontes locais</li>
+              </ul>
+            </li>
+            <li>
+              <span class="eyebrow">Aplicação</span><strong>FastAPI</strong>
+              <p>Modular monolith · Hexagonal Architecture · DDD pragmático</p>
+              <ul>
+                <li>Domínio → casos de uso → ports/adapters</li>
+                <li><b>Idempotency</b> em retentativas</li>
+                <li><b>Transactional outbox</b> para comunicação</li>
+              </ul>
+            </li>
+            <li>
+              <span class="eyebrow">Persistência</span><strong>PostgreSQL</strong>
+              <p>SQLAlchemy/psycopg · Alembic</p>
+              <ul>
+                <li><b>Database constraints</b> · intervalos GiST</li>
+                <li><b>Concurrency</b> · lock da loja primeiro</li>
+                <li>Snapshot, autoria e atomicidade</li>
+              </ul>
+            </li>
+          </ol>
+          <div class="assurances">
+            <span><b>Security</b> · sessão/CSRF/propriedade/TLS</span
+            ><span><b>CI</b> · contratos, fronteiras e build</span
+            ><span><b>Testing</b> · PostgreSQL real, navegador e recuperação</span>
+          </div>
+          <p>
+            Uma loja não exigiu serviços distribuídos. Lock da loja favorece segurança e
+            previsibilidade, com contenção de escrita assumida. SMTP aceito não comprova entrega
+            externa.
+          </p>
+          <p>
+            <a
+              href="https://github.com/O-marqs/petland/blob/f3d70a2cce07d587351eadaa66864b7c1ae4444a/docs/architecture/overview.md"
+              >Arquitetura aprofundada e diagramas</a
+            >
+            ·
+            <a
+              href="https://github.com/O-marqs/petland/blob/f3d70a2cce07d587351eadaa66864b7c1ae4444a/docs/architecture/data-model.md"
+              >Modelo de dados</a
+            >
+            ·
+            <a
+              href="https://github.com/O-marqs/petland/blob/f3d70a2cce07d587351eadaa66864b7c1ae4444a/docs/adr/README.md"
+              >Decisões de arquitetura</a
+            >
+          </p>
+        </section>
+        <section id="evidence" aria-labelledby="evidence-title">
+          <span class="eyebrow">06 · Qualidade e resultados</span>
+          <h2 id="evidence-title">O que esta jornada comprova.</h2>
+          <div class="evidence">
+            <div>
+              <p>
+                Cadastro e reserva persistidos, transferência com horário preservado, conclusão real
+                e nota interna ausente do payload público. Aviso de pronto encontrado no Mailpit.
+                Prévia de escala bloqueada sem alterar a reserva.
+              </p>
+              <p>
+                Capturas desktop/mobile verificam axe, reflow e erros JS. O player verifica links,
+                duração, seek e legendas. Hashes, ambiente, viewport e preparações acompanham os
+                arquivos.
+              </p>
+              <p>
+                <a href="media/final/capture.json">Conferir a captura final</a> ·
+                <a
+                  href="https://github.com/O-marqs/petland/blob/main/docs/evidence/Final-case.md"
+                  >Evidência e validações</a
+                >
+              </p>
+              <dl>
+                <dt>128 / 20 / 15</dt>
+                <dd>
+                  Python / React / E2E na auditoria anterior; um skip mobile previsto. Não são novas
+                  contagens da gravação.
+                </dd>
+                <dt>414,61 ms</dt>
+                <dd>
+                  p95 de reserva na CI 31920b4, tentativa 2; meta 800 ms. Tentativa 1 falhou em
+                  leituras, sem metas relaxadas.
+                </dd>
+              </dl>
+              <p class="small">
+                <a href="https://github.com/O-marqs/petland/actions/runs/37050291620/attempts/2"
+                  >CI de referência</a
+                >. Laboratório, sem benchmark comparável do 2.0, ganho percentual ou SLO produtivo
+                alegado.
+              </p>
+            </div>
+            <div class="boundaries">
+              <h3>Final no escopo.<br />Limites explícitos.</h3>
+              <p>
+                Uma loja e um pet/serviço por reserva. Sem grupos atômicos, pagamentos, recorrência,
+                escolha pública de profissional ou recepção em tela única.
+              </p>
+              <p>
+                Aceite humano dos perfis e leitor de tela continuam pendentes. D10 adia
+                provedor/domínio, SMTP externo, backup fora do host e metas produtivas. Decisão de
+                licença geral também permanece pendente.
+              </p>
+              <p>
+                Próximo passo em produção: validar ambiente alvo, entrega de e-mail, retenção,
+                chaves, observabilidade, SLO e RPO/RTO. Esta release de portfólio não é um serviço comercial
+                publicado.
+              </p>
+              <p><a href="README.md#trade-offs">Trade-offs e próximos passos</a></p>
+            </div>
+          </div>
+        </section>
+        <section aria-labelledby="run-title">
+          <span class="eyebrow">07 · Explore você mesmo</span>
+          <h2 id="run-title">Abra o produto.<br />Siga o cuidado.</h2>
+          <p>
+            Cliente em <code>/app</code>, equipe em <code>/operacao</code>, administração em
+            <code>/gestao</code>. Contas próprias da demo e e-mails no Mailpit, com instruções
+            reproduzíveis.
+          </p>
+          <div class="actions">
+            <a href="https://github.com/O-marqs/petland/tree/main#quick-start"
+              >Executar o projeto</a
+            ><a href="README.md">Ler o case completo</a
+            ><a href="historical-p08.html">Consultar histórico P08</a>
+          </div>
+          <p class="small">
+            Este preview serve só o material público. Capturas finais: f3d70a2, esquema 0007, dados
+            fictícios. Mídia gravada em RC no SHA f3d70a2; versão atual 3.0.0. Release de portfólio, sem declaração de produção comercial.
+          </p>
+        </section>
+      </main>
+      <footer>PetLand 3.0 · Lucas Marques · Produto humano, engenharia verificável.</footer>
+    </div>
+    <script>
+      const video = document.getElementById('demo-video');
+      fetch('media/final/capture.json')
+        .then((response) => {
+          if (!response.ok) throw new Error('Capture unavailable');
+          return response.json();
+        })
+        .then((capture) => {
+          const chapters = document.getElementById('chapters');
+          const transcript = document.getElementById('transcript-inline');
+          for (const [index, chapter] of capture.chapters.entries()) {
+            const time =
+              Math.floor(chapter.at_seconds / 60) +
+              ':' +
+              String(Math.floor(chapter.at_seconds % 60)).padStart(2, '0');
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'chapter';
+            button.textContent = String(index + 1).padStart(2, '0') + ' · ' + chapter.title;
+            const label = document.createElement('span');
+            label.textContent = time;
+            button.append(label);
+            button.setAttribute(
+              'aria-label',
+              'Ir para o capítulo ' + (index + 1) + ': ' + chapter.caption,
+            );
+            button.addEventListener('click', () => {
+              video.currentTime = chapter.at_seconds;
+              video.focus();
+            });
+            chapters.append(button);
+            const line = document.createElement('li');
+            line.textContent = time + ' · ' + chapter.title + '. ' + chapter.caption;
+            transcript.append(line);
+          }
+        })
+        .catch(() => {
+          document.getElementById('chapters').textContent =
+            'Consulte os capítulos na transcrição em texto.';
+        });
+    </script>
+  </body>
+</html>

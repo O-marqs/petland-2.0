@@ -1,0 +1,209 @@
+# PETLAND 3.0 — CONTINUIDADE DA IMPLEMENTAÇÃO
+
+A fundação P01 foi entregue no PR #1.
+
+Revisei a entrega e compreendi que a aplicação atual
+possui apenas a fundação técnica e uma demonstração
+do design system.
+
+Entretanto, meu objetivo final continua sendo
+um sistema de gerenciamento de pet shop completo,
+conforme o Plano Consolidado e o Caderno de UX.
+
+Não quero encerrar o desenvolvimento com uma
+landing page e uma galeria de componentes.
+
+Quero implementar todas as funcionalidades de
+negócio previstas no escopo aprovado do PetLand 3.0.
+
+IMPORTANTE:
+
+Não reinicie o projeto.
+
+Não recrie a fundação já concluída.
+
+Não substitua a arquitetura existente.
+
+Não descarte os documentos de planejamento.
+
+Continue exatamente a partir do estado atual
+da branch petland-3.0.
+
+==================================================
+1. DECISÃO D07 — PERMISSÕES
+==================================================
+
+Para o MVP, utilize três perfis:
+
+CLIENTE:
+Pode administrar os próprios dados e pets,
+realizar agendamentos, acompanhar atendimentos
+e consultar seu histórico.
+
+FUNCIONÁRIO:
+Pode consultar a agenda operacional, registrar
+chegada, iniciar e concluir atendimentos,
+cadastrar clientes e pets de forma assistida
+e realizar agendamentos em nome de clientes.
+
+O acesso aos dados pessoais deve se limitar
+ao necessário para a operação.
+
+ADMINISTRADOR:
+Pode executar as operações da equipe e gerenciar
+clientes, funcionários, permissões, serviços,
+horários, capacidade e configurações do estabelecimento.
+
+As notas internas da equipe não devem ser
+expostas automaticamente aos clientes.
+
+Cancelamentos excepcionais e demais políticas
+comerciais continuam sujeitos às decisões
+específicas registradas no planejamento.
+
+Atualize o registro da decisão D07 e a matriz
+de autorização correspondente.
+
+==================================================
+2. IMPLEMENTAÇÃO DO PRODUTO
+==================================================
+
+Continue a implementação conforme o roadmap.
+
+A P01 está concluída.
+
+A próxima fase é P02 — Identidade e autorização.
+
+Implemente os cards PL3-04, PL3-05 e PL3-06,
+respeitando suas dependências e critérios
+de aceite.
+
+O objetivo desta fase é entregar fluxos reais
+de autenticação, cadastro e gerenciamento
+de identidade e permissões.
+
+Ao final da P02, o usuário deve conseguir:
+
+- Criar uma conta de cliente.
+- Verificar o e-mail.
+- Fazer login e logout.
+- Recuperar a senha.
+- Acessar a área correspondente às suas permissões.
+- Visualizar os dados básicos da própria conta.
+
+Implemente também os mecanismos de convite,
+autorização e provisionamento administrativo
+definidos no planejamento.
+
+As funcionalidades devem possuir backend real,
+persistência em PostgreSQL, integração com React
+e testes automatizados.
+
+Não crie apenas telas demonstrativas.
+
+==================================================
+3. EVOLUÇÃO DO FRONTEND
+==================================================
+
+O frontend atual possui uma landing demonstrativa
+e uma galeria de componentes.
+
+Esses elementos serviram para validar a P01.
+
+Agora quero que o frontend comece a evoluir
+para a aplicação real.
+
+Implemente a experiência de autenticação
+utilizando o design system já criado.
+
+Prepare os layouts das áreas de cliente,
+funcionário e administrador conforme o
+Caderno de UX.
+
+Não implemente dashboards fictícios com
+informações simuladas de pets, reservas
+ou atendimentos.
+
+As telas devem utilizar a API e apresentar
+estados vazios adequados quando ainda não
+existirem dados.
+
+Conforme os módulos forem implementados,
+substitua progressivamente a apresentação
+demonstrativa pelas funcionalidades reais.
+
+Mantenha a galeria de componentes como
+uma ferramenta separada para desenvolvimento.
+
+==================================================
+4. QUALIDADE E INTEGRAÇÃO
+==================================================
+
+Cada funcionalidade deve ser desenvolvida
+de ponta a ponta.
+
+Não considere um card concluído quando
+apenas o frontend ou backend estiver pronto.
+
+Implemente:
+
+- Regras de negócio.
+- Endpoints.
+- Persistência.
+- Autorização.
+- Interface React.
+- Integração frontend/backend.
+- Tratamento de erros.
+- Testes automatizados.
+- Documentação.
+
+Preserve as validações existentes da P01.
+
+Não altere testes apenas para ocultar
+problemas de implementação.
+
+==================================================
+5. CONTINUIDADE DO ROADMAP
+==================================================
+
+Após a conclusão da P02, o objetivo continuará
+sendo implementar as fases P03, P04 e P05
+para construir o núcleo funcional do PetLand.
+
+Não trate a P02 como conclusão do produto.
+
+Organize as próximas entregas em PRs pequenos,
+com critérios de aceite e evidências.
+
+Não bloqueie todo o desenvolvimento por decisões
+comerciais que serão necessárias apenas em
+fases posteriores.
+
+Registre as decisões pendentes e suas
+dependências, conforme o planejamento.
+
+==================================================
+6. EXECUÇÃO ATUAL
+==================================================
+
+Inicie a implementação real da P02.
+
+Não produza novamente o planejamento.
+
+Não repita a P01.
+
+Não faça merge automaticamente na main.
+
+Ao finalizar, apresente:
+
+- Funcionalidades implementadas.
+- Telas acessíveis.
+- Endpoints criados.
+- Tabelas e migrations.
+- Testes executados.
+- Evidências de integração.
+- Próximos cards do roadmap.
+
+O objetivo é continuar transformando a
+fundação existente em um produto funcional,
+até completar o escopo aprovado do PetLand 3.0.

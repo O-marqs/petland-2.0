@@ -1,0 +1,767 @@
+Atue simultaneamente como:
+
+- Principal Software Engineer
+- Release Engineer
+- Git/GitHub Maintainer
+- DevEx Engineer
+- Technical Writer
+
+Repositório atual:
+
+https://github.com/O-marqs/petland-2.0
+
+OBJETIVO FINAL:
+
+Encerrar oficialmente o projeto PetLand 3.0 como projeto de portfólio.
+
+Ao final, quero:
+
+REPOSITÓRIO:
+O-marqs/petland
+
+BRANCHES:
+main
+legacy/petland-2.0
+
+TAGS:
+legacy/petland-2.0-2024-11-24
+v3.0.0
+
+A `main` deve conter o PetLand 3.0 final.
+
+A branch `legacy/petland-2.0` deve preservar exatamente o último estado do PetLand 2.0.
+
+As branches intermediárias do desenvolvimento do 3.0 devem ser removidas somente depois de comprovar que estão contidas no estado final.
+
+Os PRs históricos devem continuar existindo para preservar a rastreabilidade.
+
+NÃO reescreva histórico.
+NÃO use force push.
+NÃO apague tags históricas.
+NÃO perca commits.
+NÃO transforme limitações de produção em capacidades implementadas.
+
+====================================================
+0. ESTADO ESPERADO ANTES DE COMEÇAR
+====================================================
+
+No momento da solicitação:
+
+PR #13:
+"PetLand: case final, jornada completa e evidências de apresentação"
+
+Head conhecido no momento da revisão:
+
+afe5606bfd1045a50cac3e1440781b1a6987673e
+
+CI desse commit:
+
+checks: SUCCESS
+browser: SUCCESS
+operations: SUCCESS
+
+O PR #13 é o fechamento do case final.
+
+Antes de qualquer mutação:
+
+1. faça fetch do remoto;
+2. confirme estado atual do PR #13;
+3. confirme o HEAD real;
+4. confirme os checks do HEAD;
+5. compare o diff caso o HEAD tenha mudado desde `afe5606`;
+6. não prossiga automaticamente se surgiram mudanças funcionais não revisadas;
+7. registre todos os SHAs relevantes.
+
+====================================================
+1. MERGE DO PR #13
+====================================================
+
+Se o PR #13 continuar representando apenas o fechamento do case/documentação e seus checks estiverem verdes:
+
+- retirar de draft, se necessário;
+- fazer merge preservando histórico;
+- não usar squash se isso destruir a rastreabilidade construída nas fases;
+- registrar o merge SHA.
+
+Após o merge, confirmar que a linha consolidada contém:
+
+- código funcional;
+- PRs 10, 11 e 12;
+- documentação final;
+- UX final;
+- arquitetura final;
+- reprodutibilidade;
+- case final;
+- vídeo final.
+
+====================================================
+2. PRESERVAR O PETLAND 2.0 ANTES DE MOVER MAIN
+====================================================
+
+ANTES de alterar `main`, confirme:
+
+main atual:
+
+3cc3f898cde896b80fed587bf8c06f4aa46742f6
+
+Esse commit representa o legado PetLand 2.0.
+
+Criar, se ainda não existir:
+
+legacy/petland-2.0
+
+apontando EXATAMENTE para:
+
+3cc3f898cde896b80fed587bf8c06f4aa46742f6
+
+Confirmar também a existência da tag histórica:
+
+legacy/petland-2.0-2024-11-24
+
+Se ela já existir no commit correto:
+- não recriar;
+- não mover.
+
+Se estiver ausente:
+- criar no commit `3cc3f898...`.
+
+Se estiver apontando para outro commit:
+- NÃO mover automaticamente;
+- registrar o problema.
+
+Depois verificar:
+
+legacy/petland-2.0
+=
+3cc3f898...
+
+Apenas depois disso é permitido avançar `main`.
+
+====================================================
+3. PREPARAR RELEASE FINAL 3.0.0
+====================================================
+
+O projeto atualmente ainda se identifica como:
+
+3.0.0-rc.1
+Python: 3.0.0rc1
+
+Como este é o encerramento do projeto de portfólio, promover a versão ativa para:
+
+3.0.0
+
+IMPORTANTE:
+
+Isso significa:
+
+"release estável do projeto de portfólio"
+
+NÃO significa:
+
+"produção comercial pronta".
+
+Manter explicitamente:
+
+production_ready = false
+
+enquanto continuarem fora do escopo:
+
+- ambiente público de produção;
+- SMTP externo;
+- backup off-host;
+- SLO produtivo;
+- RPO/RTO produtivos;
+- HA;
+- aceite humano com leitor de tela.
+
+====================================================
+4. AUDITAR TODAS AS REFERÊNCIAS DE VERSÃO
+====================================================
+
+Pesquisar:
+
+3.0.0-rc.1
+3.0.0rc1
+candidate_for_review
+
+Classificar cada ocorrência em:
+
+CURRENT
+HISTORICAL
+
+Atualizar somente referências CURRENT.
+
+Preservar referências históricas quando descrevem corretamente:
+
+- P08;
+- evidências antigas;
+- snapshots;
+- benchmarks antigos;
+- manifests históricos;
+- mídia histórica.
+
+Atualizar, conforme necessário:
+
+- metadata Python;
+- package metadata;
+- OpenAPI version;
+- contratos gerados;
+- README atual;
+- documentação release atual;
+- scripts de release;
+- candidate/release metadata.
+
+Não alterar evidência histórica para parecer que ela ocorreu na versão 3.0.0.
+
+====================================================
+5. RELEASE METADATA
+====================================================
+
+Atualizar a metadata ativa de release para refletir algo semanticamente equivalente a:
+
+version:
+3.0.0
+
+python_version:
+3.0.0
+
+status:
+portfolio_release
+
+production_ready:
+false
+
+stable_release_published:
+true
+
+Somente marcar `stable_release_published=true` se a GitHub Release `v3.0.0` for realmente publicada nesta operação.
+
+Registrar explicitamente:
+
+PetLand 3.0 é uma release final de portfólio/demo.
+
+Isso NÃO constitui declaração de produção comercial.
+
+Gates de produção permanecem documentados como não aplicáveis ou adiados conforme as decisões existentes.
+
+Não converter automaticamente:
+
+screen_reader_acceptance
+
+em aprovado.
+
+====================================================
+6. ATUALIZAR A DOCUMENTAÇÃO PARA MAIN
+====================================================
+
+Remover da documentação CURRENT instruções como:
+
+"clone petland-3.0-final-case"
+"main ainda contém legado"
+"clone petland-3.0-reproducibility"
+
+O caminho oficial deve passar a ser:
+
+git clone https://github.com/O-marqs/petland.git
+cd petland
+
+A documentação deve explicar:
+
+CURRENT:
+main → PetLand 3.0
+
+LEGACY:
+legacy/petland-2.0 → PetLand 2.0
+
+Não obrigar ninguém a selecionar branch para executar o produto atual.
+
+====================================================
+7. ATUALIZAR URLs DO REPOSITÓRIO
+====================================================
+
+O novo repositório será:
+
+https://github.com/O-marqs/petland
+
+Pesquisar no source atual:
+
+O-marqs/petland-2.0
+github.com/O-marqs/petland-2.0
+petland-3.0-final-case
+petland-3.0-reproducibility
+petland-3.0-portfolio-docs
+
+Classificar ocorrências.
+
+Atualizar links CURRENT para:
+
+https://github.com/O-marqs/petland
+
+Preservar referências históricas apenas quando a branch/PR antiga for parte da evidência.
+
+Links para PRs/issues antigos podem continuar funcionando pelo redirect do GitHub, mas preferir a URL canônica nova quando seguro.
+
+====================================================
+8. CRIAR BRANCH TEMPORÁRIA DE RELEASE
+====================================================
+
+Não editar `main` diretamente.
+
+Criar uma branch temporária, por exemplo:
+
+release/petland-3.0
+
+a partir do estado final após PR #13.
+
+Aplicar nela:
+
+- promoção 3.0.0;
+- atualização README;
+- atualização URLs;
+- release metadata;
+- documentação de branch;
+- eventuais contratos/version metadata regenerados.
+
+====================================================
+9. VALIDAÇÃO ANTES DE MAIN
+====================================================
+
+Executar pelo menos:
+
+python scripts/dev.py check
+
+python scripts/check_documentation.py
+
+python scripts/render_architecture.py --check
+
+python -m unittest discover -s scripts -p test_release.py
+
+python scripts/release.py check
+
+Validar também:
+
+- README;
+- links;
+- imagens;
+- vídeo final;
+- player;
+- OpenAPI;
+- versões;
+- migrations;
+- repository hygiene.
+
+Se possível, executar E2E/rehearsal conforme o pipeline atual.
+
+Não mudar metas para fazer checks passarem.
+
+Registrar qualquer falha real.
+
+====================================================
+10. PROMOVER PETLAND 3.0 PARA MAIN
+====================================================
+
+O `main` antigo é ancestral do PetLand 3.0.
+
+NÃO substituir `main` com force push.
+
+Preferir uma promoção auditável por Pull Request:
+
+release/petland-3.0
+        ↓
+main
+
+Título sugerido:
+
+PetLand 3.0 — final portfolio release
+
+O PR deve explicar:
+
+- PetLand 2.0 preservado em legacy/petland-2.0;
+- PetLand 3.0 passa a ser produto principal;
+- release 3.0.0;
+- documentação/case final;
+- nenhuma alegação de produção comercial.
+
+Aguardar/verificar CI desse PR.
+
+Somente fazer merge se os gates automatizados estiverem aprovados.
+
+Registrar o SHA final de `main`.
+
+====================================================
+11. RENOMEAR O REPOSITÓRIO
+====================================================
+
+Depois que `main` estiver correta:
+
+renomear:
+
+O-marqs/petland-2.0
+
+para:
+
+O-marqs/petland
+
+Usar GitHub API/CLI autenticado se disponível.
+
+Após rename:
+
+atualizar remote local:
+
+git remote set-url origin https://github.com/O-marqs/petland.git
+
+Validar:
+
+git remote -v
+
+Confirmar que:
+
+https://github.com/O-marqs/petland
+
+abre corretamente.
+
+====================================================
+12. VALIDAR MAIN NO NOVO REPOSITÓRIO
+====================================================
+
+Em um diretório independente, testar:
+
+git clone https://github.com/O-marqs/petland.git
+cd petland
+
+Confirmar:
+
+git branch --show-current
+
+deve retornar:
+
+main
+
+Confirmar:
+
+- README 3.0 aparece por padrão;
+- documentação abre;
+- screenshots carregam;
+- case abre;
+- vídeo está presente;
+- `init` funciona;
+- `up` funciona, se o ambiente permitir;
+- live/ready respondem;
+- schema é `0007_product_operations`.
+
+Registrar esse clean clone final.
+
+====================================================
+13. TAG v3.0.0
+====================================================
+
+Após main validada:
+
+criar tag:
+
+v3.0.0
+
+EXATAMENTE no SHA final validado de `main`.
+
+Preferir tag anotada.
+
+Mensagem sugerida:
+
+PetLand 3.0 — final portfolio release
+
+Não mover a tag depois.
+
+====================================================
+14. GITHUB RELEASE
+====================================================
+
+Criar GitHub Release:
+
+v3.0.0
+
+Título:
+
+PetLand 3.0 — Portfolio Release
+
+Descrição curta contendo:
+
+- modernização do PetLand 2.0;
+- React + FastAPI + PostgreSQL;
+- Modular Monolith;
+- Hexagonal Architecture;
+- pragmatic DDD;
+- concorrência/consistência PostgreSQL;
+- segurança;
+- testes;
+- performance;
+- recovery;
+- UX/product documentation;
+- case e vídeo final.
+
+Adicionar declaração clara:
+
+"This is the final portfolio/demo release. It is not a claim of commercial production readiness."
+
+Não anexar:
+
+- bancos;
+- secrets;
+- `.env`;
+- certificados privados;
+- contas;
+- backups.
+
+Se o pacote de release existente for anexado, validar previamente manifesto e SHA-256.
+
+====================================================
+15. FECHAR PRs HISTÓRICOS OBSOLETOS
+====================================================
+
+Hoje ainda existem drafts antigos abertos:
+
+#1
+PetLand 3.0: fundação executável...
+
+#2
+PetLand P02...
+
+#3
+PetLand P03...
+
+#4
+PetLand P04...
+
+#9
+PetLand: primeiro acesso...
+
+Esses trabalhos já estão contidos no PetLand 3.0 final.
+
+NÃO mergear esses PRs individualmente agora.
+
+Depois que `main` estiver em v3.0.0:
+
+adicionar comentário curto em cada um, por exemplo:
+
+"Superseded by the consolidated PetLand 3.0 release now available on `main` / `v3.0.0`. This PR remains preserved as development history."
+
+Depois fechá-los.
+
+Não apagar seus comentários, commits ou evidências.
+
+====================================================
+16. AUDITAR BRANCHES ANTES DE APAGAR
+====================================================
+
+Branches intermediárias conhecidas:
+
+petland-3.0
+petland-3.0-p02
+petland-3.0-p03
+petland-3.0-p04
+petland-3.0-p05
+petland-3.0-p06
+petland-3.0-p07
+petland-3.0-p08
+petland-3.0-onboarding-fix
+petland-3.0-operations-evolution
+petland-3.0-portfolio-docs
+petland-3.0-reproducibility
+petland-3.0-final-case
+release/petland-3.0
+
+Antes da remoção:
+
+para CADA branch:
+
+- obter tip SHA;
+- comparar com main;
+- confirmar que não contém commit exclusivo fora de main;
+- confirmar que qualquer evidência importante permanece atingível por main/tag/PR.
+
+Na revisão anterior todas as branches P01–P12 conhecidas estavam totalmente contidas no estado final.
+
+Verificar novamente após PR #13.
+
+Se alguma branch possuir commit não alcançável por main/tag/PR:
+
+NÃO apagar.
+
+Registrar.
+
+====================================================
+17. ESTADO FINAL DE BRANCHES
+====================================================
+
+Se a auditoria confirmar que tudo está preservado:
+
+remover branches intermediárias remotas.
+
+O estado final desejado é EXATAMENTE:
+
+main
+legacy/petland-2.0
+
+Não apagar:
+
+main
+legacy/petland-2.0
+
+Não apagar tags.
+
+Branches locais temporárias podem ser removidas depois da verificação.
+
+====================================================
+18. README — LEGADO
+====================================================
+
+No README final, incluir de forma discreta algo equivalente a:
+
+Legacy
+
+PetLand 2.0, desenvolvido originalmente com Flask/MySQL, está preservado em:
+
+`legacy/petland-2.0`
+
+O histórico de modernização continua disponível por commits, PRs, ADRs e evidências.
+
+Não transformar a seção em um texto grande.
+
+====================================================
+19. REPOSITORY DESCRIPTION E TOPICS
+====================================================
+
+Se houver permissão para alterar metadata do GitHub:
+
+Repository name:
+
+petland
+
+Description sugerida:
+
+PetLand 3.0 — modernização de uma aplicação legada para uma plataforma operacional de pet shop com React, FastAPI, PostgreSQL e arquitetura hexagonal.
+
+Topics sugeridos:
+
+fastapi
+react
+typescript
+postgresql
+python
+docker
+hexagonal-architecture
+ddd
+software-architecture
+portfolio
+
+Não adicionar homepage fictícia.
+
+====================================================
+20. LICENSE
+====================================================
+
+Atualmente não existe licença geral.
+
+NÃO escolha uma licença automaticamente nesta tarefa.
+
+Preserve a documentação indicando licença ausente.
+
+A decisão de licença permanece do autor.
+
+Não deixar isso bloquear o fechamento técnico do repositório.
+
+====================================================
+21. VERIFICAÇÃO FINAL
+====================================================
+
+Ao final confirmar:
+
+Repository:
+O-marqs/petland
+
+Default branch:
+main
+
+Branches remotas:
+main
+legacy/petland-2.0
+
+Tags:
+legacy/petland-2.0-2024-11-24
+v3.0.0
+
+Main:
+PetLand 3.0
+
+Legacy:
+PetLand 2.0
+
+Version:
+3.0.0
+
+Schema:
+0007_product_operations
+
+Case:
+final
+
+Video:
+final
+
+README:
+main/current
+
+Production ready:
+false
+
+Portfolio release:
+true
+
+====================================================
+22. NÃO FAZER
+====================================================
+
+Não:
+
+- force push;
+- apagar histórico;
+- squashar toda a história do projeto;
+- alterar migrations antigas;
+- modificar regras de negócio;
+- implementar features novas;
+- mudar arquitetura;
+- esconder benchmarks que falharam;
+- apagar documentação histórica;
+- reclassificar P08 como final;
+- dizer que PetLand é produção comercial;
+- inventar aceite com leitor de tela;
+- apagar branch antes da auditoria de reachability;
+- apagar PR histórico.
+
+====================================================
+23. RELATÓRIO FINAL
+====================================================
+
+Responder com:
+
+1. SHA do antigo main/legado;
+2. SHA da branch legacy;
+3. merge SHA do PR #13;
+4. SHA final da main;
+5. tag v3.0.0;
+6. URL nova do repositório;
+7. GitHub Release criada;
+8. branches removidas;
+9. branches restantes;
+10. PRs históricos fechados;
+11. versões atualizadas;
+12. arquivos alterados para a release;
+13. CI/checks executados;
+14. resultado do clean clone final;
+15. limitações ainda documentadas;
+16. ações que não puderam ser executadas por falta de permissão.
+
+O resultado esperado é um repositório de portfólio limpo, reproduzível e fácil de entender:
+
+https://github.com/O-marqs/petland
+
+com `main` representando exclusivamente o PetLand 3.0 atual e `legacy/petland-2.0` preservando o sistema original.

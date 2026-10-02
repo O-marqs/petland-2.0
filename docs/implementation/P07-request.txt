@@ -1,0 +1,4 @@
+Autorização direta do usuário em 01/10/2026: "FIZ O MERGE SIGA PARA P07".
+Merge P06 confirmado no PR #6, e90e17af095ffa15b13601f25448232d84f36286 na petland-3.0-p04.
+P07: dados sintéticos e ensaio operacional local, seed/reset isolados, servidor estático, TLS, backup criptografado e restore reconciliado, recuperação e documentação. D08/D12 dispensam migração histórica; D10 mantém provedor/publicação externa adiados.
+Continuidade P07 autorizada apesar do aceite sonoro humano da P06 ainda não documentado. Não inferir que merge ou automação comprovam esse aceite. PR de revisão autorizado, sem merge automático ou P08 automática; preservar fontes, histórico, bancos locais e alterações alheias. Repositórios em Documents/GitHub. Autorização posterior de recuperação local Docker/WSL permanece vigente.
