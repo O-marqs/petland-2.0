@@ -1,6 +1,6 @@
 # PetLand — dores, cobertura e lacunas
 
-Revisão solicitada em 01/10/2026, sobre P02–P08 e a correção de primeiro acesso. Este documento avalia comportamentos da aplicação, API, persistência e testes; uma tela ou coluna no banco, isoladamente, não conta como funcionalidade entregue. As propostas do pedido são critérios de avaliação, não uma alteração automática das decisões aprovadas em [decisions.md](decisions.md).
+**CURRENT — consolidada sobre `2549523`, incluindo a evolução operacional.** Revisão iniciada em 01/10/2026; correções documentais em 02/10. Este documento avalia comportamentos da aplicação, API, persistência e testes; uma tela ou coluna no banco, isoladamente, não conta como funcionalidade entregue. Propostas não alteram automaticamente [decisões aprovadas](decisions.md). [Visão de produto](product-overview.md).
 
 **Conclusão: o núcleo funciona, mas a lista completa de dores não está resolvida.** O produto já suporta uma jornada individual com disponibilidade por pessoa apta, confirmação transacional, operação, histórico e comunicação de alterações. O incremento operacional autorizado acrescenta escala coletiva por data, pools físicos, transferência independente, alertas críticos/contexto anterior, agenda pessoal, lembretes/aviso de conclusão e indicadores por pessoa. As lacunas restantes continuam explícitas; relatórios não equivalem a produtividade ou receita.
 
@@ -97,7 +97,7 @@ O incremento resolve pools físicos e distribuição simples, com autoria/atribu
 | Pet + serviço + próximos horários em poucos cliques | Cliente → pets → agendamento assistido, disponibilidade e revisão reais; sem tela única ou sugestão de “próximos horários” com responsáveis | Parcial | Alta |
 | Cadastrar cliente novo e pet | Equipe cria contato sem conceder identidade; cadastra pet, convida vínculo quando necessário | Coberto | — |
 | Check-in, cancelar e remarcar rapidamente | Ações no detalhe e filtros da agenda; sem console único de recepção | Parcial na UX | Alta |
-| Registrar atraso, trocar profissional ou encaixar | Timestamp de chegada; extensão com possível troca. Não há transferência independente ou overbooking/encaixe privilegiado | Parcial | Alta |
+| Registrar atraso, trocar profissional ou encaixar | Timestamp de chegada, extensão e transferência independente com motivo/validação. Não há formulário dedicado de atraso, overbooking ou encaixe que ignore capacidade | Parcial | Média |
 | Consultar histórico | Cadastro e reservas/histórico filtrados, respeitando visibilidade | Coberto | — |
 
 Recepção não tem um papel de acesso separado hoje: usa EMPLOYEE conforme D07. Um novo fluxo rápido pode compartilhar as regras existentes; não deve contornar duração, habilidade ou exclusões para “encaixar”.
@@ -106,12 +106,13 @@ Recepção não tem um papel de acesso separado hoje: usa EMPLOYEE conforme D07.
 
 Exemplo: existem cinco pessoas aptas no expediente normal; somente três trabalharão em uma data.
 
-1. Entre como equipe/admin em `/operacao/configuracoes` (**Equipe e horários**).
-2. Edite cada uma das duas pessoas que não trabalharão nessa data.
-3. Se a pessoa estiver em “Seguir o expediente da loja”, desmarque essa opção e **confira sua semana normal**. Esta revisão faz o formulário começar com a semana atual da loja, evitando apagar implicitamente os outros dias. Ajuste-a caso a escala da pessoa seja diferente; depois de salvar, essa semana própria não acompanha automaticamente futuras ampliações da semana da loja.
-4. Em **Datas especiais**, adicione a data e deixe seus períodos vazios. Isso fecha apenas esse dia. Para sair cedo, informe a janela efetivamente trabalhada; a exceção substitui o dia inteiro, não apenas subtrai uma faixa.
-5. Salve. Se houver reservas incompatíveis, resolva-as antes; o sistema não as cancela nem redistribui sozinho.
-6. Nos dias adjacentes, a semana normal volta a valer. Não desative a pessoa para representar uma folga pontual: isso fecharia sua disponibilidade global.
+1. Entre como equipe/admin em `/operacao/escala` (**Equipe por data**).
+2. Escolha a data; indique as três pessoas presentes e seus períodos efetivos. As outras duas ficam ausentes somente nesse dia.
+3. Informe motivo e consulte a prévia. Pessoas aptas ao serviço e períodos da loja continuam requisitos; o número sozinho não basta.
+4. Resolva reservas incompatíveis antes de confirmar. O sistema não as cancela nem redistribui automaticamente.
+5. Confirme a escala daquele dia. Datas vizinhas continuam a semana normal; **restaurar** remove a exceção e volta à herança.
+
+Configuração individual em **Equipe e horários** continua disponível para semana própria/datas especiais; é alternativa, não o caminho principal para reduzir coletivamente a equipe em uma data. Não desative globalmente uma pessoa para representar folga pontual.
 
 Não basta escrever “3” sem indicar quais pessoas estão presentes. Três funcionários com habilidades/janelas diferentes podem gerar capacidades diferentes ao longo do mesmo dia. Para **mais** pessoas, elas precisam ter contas de equipe verificadas, estar adicionadas uma única vez à agenda e estar aptas ao serviço. A loja não pode ficar fechada e, ao mesmo tempo, ser aberta apenas pelo calendário de um funcionário: vale a interseção.
 

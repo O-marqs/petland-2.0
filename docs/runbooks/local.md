@@ -11,6 +11,17 @@ Leia o README para o caminho de entrada. Os comandos abaixo partem da raiz. Wind
 
 ## Instalação
 
+O Git remoto mantém o legado na `main`; use a branch funcional atual, sem presumir que o 3.0 já foi integrado à principal:
+
+```sh
+git clone --branch petland-3.0-onboarding-fix https://github.com/O-marqs/petland-2.0.git
+cd petland-2.0
+python scripts/dev.py init
+python scripts/dev.py up
+```
+
+Em 02/10/2026, essa branch contém o PR #10 integrado (`d564114`); seu conteúdo executável corresponde a `2549523`. A branch `petland-3.0-portfolio-docs` prepara esta documentação em PR separado. [Auditoria/estado dos PRs](../evidence/Documentation-review.md).
+
 `python scripts/dev.py init` gera `.env` com segredos locais aleatórios; nunca sobrescreve arquivo existente. O arquivo de exemplo usa marcadores que devem ser substituídos, não senhas default. Não copiar `.env` entre ambientes.
 
 `python scripts/dev.py up` é o caminho somente Docker. Os Dockerfiles instalam pelos lockfiles; imagens base são fixadas por digest. O job `migrate` termina antes de a API subir; web aguarda readiness. Não executar migration automática em cada worker.

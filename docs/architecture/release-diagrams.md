@@ -1,5 +1,7 @@
 # Contexto e execução da candidata 3.0
 
+**HISTORICAL P08.** Mermaid preservado, sem substituir sua referência temporal. [Arquitetura atual](overview.md) e [sete diagramas atuais editáveis/SVG/Mermaid](diagrams/README.md) incluem o incremento operacional.
+
 Diagramas derivados do código P01–P08; não representam serviços externos já contratados. A demo é local e de uma loja, com dados fictícios.
 
 ## Contexto
@@ -64,14 +66,14 @@ sequenceDiagram
   Tutor->>UI: Confirmar
   UI->>API: POST /me/appointments + sessão, CSRF, idempotência
   API->>DB: Transação / primeiro lock da configuração
-  API->>API: Reautorizar ator e owner; revalidar oferta, calendário e recurso
+  API->>API: Reautorizar ator e owner e revalidar oferta, calendário e recurso
   API->>DB: Reserva, snapshot, evento, auditoria, idempotência e outbox
   DB->>DB: Exclusões de intervalos de pet e recurso
   DB-->>API: Commit ou conflito
   API-->>UI: 201 ou erro 409
   API-->>Worker: Aviso disponível após commit
   Worker->>DB: Claim e tentativa de entrega fora da transação de reserva
-  Note over Tutor,DB: Mesma chave recupera o mesmo resultado; não cria segunda reserva
+  Note over Tutor,DB: Mesma chave recupera o mesmo resultado e não cria segunda reserva
 ```
 
 Papéis, duração, preço e recurso não são escolhidos livremente pelo cliente. Conflito preserva as escolhas e pede novo horário; commit local não comprova envio SMTP. [ADR-003](../adr/0003-scheduling.md), [ADR-004](../adr/0004-identity.md).

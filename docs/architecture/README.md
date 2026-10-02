@@ -1,5 +1,7 @@
 # Arquitetura implementada — candidata P08
 
+**HISTORICAL — visão da candidata P08, com complementos incrementais.** Para o estado consolidado `2549523`, leia [Architecture Overview](overview.md), [RNFs](non-functional-requirements.md) e [diagramas atuais](diagrams/README.md). O conteúdo abaixo conserva a visão temporal, inclusive o proxy de desenvolvimento.
+
 [Contexto, containers de staging e transação](release-diagrams.md), [DER/dicionário](data-model.md). O proxy Vite abaixo é de desenvolvimento; staging P07 usa Nginx/TLS e frontend estático, conforme ADR-014. A candidata P08 mantém as regras/containers e acrescenta documentação/artefatos de revisão, sem mudança de schema.
 
 RF13; RNF05/07/09. Monorepo e monólito modular, FastAPI síncrono com psycopg/SQLAlchemy. Veja plano integral §§9–16 e ADR-001/002/003/005/007/011/012.

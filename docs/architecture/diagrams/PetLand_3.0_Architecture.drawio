@@ -1,0 +1,696 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="system-context" name="01-System-Context">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 01-System-Context&#10;Uma loja · personas e dependências atuais&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tutor" value="Tutor / CUSTOMER&#10;Pets, reserva e histórico próprios" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="staff" value="Funcionário / EMPLOYEE&#10;Agenda e cuidado do dia" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="400" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" value="Administrador / ADMIN&#10;Operação, gestão e acessos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="620" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="petland" value="PetLand 3.0&#10;Plataforma operacional de pet shop&#10;Uma loja · monólito modular" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="510" y="400" width="320" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="SMTP / Mailpit local&#10;Confirmação, lembrete e pronto&#10;Sem entrega externa comprovada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="PostgreSQL 17&#10;Armazenamento interno&#10;Single-node" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="400" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ops" value="Operador offline&#10;Migrations, backup e recuperação&#10;Archive e chave no mesmo host" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="620" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="PostgreSQL pertence ao sistema. SMTP atual é local; não há provedor externo contratado." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="usa" source="tutor" target="petland" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415.0" y="245.0" />
+              <mxPoint x="415.0" y="465.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="usa" source="staff" target="petland" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415.0" y="465.0" />
+              <mxPoint x="415.0" y="465.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="usa" source="admin" target="petland" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="415.0" y="685.0" />
+              <mxPoint x="415.0" y="465.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="comunica" source="petland" target="smtp" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="955.0" y="465.0" />
+              <mxPoint x="955.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="persiste" source="petland" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="955.0" y="465.0" />
+              <mxPoint x="955.0" y="465.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="opera" source="ops" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210.0" y="575.0" />
+              <mxPoint x="1210.0" y="575.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="containers" name="02-Containers">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 02-Containers&#10;Staging local · containers e processo de outbox&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="react" value="Browser / React SPA&#10;Query, RHF/Zod, TypeScript" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="nginx" value="Nginx&#10;Frontend estático e proxy /api&#10;HTTPS localhost:8443" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="FastAPI&#10;2 Uvicorn workers&#10;Casos de uso síncronos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="PostgreSQL 17&#10;SQLAlchemy / psycopg&#10;Volume staging_data" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox" value="Outbox processor&#10;Thread no lifespan de cada worker&#10;Claim / lease / retry" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="430" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="Mailpit&#10;SMTP STARTTLS&#10;UI somente loopback" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="430" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="migration" value="Alembic job&#10;Executa antes da API&#10;Credencial migrator separada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="680" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="backup" value="Ferramentas offline&#10;Backup autenticado local&#10;Restore em banco novo" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="680" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="archive" value="Archive criptografado&#10;Chave separada / mesmo host&#10;Não publicado" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="680" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Outbox é componente dentro da API, não um container ou broker independente. Entrega at least once." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="HTTPS" source="react" target="nginx" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.0" y="245.0" />
+              <mxPoint x="365.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="/api" source="nginx" target="api" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="245.0" />
+              <mxPoint x="715.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="TLS / runtime" source="api" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="245.0" />
+              <mxPoint x="1065.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="lifespan" source="api" target="outbox" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890.0" y="370.0" />
+              <mxPoint x="890.0" y="370.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="fora da transação" source="outbox" target="smtp" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="495.0" />
+              <mxPoint x="1065.0" y="495.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="claim" source="outbox" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1055" y="495" />
+              <mxPoint x="1055" y="320" />
+              <mxPoint x="1240" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="DDL separado" source="migration" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="745" />
+              <mxPoint x="690" y="350" />
+              <mxPoint x="1390" y="350" />
+              <mxPoint x="1390" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-7" value="dump / encrypt" source="backup" target="archive" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="745.0" />
+              <mxPoint x="1065.0" y="745.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-8" value="restore isolado" source="backup" target="db" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="745" />
+              <mxPoint x="1040" y="600" />
+              <mxPoint x="1390" y="600" />
+              <mxPoint x="1390" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="backend-modules" name="03-Backend-Modules">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 03-Backend-Modules&#10;Composição, fronteiras e dependências internas&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="boot" value="bootstrap / composition root&#10;Engine, adapters, serviços e routers" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="170" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="system" value="system&#10;Saúde e revisão do schema&#10;Application / infrastructure / HTTP" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="360" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="identity" value="identity&#10;Contas, sessões, papéis, auditoria&#10;Public: Actor / HTTP / workforce" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="540" y="170" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="customers" value="customers&#10;Contato e vínculo verificado&#10;Public: acesso / contato" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="170" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pets" value="pets&#10;Propriedade e contexto de cuidado&#10;Public: referências / booking" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="570" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="catalog" value="catalog&#10;Serviço e oferta por porte&#10;Public: booking_service" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="570" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="scheduling" value="scheduling&#10;Agenda, reserva, cuidado e gestão&#10;Public: coordination / primeiro lock" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="540" y="570" width="360" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="layers" value="Camadas nos módulos comerciais: presentation → application → domain&#10;Infrastructure implementa ports; bootstrap compõe. Public conecta módulos na mesma transação.&#10;System é mínimo, sem domínio comercial. Fitness functions verificam imports absolutos e relativos." style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="800" width="1320" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Modular Monolith with Hexagonal Architecture and pragmatic DDD principles. Sem microservices / DDD puro." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="compõe" source="boot" target="system" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="240.0" y="315.0" />
+              <mxPoint x="240.0" y="315.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="compõe" source="boot" target="identity" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480.0" y="220.0" />
+              <mxPoint x="480.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="contratos públicos" source="customers" target="identity" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960.0" y="245.0" />
+              <mxPoint x="960.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="Actor / workforce / audit" source="scheduling" target="identity" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="720.0" y="445.0" />
+              <mxPoint x="720.0" y="445.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="oferta pública" source="scheduling" target="catalog" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480.0" y="645.0" />
+              <mxPoint x="480.0" y="645.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="pet / care context" source="scheduling" target="pets" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960.0" y="645.0" />
+              <mxPoint x="960.0" y="645.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="contato público" source="scheduling" target="customers" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="960" y="645" />
+              <mxPoint x="960" y="400" />
+              <mxPoint x="1200" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="booking-transaction" name="04-Booking-Transaction">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 04-Booking-Transaction&#10;Confirmação e garantias transacionais&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="review" value="1 · React / tutor&#10;Consulta não segura vaga&#10;Resumo + confirmar explicitamente" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="request" value="2 · HTTP&#10;Sessão + origem / CSRF&#10;Versões + Idempotency-Key" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="lock" value="3 · Transação&#10;Primeiro lock: configuração da loja&#10;Reautoriza ator e proprietário" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="validate" value="4 · Revalidação&#10;Oferta, escala, pessoa, duração&#10;Buffers, conflitos e pools" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="write" value="5 · PostgreSQL&#10;Reserva + snapshot + evento&#10;Auditoria + replay + outbox" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="430" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="integrity" value="6 · GiST / constraints&#10;Exclusão pet e responsável&#10;Commit ou rollback" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="430" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="response" value="7 · Resposta&#10;201 confirmado / 409 conflito&#10;Mesma chave recupera resultado" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="430" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" value="8 · Depois do commit&#10;Claim persistido da outbox&#10;SMTP fora da transação de reserva" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="680" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="9 · SMTP aceito&#10;Retry / lease persistidos&#10;Não comprova leitura externa" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="680" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Pools são validados no domínio sob o lock comum. Não existe terceira exclusion constraint para equipamento." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="POST" source="review" target="request" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.0" y="245.0" />
+              <mxPoint x="365.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="begin" source="request" target="lock" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="245.0" />
+              <mxPoint x="715.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="sob lock" source="lock" target="validate" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="245.0" />
+              <mxPoint x="1065.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="pessoa elegível" source="validate" target="write" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240.0" y="370.0" />
+              <mxPoint x="1240.0" y="370.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="atomicidade" source="write" target="integrity" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="495.0" />
+              <mxPoint x="1065.0" y="495.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="resultado" source="integrity" target="response" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="495.0" />
+              <mxPoint x="715.0" y="495.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="outbox após commit" source="integrity" target="worker" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890.0" y="620.0" />
+              <mxPoint x="890.0" y="620.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-7" value="at least once" source="worker" target="smtp" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="745.0" />
+              <mxPoint x="1065.0" y="745.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="security-boundaries" name="05-Security-Trust-Boundaries">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 05-Security-Trust-Boundaries&#10;Entradas não confiáveis e privilégios separados&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="browser" value="Browser não confiável&#10;Formulário / URL / payload&#10;Cookie opaco HttpOnly / Secure" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="proxy" value="Fronteira de transporte&#10;Nginx / TLS local&#10;Mesma origem para /api" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="identity" value="Servidor de aplicação&#10;Sessão, CSRF, RBAC e owner&#10;Argon2id / tokens únicos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="runtime" value="Runtime PostgreSQL&#10;Sem superuser / DDL&#10;Audit sem UPDATE" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="public" value="Projeção do tutor&#10;Só seus objetos / resumo público&#10;Sem notas ou motivos internos" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="470" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="internal" value="Operação / gestão&#10;Papel + contexto no servidor&#10;Notas internas / auditoria" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="470" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="privileged" value="Operador offline privilegiado&#10;Migrations / backup / restore&#10;Credencial e ferramentas separadas" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="470" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="private" value="Fronteira de artefatos&#10;.env, contas, chaves e dumps fora do Git&#10;Preview serve somente docs/case" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="750" width="610" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Menus não são controles de segurança. SMTP aceito não é entrega externa. TLS/backup não cobrem perda do host." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="HTTPS" source="browser" target="proxy" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.0" y="245.0" />
+              <mxPoint x="365.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="validar entrada" source="proxy" target="identity" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="245.0" />
+              <mxPoint x="715.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="privilégio mínimo" source="identity" target="runtime" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="245.0" />
+              <mxPoint x="1065.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="autorização contextual" source="identity" target="internal" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890.0" y="390.0" />
+              <mxPoint x="890.0" y="390.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="projeção filtrada" source="identity" target="public" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="245" />
+              <mxPoint x="690" y="390" />
+              <mxPoint x="540" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="DDL / recovery" source="privileged" target="runtime" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240.0" y="390.0" />
+              <mxPoint x="1240.0" y="390.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="custódia local" source="privileged" target="private" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240.0" y="535.0" />
+              <mxPoint x="1240.0" y="800.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="data-flow" name="06-Data-Flow">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 06-Data-Flow&#10;Dados operacionais, projeções e comunicação&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="forms" value="Entradas autenticadas&#10;Contato / pet / serviço / horário&#10;Contratos OpenAPI tipados" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="domain" value="Casos de uso / domínio&#10;Propriedade e regras&#10;Transação por mutação" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="records" value="PostgreSQL&#10;Estado + snapshot contratado&#10;Notas / eventos / auditoria" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="outbox" value="Outbox privada&#10;Destinatário / corpo / prazo&#10;Lease / tentativas / supressão" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="tutor" value="Tutor&#10;Seus pets / reservas / resumo&#10;Estado local da comunicação" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="520" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="staff" value="Equipe&#10;Agenda / alerta de perfil&#10;Últimos três cuidados anteriores" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="520" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="metrics" value="Gestão agregada&#10;Coorte: início previsto&#10;Estado atual / responsável final" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="520" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="smtp" value="SMTP / Mailpit&#10;Envio fora da transação&#10;Sem recibo de leitura externa" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="520" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="backup" value="Backup offline autenticado&#10;Todas as tabelas + ACLs + GiST → banco novo reconciliado&#10;Archive e chave separados no mesmo host; não é projeção pública" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="790" width="610" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Concluídos usam responsável final; não há divisão de esforço. Indicadores não são receita nem ranking." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="validar" source="forms" target="domain" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.0" y="245.0" />
+              <mxPoint x="365.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="persistir junto" source="domain" target="records" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="245.0" />
+              <mxPoint x="715.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="mesmo commit" source="records" target="outbox" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="245.0" />
+              <mxPoint x="1065.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="claim / retry" source="outbox" target="smtp" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240.0" y="415.0" />
+              <mxPoint x="1240.0" y="415.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="SQL agregado" source="records" target="metrics" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890.0" y="415.0" />
+              <mxPoint x="890.0" y="415.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="contexto interno" source="records" target="staff" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="245" />
+              <mxPoint x="690" y="400" />
+              <mxPoint x="540" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-6" value="owner / público" source="records" target="tutor" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="750" y="325" />
+              <mxPoint x="190" y="325" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-7" value="banco completo, offline" source="records" target="backup" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="245" />
+              <mxPoint x="1050" y="750" />
+              <mxPoint x="715" y="750" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="deployment" name="07-Deployment-Staging">
+    <mxGraphModel dx="1440" dy="1000" grid="1" gridSize="10" page="1" pageWidth="1440" pageHeight="1000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="header" value="PETLAND 3.0 · 07-Deployment-Staging&#10;CURRENT · máquina local / sem alta disponibilidade&#10;CURRENT / 2549523 / 0007_product_operations" style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="30" width="1320" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="Navegador local&#10;CA de teste&#10;https://localhost:8443" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="web" value="petland7 / web&#10;Nginx + React estático&#10;Não root / read-only" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="api" value="petland7 / api&#10;2 workers + outbox threads&#10;Sem porta publicada" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="pg" value="petland7 / postgres&#10;PostgreSQL 17 single-node&#10;Volume persistente / TLS" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="180" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="mail" value="petland7 / mailpit&#10;STARTTLS&#10;UI loopback :8026" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="480" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="job" value="petland7 / migrate&#10;Job separado antes da API&#10;Alembic head 0007" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="480" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="host" value="Host / ferramentas offline&#10;Backup local / chave separada&#10;Restore + reconciliação + ativação" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="410" y="480" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="other" value="Ambientes independentes&#10;petland3: dev Vite / outro volume; testes PG efêmeros&#10;petlanddocs: captura temporária sintética / imagem funcional 2549523" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="60" y="790" width="650" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="future" value="POSSIBLE PRODUCTION EVOLUTION&#10;Não implementada: provedor, Multi-AZ, PITR, SMTP externo, off-host&#10;SLO/RPO/RTO, observabilidade e balanceamento dependem de D10" style="rounded=1;whiteSpace=wrap;html=0;fillColor=#ffffff;strokeColor=#1f5d50;fontColor=#243a35;fontSize=17;spacing=16;" vertex="1" parent="1">
+          <mxGeometry x="760" y="790" width="610" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="footer" value="Rede privada entre containers; portas públicas somente loopback. Archive local não cobre perda da máquina." style="text;html=0;align=left;fontSize=18;fontColor=#243a35;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="935" width="1320" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-0" value="HTTPS local" source="user" target="web" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="365.0" y="245.0" />
+              <mxPoint x="365.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-1" value="/api" source="web" target="api" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="715.0" y="245.0" />
+              <mxPoint x="715.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-2" value="verify-full" source="api" target="pg" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1065.0" y="245.0" />
+              <mxPoint x="1065.0" y="245.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-3" value="STARTTLS" source="api" target="mail" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="890.0" y="395.0" />
+              <mxPoint x="890.0" y="395.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-4" value="migrator / DDL" source="job" target="pg" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1240.0" y="395.0" />
+              <mxPoint x="1240.0" y="395.0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge-5" value="dump / restore" source="host" target="pg" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=0;endArrow=block;strokeColor=#1f5d50;fontColor=#243a35;fontSize=13;labelBackgroundColor=#f7f5ef;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="690" y="545" />
+              <mxPoint x="690" y="365" />
+              <mxPoint x="1240" y="365" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

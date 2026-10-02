@@ -1,0 +1,257 @@
+{
+  "captured_at": "2026-10-02T16:10:08.393Z",
+  "functional_reference": "25495230b75e06ef61b52b8751c76ef9b280dfd1",
+  "schema_revision": "0007_product_operations",
+  "origin": "https://localhost:8444",
+  "project": "petlanddocs",
+  "synthetic": true,
+  "fixture": "petland-p07-synthetic-v1",
+  "reference_date": "2026-10-02",
+  "fake_clock": false,
+  "image": "petland-stage-api:25495230b75e",
+  "web_image": "petland-stage-web:25495230b75e",
+  "source_hashes": {
+    "apps/web/src/features/home/HomePage.tsx": "16be6ae3a4bada2968dc1cadb2e51e0f185c353e67c7d59da0ca67f05ac1326a",
+    "apps/web/src/features/identity/AccountLayout.tsx": "7ae94ab21b56db2276b8047e1f3a531e6a920866bf7f84da036837187c0b6458",
+    "apps/web/src/shared/styles/tokens.css": "4364ecb0834bf86fa4251958a96956e87e19cca988072b126a397adf6ead2726",
+    "apps/web/src/features/booking/OperationsDashboard.tsx": "927a55c896e00f936ab2c1b43c960fb5b34b20a2ee62b3dfc7f83fa6fac8aa65",
+    "apps/api/src/petland/shared/database.py": "82be890d345ada93dbe00d6eb6d8a49c44d377ef3609655e37f619550b0bd986",
+    "packages/api-contract/openapi.json": "effd88548026302e1ed506d54f8c7064a986624744cc5c6b2556202aa7f3f9ee"
+  },
+  "preparation": [
+    "Fresh database seeded only with the existing synthetic fixture",
+    "One-day roster on reference +3",
+    "Capacity pool of two units",
+    "Critical care text on synthetic Luna",
+    "Booking review only; no new reservation confirmation"
+  ],
+  "checks": [
+    {
+      "name": "home",
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Cada pet.Um mundode cuidado. Â· PetLand",
+      "png": "home-current.png",
+      "sha256": "12858b1f3881b5afbbdb7e69e108d1fd1243257b19f171285256a2f765e53328",
+      "image": "home-current.webp",
+      "image_sha256": "75dbdf1e8c6cfd3adb729903aab0202836e05d44f7f845cb9326fe438407be3e",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "name": "tutor",
+      "route": "/app",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "OlÃ¡, Tutor. Â· PetLand",
+      "png": "tutor-current.png",
+      "sha256": "1d68d10d835513810652d368139165f66ee02dc4add56266311d1750cec894c7",
+      "image": "tutor-current.webp",
+      "image_sha256": "ae96383d73bf570f65dbe13636a2b21d9228ae4816b83bd80b03fc8a73d6f64a",
+      "width": 1440,
+      "height": 1437
+    },
+    {
+      "name": "booking",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Agendar um cuidado Â· PetLand",
+      "png": "booking-current.png",
+      "sha256": "47a1247ace420d18caa1ed837c34ec6af72673bbf436a9afcf29474404244b89",
+      "image": "booking-current.webp",
+      "image_sha256": "d749f5d897b23814f842ad6b3ebbc7ea50b0d70cfc7f3d6a359fa6c94bf63cbe",
+      "width": 1440,
+      "height": 1150
+    },
+    {
+      "name": "booking-mobile",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Agendar um cuidado Â· PetLand"
+    },
+    {
+      "name": "dashboard",
+      "route": "/operacao?data=2026-10-03&escopo=equipe",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "O dia na PetLand. Â· PetLand",
+      "png": "dashboard-current.png",
+      "sha256": "02e166208a6c1d4ec17cbe97d2aaafed0b92c2933b35fd8db9be4aa43aa1105b",
+      "image": "dashboard-current.webp",
+      "image_sha256": "b909232d7c10c970e8b2fde9155b3a4ab965c962cc0407dc7d4ffc74c85905e9",
+      "width": 1440,
+      "height": 1973
+    },
+    {
+      "name": "roster",
+      "route": "/operacao/escala?data=2026-10-05",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Equipe por data Â· PetLand",
+      "png": "roster-current.png",
+      "sha256": "758d0c9180d291321e3e658cfc4bdfb9a1fff6d938d2ee8a7c4d8979fa45ab55",
+      "image": "roster-current.webp",
+      "image_sha256": "d77ea09b25fc8e0a9179ed3f9f799be92ec3d68380227cf27bd4791f63509159",
+      "width": 1440,
+      "height": 1698
+    },
+    {
+      "name": "capacity",
+      "route": "/operacao/capacidade",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Capacidade fÃ­sica Â· PetLand",
+      "png": "capacity-current.png",
+      "sha256": "04e2466a7c97c7b7d67d18a9ec2b2f3718a9dcbc0095223c38991b87e5e9ec7f",
+      "image": "capacity-current.webp",
+      "image_sha256": "2382405d980f7b5360e13010f68d754d38151872b056425a59597887ec9ce5f6",
+      "width": 1440,
+      "height": 1136
+    },
+    {
+      "name": "attendance",
+      "route": "/operacao/atendimentos/8d62eabf-775e-5d7a-bddb-478860224c18",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Atendimento de Luna demo Â· PetLand",
+      "png": "attendance-current.png",
+      "sha256": "a83bfc562f4e3ab08769625c6251f9d78562beacb0b9699cf774a2c96b6ced72",
+      "image": "attendance-current.webp",
+      "image_sha256": "d59013c778ca6be984d69f430c88c8bb2792ca7e8ee6ca24a1181c8a573b4f16",
+      "width": 1440,
+      "height": 2299
+    },
+    {
+      "name": "management",
+      "route": "/gestao",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "VisÃ£o geral Â· PetLand",
+      "png": "management-current.png",
+      "sha256": "46333157c62da6b840c4265afde860e4fb42b79cbf19b21d21cf269e31e92233",
+      "image": "management-current.webp",
+      "image_sha256": "4393d38eb32fbd39c40a70a410e762dd1ed7875cc73987678b6044a5ff11040b",
+      "width": 1440,
+      "height": 2818
+    },
+    {
+      "name": "home-mobile",
+      "route": "/",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Cada pet.Um mundode cuidado. Â· PetLand"
+    },
+    {
+      "name": "tutor-mobile",
+      "route": "/app",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "OlÃ¡, Tutor. Â· PetLand"
+    },
+    {
+      "name": "dashboard-mobile",
+      "route": "/operacao?data=2026-10-03&escopo=equipe",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "O dia na PetLand. Â· PetLand"
+    },
+    {
+      "name": "roster-mobile",
+      "route": "/operacao/escala?data=2026-10-05",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Equipe por data Â· PetLand"
+    },
+    {
+      "name": "capacity-mobile",
+      "route": "/operacao/capacidade",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Capacidade fÃ­sica Â· PetLand"
+    },
+    {
+      "name": "attendance-mobile",
+      "route": "/operacao/atendimentos/8d62eabf-775e-5d7a-bddb-478860224c18",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "Atendimento de Luna demo Â· PetLand"
+    },
+    {
+      "name": "management-mobile",
+      "route": "/gestao",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "title": "VisÃ£o geral Â· PetLand"
+    }
+  ],
+  "javascript_errors": [],
+  "passed": true,
+  "conversion": "Pillow lossless WebP; decoded RGBA pixels verified equal to original PNG"
+}

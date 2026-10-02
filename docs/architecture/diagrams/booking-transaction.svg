@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img">
+<title>04-Booking-Transaction</title><desc>Confirmação e garantias transacionais. Pools são validados no domínio sob o lock comum. Não existe terceira exclusion constraint para equipamento.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1f5d50"/></marker></defs>
+<rect width="1440" height="1000" fill="#f7f5ef"/>
+<text data-node="header" x="60" y="57" fill="#243a35" font-family="Arial, sans-serif" font-size="23" font-weight="700">PETLAND 3.0 · 04-Booking-Transaction</text>
+<text data-node="header" x="60" y="82" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">Confirmação e garantias transacionais</text>
+<text data-node="header" x="60" y="107" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">CURRENT / 2549523 / 0007_product_operations</text>
+<rect id="node-review" x="60" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="review" x="78" y="219.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">1 · React / tutor</text>
+<text data-node="review" x="78" y="239.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Consulta não segura vaga</text>
+<text data-node="review" x="78" y="260.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Resumo + confirmar</text>
+<text data-node="review" x="78" y="280.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">explicitamente</text>
+<rect id="node-request" x="410" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="request" x="428" y="219.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">2 · HTTP</text>
+<text data-node="request" x="428" y="239.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Sessão + origem / CSRF</text>
+<text data-node="request" x="428" y="260.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Versões + Idempotency-</text>
+<text data-node="request" x="428" y="280.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Key</text>
+<rect id="node-lock" x="760" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="lock" x="778" y="209.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">3 · Transação</text>
+<text data-node="lock" x="778" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Primeiro lock:</text>
+<text data-node="lock" x="778" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">configuração da loja</text>
+<text data-node="lock" x="778" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Reautoriza ator e</text>
+<text data-node="lock" x="778" y="290.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">proprietário</text>
+<rect id="node-validate" x="1110" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="validate" x="1128" y="209.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">4 · Revalidação</text>
+<text data-node="validate" x="1128" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Oferta, escala, pessoa,</text>
+<text data-node="validate" x="1128" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">duração</text>
+<text data-node="validate" x="1128" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Buffers, conflitos e</text>
+<text data-node="validate" x="1128" y="290.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">pools</text>
+<rect id="node-write" x="1110" y="430" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="write" x="1128" y="459.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">5 · PostgreSQL</text>
+<text data-node="write" x="1128" y="479.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Reserva + snapshot +</text>
+<text data-node="write" x="1128" y="499.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">evento</text>
+<text data-node="write" x="1128" y="520.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Auditoria + replay +</text>
+<text data-node="write" x="1128" y="540.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">outbox</text>
+<rect id="node-integrity" x="760" y="430" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="integrity" x="778" y="469.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">6 · GiST / constraints</text>
+<text data-node="integrity" x="778" y="489.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Exclusão pet e</text>
+<text data-node="integrity" x="778" y="510.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">responsável</text>
+<text data-node="integrity" x="778" y="530.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Commit ou rollback</text>
+<rect id="node-response" x="410" y="430" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="response" x="428" y="459.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">7 · Resposta</text>
+<text data-node="response" x="428" y="479.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">201 confirmado / 409</text>
+<text data-node="response" x="428" y="499.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">conflito</text>
+<text data-node="response" x="428" y="520.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Mesma chave recupera</text>
+<text data-node="response" x="428" y="540.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">resultado</text>
+<rect id="node-worker" x="760" y="680" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="worker" x="778" y="709.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">8 · Depois do commit</text>
+<text data-node="worker" x="778" y="729.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Claim persistido da</text>
+<text data-node="worker" x="778" y="749.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">outbox</text>
+<text data-node="worker" x="778" y="770.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">SMTP fora da transação</text>
+<text data-node="worker" x="778" y="790.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">de reserva</text>
+<rect id="node-smtp" x="1110" y="680" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="smtp" x="1128" y="709.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">9 · SMTP aceito</text>
+<text data-node="smtp" x="1128" y="729.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Retry / lease</text>
+<text data-node="smtp" x="1128" y="749.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">persistidos</text>
+<text data-node="smtp" x="1128" y="770.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Não comprova leitura</text>
+<text data-node="smtp" x="1128" y="790.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">externa</text>
+<text data-node="footer" x="60" y="962" fill="#243a35" font-family="Arial, sans-serif" font-size="16" font-weight="700">Pools são validados no domínio sob o lock comum. Não existe terceira exclusion constraint para equipamento.</text>
+<polyline points="320,245.0 365.0,245.0 365.0,245.0 410,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="342.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">POST</text>
+<polyline points="670,245.0 715.0,245.0 715.0,245.0 760,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="692.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">begin</text>
+<polyline points="1020,245.0 1065.0,245.0 1065.0,245.0 1110,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">sob lock</text>
+<polyline points="1240.0,310 1240.0,370.0 1240.0,370.0 1240.0,430" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1240.0" y="331.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">pessoa elegível</text>
+<polyline points="1110,495.0 1065.0,495.0 1065.0,495.0 1020,495.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1087.5" y="486.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">atomicidade</text>
+<polyline points="760,495.0 715.0,495.0 715.0,495.0 670,495.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="737.5" y="486.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">resultado</text>
+<polyline points="890.0,560 890.0,620.0 890.0,620.0 890.0,680" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="890.0" y="581.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">outbox após commit</text>
+<polyline points="1020,745.0 1065.0,745.0 1065.0,745.0 1110,745.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="721.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">at least</text>
+<text x="1042.5" y="736.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">once</text>
+</svg>
