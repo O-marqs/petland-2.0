@@ -52,3 +52,9 @@ Não comparar diretamente Windows/WSL com Linux para inferir ganho percentual. N
 | Relógio WSL e contenção local | Limite ambiental conhecido | Procedimento/reversão P06; CI Linux independente; sem afirmar estabilidade absoluta |
 
 Não há falha crítica conhecida de autorização/integridade nas verificações executadas. Esse recorte não equivale a certificação WCAG, pentest independente ou aprovação comercial. A candidata conserva os gates em [candidate.json](candidate.json).
+
+## Evolução operacional posterior
+
+Schema atual 0007, escala coletiva/pools físicos/transferência/contexto crítico e anterior/comunicação/painel/indicadores por pessoa, conforme [ADR-016](../adr/0016-operational-evolution.md). Check final local 128 Python + 20 React; E2E 15 + skip previsto e revisão 16 checkpoints. Novo roteiro HTTPS usa horário/SMTP reais e restaura regras temporárias; [evidência e limites atuais](../evidence/Operations-evolution.md). Medições locais e rodadas Linux reprovaram carga e geraram otimização; resultado final/CI fica no PR, sem reutilizar métricas anteriores. Candidata permanece para revisão humana, com todos os gates D10/leitor de tela pendentes.
+
+Web final: 9/9 amostras, LCP até 2452 ms, INP até 104 ms, CLS até 0,0011783, após carregar CSS operacional junto ao layout autenticado. API local da revisão `a4c2630` reprova relatório/painel/reserva; Linux dessa revisão passou, mas uma rodada posterior excedeu o relatório e motivou compartilhar conversões da capacidade. [Carga local preservada](../evidence/Operations-evolution-api-local.json), [web e condições](../evidence/Operations-evolution-web-benchmark.json); CI final permanece registrada no PR.

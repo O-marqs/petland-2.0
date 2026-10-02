@@ -30,6 +30,8 @@ O cliente HTTP usa tipos gerados de OpenAPI, cookies habilitados, abort/cancelam
 
 Scheduling consulta snapshots por contratos públicos dos demais módulos. Toda mutação crítica começa pelo lock da configuração; PostgreSQL mantém exclusões independentes de intervalos. Avisos são persistidos junto com a reserva e entregues fora da transação pelo worker. A interface permite repetir explicitamente uma confirmação com a mesma chave. Ver [ADR-003](../adr/0003-scheduling.md).
 
+A migração aditiva `0007_product_operations` preserva dados e acrescenta contexto crítico do pet, transferências estruturadas e estado de comunicação programada. Escalas de datas e pools físicos são regras versionadas da configuração. Revalidação sob lock protege mudanças e reservas; consultas de gestão agregam concluídos por responsável final, sem converter contrato em receita. [ADR-016](../adr/0016-operational-evolution.md).
+
 ## Limites de segurança atuais
 
 Sessões opacas, Argon2id, CSRF, autorização contextual, revogação, rate limit compartilhado, limites de body e auditoria são descritos no [ADR 004](../adr/0004-identity.md). URLs brutas, query strings, bodies, tokens e mensagens de exceção não são registrados. Swagger é local; staging/prod exigem HTTPS, TLS PostgreSQL verificado e SMTP com STARTTLS. Essas validações não equivalem a uma revisão completa ou release de produção.

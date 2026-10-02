@@ -63,3 +63,7 @@ Laboratório móvel P06: nove amostras, LCP máximo 2028 ms, INP máximo 88 ms, 
 Aceite final de produto e revisão humana com leitor de tela continuam pendentes. D10 adia provedor, domínio, e-mail externo, publicação, cópia de backup fora do host e metas produtivas. Não há dados reais, multiempresa, pagamentos ou importação histórica; D08/D12 dispensam esta última. Não houve tag/release estável, merge ou deploy automático. [Candidato e procedimento de promoção](../runbooks/release.md).
 
 O repositório preserva a baseline, as alterações locais do legado, fontes recebidas e o histórico incremental. A evolução é demonstrada pelas jornadas, constraints e ensaios reproduzíveis; este case não apresenta o candidato como serviço comercial em operação.
+
+## Incremento operacional posterior à gravação
+
+O vídeo P08 é histórico e permanece intacto. O case acrescenta captura separada do painel diário real, com origem em `media/operations-evolution.json`, para mostrar agenda pessoal/equipe, pendências e carga. O incremento autorizado traz escala coletiva, pools físicos, transferência independente, contexto crítico/anterior e avisos programados/de conclusão. Resultados atuais e limites ficam em [Operations-evolution](../evidence/Operations-evolution.md); a referência P07 acima não é nova medição. Reserva em grupo, serviço alterado durante execução, períodos de férias, recepção em tela única, recorrência e D10 continuam lacunas explícitas.

@@ -479,6 +479,11 @@ def main():
                 ),
                 ("admin_metrics_month", sessions[40:], f"/api/v1/management/metrics?{period}"),
                 (
+                    "staff_daily_dashboard",
+                    sessions[20:40],
+                    f"/api/v1/operations/dashboard?date={last}",
+                ),
+                (
                     "admin_audit_month",
                     sessions[40:],
                     f"/api/v1/management/audit?start={first}T00:00:00Z&end={today.date()}T00:00:00Z",

@@ -49,3 +49,7 @@ node apps/web/scripts/onboarding-staging.mjs
 O roteiro de onboarding cadastra uma conta sintética pela interface, testa a restrição antes da confirmação, confirma a mensagem SMTP real, salva contato e pet, reserva pela interface e verifica a mesma reserva no back office. A equipe reagenda e cancela essa reserva, preservando o histórico e conferindo os avisos. Não altera serviços/calendário existentes. Relatório e capturas em `.local/staging/browser/onboarding`; uma tentativa interrompida registra o ID da própria reserva em `attempt.json`, quando já criada. Ele recusa bancos fora do namespace demo e não aceita endereço externo.
 
 Desenvolvimento usa **http://localhost:5173** e caixa **http://localhost:8025**. Não misture contas, links de confirmação ou caixas dos dois ambientes. O botão de caixa local só aparece nas origens locais suportadas; não expõe essa caixa em um domínio publicado.
+
+## Evolução da operação
+
+Agora há **Equipe por data**: pessoas/períodos, motivo, prévia e confirmação de uma única data; o fluxo individual anterior permanece disponível. Teste também `/operacao` (dia/minha agenda/equipe/pendências), `/operacao/capacidade` (banheiras/mesas por serviço), transferência independente, alerta crítico com leitura atual, cuidados anteriores privados, lembrete e aviso de conclusão na caixa local. Administrador vê dados por responsável final em `/gestao`. [Roteiro detalhado](operational-evolution.md). A automação confirma contratos/telas/SMTP; o teste pessoal e o aceite com leitor de tela continuam pendentes.

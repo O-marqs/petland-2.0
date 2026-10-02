@@ -14,6 +14,8 @@ def booking_pet(session: Session, customer_id: UUID, pet_id: UUID) -> Pet:
     return pet
 
 
-def care_context(session: Session, customer_id: UUID, pet_id: UUID) -> tuple[str, str, str]:
+def care_context(
+    session: Session, customer_id: UUID, pet_id: UUID
+) -> tuple[str, str, str, str, str, int]:
     pet = PostgresPets(session).get(customer_id, pet_id)
-    return pet.name, pet.species_id, pet.care_notes
+    return pet.name, pet.species_id, pet.care_notes, pet.allergies, pet.handling_notes, pet.version

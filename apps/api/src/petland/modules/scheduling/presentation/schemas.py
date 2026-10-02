@@ -7,10 +7,12 @@ from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
 
 from petland.modules.scheduling.domain.models import (
     Calendar,
+    CapacityPool,
     Configuration,
     Day,
     ExceptionDay,
     Resource,
+    StaffShift,
     Window,
 )
 
@@ -62,6 +64,7 @@ class ConfigurationInput(Input):
     shop_phone: str = Field(default="", max_length=30)
     shop_email: str = Field(default="", max_length=254)
     shop_address: str = Field(default="", max_length=300)
+    reminder_minutes: int = Field(default=0, ge=0, le=10080, strict=True)
 
     def value(self) -> Configuration:
         return Configuration(**{**self.model_dump(), "calendar": self.calendar.value()})
@@ -185,6 +188,7 @@ class DetailResponse(Input):
     appointment: AppointmentResponse
     events: list[EventResponse]
     summaries: list["PublicNoteResponse"] = Field(default_factory=list)
+    communications: list["CommunicationResponse"] = Field(default_factory=list)
 
 
 class AppointmentPage(Input):
@@ -205,6 +209,27 @@ class NoteResponse(PublicNoteResponse):
 
 class OperationEventResponse(EventResponse):
     actor_id: UUID
+    previous_resource_id: UUID | None
+    resource_id: UUID | None
+
+
+class CommunicationResponse(Input):
+    id: UUID
+    kind: str
+    created_at: datetime
+    available_at: datetime
+    delivered_at: datetime | None
+    attempts: int
+    suppressed_at: datetime | None
+
+
+class PreviousCareResponse(Input):
+    appointment_id: UUID
+    service_name: str
+    resource_name: str
+    completed_at: datetime
+    actual_minutes: float | None
+    notes: list[NoteResponse]
 
 
 class CareContextResponse(Input):
@@ -214,6 +239,9 @@ class CareContextResponse(Input):
     pet_name: str
     species: str
     care_notes: str
+    allergies: str
+    handling_notes: str
+    pet_version: int
 
 
 class OperationItemResponse(Input):
@@ -231,6 +259,9 @@ class OperationDetailResponse(Input):
     events: list[OperationEventResponse]
     notes: list[NoteResponse]
     authors: dict[UUID, str]
+    resources: dict[UUID, str]
+    previous_care: list[PreviousCareResponse]
+    communications: list[CommunicationResponse]
 
 
 class AgendaResponse(Input):
@@ -247,6 +278,7 @@ class AttendanceInput(Input):
     operation: Literal["arrive", "start", "complete", "no_show", "cancel_exception"]
     reason: str = Field(default="", max_length=500)
     summary: str = Field(default="", max_length=2000)
+    care_version: int | None = Field(default=None, ge=1, strict=True)
 
 
 class NoteInput(Input):
@@ -260,6 +292,77 @@ class ExtensionInput(ChangeInput):
     resource_id: UUID | None = None
 
 
+class TransferInput(ChangeInput):
+    resource_id: UUID
+
+
+class ShiftInput(Input):
+    resource_id: UUID
+    windows: list[WindowInput] = Field(max_length=4)
+
+    def value(self) -> StaffShift:
+        return StaffShift(self.resource_id, [Window(w.start, w.end) for w in self.windows])
+
+
+class RosterInput(Input):
+    version: int = Field(ge=1, strict=True)
+    reason: str = Field(min_length=1, max_length=500)
+    shifts: list[ShiftInput] | None = Field(max_length=100)
+
+
+class RosterRowResponse(ShiftInput):
+    name: str
+
+
+class RosterResponse(Input):
+    date: date
+    version: int
+    timezone: str
+    custom: bool
+    reason: str
+    rows: list[RosterRowResponse]
+
+
+class PoolInput(Input):
+    id: UUID
+    name: str = Field(min_length=1, max_length=100)
+    capacity: int = Field(ge=1, le=100, strict=True)
+    service_ids: list[UUID] = Field(min_length=1, max_length=100)
+    active: bool
+
+    def value(self) -> CapacityPool:
+        return CapacityPool(**self.model_dump())
+
+
+class PoolsInput(Input):
+    version: int = Field(ge=1, strict=True)
+    pools: list[PoolInput] = Field(max_length=32)
+
+
+class StaffMetricResponse(Input):
+    resource_id: UUID
+    name: str
+    total: int
+    completed: int
+    cancelled: int
+    no_show: int
+    average_actual_minutes: float | None
+    average_delay_minutes: float | None
+    average_deviation_minutes: float | None
+    occupied_minutes: float
+    available_minutes: float
+    by_service: dict[str, int]
+
+
+class ServiceMetricResponse(Input):
+    service_id: UUID
+    name: str
+    total: int
+    completed: int
+    average_planned_minutes: float | None
+    average_actual_minutes: float | None
+
+
 class MetricsResponse(Input):
     date_from: date
     date_to: date
@@ -271,6 +374,31 @@ class MetricsResponse(Input):
     occupied_minutes: float
     available_minutes: float
     occupancy_percent: float | None
+    staff: list[StaffMetricResponse]
+    services: list[ServiceMetricResponse]
+    completed_pets: int
+    completed_customers: int
+
+
+class DayLoadResponse(Input):
+    resource_id: UUID
+    name: str
+    planned: int
+    completed: int
+    occupied_minutes: float
+    available_minutes: float
+
+
+class DailyDashboardResponse(Input):
+    date: date
+    timezone: str
+    calculated_at: datetime
+    total: int
+    by_status: dict[str, int]
+    my_resource_id: UUID | None
+    appointments: list[OperationItemResponse]
+    attention: list[OperationItemResponse]
+    staff: list[DayLoadResponse]
 
 
 class EstablishmentResponse(Input):

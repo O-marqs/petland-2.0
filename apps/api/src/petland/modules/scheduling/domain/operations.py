@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, replace
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from uuid import UUID, uuid4
 from zoneinfo import ZoneInfo
 
@@ -7,7 +7,9 @@ from petland.modules.scheduling.domain.models import (
     Appointment,
     Configuration,
     Resource,
+    Window,
     local_instant,
+    worker_windows,
 )
 from petland.shared.domain.errors import BusinessError
 
@@ -30,6 +32,81 @@ class CareContext:
     pet_name: str
     species: str
     care_notes: str
+    allergies: str = ""
+    handling_notes: str = ""
+    pet_version: int = 1
+
+
+@dataclass
+class PreviousCare:
+    appointment_id: UUID
+    service_name: str
+    resource_name: str
+    completed_at: datetime
+    actual_minutes: float | None
+    notes: list[Note]
+
+
+@dataclass
+class Communication:
+    id: UUID
+    kind: str
+    created_at: datetime
+    available_at: datetime
+    delivered_at: datetime | None
+    attempts: int
+    suppressed_at: datetime | None
+
+
+@dataclass
+class StaffMetric:
+    resource_id: UUID
+    name: str
+    total: int
+    completed: int
+    cancelled: int
+    no_show: int
+    average_actual_minutes: float | None
+    average_delay_minutes: float | None
+    average_deviation_minutes: float | None
+    occupied_minutes: float
+    by_service: dict[str, int] = field(default_factory=dict)
+    available_minutes: float = 0
+
+
+@dataclass
+class ServiceMetric:
+    service_id: UUID
+    name: str
+    total: int
+    completed: int
+    average_planned_minutes: float | None
+    average_actual_minutes: float | None
+
+
+@dataclass
+class Analytics:
+    staff: list[StaffMetric]
+    services: list[ServiceMetric]
+    completed_pets: int
+    completed_customers: int
+
+
+@dataclass
+class RosterRow:
+    resource_id: UUID
+    name: str
+    windows: list[Window]
+
+
+@dataclass
+class Roster:
+    date: date
+    version: int
+    timezone: str
+    custom: bool
+    reason: str
+    rows: list[RosterRow]
 
 
 def actions(a: Appointment, now: datetime, admin: bool) -> list[str]:
@@ -53,6 +130,8 @@ def actions(a: Appointment, now: datetime, admin: bool) -> list[str]:
         result.append("complete")
     if a.status in {"ARRIVED", "IN_PROGRESS"}:
         result.append("extend")
+    if a.status in {"BOOKED", "ARRIVED", "IN_PROGRESS"}:
+        result.append("transfer")
     return result
 
 
@@ -84,31 +163,37 @@ def transition(a: Appointment, operation: str, now: datetime, admin: bool) -> Ap
     raise BusinessError("INVALID_TRANSITION", 409)
 
 
-def available_minutes(
+def available_minutes_by_resource(
     config: Configuration, resources: list[Resource], start: datetime, end: datetime
-) -> float:
+) -> dict[UUID, float]:
     """Capacity of current configuration, clipped to the requested absolute interval."""
+    minutes = {r.id: 0.0 for r in resources}
     if not config.enabled:
-        return 0
+        return minutes
     zone = ZoneInfo(config.timezone)
     day = start.astimezone(zone).date()
-    minutes = 0.0
-    while day <= end.astimezone(zone).date():
+    last = end.astimezone(zone).date()
+    while day <= last:
         shop = config.calendar.windows(day)
+        periods: dict[tuple[int, int], float] = {}
         for resource in resources:
             if not resource.active or not resource.service_ids:
                 continue
-            own = shop if resource.calendar is None else resource.calendar.windows(day)
+            own = worker_windows(config, resource, day)
             for left in shop:
                 for right in own:
                     lo, hi = max(left.start, right.start), min(left.end, right.end)
                     if lo >= hi:
                         continue
-                    begin, finish = local_instant(day, lo, zone), local_instant(day, hi, zone)
-                    if begin is not None and finish is not None:
-                        minutes += max(
-                            0, (min(finish, end) - max(begin, start)).total_seconds() / 60
+                    key = (lo, hi)
+                    if key not in periods:
+                        begin, finish = local_instant(day, lo, zone), local_instant(day, hi, zone)
+                        periods[key] = (
+                            max(0, (min(finish, end) - max(begin, start)).total_seconds() / 60)
+                            if begin is not None and finish is not None
+                            else 0.0
                         )
+                    minutes[resource.id] += periods[key]
         day += timedelta(days=1)
     return minutes
 

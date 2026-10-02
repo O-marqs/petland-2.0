@@ -21,6 +21,8 @@ class PetInput(BaseModel):
     birth_date: date | None = None
     birth_estimated: bool = False
     care_notes: str = Field(default="", max_length=1000)
+    allergies: str = Field(default="", max_length=1000)
+    handling_notes: str = Field(default="", max_length=1000)
 
     def data(self) -> PetData:
         return PetData(**self.model_dump())

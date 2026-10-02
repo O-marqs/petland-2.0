@@ -41,6 +41,8 @@ class PetRecord(Base):
     birth_date: Mapped[date | None]
     birth_estimated: Mapped[bool]
     care_notes: Mapped[str] = mapped_column(String(1000))
+    allergies: Mapped[str] = mapped_column(String(1000), server_default="")
+    handling_notes: Mapped[str] = mapped_column(String(1000), server_default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

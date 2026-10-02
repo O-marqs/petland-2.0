@@ -1,6 +1,6 @@
 # Modelo de dados implementado
 
-Revisão Alembic **`0006_hardening`**. DER abaixo mostra as relações centrais, não todas as colunas/tabelas técnicas. Fonte: ORM dos módulos e migrations; schema de referência é PostgreSQL, nunca MySQL presumido.
+Revisão Alembic **`0007_product_operations`**. DER abaixo mostra as relações centrais, não todas as colunas/tabelas técnicas. Fonte: ORM dos módulos e migrations; schema de referência é PostgreSQL, nunca MySQL presumido.
 
 ```mermaid
 erDiagram
@@ -46,3 +46,5 @@ Instantes de chegada/início/conclusão pertencem ao servidor e respeitam ordena
 O restore P07 reconciliou **23 tabelas**, incluindo `alembic_version` e o manifesto privado de demo `petland_ops.demo_manifest`. O schema `petland_ops` pertence somente às ferramentas offline; não é uma API de negócio. [Prova P07](../evidence/P07.md), [reprodução](../runbooks/operations-recovery.md).
 
 D08/D12 dispensam importação histórica; nenhum CPF/hash/reserva legado foi convertido. Política/custódia/retenção externas dependem de D10. [Baseline preservada](../migration/baseline.md).
+
+Incremento operacional: `pets.allergies/handling_notes`; `appointment_events.previous_resource_id/resource_id` para transferência interna; `appointment_outbox.kind/scheduled_start_at/suppressed_at` para avisos programados/descartados. `schedule_configuration.data` guarda escala coletiva de datas, pools físicos e antecedência de lembrete. Mudança aditiva preserva as 23 tabelas, dados e exclusões; downgrade recusa descartar informação nova. [ADR-016](../adr/0016-operational-evolution.md).

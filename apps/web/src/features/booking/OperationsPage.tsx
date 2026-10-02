@@ -27,6 +27,7 @@ export default function OperationsPage() {
     status: (params.get('status') || undefined) as Status | undefined,
     resource_id: params.get('pessoa') || undefined,
     offset,
+    mine: !params.get('pessoa') && params.get('escopo') !== 'equipe',
   };
   const agenda = useQuery({
     queryKey: ['schedule', 'agenda', query],
@@ -48,6 +49,7 @@ export default function OperationsPage() {
         <CalendarDays aria-hidden="true" size={38} />
       </header>
       <div className="care-actions">
+        <Link to="/operacao">Hoje na PetLand</Link>
         <Link className="button button--primary" to="/operacao/clientes">
           Agendar para um cliente
         </Link>
@@ -56,6 +58,20 @@ export default function OperationsPage() {
       </div>
       <section className="identity-card agenda-filters" aria-label="Filtros da agenda">
         <div className="care-actions">
+          <Button
+            variant="secondary"
+            aria-pressed={query.mine}
+            onClick={() => change({ escopo: 'minha', pessoa: '' })}
+          >
+            Minha agenda
+          </Button>
+          <Button
+            variant="secondary"
+            aria-pressed={!query.mine}
+            onClick={() => change({ escopo: 'equipe', pessoa: '' })}
+          >
+            Toda a equipe
+          </Button>
           <Button
             variant="secondary"
             onClick={() =>
@@ -98,6 +114,7 @@ export default function OperationsPage() {
               busca: String(values.get('busca')),
               status: String(values.get('status')),
               pessoa: String(values.get('pessoa')),
+              escopo: String(values.get('pessoa')) ? 'equipe' : params.get('escopo') || 'minha',
             });
           }}
         >
@@ -123,7 +140,7 @@ export default function OperationsPage() {
             ))}
           </Select>
           <Select label="Pessoa da equipe" name="pessoa" defaultValue={query.resource_id || ''}>
-            <option value="">Todas</option>
+            <option value="">{query.mine ? 'Somente minha agenda' : 'Todas'}</option>
             {settings.data?.resources.map((r) => (
               <option key={r.id} value={r.id}>
                 {r.name}

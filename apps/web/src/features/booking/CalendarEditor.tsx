@@ -21,7 +21,7 @@ const minutes = (value: string) => {
 };
 type Window = Calendar['weekly'][number]['windows'][number];
 
-function Windows({
+export function Windows({
   values,
   change,
   label,

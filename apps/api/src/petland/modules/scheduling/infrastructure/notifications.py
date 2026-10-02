@@ -10,7 +10,7 @@ from sqlalchemy import or_, select
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
-from petland.modules.scheduling.infrastructure.models import OutboxRecord
+from petland.modules.scheduling.infrastructure.models import AppointmentRecord, OutboxRecord
 
 
 class AppointmentMailer:
@@ -46,6 +46,7 @@ def deliver_one(engine: Engine, send: Callable[[str, str, str, str], None]) -> b
             select(OutboxRecord)
             .where(
                 OutboxRecord.delivered_at.is_(None),
+                OutboxRecord.suppressed_at.is_(None),
                 OutboxRecord.available_at <= now,
                 or_(OutboxRecord.lease_until.is_(None), OutboxRecord.lease_until < now),
             )
@@ -55,6 +56,16 @@ def deliver_one(engine: Engine, send: Callable[[str, str, str, str], None]) -> b
         )
         if row is None:
             return False
+        if row.kind == "reminder":
+            appointment = db.get(AppointmentRecord, row.appointment_id)
+            if (
+                appointment is None
+                or appointment.status != "BOOKED"
+                or appointment.starts_at != row.scheduled_start_at
+                or appointment.starts_at <= now
+            ):
+                row.suppressed_at = now
+                return True
         row.attempts += 1
         row.lease_until = now + timedelta(minutes=2)
         id, lease, attempt = row.id, row.lease_until, row.attempts

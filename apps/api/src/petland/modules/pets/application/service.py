@@ -21,6 +21,8 @@ class PetData:
     birth_date: date | None
     birth_estimated: bool
     care_notes: str
+    allergies: str = ""
+    handling_notes: str = ""
 
 
 class Pets:
@@ -81,6 +83,8 @@ class Pets:
                 data.care_notes,
                 now,
                 now,
+                allergies=data.allergies,
+                handling_notes=data.handling_notes,
             )
             if previous:
                 pet.id, pet.created_at, pet.version = (

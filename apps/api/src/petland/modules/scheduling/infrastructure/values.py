@@ -8,10 +8,13 @@ from uuid import UUID
 from petland.modules.scheduling.domain.models import (
     Appointment,
     Calendar,
+    CapacityPool,
     Configuration,
     Day,
     ExceptionDay,
     Offer,
+    StaffDay,
+    StaffShift,
     Window,
 )
 
@@ -32,7 +35,33 @@ def calendar_value(value: dict[str, Any]) -> Calendar:
 
 
 def configuration_value(value: dict[str, Any]) -> Configuration:
-    return Configuration(**{**value, "calendar": calendar_value(value["calendar"])})
+    return Configuration(
+        **{
+            **value,
+            "calendar": calendar_value(value["calendar"]),
+            "staff_days": [
+                StaffDay(
+                    date.fromisoformat(d["date"]),
+                    [
+                        StaffShift(UUID(s["resource_id"]), [Window(**w) for w in s["windows"]])
+                        for s in d["shifts"]
+                    ],
+                    d["reason"],
+                )
+                for d in value.get("staff_days", [])
+            ],
+            "capacity_pools": [
+                CapacityPool(
+                    UUID(p["id"]),
+                    p["name"],
+                    p["capacity"],
+                    [UUID(s) for s in p["service_ids"]],
+                    p["active"],
+                )
+                for p in value.get("capacity_pools", [])
+            ],
+        }
+    )
 
 
 def offer_value(value: dict[str, Any]) -> Offer:

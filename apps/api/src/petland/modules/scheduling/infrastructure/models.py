@@ -121,6 +121,8 @@ class EventRecord(Base):
     starts_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     ends_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    previous_resource_id: Mapped[UUID | None] = mapped_column(ForeignKey("schedule_resources.id"))
+    resource_id: Mapped[UUID | None] = mapped_column(ForeignKey("schedule_resources.id"))
 
 
 class IdempotencyRecord(Base):
@@ -145,3 +147,6 @@ class OutboxRecord(Base):
     delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     attempts: Mapped[int]
     lease_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    kind: Mapped[str] = mapped_column(String(20), server_default="legacy")
+    scheduled_start_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    suppressed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

@@ -36,6 +36,10 @@ PUBLIC_ERRORS: dict[int, tuple[str, str]] = {
 }
 
 IDENTITY_ERRORS = {
+    "INVALID_CAPACITY": "Confira o nome, a quantidade e os serviços que usam cada recurso físico.",
+    "CAPACITY_UNAVAILABLE": "Não há capacidade física disponível nesse período. Consulte a agenda antes de alterar.",
+    "INVALID_TRANSFER": "Selecione outra pessoa apta para um atendimento ainda aberto.",
+    "PET_CARE_ACK_REQUIRED": "Confira os alertas atuais do pet e confirme a leitura antes de iniciar. Atualize o atendimento se o cadastro mudou.",
     "INVALID_CALENDAR": "Confira os horários, as pausas e os prazos da agenda.",
     "INVALID_WORKER": "Selecione uma pessoa da equipe com conta ativa e e-mail confirmado.",
     "RESOURCE_EXISTS": "Essa pessoa já está cadastrada na capacidade da agenda.",

@@ -22,6 +22,8 @@ const schema = z
     birth_date: z.string(),
     birth_estimated: z.boolean(),
     care_notes: z.string().max(1000, 'Use até 1.000 caracteres.'),
+    allergies: z.string().max(1000, 'Use até 1.000 caracteres.'),
+    handling_notes: z.string().max(1000, 'Use até 1.000 caracteres.'),
   })
   .superRefine((v, ctx) => {
     const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(
@@ -64,6 +66,8 @@ function PetForm({
       birth_date: existing?.birth_date || '',
       birth_estimated: existing?.birth_estimated || false,
       care_notes: existing?.care_notes || '',
+      allergies: existing?.allergies || '',
+      handling_notes: existing?.handling_notes || '',
     },
   });
   const speciesId = form.watch('species_id');
@@ -170,6 +174,22 @@ function PetForm({
           {...form.register('care_notes')}
           hint="Compartilhe apenas o que ajuda no cuidado. Estas informações são visíveis ao cliente e à equipe."
           error={form.formState.errors.care_notes?.message}
+        />
+        <TextArea
+          label="Alergias e restrições críticas"
+          maxLength={1000}
+          rows={3}
+          {...form.register('allergies')}
+          error={form.formState.errors.allergies?.message}
+          hint="Informe as restrições conhecidas. A equipe verá um alerta e deverá confirmar a leitura antes de iniciar o cuidado."
+        />
+        <TextArea
+          label="Comportamento e preferências de cuidado"
+          maxLength={1000}
+          rows={3}
+          {...form.register('handling_notes')}
+          error={form.formState.errors.handling_notes?.message}
+          hint="Por exemplo: sensibilidade ao secador ou preferência de produtos. Cliente e equipe podem consultar estas informações."
         />
         {mutation.isError && <SaveError error={mutation.error} />}
         <div className="care-actions">

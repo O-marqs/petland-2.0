@@ -61,6 +61,28 @@ class Calendar:
 
 
 @dataclass
+class StaffShift:
+    resource_id: UUID
+    windows: list[Window]
+
+
+@dataclass
+class StaffDay:
+    date: date
+    shifts: list[StaffShift]
+    reason: str
+
+
+@dataclass
+class CapacityPool:
+    id: UUID
+    name: str
+    capacity: int
+    service_ids: list[UUID]
+    active: bool = True
+
+
+@dataclass
 class Configuration:
     timezone: str = "America/Sao_Paulo"
     enabled: bool = False
@@ -75,6 +97,9 @@ class Configuration:
     shop_phone: str = ""
     shop_email: str = ""
     shop_address: str = ""
+    reminder_minutes: int = 0
+    staff_days: list[StaffDay] = field(default_factory=list)
+    capacity_pools: list[CapacityPool] = field(default_factory=list)
 
     def validate(self) -> None:
         try:
@@ -92,9 +117,33 @@ class Configuration:
             or len(self.shop_phone) > 30
             or len(self.shop_email) > 254
             or len(self.shop_address) > 300
+            or not 0 <= self.reminder_minutes <= 10080
+            or len(self.staff_days) > 100
+            or len({d.date for d in self.staff_days}) != len(self.staff_days)
+            or len(self.capacity_pools) > 32
+            or len({p.id for p in self.capacity_pools}) != len(self.capacity_pools)
         ):
             raise BusinessError("INVALID_CALENDAR", 422)
         self.calendar.validate()
+        for day in self.staff_days:
+            if (
+                len(day.shifts) > 100
+                or len({s.resource_id for s in day.shifts}) != len(day.shifts)
+                or not day.reason.strip()
+                or len(day.reason) > 500
+            ):
+                raise BusinessError("INVALID_CALENDAR", 422)
+            for shift in day.shifts:
+                Calendar(exceptions=[ExceptionDay(day.date, shift.windows)]).validate()
+        for pool in self.capacity_pools:
+            if (
+                not 1 <= len(pool.name.strip()) <= 100
+                or not 1 <= pool.capacity <= 100
+                or not pool.service_ids
+                or len(pool.service_ids) > 100
+                or len(set(pool.service_ids)) != len(pool.service_ids)
+            ):
+                raise BusinessError("INVALID_CAPACITY", 422)
 
 
 @dataclass
@@ -195,6 +244,8 @@ class Event:
     ends_at: datetime
     occurred_at: datetime
     id: UUID = field(default_factory=uuid4)
+    previous_resource_id: UUID | None = None
+    resource_id: UUID | None = None
 
 
 def overlaps(a: datetime, b: datetime, c: datetime, d: datetime) -> bool:
@@ -211,11 +262,22 @@ def local_instant(day: date, minute: int, zone: ZoneInfo) -> datetime | None:
     return utc if utc.astimezone(zone).replace(tzinfo=None) == local else None
 
 
+def worker_windows(config: Configuration, resource: Resource, day: date) -> list[Window]:
+    roster = next((r for r in config.staff_days if r.date == day), None)
+    if roster is not None:
+        return next((s.windows for s in roster.shifts if s.resource_id == resource.id), [])
+    return (
+        config.calendar.windows(day)
+        if resource.calendar is None
+        else resource.calendar.windows(day)
+    )
+
+
 def fits(config: Configuration, resource: Resource, start: datetime, end: datetime) -> bool:
     zone = ZoneInfo(config.timezone)
     day = start.astimezone(zone).date()
     shop = config.calendar.windows(day)
-    worker = shop if resource.calendar is None else resource.calendar.windows(day)
+    worker = worker_windows(config, resource, day)
     for window in shop:
         for own in worker:
             left = local_instant(day, max(window.start, own.start), zone)
@@ -223,6 +285,39 @@ def fits(config: Configuration, resource: Resource, start: datetime, end: dateti
             if left is not None and right is not None and left <= start < end <= right:
                 return True
     return False
+
+
+def physical_fits(
+    config: Configuration,
+    existing: list[Appointment],
+    service_id: UUID,
+    start: datetime,
+    end: datetime,
+    ignore_id: UUID | None = None,
+) -> bool:
+    """Shared pools reserve the complete occupied interval. Endpoints are half-open."""
+    for pool in config.capacity_pools:
+        if service_id not in pool.service_ids:
+            continue
+        if not pool.active:
+            return False
+        events: list[tuple[datetime, int]] = [(start, 1), (end, -1)]
+        for a in existing:
+            if (
+                a.id != ignore_id
+                and a.status in OCCUPYING
+                and a.service_id in pool.service_ids
+                and overlaps(start, end, a.occupied_start_at, a.occupied_end_at)
+            ):
+                events.extend(
+                    [(max(start, a.occupied_start_at), 1), (min(end, a.occupied_end_at), -1)]
+                )
+        used = 0
+        for _, delta in sorted(events):
+            used += delta
+            if used > pool.capacity:
+                return False
+    return True
 
 
 def candidates(config: Configuration, day: date, now: datetime) -> list[datetime]:
@@ -249,16 +344,29 @@ def allocate(
     offer: Offer,
     start: datetime,
     ignore_id: UUID | None = None,
+    planned_load: dict[UUID, float] | None = None,
 ) -> Resource | None:
     end = start + timedelta(minutes=offer.duration_minutes)
     occupied_start = start - timedelta(minutes=offer.buffer_before_minutes)
     occupied_end = end + timedelta(minutes=offer.buffer_after_minutes)
     occupied = [b for b in existing if b.status in OCCUPYING and b.id != ignore_id]
+    if not physical_fits(config, occupied, offer.service_id, occupied_start, occupied_end):
+        return None
     if any(
         b.pet_id == pet_id and overlaps(start, end, b.starts_at, b.capacity_end) for b in occupied
     ):
         return None
-    for resource in sorted(resources, key=lambda r: str(r.id)):
+    # Spread eligible work by planned occupied minutes on this shop day, then stable UUID.
+    day = start.astimezone(ZoneInfo(config.timezone)).date()
+    load: dict[UUID, float] = dict(planned_load) if planned_load is not None else {}
+    if planned_load is None:
+        for b in occupied:
+            if b.starts_at.astimezone(ZoneInfo(config.timezone)).date() == day:
+                load[b.resource_id] = (
+                    load.get(b.resource_id, 0)
+                    + (b.occupied_end_at - b.occupied_start_at).total_seconds()
+                )
+    for resource in sorted(resources, key=lambda r: (load.get(r.id, 0), str(r.id))):
         if (
             resource.active
             and offer.service_id in resource.service_ids

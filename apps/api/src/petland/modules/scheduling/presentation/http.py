@@ -6,10 +6,15 @@ from fastapi import APIRouter, Depends, Header, Query, Request
 
 from petland.modules.identity.public import Actor
 from petland.modules.identity.public.http import HttpIdentity
-from petland.modules.scheduling.application.operations import Agenda, Metrics, OperationDetail
+from petland.modules.scheduling.application.operations import (
+    Agenda,
+    DailyDashboard,
+    Metrics,
+    OperationDetail,
+)
 from petland.modules.scheduling.application.service import Scheduling
 from petland.modules.scheduling.domain.models import Appointment, Availability, Resource
-from petland.modules.scheduling.domain.operations import AppointmentFilter
+from petland.modules.scheduling.domain.operations import AppointmentFilter, Roster
 from petland.modules.scheduling.presentation.schemas import (
     AgendaResponse,
     AppointmentPage,
@@ -19,7 +24,9 @@ from petland.modules.scheduling.presentation.schemas import (
     AvailabilityResponse,
     BookingInput,
     ChangeInput,
+    CommunicationResponse,
     ConfigurationInput,
+    DailyDashboardResponse,
     DetailResponse,
     EstablishmentResponse,
     EventResponse,
@@ -28,11 +35,16 @@ from petland.modules.scheduling.presentation.schemas import (
     MetricsResponse,
     NoteInput,
     OperationDetailResponse,
+    PoolInput,
+    PoolsInput,
     PublicNoteResponse,
     RescheduleInput,
     ResourceInput,
     ResourceResponse,
+    RosterInput,
+    RosterResponse,
     SettingsResponse,
+    TransferInput,
     WorkerResponse,
 )
 from petland.shared.domain.errors import BusinessError
@@ -60,6 +72,7 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
         search: str = Query(default="", max_length=100),
         offset: int = Query(default=0, ge=0, le=100000),
         limit: int = Query(default=20, ge=1, le=100),
+        mine: bool = False,
     ) -> Agenda:
         return service.operations.agenda(
             actor,
@@ -68,7 +81,12 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
             AppointmentFilter(status=status, resource_id=resource_id, search=search.strip()),
             offset,
             limit,
+            mine,
         )
+
+    @router.get("/operations/dashboard", response_model=DailyDashboardResponse)
+    def dashboard(actor: User, date: date | None = None, mine: bool = True) -> DailyDashboard:
+        return service.operations.dashboard(actor, date, mine)
 
     @router.get("/operations/attendances/{appointment_id}", response_model=OperationDetailResponse)
     def attendance(appointment_id: UUID, actor: User) -> OperationDetail:
@@ -91,6 +109,80 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
             request.state.request_id,
             reason=body.reason,
             body=body.summary,
+            care_version=body.care_version,
+        )
+
+    @router.post(
+        "/operations/attendances/{appointment_id}/transfer", response_model=AppointmentResponse
+    )
+    def transfer(
+        appointment_id: UUID, body: TransferInput, actor: User, key: Key, request: Request
+    ) -> Appointment:
+        return service.operations.command(
+            actor,
+            appointment_id,
+            "transfer",
+            body.version,
+            key,
+            request.state.request_id,
+            reason=body.reason,
+            resource_id=body.resource_id,
+        )
+
+    @router.get("/operations/roster/{day}", response_model=RosterResponse)
+    def roster(day: date, actor: User) -> Roster:
+        return service.roster(actor, day)
+
+    @router.put("/operations/roster/{day}", response_model=RosterResponse)
+    def save_roster(day: date, body: RosterInput, actor: User, request: Request) -> Roster:
+        service.set_roster(
+            actor,
+            day,
+            [s.value() for s in body.shifts] if body.shifts is not None else None,
+            body.reason,
+            body.version,
+            request.state.request_id,
+        )
+        return service.roster(actor, day)
+
+    @router.post("/operations/roster/{day}/impact-preview", response_model=ImpactResponse)
+    def roster_preview(
+        day: date, body: RosterInput, actor: User, request: Request
+    ) -> ImpactResponse:
+        return ImpactResponse(
+            appointment_ids=service.set_roster(
+                actor,
+                day,
+                [s.value() for s in body.shifts] if body.shifts is not None else None,
+                body.reason,
+                body.version,
+                request.state.request_id,
+                preview=True,
+            )
+        )
+
+    @router.get("/operations/capacity", response_model=PoolsInput)
+    def capacity(actor: User) -> PoolsInput:
+        version, pools = service.pools(actor)
+        return PoolsInput(version=version, pools=[PoolInput.model_validate(p) for p in pools])
+
+    @router.put("/operations/capacity", response_model=PoolsInput)
+    def save_capacity(body: PoolsInput, actor: User, request: Request) -> PoolsInput:
+        service.set_pools(
+            actor, [p.value() for p in body.pools], body.version, request.state.request_id
+        )
+        return capacity(actor)
+
+    @router.post("/operations/capacity/impact-preview", response_model=ImpactResponse)
+    def capacity_preview(body: PoolsInput, actor: User, request: Request) -> ImpactResponse:
+        return ImpactResponse(
+            appointment_ids=service.set_pools(
+                actor,
+                [p.value() for p in body.pools],
+                body.version,
+                request.state.request_id,
+                preview=True,
+            )
         )
 
     @router.post(
@@ -238,6 +330,10 @@ def scheduling_router(service: Scheduling, auth: HttpIdentity) -> APIRouter:
                 summaries=[
                     PublicNoteResponse.model_validate(n)
                     for n in service.public_notes(actor, assisted, appointment_id)
+                ],
+                communications=[
+                    CommunicationResponse.model_validate(c)
+                    for c in service.communications(actor, assisted, appointment_id)
                 ],
             )
 

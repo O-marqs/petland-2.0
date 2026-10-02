@@ -66,11 +66,14 @@ export default function AccountLayout() {
       label: 'Operação',
       show: employee,
       items: [
+        ['/operacao', 'Hoje na PetLand'],
         ['/operacao/agenda', 'Agenda'],
         ['/operacao/reservas', 'Reservas'],
         ['/operacao/clientes', 'Clientes e pets'],
         ['/operacao/servicos', 'Serviços'],
         ['/operacao/configuracoes', 'Equipe e horários'],
+        ['/operacao/escala', 'Equipe por data'],
+        ['/operacao/capacidade', 'Capacidade física'],
       ],
     },
     {
@@ -149,14 +152,7 @@ export default function AccountLayout() {
               to={management ? '/gestao' : employee ? '/operacao/agenda' : '/app'}
               end
               aria-label={management ? 'Visão geral' : employee ? 'Agenda' : 'Área do cliente'}
-              className={({ isActive }) =>
-                isActive || (employee && !management && pathname === '/operacao')
-                  ? 'active'
-                  : undefined
-              }
-              aria-current={
-                employee && !management && pathname === '/operacao' ? 'page' : undefined
-              }
+              className={({ isActive }) => (isActive ? 'active' : undefined)}
             >
               {management ? 'Visão geral' : employee ? 'Agenda' : 'Início'}
             </NavLink>
@@ -195,15 +191,8 @@ export default function AccountLayout() {
                   <NavLink
                     key={to}
                     to={to}
-                    end={to === '/app' || to === '/gestao'}
-                    className={({ isActive }) =>
-                      isActive || (to === '/operacao/agenda' && pathname === '/operacao')
-                        ? 'active'
-                        : undefined
-                    }
-                    aria-current={
-                      to === '/operacao/agenda' && pathname === '/operacao' ? 'page' : undefined
-                    }
+                    end={to === '/app' || to === '/gestao' || to === '/operacao'}
+                    className={({ isActive }) => (isActive ? 'active' : undefined)}
                   >
                     {label}
                   </NavLink>
@@ -248,3 +237,4 @@ export default function AccountLayout() {
     </>
   );
 }
+import '../../shared/styles/operational.css';

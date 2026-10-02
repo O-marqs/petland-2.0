@@ -16,6 +16,7 @@ import { Select, TextArea } from '../../shared/ui/Select';
 import { Button } from '../../shared/ui/Button';
 import { Alert, Badge, Skeleton } from '../../shared/ui/Feedback';
 import { ApiError } from '../../shared/lib/api';
+import { CommunicationHistory } from './CommunicationHistory';
 
 type Attempt = {
   key: string;
@@ -25,6 +26,7 @@ type Attempt = {
   visibility: 'INTERNAL' | 'PUBLIC';
   until: string;
   resource: string;
+  care_version?: number;
 };
 
 function ActionForm({
@@ -47,7 +49,7 @@ function ActionForm({
   const settings = useQuery({
     queryKey: ['schedule', 'settings'],
     queryFn: ({ signal }) => bookingApi.settings(signal),
-    enabled: action === 'extend',
+    enabled: action === 'extend' || action === 'transfer',
   });
   const mutation = useMutation({
     mutationFn: (v: Attempt) =>
@@ -68,16 +70,23 @@ function ActionForm({
               },
               v.key,
             )
-          : operationsApi.transition(
-              a.id,
-              {
-                version: v.version,
-                operation: action as Transition['operation'],
-                reason: v.reason,
-                summary: action === 'complete' ? v.body : '',
-              },
-              v.key,
-            ),
+          : action === 'transfer'
+            ? operationsApi.transfer(
+                a.id,
+                { version: v.version, reason: v.reason, resource_id: v.resource },
+                v.key,
+              )
+            : operationsApi.transition(
+                a.id,
+                {
+                  version: v.version,
+                  operation: action as Transition['operation'],
+                  reason: v.reason,
+                  summary: action === 'complete' ? v.body : '',
+                  care_version: v.care_version,
+                },
+                v.key,
+              ),
     onSuccess: done,
   });
   const conflict = mutation.error instanceof ApiError && mutation.error.status < 500;
@@ -113,6 +122,7 @@ function ActionForm({
                   ).toISOString()
                 : '',
             resource: String(data.get('resource') || ''),
+            care_version: data.get('care_ack') ? detail.context.pet_version : undefined,
           };
           setAttempt(value);
           mutation.mutate(value);
@@ -138,14 +148,49 @@ function ActionForm({
               }
             />
           )}
-          {['no_show', 'cancel_exception', 'extend'].includes(action) && (
+          {['no_show', 'cancel_exception', 'extend', 'transfer'].includes(action) && (
             <TextArea
               label="Motivo"
               name="reason"
               required
               maxLength={500}
-              hint="O motivo faz parte do histórico visível ao cliente."
+              hint={
+                action === 'transfer'
+                  ? 'O motivo e a troca de responsável ficam no histórico interno da equipe.'
+                  : 'O motivo faz parte do histórico visível ao cliente.'
+              }
             />
+          )}
+          {action === 'start' && detail.context.allergies && (
+            <label className="care-check critical-ack">
+              <input type="checkbox" name="care_ack" required />
+              Li as alergias e restrições críticas atuais deste pet antes de iniciar.
+            </label>
+          )}
+          {action === 'transfer' && (
+            <>
+              <p>
+                Responsável atual: <strong>{detail.item.resource_name}</strong>. Horário, duração e
+                preço permanecem iguais. A nova pessoa precisa ter o período livre e estar apta ao
+                serviço.
+              </p>
+              <Select label="Nova pessoa responsável" name="resource" required defaultValue="">
+                <option value="">Selecione quem assumirá</option>
+                {settings.data?.resources
+                  .filter(
+                    (r) =>
+                      r.active &&
+                      r.id !== detail.item.resource_id &&
+                      r.service_ids.includes(a.service_id),
+                  )
+                  .map((r) => (
+                    <option key={r.id} value={r.id}>
+                      {r.name}
+                    </option>
+                  ))}
+              </Select>
+              {settings.isError && <Failure error={settings.error} />}
+            </>
           )}
           {action === 'extend' && (
             <>
@@ -195,7 +240,7 @@ function ActionForm({
           <Button
             type="submit"
             busy={mutation.isPending}
-            disabled={conflict || (action === 'extend' && !settings.data)}
+            disabled={conflict || (['extend', 'transfer'].includes(action) && !settings.data)}
             variant={action === 'cancel_exception' ? 'danger' : 'primary'}
           >
             {attempt
@@ -251,6 +296,12 @@ export default function AttendancePage() {
         <Badge>{statusLabels[a.status]}</Badge>
       </header>
       {saved && <Alert tone="success" title={saved} />}
+      {d.context.allergies && (
+        <Alert tone="error" title="Atenção: alergias e restrições críticas">
+          <p className="preserve-lines">{d.context.allergies}</p>
+          <p>Informação do cadastro do pet. Confira antes de iniciar o cuidado.</p>
+        </Alert>
+      )}
       {d.item.overdue && (
         <Alert title="O tempo reservado terminou">
           O atendimento continua aberto. Confira a agenda e estenda a ocupação se houver
@@ -319,9 +370,49 @@ export default function AttendancePage() {
             ) : (
               <p>Sem observações de cuidado informadas.</p>
             )}
+            {d.context.handling_notes && (
+              <p className="preserve-lines">
+                <strong>Comportamento e preferências:</strong> {d.context.handling_notes}
+              </p>
+            )}
             <Link to={'/operacao/clientes/' + a.customer_id}>
               Abrir cadastro e histórico do cliente
             </Link>
+          </section>
+          <section className="identity-card">
+            <h2>Nos cuidados anteriores</h2>
+            <p>
+              Últimos três atendimentos concluídos deste pet; até cinco anotações recentes de cada
+              cuidado, com visibilidade preservada.
+            </p>
+            {!d.previous_care.length ? (
+              <p>Este pet ainda não tem um atendimento anterior concluído.</p>
+            ) : (
+              d.previous_care.map((p) => (
+                <details className="previous-care" key={p.appointment_id}>
+                  <summary>
+                    {p.service_name} · {dateTime(p.completed_at, a.timezone)}
+                  </summary>
+                  <p>
+                    {p.resource_name} ·{' '}
+                    {p.actual_minutes === null
+                      ? 'Tempo real não registrado'
+                      : `${p.actual_minutes.toLocaleString('pt-BR')} min reais`}
+                  </p>
+                  {p.notes.map((n) => (
+                    <div key={n.id}>
+                      <Badge>
+                        {n.visibility === 'INTERNAL' ? 'Nota interna' : 'Resumo público'}
+                      </Badge>
+                      <p className="preserve-lines">{n.body}</p>
+                    </div>
+                  ))}
+                  <Link to={'/operacao/atendimentos/' + p.appointment_id}>
+                    Abrir histórico completo
+                  </Link>
+                </details>
+              ))
+            )}
           </section>
           <section className="identity-card">
             <h2>Horários e condições</h2>
@@ -396,10 +487,17 @@ export default function AttendancePage() {
                 <span>{dateTime(e.occurred_at, a.timezone)}</span>
                 {e.reason && <p>{e.reason}</p>}
                 {e.kind === 'extend' && <p>Ocupação até {dateTime(e.ends_at, a.timezone)}.</p>}
+                {e.previous_resource_id && e.resource_id && (
+                  <p>
+                    {d.resources[e.previous_resource_id] || 'Responsável anterior'} →{' '}
+                    {d.resources[e.resource_id] || 'Novo responsável'}
+                  </p>
+                )}
                 <small>Autor: {d.authors[e.actor_id] || 'Equipe'}</small>
               </li>
             ))}
           </ol>
+          <CommunicationHistory messages={d.communications} timezone={a.timezone} />
         </section>
       </div>
     </article>

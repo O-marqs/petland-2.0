@@ -2,7 +2,7 @@
   "version": "3.0.0-rc.1",
   "python_version": "3.0.0rc1",
   "status": "candidate_for_review",
-  "schema_revision": "0006_hardening",
+  "schema_revision": "0007_product_operations",
   "legacy_commit": "3cc3f898cde896b80fed587bf8c06f4aa46742f6",
   "p07_merge": "3dde06b133a53a1b704eb6f5113a01a85d5a741e",
   "production_ready": false,
@@ -43,6 +43,13 @@
     "docs/architecture/release-diagrams.md",
     "docs/release/quality-report.md",
     "docs/release/3.0.0-rc.1.md",
-    "docs/runbooks/release.md"
+    "docs/runbooks/release.md",
+    "docs/case/media/operations-dashboard.webp",
+    "docs/case/media/operations-evolution.json",
+    "docs/adr/0016-operational-evolution.md",
+    "docs/runbooks/operational-evolution.md",
+    "docs/evidence/Operations-evolution.md",
+    "docs/evidence/Operations-evolution-api-local.json",
+    "docs/evidence/Operations-evolution-web-benchmark.json"
   ]
 }

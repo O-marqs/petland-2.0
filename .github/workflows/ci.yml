@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08, petland-3.0-onboarding-fix]
+    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08, petland-3.0-onboarding-fix, petland-3.0-operations-evolution]
 permissions:
   contents: read
 concurrency:
@@ -124,6 +124,8 @@ jobs:
           cat .local/staging/rehearsal.json
       - name: New-account UI, confirmation, pet, reservation and staff communication
         run: node apps/web/scripts/onboarding-staging.mjs
+      - name: Daily roster, physical capacity, transfer, critical care, reporting and actual SMTP
+        run: node apps/web/scripts/operations-evolution-staging.mjs
       - name: Visual reflow, accessible navigation and role boundaries
         run: node apps/web/scripts/review-staging.mjs
       - name: Stop isolated staging, preserve volume

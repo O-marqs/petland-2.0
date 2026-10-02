@@ -75,6 +75,10 @@ it('keeps business metrics on the shop date at the same instant', async () => {
     available_minutes: 0,
     occupancy_percent: null,
     calculated_at: '2026-10-02T01:30:00Z',
+    staff: [],
+    services: [],
+    completed_pets: 0,
+    completed_customers: 0,
   });
   render(<ManagementPage />, { wrapper });
   expect(screen.getByLabelText('Fim do período (obrigatório)')).toHaveValue('2026-10-01');

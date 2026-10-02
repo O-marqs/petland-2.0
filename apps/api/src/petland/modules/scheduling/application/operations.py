@@ -12,16 +12,23 @@ from petland.modules.scheduling.application.ports import ScheduleStore
 from petland.modules.scheduling.domain.models import (
     STATUSES,
     Appointment,
+    Configuration,
     Event,
+    Resource,
     fits,
     overlaps,
+    physical_fits,
 )
 from petland.modules.scheduling.domain.operations import (
     AppointmentFilter,
     CareContext,
+    Communication,
     Note,
+    PreviousCare,
+    ServiceMetric,
+    StaffMetric,
     actions,
-    available_minutes,
+    available_minutes_by_resource,
     transition,
 )
 from petland.shared.domain.errors import BusinessError
@@ -44,6 +51,9 @@ class OperationDetail:
     events: list[Event]
     notes: list[Note]
     authors: dict[UUID, str]
+    previous_care: list[PreviousCare]
+    communications: list[Communication]
+    resources: dict[UUID, str]
 
 
 @dataclass
@@ -68,6 +78,33 @@ class Metrics:
     occupied_minutes: float
     available_minutes: float
     occupancy_percent: float | None
+    staff: list[StaffMetric]
+    services: list[ServiceMetric]
+    completed_pets: int
+    completed_customers: int
+
+
+@dataclass
+class DayLoad:
+    resource_id: UUID
+    name: str
+    planned: int
+    completed: int
+    occupied_minutes: float
+    available_minutes: float
+
+
+@dataclass
+class DailyDashboard:
+    date: date
+    timezone: str
+    calculated_at: datetime
+    total: int
+    by_status: dict[str, int]
+    my_resource_id: UUID | None
+    appointments: list[OperationItem]
+    attention: list[OperationItem]
+    staff: list[DayLoad]
 
 
 class Operations:
@@ -106,6 +143,7 @@ class Operations:
         filters: AppointmentFilter,
         offset: int,
         limit: int,
+        mine: bool = False,
     ) -> Agenda:
         with self.store() as store:
             live = store.actor(actor.id)
@@ -114,6 +152,11 @@ class Operations:
             first = first or now.astimezone(ZoneInfo(config.timezone)).date()
             last = last or first
             start, end = self.interval(config.timezone, first, last)
+            if mine:
+                own = next((r for r in store.resources() if r.user_id == actor.id), None)
+                if own is None:
+                    return Agenda([], 0, first, last, config.timezone, now)
+                filters = replace(filters, resource_id=own.id)
             if filters.status and filters.status not in STATUSES:
                 raise BusinessError("INVALID_BOOKING", 422)
             rows, total = store.appointments_page(
@@ -159,6 +202,9 @@ class Operations:
                 events,
                 notes,
                 store.actor_names(list({e.actor_id for e in events} | {n.actor_id for n in notes})),
+                store.previous_care(a),
+                store.communications(a.id),
+                resources,
             )
 
     def command(
@@ -174,6 +220,7 @@ class Operations:
         visibility: str = "INTERNAL",
         until: datetime | None = None,
         resource_id: UUID | None = None,
+        care_version: int | None = None,
     ) -> Appointment:
         if operation not in {
             "arrive",
@@ -183,11 +230,15 @@ class Operations:
             "cancel_exception",
             "note",
             "extend",
+            "transfer",
         }:
             raise BusinessError("INVALID_TRANSITION", 422)
         if len(reason) > 500 or len(body) > 2000 or visibility not in {"INTERNAL", "PUBLIC"}:
             raise BusinessError("INVALID_BOOKING", 422)
-        if operation in {"no_show", "cancel_exception", "extend"} and not reason.strip():
+        if (
+            operation in {"no_show", "cancel_exception", "extend", "transfer"}
+            and not reason.strip()
+        ):
             raise BusinessError("REASON_REQUIRED", 422)
         if operation == "note" and not body.strip():
             raise BusinessError("INVALID_BOOKING", 422)
@@ -207,6 +258,7 @@ class Operations:
                     str(until),
                     str(resource_id),
                 ]
+                + ([care_version] if care_version is not None else [])
             ).encode()
         ).hexdigest()
         with self.store() as store:
@@ -225,12 +277,22 @@ class Operations:
             if operation == "note":
                 result = replace(a, version=a.version + 1, updated_at=now)
                 store.add_note(Note(a.id, actor.id, body.strip(), visibility, now))
-            elif operation == "extend":
-                if (
-                    until is None
-                    or operation not in actions(a, now, False)
-                    or until <= max(a.capacity_end, now)
-                    or until > a.ends_at + timedelta(hours=8)
+            elif operation in {"extend", "transfer"}:
+                if operation == "transfer":
+                    if (
+                        operation not in actions(a, now, False)
+                        or resource_id is None
+                        or resource_id == a.resource_id
+                    ):
+                        raise BusinessError("INVALID_TRANSFER", 409)
+                    until = a.capacity_end
+                if until is None or (
+                    operation == "extend"
+                    and (
+                        operation not in actions(a, now, False)
+                        or until <= max(a.capacity_end, now)
+                        or until > a.ends_at + timedelta(hours=8)
+                    )
                 ):
                     raise BusinessError("INVALID_EXTENSION", 409)
                 resources = {r.id: r for r in store.resources()}
@@ -246,6 +308,15 @@ class Operations:
                 ):
                     raise BusinessError("EXTENSION_UNAVAILABLE", 409)
                 others = store.appointments(a.occupied_start_at, occupied_end)
+                if not physical_fits(
+                    store.configuration(),
+                    others,
+                    a.service_id,
+                    a.occupied_start_at,
+                    occupied_end,
+                    a.id,
+                ):
+                    raise BusinessError("CAPACITY_UNAVAILABLE", 409)
                 if a.status == "IN_PROGRESS" and any(
                     b.id != a.id and b.resource_id == resource.id and b.status == "IN_PROGRESS"
                     for b in others
@@ -274,7 +345,7 @@ class Operations:
                 result = replace(
                     a,
                     resource_id=resource.id,
-                    reserved_until=until,
+                    reserved_until=until if operation == "extend" else a.reserved_until,
                     occupied_end_at=occupied_end,
                     version=a.version + 1,
                     updated_at=now,
@@ -292,6 +363,9 @@ class Operations:
             else:
                 result = transition(a, operation, now, "identity:manage" in live.permissions)
                 if operation == "start":
+                    context = store.context(a)
+                    if context.allergies.strip() and care_version != context.pet_version:
+                        raise BusinessError("PET_CARE_ACK_REQUIRED", 409)
                     resource = next(r for r in store.resources() if r.id == a.resource_id)
                     if (
                         not resource.active
@@ -306,6 +380,16 @@ class Operations:
                         for b in store.appointments(a.starts_at, a.occupied_end_at)
                     ):
                         raise BusinessError("RESOURCE_IN_PROGRESS", 409)
+                    if context.allergies.strip():
+                        store.add_note(
+                            Note(
+                                a.id,
+                                actor.id,
+                                f"Alerta crítico revisado antes do início. Versão do pet: {context.pet_version}.",
+                                "INTERNAL",
+                                now,
+                            )
+                        )
                 if operation == "complete" and body.strip():
                     store.add_note(Note(a.id, actor.id, body.strip(), "PUBLIC", now))
             store.save(result)
@@ -324,6 +408,10 @@ class Operations:
                     result.starts_at,
                     result.capacity_end,
                     now,
+                    previous_resource_id=a.resource_id
+                    if result.resource_id != a.resource_id
+                    else None,
+                    resource_id=result.resource_id if result.resource_id != a.resource_id else None,
                 ),
                 result,
                 request_id,
@@ -338,8 +426,12 @@ class Operations:
             config = store.configuration()
             start, end = self.interval(config.timezone, first, last)
             totals = store.period_totals(start, end)
-            capacity = available_minutes(config, store.resources(eligible_only=True), start, end)
             occupied = totals.occupied_minutes
+            analytics = store.analytics(start, end)
+            staff = self.staff_capacity(
+                analytics.staff, store.resources(eligible_only=True), config, start, end
+            )
+            capacity = sum(row.available_minutes for row in staff)
             return Metrics(
                 first,
                 last,
@@ -351,4 +443,98 @@ class Operations:
                 occupied,
                 capacity,
                 round(100 * occupied / capacity, 2) if capacity else None,
+                staff,
+                analytics.services,
+                analytics.completed_pets,
+                analytics.completed_customers,
             )
+
+    def dashboard(self, actor: Actor, day: date | None = None, mine: bool = True) -> DailyDashboard:
+        with self.store() as store:
+            live = store.actor(actor.id)
+            live.require("operation:read")
+            store.lock(shared=True)
+            config, now = store.configuration(), self.clock()
+            day = day or now.astimezone(ZoneInfo(config.timezone)).date()
+            start, end = self.interval(config.timezone, day, day)
+            resources = store.resources()
+            own = next((r for r in resources if r.user_id == actor.id), None)
+            rows, _ = store.appointments_page(
+                None,
+                0,
+                6,
+                AppointmentFilter(
+                    start=start,
+                    end=end,
+                    resource_id=own.id if mine and own else None,
+                    period="upcoming",
+                    now=now,
+                ),
+            )
+            if mine and own is None:
+                rows = []
+            attention = store.attention(start, end, now)
+            names = store.customer_names(list({a.customer_id for a in [*rows, *attention]}))
+            labels = {r.id: r.name for r in resources}
+            totals = store.period_totals(start, end)
+            analytics = store.analytics(start, end, details=False)
+            staff = self.staff_capacity(
+                analytics.staff, store.resources(eligible_only=True), config, start, end
+            )
+            return DailyDashboard(
+                day,
+                config.timezone,
+                now,
+                totals.total,
+                totals.by_status,
+                own.id if own else None,
+                [
+                    self.item(
+                        a,
+                        names[a.customer_id],
+                        labels[a.resource_id],
+                        now,
+                        "identity:manage" in live.permissions,
+                    )
+                    for a in rows
+                ],
+                [
+                    self.item(
+                        a,
+                        names[a.customer_id],
+                        labels[a.resource_id],
+                        now,
+                        "identity:manage" in live.permissions,
+                    )
+                    for a in attention
+                ],
+                [
+                    DayLoad(
+                        r.resource_id,
+                        r.name,
+                        r.total,
+                        r.completed,
+                        r.occupied_minutes,
+                        r.available_minutes,
+                    )
+                    for r in staff
+                ],
+            )
+
+    @staticmethod
+    def staff_capacity(
+        rows: list[StaffMetric],
+        resources: list[Resource],
+        config: Configuration,
+        start: datetime,
+        end: datetime,
+    ) -> list[StaffMetric]:
+        by_id = {row.resource_id: row for row in rows}
+        capacity = available_minutes_by_resource(config, resources, start, end)
+        for resource in resources:
+            row = by_id.setdefault(
+                resource.id,
+                StaffMetric(resource.id, resource.name, 0, 0, 0, 0, None, None, None, 0),
+            )
+            row.available_minutes = capacity[resource.id]
+        return sorted(by_id.values(), key=lambda row: (row.name.casefold(), str(row.resource_id)))

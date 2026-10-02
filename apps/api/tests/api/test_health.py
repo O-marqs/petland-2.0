@@ -106,6 +106,12 @@ def test_contract_only_exposes_implemented_endpoints(settings):
     assert set(paths) == {
         "/api/v1/establishment",
         "/api/v1/operations/agenda",
+        "/api/v1/operations/dashboard",
+        "/api/v1/operations/roster/{day}",
+        "/api/v1/operations/roster/{day}/impact-preview",
+        "/api/v1/operations/capacity",
+        "/api/v1/operations/capacity/impact-preview",
+        "/api/v1/operations/attendances/{appointment_id}/transfer",
         "/api/v1/operations/attendances/{appointment_id}",
         "/api/v1/operations/attendances/{appointment_id}/transitions",
         "/api/v1/operations/attendances/{appointment_id}/notes",
