@@ -77,7 +77,7 @@ Resultados locais executados em 02/10/2026, sobre a árvore documental com a mes
 
 A primeira passagem de lint encontrou quatro variáveis sem uso no novo script de captura. Corrigidas pela seleção explícita dos campos de atualização do pet; check completo e captura foram repetidos e passaram. Não houve relaxamento de regra/teste. Os logs de execução ficam em `.local`; esta evidência registra resultados, não credenciais.
 
-Benchmarks API/web e rehearsal de recovery citados em RNFs continuam vinculados à revisão que os produziu. Esta revisão não executou uma nova carga nem concede aceite humano, certificação de acessibilidade ou aprovação de produção.
+Benchmarks API/web e rehearsal de recovery citados em RNFs continuam vinculados à revisão que os produziu. Não foi executada nova carga manual local para esta documentação. A CI do PR mantém seus ensaios automáticos; resultados do novo commit devem ser consultados nos checks do PR, sem substituir as medições anteriores. O bundle local foi verificado com 394 arquivos e manifesto/checksums, sem publicação. Nenhuma dessas verificações concede aceite humano, certificação de acessibilidade ou aprovação de produção.
 
 ## Pendências de produto / operação
 
