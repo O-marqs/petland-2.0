@@ -12,7 +12,9 @@ from petland.modules.scheduling.application.ports import ScheduleStore
 from petland.modules.scheduling.domain.models import (
     STATUSES,
     Appointment,
+    Configuration,
     Event,
+    Resource,
     fits,
     overlaps,
     physical_fits,
@@ -424,15 +426,12 @@ class Operations:
             config = store.configuration()
             start, end = self.interval(config.timezone, first, last)
             totals = store.period_totals(start, end)
-            capacity = available_minutes(config, store.resources(eligible_only=True), start, end)
             occupied = totals.occupied_minutes
             analytics = store.analytics(start, end)
-            by_id = {r.id: r for r in store.resources(eligible_only=True)}
-            for row in analytics.staff:
-                resource = by_id.get(row.resource_id)
-                row.available_minutes = (
-                    available_minutes(config, [resource], start, end) if resource else 0
-                )
+            staff = self.staff_capacity(
+                analytics.staff, store.resources(eligible_only=True), config, start, end
+            )
+            capacity = sum(row.available_minutes for row in staff)
             return Metrics(
                 first,
                 last,
@@ -444,7 +443,7 @@ class Operations:
                 occupied,
                 capacity,
                 round(100 * occupied / capacity, 2) if capacity else None,
-                analytics.staff,
+                staff,
                 analytics.services,
                 analytics.completed_pets,
                 analytics.completed_customers,
@@ -479,7 +478,9 @@ class Operations:
             labels = {r.id: r.name for r in resources}
             totals = store.period_totals(start, end)
             analytics = store.analytics(start, end, details=False)
-            eligible = {r.id: r for r in store.resources(eligible_only=True)}
+            staff = self.staff_capacity(
+                analytics.staff, store.resources(eligible_only=True), config, start, end
+            )
             return DailyDashboard(
                 day,
                 config.timezone,
@@ -514,10 +515,25 @@ class Operations:
                         r.total,
                         r.completed,
                         r.occupied_minutes,
-                        available_minutes(config, [eligible[r.resource_id]], start, end)
-                        if r.resource_id in eligible
-                        else 0,
+                        r.available_minutes,
                     )
-                    for r in analytics.staff
+                    for r in staff
                 ],
             )
+
+    @staticmethod
+    def staff_capacity(
+        rows: list[StaffMetric],
+        resources: list[Resource],
+        config: Configuration,
+        start: datetime,
+        end: datetime,
+    ) -> list[StaffMetric]:
+        by_id = {row.resource_id: row for row in rows}
+        for resource in resources:
+            row = by_id.setdefault(
+                resource.id,
+                StaffMetric(resource.id, resource.name, 0, 0, 0, 0, None, None, None, 0),
+            )
+            row.available_minutes = available_minutes(config, [resource], start, end)
+        return sorted(by_id.values(), key=lambda row: (row.name.casefold(), str(row.resource_id)))

@@ -232,6 +232,31 @@ def test_report_attributes_completion_to_final_person_and_real_duration(
         op.metrics(a[1], a[6].date(), a[6].date())
 
 
+def test_report_counts_returning_pets_once_and_keeps_idle_people(agenda, identity_engine, crm):
+    a = agenda
+    worker(a, crm, 2)
+    for i, pet in enumerate([0, 0, 1]):
+        ap = book(a, pet, a[6] + timedelta(hours=i))
+        op = operations(a, identity_engine, i * 60)
+        ap = act(op, a, ap, "arrive")
+        ap = act(op, a, ap, "start")
+        act(operations(a, identity_engine, i * 60 + 20), a, ap, "complete")
+    cancel(a, book(a, 2, a[6] + timedelta(hours=4)))
+    _, idle = worker(a, crm, 3)
+    admin = register(crm[0], crm[1], "manager@example.com", roles=[Role.ADMIN])
+    op = operations(a, identity_engine, 150)
+    metrics = op.metrics(admin, a[6].date(), a[6].date())
+    assert (metrics.total, metrics.completed_pets, metrics.completed_customers) == (4, 2, 1)
+    assert sum(r.completed for r in metrics.staff) == 3
+    assert metrics.services[0].completed == 3
+    rows = {r.resource_id: r for r in metrics.staff}
+    assert rows[idle.id].total == 0 and rows[idle.id].available_minutes == 480
+    assert metrics.available_minutes == sum(r.available_minutes for r in metrics.staff)
+    dashboard = op.dashboard(a[1], mine=False)
+    assert dashboard.total == 4 and sum(r.completed for r in dashboard.staff) == 3
+    assert next(r for r in dashboard.staff if r.resource_id == idle.id).planned == 0
+
+
 def test_critical_care_requires_current_profile_ack_and_previous_care_is_private(
     agenda, identity_engine
 ):

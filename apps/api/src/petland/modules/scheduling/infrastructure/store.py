@@ -324,7 +324,8 @@ class PostgresSchedule:
             / 60
         )
         service_name = a.offer["service_name"].astext
-        # One bounded aggregate scan for the report. Daily dashboard uses only worker groups.
+        # Distinct pets/customers are global, not per grouping. Keeping them out of
+        # GROUPING SETS lets PostgreSQL hash the worker/service aggregates.
         group = func.grouping(a.resource_id, a.service_id, service_name) if details else literal(3)
         query = (
             select(
@@ -342,12 +343,6 @@ class PostgresSchedule:
                 func.avg(case((complete, duration - planned))) if details else literal(None),
                 func.sum(case((a.status.in_(OCCUPYING), occupied), else_=0)),
                 func.avg(case((complete, planned))) if details else literal(None),
-                func.count(func.distinct(case((a.status == "COMPLETED", a.pet_id))))
-                if details
-                else literal(0),
-                func.count(func.distinct(case((a.status == "COMPLETED", a.customer_id))))
-                if details
-                else literal(0),
             )
             .join(ResourceRecord, ResourceRecord.id == a.resource_id)
             .where(cohort)
@@ -358,7 +353,6 @@ class PostgresSchedule:
                     tuple_(a.resource_id),
                     tuple_(a.resource_id, service_name),
                     tuple_(a.service_id, service_name),
-                    tuple_(),
                 )
             )
             if details
@@ -387,8 +381,6 @@ class PostgresSchedule:
             deviation,
             used,
             expected,
-            unique_pets,
-            unique_customers,
         ) in self.db.execute(query):
             if mask == 3:
                 workers[resource_id] = StaffMetric(
@@ -411,11 +403,12 @@ class PostgresSchedule:
                         service_id, name, total, completed, number(expected), number(actual)
                     )
                 )
-            elif mask == 7:
-                pets, customers = unique_pets, unique_customers
-        for r in self.resources(eligible_only=True):
-            if r.id not in workers:
-                workers[r.id] = StaffMetric(r.id, r.name, 0, 0, 0, 0, None, None, None, 0)
+        if details:
+            pets, customers = self.db.execute(
+                select(
+                    func.count(func.distinct(a.pet_id)), func.count(func.distinct(a.customer_id))
+                ).where(cohort, a.status == "COMPLETED")
+            ).one()
         for resource_id, counts_by_service in counts.items():
             workers[resource_id].by_service = counts_by_service
         return Analytics(
