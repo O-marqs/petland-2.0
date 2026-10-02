@@ -1,0 +1,1403 @@
+{
+  "snapshot_commit": "968a1451beaa2587764a97d1d257adf597223dff",
+  "scope": "Every tracked UTF-8 occurrence before release edits; original discovery and evidence bytes retained. No migration/feature changes.",
+  "occurrences": [
+    {
+      "file": "AGENTS.md",
+      "line_before": 43,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "AGENTS.md",
+      "line_before": 49,
+      "terms": [
+        "petland-3.0-portfolio-docs"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "AGENTS.md",
+      "line_before": 51,
+      "terms": [
+        "petland-3.0-reproducibility"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "AGENTS.md",
+      "line_before": 53,
+      "terms": [
+        "petland-3.0-final-case"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "README.md",
+      "line_before": 26,
+      "terms": [
+        "3.0.0-rc.1",
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "README.md",
+      "line_before": 37,
+      "terms": [
+        "petland-3.0-final-case",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "apps/api/pyproject.toml",
+      "line_before": 3,
+      "terms": [
+        "3.0.0rc1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "apps/api/src/petland/bootstrap/app.py",
+      "line_before": 71,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "apps/api/uv.lock",
+      "line_before": 579,
+      "terms": [
+        "3.0.0rc1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "apps/web/package.json",
+      "line_before": 2,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "apps/web/scripts/capture-portfolio.mjs",
+      "line_before": 305,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/README.md",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/README.md",
+      "line_before": 69,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/adr/0015-p08-release-case.md",
+      "line_before": 5,
+      "terms": [
+        "3.0.0-rc.1",
+        "3.0.0rc1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/architecture/non-functional-requirements.md",
+      "line_before": 7,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/architecture/non-functional-requirements.md",
+      "line_before": 14,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/architecture/non-functional-requirements.md",
+      "line_before": 17,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/architecture/non-functional-requirements.md",
+      "line_before": 35,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/architecture/overview.md",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/README.md",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/README.md",
+      "line_before": 78,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/README.md",
+      "line_before": 100,
+      "terms": [
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 273,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 277,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 333,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 338,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 520,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 525,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 545,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 548,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/historical-p08.html",
+      "line_before": 551,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 33,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 41,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 74,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 128,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 335,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 340,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 345,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 368,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 385,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/index.html",
+      "line_before": 420,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/case/media/capture.json",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/case/media/final/capture.json",
+      "line_before": 447,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Documentation-review-api-ci-attempt-1.json",
+      "line_before": 5,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Documentation-review.md",
+      "line_before": 7,
+      "terms": [
+        "petland-3.0-portfolio-docs"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Documentation-review.md",
+      "line_before": 9,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Documentation-review.md",
+      "line_before": 36,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Documentation-review.md",
+      "line_before": 82,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Final-case.md",
+      "line_before": 3,
+      "terms": [
+        "petland-3.0-final-case"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Operations-evolution-api-ci-pr.json",
+      "line_before": 5,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Operations-evolution-api-ci-push.json",
+      "line_before": 5,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/P01.md",
+      "line_before": 30,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/P01.md",
+      "line_before": 34,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/P08.md",
+      "line_before": 1,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Reproducibility-review.md",
+      "line_before": 7,
+      "terms": [
+        "petland-3.0-reproducibility"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Reproducibility-review.md",
+      "line_before": 9,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/evidence/Reproducibility-review.md",
+      "line_before": 33,
+      "terms": [
+        "petland-3.0-portfolio-docs",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/Documentation-review-request.txt",
+      "line_before": 14,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/Final-case-request.txt",
+      "line_before": 5,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/P01-request.txt",
+      "line_before": 42,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/P08-request.txt",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/Reproducibility-review-request.txt",
+      "line_before": 5,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 5,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 63,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 95,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 103,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 107,
+      "terms": [
+        "3.0.0-rc.1",
+        "3.0.0rc1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 145,
+      "terms": [
+        "petland-3.0-portfolio-docs"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 155,
+      "terms": [
+        "petland-3.0-reproducibility"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/implementation/progress.md",
+      "line_before": 165,
+      "terms": [
+        "petland-3.0-final-case"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/migration/baseline.md",
+      "line_before": 3,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 7,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1053,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1250,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1286,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1320,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1347,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1387,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1421,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1453,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1490,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1518,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1557,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1575,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1612,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1653,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1674,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1710,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1762,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1806,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1833,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1851,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1884,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1915,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1945,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 1980,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2009,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2057,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2089,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2105,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2132,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2208,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2209,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2210,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2211,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2212,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2213,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2214,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2215,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2216,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2217,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2218,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2219,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2220,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2221,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2222,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2223,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2224,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2225,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2226,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2227,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2228,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2229,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2230,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2231,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2232,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2233,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2234,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2235,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/product/PetLand_3.0_Plano_Consolidado.md",
+      "line_before": 2236,
+      "terms": [
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/3.0.0-rc.1.md",
+      "line_before": 1,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/3.0.0-rc.1.md",
+      "line_before": 5,
+      "terms": [
+        "3.0.0-rc.1",
+        "3.0.0rc1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/candidate.json",
+      "line_before": 2,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/candidate.json",
+      "line_before": 3,
+      "terms": [
+        "3.0.0rc1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/candidate.json",
+      "line_before": 4,
+      "terms": [
+        "candidate_for_review"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/candidate.json",
+      "line_before": 45,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/quality-report.md",
+      "line_before": 1,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/quality-report.md",
+      "line_before": 27,
+      "terms": [
+        "O-marqs/petland-2.0",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 7,
+      "terms": [
+        "petland-3.0-final-case"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 15,
+      "terms": [
+        "petland-3.0-portfolio-docs"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 16,
+      "terms": [
+        "petland-3.0-reproducibility"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 19,
+      "terms": [
+        "petland-3.0-final-case",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/release/reproducibility.md",
+      "line_before": 38,
+      "terms": [
+        "3.0.0rc1",
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/runbooks/local.md",
+      "line_before": 17,
+      "terms": [
+        "petland-3.0-final-case",
+        "O-marqs/petland-2.0"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/runbooks/local.md",
+      "line_before": 23,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/runbooks/release.md",
+      "line_before": 3,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/runbooks/release.md",
+      "line_before": 7,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "docs/runbooks/release.md",
+      "line_before": 22,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "package.json",
+      "line_before": 2,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "packages/api-contract/openapi.json",
+      "line_before": 3463,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "packages/api-contract/package.json",
+      "line_before": 2,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "CURRENT",
+      "reason": "Active version, checkout, repository navigation or release policy; updated for portfolio 3.0.0."
+    },
+    {
+      "file": "scripts/encode_final_case.py",
+      "line_before": 126,
+      "terms": [
+        "3.0.0-rc.1"
+      ],
+      "classification": "HISTORICAL",
+      "reason": "Evidence/discovery/request or historical capture/benchmark snapshot; version retained. Historical branch hyperlinks resolve to immutable commits."
+    }
+  ]
+}

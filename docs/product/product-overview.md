@@ -1,6 +1,6 @@
 # PetLand 3.0 — visão do produto
 
-**CURRENT STATE · código de referência `2549523` · schema `0007_product_operations`.** Documentação de portfólio para revisão humana; publicação e aceite final continuam pendentes. O [plano consolidado original](PetLand_3.0_Plano_Consolidado.md) é discovery, não uma lista de funcionalidades já entregues.
+**CURRENT STATE · código de referência `2549523` · schema `0007_product_operations`.** Release final de portfólio/demo **3.0.0** na `main`; produção comercial não declarada. Aceite humano/leitor de tela e gates D10 continuam pendentes. O [plano consolidado original](PetLand_3.0_Plano_Consolidado.md) é discovery, não uma lista de funcionalidades já entregues.
 
 ## Visão e problema
 

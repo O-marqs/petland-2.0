@@ -23,7 +23,7 @@ Captura final de `f3d70a2`, após os merges dos PRs 11/12, em demo separada com 
 
 Uma reserva contém **um pet e um serviço**; profissional atribuído automaticamente. Sem taxas, pagamentos, grupos atômicos ou multiempresa. [Produto e limites](docs/product/product-overview.md) · [Matriz de dores](docs/product/functional-gap-analysis.md).
 
-**Estado:** candidata `3.0.0-rc.1`, schema `0007_product_operations`, staging local. **Clone `petland-3.0-final-case`: a `main` ainda contém o legado.** [Versão/SHAs e requisitos](docs/release/reproducibility.md). Documentação para revisão humana, sem declarar produção ou aceite final. Mailpit não entrega e-mail externo; backup permanece no host. [Gates](docs/release/candidate.json).
+**Estado:** release final de portfólio/demo **3.0.0**, schema `0007_product_operations`. **`main` contém o PetLand 3.0.** [Release e declaração de escopo](docs/release/3.0.0.md) · [Versão e requisitos](docs/release/reproducibility.md). `production_ready=false`: Mailpit não entrega e-mail externo; backup permanece no host; aceite humano com leitor de tela continua pendente. [Metadata e gates](docs/release/candidate.json).
 
 ## Quick Start
 
@@ -34,8 +34,8 @@ Os comandos partem da raiz do clone. Escolha seu objetivo abaixo. Rede necessár
 Git, Docker com Compose v2 ativo e Python 3.11+ no host. Imagens instalam Python 3.13/Node 22 e dependências pelos lockfiles; uv/Node/pnpm no host não são necessários neste caminho.
 
 ```sh
-git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
-cd petland-2.0
+git clone https://github.com/O-marqs/petland.git
+cd petland
 python scripts/dev.py init
 python scripts/dev.py up
 ```
@@ -151,3 +151,7 @@ Player: http://127.0.0.1:8780. Aceite humano de produto/leitor de tela e D10 (pu
 Pacote local com commit/inventário/hashes: [guia de revisão](docs/runbooks/release.md). **Licença geral ainda não definida**; notices de terceiros não licenciam o projeto. [Ausência e recomendação para decisão do autor](docs/release/reproducibility.md#pacote-e-licença).
 
 Legado/tag baseline, plano/PDF originais e evidências preservados em [History / Evidence](docs/README.md#history--evidence). Nenhum MySQL migrado. Histórico de fases fica em implementation/evidence; README apresenta o produto.
+
+## Legacy
+
+PetLand 2.0, originalmente Flask/MySQL, está preservado em [`legacy/petland-2.0`](https://github.com/O-marqs/petland/tree/legacy/petland-2.0). Commits, PRs, ADRs e evidências mantêm o histórico da modernização.

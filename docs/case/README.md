@@ -1,6 +1,6 @@
 # PetLand 3.0 — o cuidado do pet, uma operação inteira
 
-Case de produto e engenharia de **Lucas Marques**. Uma loja, três perfis, da disponibilidade ao cuidado concluído. **Apresentação final do escopo implementado; candidata `3.0.0-rc.1` para revisão humana, sem publicação em produção.**
+Case de produto e engenharia de **Lucas Marques**. Uma loja, três perfis, da disponibilidade ao cuidado concluído. **Apresentação final do escopo implementado; release final de portfólio/demo `3.0.0`, sem declaração de produção comercial. Mídia final gravada em RC, no SHA `f3d70a2`; manifesto original preservado.**
 
 [Abrir o case e assistir](index.html) · [Vídeo final, cerca de 4 minutos](media/final/petland-final-demo.webm) · [Roteiro usado](presentation-script.md) · [Transcrição](final-transcript.md) · [Legendas](media/final/petland-final-demo.vtt) · [Origem e ações reais](media/final/capture.json).
 
@@ -75,7 +75,7 @@ Preparação por APIs/ferramentas existentes: namespace/CA/contas próprios, ban
 
 A captura confere persistência, horário preservado na transferência, conclusão, ausência da nota privada no payload público, SMTP no Mailpit e prévia sem mutação. Desktop/mobile exercitam axe, reflow e ausência de erro JS. O player verifica links, duração, seek e legendas a 1280/320 px. [Evidência desta apresentação](../evidence/Final-case.md), [proveniência com hashes](media/final/capture.json).
 
-A auditoria anterior passou **128 Python, 20 React e 15 E2E**, com um skip mobile previsto para o primeiro admin singleton. São resultados anteriores, não testes atribuídos às capturas. [Reprodução independente](../evidence/Reproducibility-review.md). [CI `31920b4`, tentativa 2](https://github.com/O-marqs/petland-2.0/actions/runs/37050291620/attempts/2): três jobs aprovados após falha de leituras na primeira tentativa; metas 400/800 ms preservadas. Axe não substitui leitor de tela/aceite humano.
+A auditoria anterior passou **128 Python, 20 React e 15 E2E**, com um skip mobile previsto para o primeiro admin singleton. São resultados anteriores, não testes atribuídos às capturas. [Reprodução independente](../evidence/Reproducibility-review.md). [CI `31920b4`, tentativa 2](https://github.com/O-marqs/petland/actions/runs/37050291620/attempts/2): três jobs aprovados após falha de leituras na primeira tentativa; metas 400/800 ms preservadas. Axe não substitui leitor de tela/aceite humano.
 
 ## Results
 
@@ -97,7 +97,7 @@ Multiempresa, pagamentos, taxas, escolha pública de profissional, reservas atô
 
 ## Run it yourself
 
-[Quick Start](../../README.md#quick-start) e [requisitos por caminho](../release/reproducibility.md). `main` ainda contém o legado; apresentação na branch `petland-3.0-final-case`.
+[Quick Start](../../README.md#quick-start) e [requisitos por caminho](../release/reproducibility.md). Clone padrão de `O-marqs/petland`, branch `main`. Legado em `legacy/petland-2.0`; [notas 3.0.0](../release/3.0.0.md).
 
 Para abrir só o case público, da raiz com Python 3.11+:
 

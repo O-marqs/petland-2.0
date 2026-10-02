@@ -1,6 +1,6 @@
 [project]
 name = "petland-api"
-version = "3.0.0rc1"
+version = "3.0.0"
 description = "PetLand 3.0 — CRM de pet shop e demonstração de portfólio"
 requires-python = ">=3.13,<3.14"
 dependencies = [

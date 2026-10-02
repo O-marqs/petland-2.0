@@ -1,10 +1,10 @@
 # Versão, execução e reprodução
 
-**CURRENT · candidata `3.0.0-rc.1` · schema `0007_product_operations`.** Esta página é a referência de checkout/ambiente. [Produto](../product/product-overview.md), [UX](../ux/PetLand_3.0_UX_Final.md) e [arquitetura](../architecture/overview.md) descrevem o código funcional; discovery, capturas e benchmarks conservam suas referências originais.
+**CURRENT · `main` · release de portfólio `3.0.0` · schema `0007_product_operations`.** Esta página é a referência de checkout/ambiente. [Produto](../product/product-overview.md), [UX](../ux/PetLand_3.0_UX_Final.md) e [arquitetura](../architecture/overview.md) descrevem o código funcional; discovery, capturas e benchmarks conservam suas referências originais.
 
 ## Qual versão clonar
 
-**Atual após merges humanos dos PRs 11/12:** onboarding em `f3d70a2cce07d587351eadaa66864b7c1ae4444a`. A branch `petland-3.0-final-case` acrescenta a apresentação final sobre esse estado, sem mudança funcional. [Vídeo/capturas finais](../case/README.md), [proveniência](../case/media/final/capture.json). `main` permanece legada; nenhuma promoção presumida.
+**Atual:** clone padrão de `O-marqs/petland`, branch `main`, versão `3.0.0`. PetLand 2.0 está em `legacy/petland-2.0`, exatamente `3cc3f898cde896b80fed587bf8c06f4aa46742f6`. PR #13 integrado por merge commit `968a1451beaa2587764a97d1d257adf597223dff`, preservando PRs 10–12. [Vídeo/capturas finais](../case/README.md) foram gravados em `f3d70a2cce07d587351eadaa66864b7c1ae4444a`, ainda RC: [proveniência original](../case/media/final/capture.json). A promoção de versão não altera regras nem redata essa mídia.
 
 A tabela abaixo preserva o snapshot recebido na auditoria anterior, antes desses merges. Os estados dos PRs nessa tabela são históricos.
 
@@ -16,12 +16,12 @@ A tabela abaixo preserva o snapshot recebido na auditoria anterior, antes desses
 | `petland-3.0-reproducibility`                                             | Incremento desta auditoria sobre `4ef44e0`: instruções de execução e proteção dos artefatos. Branch auditada anteriormente; não concede merge ou release. |
 
 ```sh
-git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
-cd petland-2.0
+git clone https://github.com/O-marqs/petland.git
+cd petland
 git rev-parse HEAD
 ```
 
-No Windows, coloque o clone em `C:\Users\LUCASMARQUESMARQUES\Documents\GitHub` ou no diretório equivalente escolhido pelo leitor. Registre o SHA emitido; branches podem avançar. Para repetir um artefato específico, use o SHA do seu manifesto: `git checkout --detach SHA_DO_COMMIT`. Não usar apenas o nome da candidata para inferir um commit: a versão permanece RC durante a revisão.
+No Windows, coloque o clone em `C:\Users\LUCASMARQUESMARQUES\Documents\GitHub` ou no diretório equivalente escolhido pelo leitor. Registre o SHA emitido; branches podem avançar. Para repetir um artefato específico, use o SHA do seu manifesto: `git checkout --detach SHA_DO_COMMIT`. A tag anotada `v3.0.0` identifica o commit final validado; não inferir o SHA de mídias antigas pela versão atual.
 
 ## Cinco caminhos, requisitos distintos
 
@@ -35,7 +35,7 @@ No Windows, coloque o clone em `C:\Users\LUCASMARQUESMARQUES\Documents\GitHub` o
 
 Imagens precisam de acesso a Docker Hub/GHCR, npm e PyPI na primeira construção; instalação host usa os mesmos registries/lockfiles. Cache existente pode ser reutilizado, sem obrigação de apagar imagens/volumes. Tempo de download/construção depende do host e da rede; “10 minutos” é uma trilha de leitura/execução, não um SLA de instalação.
 
-Python da aplicação é **3.13** (`.python-version`, `pyproject.toml`, imagem e CI); o launcher `dev.py` suporta **3.11+**. uv obtém o Python de projeto quando necessário. Node é **linha 22, mínimo 22.14**; pnpm **10.34.5** está em `packageManager`, Dockerfiles e CI. PostgreSQL é **17**, imagem fixada por digest; patch observado consta na evidência do ensaio. Versão Python `3.0.0rc1` é a forma PEP 440 de `3.0.0-rc.1`, não outra release.
+Python da aplicação é **3.13** (`.python-version`, `pyproject.toml`, imagem e CI); o launcher `dev.py` suporta **3.11+**. uv obtém o Python de projeto quando necessário. Node é **linha 22, mínimo 22.14**; pnpm **10.34.5** está em `packageManager`, Dockerfiles e CI. PostgreSQL é **17**, imagem fixada por digest; patch observado consta na evidência do ensaio. Metadata Python/npm/OpenAPI atual usa **3.0.0**. A RC permanece somente em evidências e ferramentas de captura históricas.
 
 Para instalar ferramentas host, use os instaladores oficiais de [uv](https://docs.astral.sh/uv/getting-started/installation/) e [Node](https://nodejs.org/en/download). Com Node/npm disponíveis, `npm install --global pnpm@10.34.5`; confira `uv --version`, `node --version` e `pnpm --version`. Se outra versão de pnpm estiver no PATH, use uma instalação isolada da versão exigida; não regrave o lockfile com ela. O modo RUN THE APP não exige uv/Node/pnpm no host.
 
@@ -110,4 +110,4 @@ ZIP não inclui `.git` nem dependências/configurações geradas: staging e repr
 
 **Licença geral ausente.** Notices de terceiros existentes não licenciam todo o PetLand. Recomendação para o autor: [MIT](https://opensource.org/license/mit) se deseja reuso amplo com preservação do aviso de copyright/licença; considerar [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) se deseja concessão explícita de patentes e suas condições. Nenhuma foi adicionada sem decisão humana.
 
-[Evidência do clean-start e limites](../evidence/Reproducibility-review.md). Publicação/tag/release/merge, aceite de produto/leitor de tela e D10 continuam fora desta auditoria.
+[Evidência do clean-start e limites](../evidence/Reproducibility-review.md). Essa auditoria anterior é histórica. O [fechamento autorizado](../evidence/Portfolio-closure.md) promove o portfólio por PR, tag e GitHub Release; aceite humano/leitor de tela e D10 não foram convertidos em aprovação comercial.

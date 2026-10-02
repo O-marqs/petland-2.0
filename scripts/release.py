@@ -1,4 +1,4 @@
-"""Validate and package a review candidate locally; never create a tag, deploy or publish."""
+"""Validate and package portfolio releases locally; never tag, deploy or publish."""
 
 import argparse
 import hashlib
@@ -15,6 +15,35 @@ from repository_hygiene import check_public_file, check_public_path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = "docs/release/candidate.json"
+HISTORICAL_CAPTURE_VERSION = "3.0.0-rc.1"
+
+
+def validate_policy(candidate):
+    version = candidate["version"]
+    rc = re.fullmatch(r"3\.0\.0-rc\.([1-9][0-9]*)", version)
+    if candidate["production_ready"] is not False:
+        raise ValueError("Portfolio packaging cannot grant production readiness")
+    if rc:
+        if (
+            candidate["status"] != "candidate_for_review"
+            or candidate["stable_release_published"] is not False
+            or candidate["python_version"] != f"3.0.0rc{rc[1]}"
+        ):
+            raise ValueError("Invalid review candidate policy")
+    elif version == "3.0.0":
+        publication = candidate.get("publication_record", {})
+        if (
+            candidate["status"] != "portfolio_release"
+            or candidate["python_version"] != version
+            or candidate["stable_release_published"] is not None
+            or publication.get("source") != "github_release"
+            or publication.get("tag") != "v3.0.0"
+            or publication.get("url") != "https://github.com/O-marqs/petland/releases/tag/v3.0.0"
+            or publication.get("receipt_asset") != "publication.json"
+        ):
+            raise ValueError("Portfolio publication requires an external GitHub receipt")
+    else:
+        raise ValueError("Unsupported portfolio version")
 
 
 def digest(path: Path) -> str:
@@ -25,10 +54,7 @@ def digest(path: Path) -> str:
 def validate(read):
     candidate = json.loads(read(CONFIG))
     version = candidate["version"]
-    if not re.fullmatch(r"3\.0\.0-rc\.[1-9][0-9]*", version):
-        raise ValueError("Only a review candidate is allowed")
-    if candidate["production_ready"] or candidate["stable_release_published"]:
-        raise ValueError("This tool cannot grant acceptance or publication")
+    validate_policy(candidate)
     for name in [
         "package.json",
         "apps/web/package.json",
@@ -59,18 +85,24 @@ def validate(read):
         not capture["passed"]
         or not capture["synthetic"]
         or capture["fake_clock"]
-        or capture["version"] != version
+        or capture["version"] != HISTORICAL_CAPTURE_VERSION
         or not 180 <= capture["duration_seconds"] <= 300
     ):
         raise ValueError("Three-journey recording evidence is incompatible")
     if "docs/case/media/final/capture.json" in candidate["assets"]:
+        final_capture = json.loads(read("docs/case/media/final/capture.json"))
+        if final_capture["version"] != HISTORICAL_CAPTURE_VERSION:
+            raise ValueError("Final recording historical version changed")
         validate_final(read)
     return candidate
 
 
 def check():
     candidate = validate(lambda name: (ROOT / name).read_bytes())
-    print(f"Candidate {candidate['version']} consistent; media present, acceptance still pending.")
+    print(
+        f"Portfolio {candidate['version']} consistent; production_ready=false; "
+        "human acceptance pending. Packaging does not prove publication."
+    )
     return candidate
 
 

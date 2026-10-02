@@ -1,5 +1,5 @@
 {
-  "name": "petland", "private": true, "version": "3.0.0-rc.1",
+  "name": "petland", "private": true, "version": "3.0.0",
   "packageManager": "pnpm@10.34.5",
   "engines": { "node": ">=22.14 <23" },
   "scripts": {

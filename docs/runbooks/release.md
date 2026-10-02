@@ -1,33 +1,42 @@
-# Revisão e pacote local da candidata
+# Release de portfólio e pacote local
 
-Responsável: Lucas. Artefato **3.0.0-rc.1**, schema atual `0007_product_operations`. [Versão/checkout e reprodução](../release/reproducibility.md) são a referência de execução; [candidate.json](../release/candidate.json) registra gates. A versão RC permanece durante incrementos de revisão; identifique o commit, não apenas o número. Não fazer merge/tag/promoção automática. Aceite de produto/leitor de tela e D10 permanecem pendentes.
+Versão ativa **3.0.0**, schema `0007_product_operations`, `main` em `O-marqs/petland`. [Notas](../release/3.0.0.md), [metadata](../release/candidate.json), [registro autorizado](../evidence/Portfolio-closure.md). Release final de portfólio/demo; `production_ready=false`, sem aceite humano/leitor de tela presumido.
 
 ## Revisar agora
 
-1. Conferir branch/PR atual da [auditoria de reprodução](../evidence/Reproducibility-review.md), CI do commit exato, [produto atual](../product/product-overview.md) e [relatório](../release/quality-report.md). As [notas P08](../release/3.0.0-rc.1.md) conservam seu schema e resultados históricos.
-2. Reproduzir setup pelo README. Em demo local, consultar apenas localmente `.local/staging/accounts.json`; não publicar seu conteúdo. Certificado é local de teste.
-3. Cliente: cadastrar/editar pet, escolher oferta, conferir resumo, confirmar e acompanhar. Equipe: painel/agenda, chegar/iniciar/concluir, transferir, conferir cuidados e comunicação. Gestão: equipe por data, capacidade física, indicadores e acessos. Siga [aceite manual](manual-acceptance.md) e [operação atual](operational-evolution.md). Compare com [capturas atuais](../ux/PetLand_3.0_UX_Final.md); o [vídeo](../case/index.html) é histórico P08.
-4. Realizar aceite com leitor de tela segundo P06. Registrar sistema/leitor/versão, resultado por jornada e achados. Axe/árvore acessível/teclado/vídeo não substituem essa execução.
-5. Registrar decisão final de produto e limitações aceitas. Um merge de código não concede automaticamente aprovação de publicação ou SLA.
+1. Conferir SHA do PR de release e seus três checks exatos: checks, browser, operations. Legado deve permanecer em `3cc3f898cde896b80fed587bf8c06f4aa46742f6` na branch/tag histórica.
+2. Reproduzir o clone padrão pelo README. Usar namespace e configurações próprios; nunca copiar contas, secrets, banco ou certificados do autor.
+3. Exercitar tutor, equipe e gestão conforme [aceite manual](manual-acceptance.md). [Case final](../case/index.html) e vídeo têm origem RC `f3d70a2`, sem reclassificar P08 nem alterar evidências passadas.
+4. Aceite com leitor de tela permanece pendente; axe, vídeo e CI não o substituem. D10 permanece adiado para ambiente comercial.
 
 ## Validar e empacotar localmente
 
 ```sh
+python scripts/dev.py check
+python scripts/check_documentation.py
+python scripts/render_architecture.py --check
+python -m unittest discover -s scripts -p test_release.py
 python scripts/release.py check
-# Depois de commit e árvore limpa:
+# Após commit e árvore limpa:
 python scripts/release.py bundle
 python scripts/release.py verify --folder CAMINHO_DA_PASTA_EMITIDA
 ```
 
-Saída em `.local/release/3.0.0-rc.1/<commit>/`: ZIP, inventário e SHA-256, versão/commit e gates explícitos. Diretório/arquivo existente não é sobrescrito; repetição verifica o pacote. ZIP contém somente arquivos da árvore ativa do commit; não embute histórico legado, credenciais, contas de demo, CA/chaves, archive de banco, venv/node_modules ou `.local`. O pacote não é publicado nem muda refs Git. `verify` lê sem extrair, compara o commit no comentário Git do ZIP e no manifesto, recusa entradas duplicadas/caminhos privados/assinaturas de segredo conhecidas e confere inventário, hashes, mídia e versão. Hashes dependem de manifesto confiável; não são assinatura externa nem auditoria completa de PII/histórico. Para staging/proveniência histórica, use o clone Git do README: ZIP não contém os metadados/histórico exigidos por essas rotinas.
+Saída em `.local/release/3.0.0/<commit>/`: ZIP do Git, inventário, SHA-256, versão/commit e gates. Repetição verifica o pacote existente, sem sobrescrever. `verify` compara commit no comentário do ZIP/manifesto, duplicatas, caminhos privados, assinaturas de segredo conhecidas, inventário, hashes, mídia e versão; não extrai nem publica. ZIP não inclui histórico Git, secrets, contas, `.env`, bancos, backups, chaves, certificados privados ou caches. Staging/reprodução histórica exigem clone Git. Hashes relativos ao manifesto confiável não são assinatura externa ou auditoria integral de PII.
 
-Para assistir o case com legendas, servir **somente a pasta pública do case**:
+A publicação é estado externo: metadata imutável usa `stable_release_published=null` e aponta à [GitHub Release v3.0.0](https://github.com/O-marqs/petland/releases/tag/v3.0.0). Somente depois de GitHub retornar `draft=false` e `published_at` real, o recibo **publication.json**, anexado à Release, registra `stable_release_published=true`, commit, tag e URL. Assim main/tag ficam no mesmo SHA sem afirmar publicação antecipadamente. O manifesto do ZIP descreve o instante do empacotamento (`publication=not_performed`); não é o recibo de publicação.
+
+## Promoção autorizada de portfólio
+
+O pedido de fechamento autoriza merge commit do PR #13, preservação do legado, branch temporária de release, PR para main com CI verde, rename, clean clone independente, tag anotada exatamente no main validado, GitHub Release e fechamento de drafts obsoletos. Remover branches apenas após conferir tip, zero commits exclusivos e reachability por main/tag. Nunca force push ou mover tags. Registro final e recibo são anexados à GitHub Release; não há atualização circular de SHA no próprio commit.
+
+Para assistir com legendas:
 
 ```sh
 python scripts/portfolio_preview.py
 ```
 
-Abrir http://127.0.0.1:8780/. O servidor fixa loopback/pasta pública, não permite listar/expor arquivos privados e suporta ranges HTTP para saltar capítulos do vídeo. Não servir a raiz do repositório, que contém arquivos privados ignorados. Vídeo sem áudio, com WebVTT e transcrição. Fontes do case não exigem rede externa.
+Abrir http://127.0.0.1:8780/. Servir somente a pasta pública no loopback; ranges permitem seek. Vídeo sem áudio, com WebVTT/transcrição e fontes locais. Não servir a raiz, que contém arquivos privados ignorados.
 
 ## Capturador histórico P08: uso isolado
 
@@ -54,8 +63,8 @@ Preparação/gravação usam API/UI existentes: serviço de cinco minutos, passo
 
 Antes histórico: `python scripts/legacy_preview.py`; servir exclusivamente `.local/p08/legacy` no loopback e capturar 1280×900. Duas substituições de opções/data, links/forms inativos, scripts/fontes externas removidos e aviso explícito. Copiar `provenance.json` junto às capturas. Nunca executar/importar `app.py`, conectar MySQL ou alterar o checkout antigo.
 
-## Promoção futura, após aceite
+## Produção comercial permanece adiada
 
-Definir D10: ambiente/provedor/orçamento, domínio, e-mail, custódia, backup externo e RPO/RTO. Preparar revisão das mudanças de ambiente, novo restore fora do host e smoke. Só então propor versão estável 3.0.0, tag no commit aprovado, imagens por digest e release com notas/artefatos revisados. Nenhum segredo por variável de build ou PR não confiável; migration em job único antes do smoke.
+Ambiente público, SMTP externo, backup off-host/custódia, SLO, RPO/RTO produtivos e HA não estão implementados. A release 3.0.0 não aprova esses gates. Definição de provedor/orçamento/domínio e novo ensaio fora do host dependem de D10; leitor de tela depende de execução humana. Licença geral ausente, sem adoção automática.
 
-Falha antes da promoção: candidata permanece local; corrigir e repetir os checks afetados. Falha após troca de banco: preservar origem e escritas novas; usar o runbook P07. Rollback de imagem exige compatibilidade com schema; downgrade destrutivo não é mecanismo de recuperação. Nunca voltar a um backup ignorando operações novas.
+Falha antes de merge/tag: corrigir e repetir checks afetados; não promover uma CI vermelha. Após troca de banco, preservar origem/escritas novas e seguir P07. Rollback de imagem exige compatibilidade com schema; downgrade destrutivo ou retorno a backup ignorando operações novas não são recuperação.

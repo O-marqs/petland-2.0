@@ -1,6 +1,6 @@
 # PetLand 3.0 — UX implementada
 
-**CURRENT STATE · referência funcional `2549523` · revisão documental de 02/10/2026.** “Final” distingue este documento do discovery; não concede aceite humano ou encerramento do produto. O [Caderno UX original](PetLand_3.0_Caderno_UX.pdf) permanece intacto. Não existe gerador de PDF final no repositório: Markdown é a fonte de verdade.
+**CURRENT STATE · referência funcional `2549523` · revisão documental de 02/10/2026.** Release de portfólio **3.0.0** na `main`. “Final” distingue este documento do discovery; não concede aceite humano nem prontidão comercial. O [Caderno UX original](PetLand_3.0_Caderno_UX.pdf) permanece intacto. Não existe gerador de PDF final no repositório: Markdown é a fonte de verdade.
 
 ## Princípios e identidade
 

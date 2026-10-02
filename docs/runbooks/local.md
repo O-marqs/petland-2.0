@@ -11,16 +11,16 @@ Leia o [README](../../README.md) para o caminho de entrada e [versão/reproduç�
 
 ## Instalação
 
-O Git remoto mantém o legado na `main`; use a branch funcional atual, sem presumir que o 3.0 já foi integrado à principal:
+O clone padrão traz PetLand 3.0 da `main`; não é necessário selecionar branch:
 
 ```sh
-git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
-cd petland-2.0
+git clone https://github.com/O-marqs/petland.git
+cd petland
 python scripts/dev.py init
 python scripts/dev.py up
 ```
 
-Essa branch acrescenta instruções de reprodução à consolidação documental `4ef44e0` (PR #11), preservando o código funcional `2549523`. Versão `3.0.0-rc.1`, schema `0007_product_operations`. `main` ainda é legada no snapshot desta auditoria; confira o SHA clonado. [Estado dos PRs e ensaio limpo](../evidence/Reproducibility-review.md).
+Versão **3.0.0**, schema `0007_product_operations`, release de portfólio/demo. Legado preservado em `legacy/petland-2.0`. Confira o SHA clonado e a tag `v3.0.0`; [fechamento e ensaio final](../evidence/Portfolio-closure.md).
 
 `python scripts/dev.py init` gera `.env` com segredos locais aleatórios; nunca sobrescreve arquivo existente. O arquivo de exemplo usa marcadores que devem ser substituídos, não senhas default. Não copiar `.env` entre ambientes.
 

@@ -2,9 +2,7 @@
 
 ## Estado desta entrega
 
-**Fase:** P08 integrada no PR #8; correção do primeiro acesso em revisão em 01/10/2026. Candidata 3.0.0-rc.1 e case preservados. Aceite final de produto e sonoro humano pendentes; publicação externa permanece adiada por D10.
-
-**Branch atual:** `petland-3.0-onboarding-fix`, criada do merge P08 `3fba52725d5a6e77fd87b40a2e166a0a436f64df` na `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
+**Atual:** fechamento da release de portfólio/demo 3.0.0, schema `0007_product_operations`, por `release/petland-3.0` → `main`. PR #13 integrado em `968a1451beaa2587764a97d1d257adf597223dff`; legado `3cc3f898cde896b80fed587bf8c06f4aa46742f6` preservado em branch/tag. [Pedido](Portfolio-closure-request.txt), [registro](../evidence/Portfolio-closure.md) e [notas](../release/3.0.0.md). Produção comercial, aceite humano/leitor de tela e D10 continuam pendentes. Os registros abaixo preservam seus estados históricos.
 
 | Card   | Escopo / requisitos                                             | Estado e evidência                                                                                                           |
 | ------ | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |

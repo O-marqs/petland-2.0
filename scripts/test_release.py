@@ -8,7 +8,7 @@ import warnings
 import zipfile
 from pathlib import Path
 
-from release import verify
+from release import validate, validate_policy, verify
 from repository_hygiene import check_public_file, check_public_path
 
 
@@ -97,6 +97,54 @@ class PublicArchiveTests(unittest.TestCase):
                 file.write(b"tampered")
             with self.assertRaisesRegex(ValueError, "Candidate archive checksum mismatch"):
                 verify(folder)
+
+
+class PortfolioPolicyTests(unittest.TestCase):
+    def metadata(self):
+        return json.loads(
+            (Path(__file__).resolve().parents[1] / "docs/release/candidate.json").read_text()
+        )
+
+    def test_stable_portfolio_delegates_publication_to_github(self):
+        candidate = self.metadata()
+        validate_policy(candidate)
+        self.assertIsNone(candidate["stable_release_published"])
+
+    def test_cannot_claim_publication_before_external_receipt(self):
+        candidate = self.metadata()
+        candidate["stable_release_published"] = True
+        with self.assertRaisesRegex(ValueError, "external GitHub receipt"):
+            validate_policy(candidate)
+
+    def test_cannot_grant_commercial_production(self):
+        candidate = self.metadata()
+        candidate["production_ready"] = True
+        with self.assertRaisesRegex(ValueError, "production readiness"):
+            validate_policy(candidate)
+
+    def test_historical_rc_policy_still_supported(self):
+        candidate = self.metadata()
+        candidate.update(
+            version="3.0.0-rc.1",
+            python_version="3.0.0rc1",
+            status="candidate_for_review",
+            stable_release_published=False,
+        )
+        validate_policy(candidate)
+
+    def test_historical_media_cannot_be_redated_as_stable(self):
+        root = Path(__file__).resolve().parents[1]
+
+        def read(name):
+            data = (root / name).read_bytes()
+            if name == "docs/case/media/capture.json":
+                capture = json.loads(data)
+                capture["version"] = "3.0.0"
+                return json.dumps(capture).encode()
+            return data
+
+        with self.assertRaisesRegex(ValueError, "recording evidence"):
+            validate(read)
 
 
 if __name__ == "__main__":

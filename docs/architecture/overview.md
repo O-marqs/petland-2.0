@@ -1,6 +1,6 @@
 # PetLand 3.0 — Architecture Overview
 
-**CURRENT · código `2549523` · schema `0007_product_operations` · candidata `3.0.0-rc.1`.**
+**CURRENT · `main` · release de portfólio `3.0.0` · schema `0007_product_operations`.** Código funcional de referência `2549523`; promoção de versão sem mudança arquitetural ou comercial.
 
 **Modular Monolith with Hexagonal Architecture and pragmatic DDD principles.** Um processo de aplicação com seis módulos internos, uma implantação local e um PostgreSQL compartilhado. Não são microservices nem DDD puro. [Produto](../product/product-overview.md) · [Dados](data-model.md) · [Autorização](authorization.md) · [ADRs](../adr/README.md).
 

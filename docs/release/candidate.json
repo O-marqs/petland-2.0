@@ -1,12 +1,12 @@
 {
-  "version": "3.0.0-rc.1",
-  "python_version": "3.0.0rc1",
-  "status": "candidate_for_review",
+  "version": "3.0.0",
+  "python_version": "3.0.0",
+  "status": "portfolio_release",
   "schema_revision": "0007_product_operations",
   "legacy_commit": "3cc3f898cde896b80fed587bf8c06f4aa46742f6",
   "p07_merge": "3dde06b133a53a1b704eb6f5113a01a85d5a741e",
   "production_ready": false,
-  "stable_release_published": false,
+  "stable_release_published": null,
   "gates": {
     "final_product_acceptance": "pending_human_review",
     "screen_reader_acceptance": "pending_human_review",
@@ -128,6 +128,17 @@
     "docs/case/media/final/petland-final-demo.vtt",
     "docs/case/media/final/petland-final-demo.webm",
     "apps/web/scripts/verify-final-roster.mjs",
-    "docs/evidence/Final-case-adjacent-days.json"
-  ]
+    "docs/evidence/Final-case-adjacent-days.json",
+    "docs/release/3.0.0.md",
+    "docs/evidence/Portfolio-closure.md",
+    "docs/release/reference-audit.json"
+  ],
+  "publication_record": {
+    "source": "github_release",
+    "tag": "v3.0.0",
+    "url": "https://github.com/O-marqs/petland/releases/tag/v3.0.0",
+    "receipt_asset": "publication.json",
+    "reason": "Publication is external state, verified after tag creation. The receipt sets stable_release_published=true only after GitHub reports published_at and draft=false; immutable main/tag contain no advance claim."
+  },
+  "release_scope": "final_portfolio_demo_not_commercial_production"
 }

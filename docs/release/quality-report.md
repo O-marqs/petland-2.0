@@ -1,4 +1,4 @@
-# Qualidade e rastreabilidade — candidata 3.0.0-rc.1
+# Qualidade e rastreabilidade — snapshot histórico da candidata 3.0.0-rc.1
 
 **Relatório incremental/histórico.** O quadro consolidado de metas, resultados finais `2549523` e limites está em [RNFs atuais](../architecture/non-functional-requirements.md). P06/P07/P08 abaixo conservam números/ambientes próprios. [Checks da revisão documental](../evidence/Documentation-review.md).
 
@@ -24,7 +24,7 @@ O relatório consolida provas existentes e a demonstração P08. Cada medição 
 
 ## Provas automatizadas e operacionais
 
-Referência integrada P07: [CI do PR](https://github.com/O-marqs/petland-2.0/actions/runs/36905134678), head `2154801`, merge temporário `ee7216409df6`. **114 Python + 15 React + 15 E2E**, 1 skip mobile previsto do bootstrap singleton; checks/browser/operations verdes. [Push direto](https://github.com/O-marqs/petland-2.0/actions/runs/36905114335) também aprovado. Auditorias de dependências de execução e ferramentas não reportaram vulnerabilidades conhecidas naquele ensaio; pacote local não auditável no PyPI. Isso não é auditoria completa do histórico legado.
+Referência integrada P07: [CI do PR](https://github.com/O-marqs/petland/actions/runs/36905134678), head `2154801`, merge temporário `ee7216409df6`. **114 Python + 15 React + 15 E2E**, 1 skip mobile previsto do bootstrap singleton; checks/browser/operations verdes. [Push direto](https://github.com/O-marqs/petland/actions/runs/36905114335) também aprovado. Auditorias de dependências de execução e ferramentas não reportaram vulnerabilidades conhecidas naquele ensaio; pacote local não auditável no PyPI. Isso não é auditoria completa do histórico legado.
 
 P07 Linux: todas as **23 tabelas** com contagens/digests iguais antes das escritas de smoke, grants/exclusões conferidos; três perfis × origem/cópia/retorno; TLS verificado, SMTP STARTTLS, cookies Secure/HttpOnly, owner/capacidade/privacidade e replay de idempotência persistida. Backup 0,251 s, restore/reconciliação 0,557 s, ativação e verificações da cópia 23,449 s. Somente durações observadas, sem SLA/RPO/RTO produtivos. [Runbook](../runbooks/operations-recovery.md).
 

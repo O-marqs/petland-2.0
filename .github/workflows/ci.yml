@@ -2,7 +2,7 @@ name: PetLand quality
 on:
   pull_request:
   push:
-    branches: [petland-3.0, petland-3.0-p02, petland-3.0-p03, petland-3.0-p04, petland-3.0-p05, petland-3.0-p06, petland-3.0-p07, petland-3.0-p08, petland-3.0-onboarding-fix, petland-3.0-operations-evolution]
+    branches: [main]
 permissions:
   contents: read
 concurrency:
