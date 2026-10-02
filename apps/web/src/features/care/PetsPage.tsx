@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from '../../shared/lib/validation';
-import { Cat, Dog, Plus, PawPrint } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { careApi, sizes, sizeLabels, type Pet, type PetInput } from './api';
 import { LoadError, Pagination, SaveError } from './Feedback';
 import { Input } from '../../shared/ui/Input';
@@ -327,14 +327,8 @@ export default function PetsPage() {
                   {list.data.items.map((p) => (
                     <li className="pet-card" key={p.id}>
                       <div className="pet-card-top">
-                        <span className="pet-mark">
-                          {p.species_id === 'CAT' ? (
-                            <Cat aria-hidden="true" />
-                          ) : p.species_id === 'DOG' ? (
-                            <Dog aria-hidden="true" />
-                          ) : (
-                            <PawPrint aria-hidden="true" />
-                          )}
+                        <span className="pet-initial" aria-hidden="true">
+                          {p.name.slice(0, 1).toLocaleUpperCase('pt-BR')}
                         </span>
                         <Badge>{p.archived_at ? 'ARQUIVADO' : sizeLabels[p.size]}</Badge>
                       </div>

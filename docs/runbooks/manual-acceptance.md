@@ -27,6 +27,16 @@ Use outro perfil/janela privada do navegador para manter cliente e funcionário 
 
 O administrador também pode testar acessos, convites, indicadores e auditoria. Convites e recuperação de senha chegam à mesma caixa local. Leitor de tela e aceite humano final continuam pendentes até serem efetivamente realizados.
 
+## Equipe diferente em apenas uma data
+
+Abra **Equipe e horários** em `https://localhost:8443/operacao/configuracoes`. No celular, use **Menu** para abrir os destinos adicionais; **Agenda/Reservas** continuam visíveis. O tutor usa navegação superior em telas amplas; equipe/admin usam lateral agrupada.
+
+Edite a pessoa que ficará de folga. Se ela segue o expediente da loja, desmarque essa opção: o formulário carrega a semana atual da loja como base. Confira a semana, adicione uma **Data especial** e deixe seus períodos vazios. Para sair cedo, informe todos os períodos válidos desse dia, pois a exceção substitui a data inteira. Salve somente após conferir possíveis reservas afetadas. Os demais dias continuam seguindo a semana própria.
+
+Repita para as outras pessoas ausentes. A quantidade de vagas deriva de quais pessoas estarão presentes, dos serviços que fazem, da duração e dos horários; não há um campo coletivo “número de funcionários”. Não use “desativar” para representar uma folga pontual. A orientação recolhível na tela explica esse fluxo. [Limites e teste de 5 → 3 → 5 pessoas](../product/functional-gap-analysis.md#um-dia-com-menos-funcionários-como-funciona).
+
+Para revisar o novo menu sem alterar dados: `node apps/web/scripts/review-staging.mjs`. O script confere quatro contextos e telas de 1440/768/320 px, teclado/Escape/foco e calendário sem salvar. Relatório privado em `.local/product-review/after/report.json`.
+
 ## Verificação reproduzível de uma conta nova
 
 Com o staging demo iniciado e o TLS já verificado pelo smoke:

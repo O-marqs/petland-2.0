@@ -1,6 +1,6 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { PawPrint, ArrowRight, UserRound, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import type { Account } from '../identity/api';
 import { careApi } from './api';
 import { LoadError } from './Feedback';
@@ -25,14 +25,14 @@ export default function Dashboard() {
     enabled: !!profile.data,
   });
   return (
-    <div className="care-stack">
+    <div className="care-stack customer-dashboard">
       <header className="area-heading">
         <span className="eyebrow">BEM-VINDO AO SEU ESPAÇO</span>
         <h1>Olá, {account.display_name.split(' ')[0]}.</h1>
         <p>Um lugar para seus companheiros e os cuidados de cada dia.</p>
       </header>
       {!profile.isPending && !profile.isError && (!profile.data || pets.data?.total === 0) && (
-        <section className="identity-card">
+        <section className="identity-card customer-onboarding">
           <h2>Comece por aqui</h2>
           <ol className="onboarding-steps" aria-label="Primeiros passos">
             <li>
@@ -48,7 +48,7 @@ export default function Dashboard() {
         </section>
       )}
       {profile.data && (
-        <section className="identity-card">
+        <section className="identity-card next-care">
           <h2>Próximo cuidado</h2>
           {upcoming.isPending ? (
             <Skeleton label="Carregando próximo cuidado" />
@@ -76,21 +76,6 @@ export default function Dashboard() {
           </p>
         </section>
       )}
-      <section className="care-welcome">
-        <div>
-          <span className="eyebrow">CUIDAR COMEÇA POR CONHECER</span>
-          <h2>
-            Pequenos detalhes.
-            <br />
-            Mais cuidado.
-          </h2>
-          <p>Mantenha as informações dos seus pets por perto e conheça os serviços disponíveis.</p>
-          <Link className="button button--primary" to="/app/pets">
-            Ver meus pets <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <PawPrint className="welcome-paw" aria-hidden="true" />
-      </section>
       {profile.isPending ? (
         <Skeleton label="Carregando cadastro" />
       ) : profile.isError ? (
@@ -113,7 +98,9 @@ export default function Dashboard() {
             <ul className="dashboard-pets">
               {pets.data.items.slice(0, 3).map((p) => (
                 <li key={p.id}>
-                  <PawPrint aria-hidden="true" />
+                  <span className="pet-initial" aria-hidden="true">
+                    {p.name.slice(0, 1).toLocaleUpperCase('pt-BR')}
+                  </span>
                   <div>
                     <h3>{p.name}</h3>
                     <p>{p.species_id === 'CAT' ? 'Gato' : 'Cachorro'}</p>
@@ -127,22 +114,32 @@ export default function Dashboard() {
           )}
         </section>
       )}
-      <div className="care-cards">
+      <div className="customer-utility-links">
+        <Link className="dashboard-link" to="/app/pets">
+          <span className="eyebrow">01 · COMPANHEIROS</span>
+          <h2>
+            Ver meus pets <ArrowRight size={20} aria-hidden="true" />
+          </h2>
+          <p>Pequenos detalhes que ajudam a cuidar.</p>
+        </Link>
         <Link className="dashboard-link" to="/app/perfil">
-          <UserRound aria-hidden="true" />
-          <h2>Meu cadastro</h2>
+          <span className="eyebrow">02 · CONTATO</span>
+          <h2>
+            Meu cadastro <ArrowRight size={20} aria-hidden="true" />
+          </h2>
           <p>Informações para manter o contato.</p>
         </Link>
         <Link className="dashboard-link" to="/servicos">
-          <Sparkles aria-hidden="true" />
-          <h2>Conhecer serviços</h2>
+          <span className="eyebrow">03 · PRÓXIMO PASSO</span>
+          <h2>
+            Conhecer serviços <ArrowRight size={20} aria-hidden="true" />
+          </h2>
           <p>Preço e duração por porte.</p>
         </Link>
       </div>
-      <Link className="button button--primary" to="/app/agendar">
-        Agendar um cuidado
+      <Link className="text-link" to="/app/reservas">
+        Acompanhar minhas reservas <ArrowRight size={18} aria-hidden="true" />
       </Link>
-      <Link to="/app/reservas">Acompanhar minhas reservas</Link>
     </div>
   );
 }

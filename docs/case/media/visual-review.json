@@ -1,0 +1,22 @@
+{
+  "captured_at": "2026-10-02T00:48:42.661Z",
+  "origin": "https://localhost:8443/",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "method": "Real local HTTPS app, read-only capture, synthetic store information. No UI mockup. Brand photo generated, visibly identified.",
+  "source_kind": "working_tree_snapshot",
+  "parent_commit": "0b256cb4bfc43ed180d5b721ae00e716be4e3ca8",
+  "source_sha256": {
+    "apps/web/src/features/home/HomePage.tsx": "16be6ae3a4bada2968dc1cadb2e51e0f185c353e67c7d59da0ca67f05ac1326a",
+    "apps/web/src/shared/ui/PetPortrait.tsx": "ddaf73634c3cccd9dff10b37ef4d1e4da7cac9cce42f3cae1540137e686fbdd0",
+    "apps/web/src/shared/assets/petland-editorial.webp": "4ae040594039b6b1bfc9f6444f4a9140201bb39338fc0503fed99f48bdf5a423",
+    "apps/web/src/shared/styles/editorial.css": "ccb5135b0d18355bbc956bf77941a65b6f427fa4e584785e0b20bf1a0fbad821",
+    "apps/web/src/shared/styles/tokens.css": "4364ecb0834bf86fa4251958a96956e87e19cca988072b126a397adf6ead2726"
+  },
+  "image": "review-home.webp",
+  "prior_p08_media": "preserved unchanged as historical evidence",
+  "image_sha256": "1af61843a862752f48b26e055d028204cb6b99518654c4c3fe44289799657c18",
+  "encoding": "PNG screenshot encoded as WebP quality 90; no content alteration"
+}

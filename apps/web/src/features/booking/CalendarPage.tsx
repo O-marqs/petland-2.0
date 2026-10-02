@@ -269,13 +269,29 @@ function ResourceForm({
           <input
             type="checkbox"
             checked={calendar === null}
-            onChange={(e) => setCalendar(e.target.checked ? null : { weekly: [], exceptions: [] })}
+            onChange={(e) =>
+              setCalendar(
+                e.target.checked
+                  ? null
+                  : {
+                      weekly: settings.configuration.calendar.weekly.map((day) => ({
+                        weekday: day.weekday,
+                        windows: day.windows.map((window) => ({ ...window })),
+                      })),
+                      exceptions: [],
+                    },
+              )
+            }
           />
           Seguir o expediente da loja
         </label>
         {calendar !== null && (
           <>
-            <p>Os períodos desta pessoa serão limitados também pelo expediente da loja.</p>
+            <p>
+              Confira a semana desta pessoa e use “Datas especiais” para alterar só uma data. Ao
+              deixar de seguir o expediente da loja, a semana atual da loja é carregada como base.
+              Os períodos continuam limitados pelo expediente da loja.
+            </p>
             <CalendarEditor value={calendar} change={setCalendar} />
           </>
         )}
@@ -377,6 +393,19 @@ export default function CalendarPage() {
             Convites e permissões de acesso são administrados em “Pessoas e acessos”. Aqui, a equipe
             organiza a capacidade de atendimento.
           </p>
+          <details className="calendar-daily-guide">
+            <summary>Alterar a equipe em uma data específica</summary>
+            <p>
+              Edite as pessoas que terão um horário diferente. Desmarque “Seguir o expediente da
+              loja”, confira a semana normal e adicione uma “Data especial”. Deixe a data sem
+              períodos para uma folga ou informe o horário reduzido.
+            </p>
+            <p>
+              Nos outros dias vale a semana normal. Não desative a pessoa para uma folga pontual.
+              Resolva as reservas afetadas antes de salvar: elas não serão canceladas ou
+              transferidas automaticamente.
+            </p>
+          </details>
           {!data.resources.length && (
             <Alert title="Adicione a equipe para liberar vagas">
               Cadastre cada pessoa e os serviços que ela realiza.

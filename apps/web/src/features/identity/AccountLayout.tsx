@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
+import { Suspense, useId, useRef, useState } from 'react';
 import { Link, Navigate, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { PawPrint, LogOut, UserRound, LayoutGrid, CalendarDays, ShieldCheck } from 'lucide-react';
+import { PawPrint, LogOut, Menu, X } from 'lucide-react';
 import { useAccount, roleLabels } from './account';
 import { identityApi } from './api';
 import { Alert, Skeleton } from '../../shared/ui/Feedback';
@@ -12,6 +12,10 @@ import { RouteFocus } from '../../shared/layout/RouteFocus';
 export default function AccountLayout() {
   const account = useAccount();
   const { pathname, search } = useLocation();
+  const [expandedPath, setExpandedPath] = useState<string | null>(null);
+  const navigationId = useId();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const menuOpen = expandedPath === pathname;
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const logout = useMutation({
@@ -45,6 +49,40 @@ export default function AccountLayout() {
   const employee =
     user.email_verified && user.roles.some((role) => role === 'EMPLOYEE' || role === 'ADMIN');
   const admin = user.email_verified && user.roles.includes('ADMIN');
+  const management = admin && pathname.startsWith('/gestao');
+  const groups = [
+    {
+      label: 'Seu cuidado',
+      show: customer,
+      items: [
+        ['/app', 'Área do cliente'],
+        ['/app/pets', 'Meus pets'],
+        ['/app/agendar', 'Agendar um cuidado'],
+        ['/app/reservas', 'Minhas reservas'],
+        ['/app/perfil', 'Meu cadastro'],
+      ],
+    },
+    {
+      label: 'Operação',
+      show: employee,
+      items: [
+        ['/operacao/agenda', 'Agenda'],
+        ['/operacao/reservas', 'Reservas'],
+        ['/operacao/clientes', 'Clientes e pets'],
+        ['/operacao/servicos', 'Serviços'],
+        ['/operacao/configuracoes', 'Equipe e horários'],
+      ],
+    },
+    {
+      label: 'Gestão',
+      show: admin,
+      items: [
+        ['/gestao', 'Visão geral'],
+        ['/gestao/auditoria', 'Auditoria'],
+        ['/gestao/acessos', 'Pessoas e acessos'],
+      ],
+    },
+  ].filter((group) => group.show);
   const allowed =
     pathname === '/app/conta' ||
     (pathname.startsWith('/gestao')
@@ -67,56 +105,119 @@ export default function AccountLayout() {
             <span>{user.display_name}</span>
             <small>{user.roles.map((role) => roleLabels[role]).join(' · ')}</small>
           </div>
+          <Link className="account-utility" to="/app/conta">
+            Minha conta
+          </Link>
           <Button variant="secondary" onClick={() => logout.mutate()} busy={logout.isPending}>
             <LogOut size={17} aria-hidden="true" />
             Sair
           </Button>
         </div>
       </header>
-      <div className="container application-layout">
-        <aside className="area-navigation">
-          <span className="eyebrow">SEU ESPAÇO</span>
-          <nav aria-label="Áreas da conta">
-            {customer && (
-              <NavLink to="/app" end>
-                <LayoutGrid size={20} aria-hidden="true" />
-                Área do cliente
-              </NavLink>
-            )}
-            {customer && <NavLink to="/app/pets">Meus pets</NavLink>}
-            {customer && <NavLink to="/app/agendar">Agendar um cuidado</NavLink>}
-            {customer && <NavLink to="/app/reservas">Minhas reservas</NavLink>}
-            {employee && <NavLink to="/operacao/reservas">Reservas</NavLink>}
-            {employee && <NavLink to="/operacao/agenda">Agenda</NavLink>}
-            {employee && <NavLink to="/operacao/configuracoes">Equipe e horários</NavLink>}
-            {customer && <NavLink to="/app/perfil">Meu cadastro</NavLink>}
-            {employee && <NavLink to="/operacao/clientes">Clientes e pets</NavLink>}
-            {employee && <NavLink to="/operacao/servicos">Serviços</NavLink>}
-            {employee && (
-              <NavLink to="/operacao" end>
-                <CalendarDays size={20} aria-hidden="true" />
-                Área da equipe
-              </NavLink>
-            )}
-            {admin && (
-              <NavLink to="/gestao" end>
-                <LayoutGrid size={20} aria-hidden="true" />
-                Visão geral
-              </NavLink>
-            )}
-            {admin && <NavLink to="/gestao/auditoria">Auditoria</NavLink>}
-            {admin && (
-              <NavLink to="/gestao/acessos">
-                <ShieldCheck size={20} aria-hidden="true" />
-                Pessoas e acessos
-              </NavLink>
-            )}
-            <NavLink to="/app/conta">
-              <UserRound size={20} aria-hidden="true" />
-              Minha conta
+      <div
+        className={`container application-layout ${employee ? 'workspace-team' : 'workspace-customer'}`}
+      >
+        <aside
+          className="area-navigation"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape' && menuOpen) {
+              setExpandedPath(null);
+              menuButton.current?.focus();
+            }
+          }}
+        >
+          <div className="mobile-navigation-tools">
+            <span className="eyebrow">{employee ? 'EQUIPE PETLAND' : 'SEU ESPAÇO'}</span>
+            <button
+              ref={menuButton}
+              className="button button--secondary"
+              aria-label="Menu da conta"
+              aria-expanded={menuOpen}
+              aria-controls={navigationId}
+              onClick={() => setExpandedPath(menuOpen ? null : pathname)}
+            >
+              {menuOpen ? (
+                <X size={18} aria-hidden="true" />
+              ) : (
+                <Menu size={18} aria-hidden="true" />
+              )}
+              {menuOpen ? 'Fechar' : 'Menu'}
+            </button>
+          </div>
+          <nav className="mobile-primary-navigation" aria-label="Atalhos principais">
+            <NavLink
+              to={management ? '/gestao' : employee ? '/operacao/agenda' : '/app'}
+              end
+              aria-label={management ? 'Visão geral' : employee ? 'Agenda' : 'Área do cliente'}
+              className={({ isActive }) =>
+                isActive || (employee && !management && pathname === '/operacao')
+                  ? 'active'
+                  : undefined
+              }
+              aria-current={
+                employee && !management && pathname === '/operacao' ? 'page' : undefined
+              }
+            >
+              {management ? 'Visão geral' : employee ? 'Agenda' : 'Início'}
             </NavLink>
+            {(employee || customer) && (
+              <NavLink
+                to={
+                  employee
+                    ? management
+                      ? '/operacao/agenda'
+                      : '/operacao/reservas'
+                    : '/app/agendar'
+                }
+                aria-label={employee ? (management ? 'Agenda' : 'Reservas') : 'Agendar um cuidado'}
+              >
+                {employee ? (management ? 'Agenda' : 'Reservas') : 'Agendar'}
+              </NavLink>
+            )}
           </nav>
-          <p>Um cuidado mais próximo, a cada etapa.</p>
+          <nav
+            id={navigationId}
+            className="workspace-navigation"
+            aria-label="Áreas da conta"
+            data-open={menuOpen}
+            onClick={(event) => {
+              const link = (event.target as HTMLElement).closest('a');
+              if (link) {
+                setExpandedPath(null);
+                if (link.getAttribute('href') === pathname) menuButton.current?.focus();
+              }
+            }}
+          >
+            {groups.map((group) => (
+              <div className="navigation-group" key={group.label}>
+                <span className="navigation-group-label">{group.label}</span>
+                {group.items.map(([to, label]) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    end={to === '/app' || to === '/gestao'}
+                    className={({ isActive }) =>
+                      isActive || (to === '/operacao/agenda' && pathname === '/operacao')
+                        ? 'active'
+                        : undefined
+                    }
+                    aria-current={
+                      to === '/operacao/agenda' && pathname === '/operacao' ? 'page' : undefined
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                ))}
+              </div>
+            ))}
+          </nav>
+          {employee && (
+            <p className="navigation-signature">
+              Do horário marcado
+              <br />
+              ao cuidado feito<span aria-hidden="true">.</span>
+            </p>
+          )}
         </aside>
         <main id="main" tabIndex={-1} className="area-content">
           <RouteFocus />

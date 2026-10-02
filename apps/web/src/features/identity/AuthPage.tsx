@@ -9,7 +9,7 @@ import { Button } from '../../shared/ui/Button';
 import { Input } from '../../shared/ui/Input';
 import { Alert } from '../../shared/ui/Feedback';
 import { errorMessage } from '../../shared/lib/api';
-import { PetIllustration } from '../home/PetIllustration';
+import { PetPortrait } from '../../shared/ui/PetPortrait';
 import { identityApi } from './api';
 import { accountDestination } from './account';
 import { LocalEmailNotice } from '../../shared/ui/LocalEmailNotice';
@@ -192,7 +192,7 @@ function AuthForm({ mode }: { mode: Mode }) {
       <aside className="auth-story" aria-label="Bem-vindo ao PetLand">
         <span className="eyebrow">CUIDADO QUE CONECTA</span>
         <h2>Mais perto de quem faz parte da família.</h2>
-        <PetIllustration />
+        <PetPortrait />
         <p>Seu espaço para organizar o cuidado, com clareza em cada etapa.</p>
       </aside>
       <section className="auth-panel" aria-labelledby="auth-title">

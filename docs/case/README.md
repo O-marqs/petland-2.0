@@ -2,6 +2,8 @@
 
 Case de portfólio de Lucas Marques. **Candidato 3.0.0-rc.1, ambiente local e dados fictícios.** P08 prepara a entrega para revisão; publicação externa e aceite final não estão declarados concluídos.
 
+Revisão posterior de produto/identidade: [matriz completa de dores](../product/functional-gap-analysis.md), [navegação e direção visual](../ux/visual-review.md) e [evidências](../evidence/Product-review.md). A capa atual do case usa uma nova captura real em `media/review-home.webp`, com origem em `media/visual-review.json`. As imagens `after-*` e o vídeo a seguir continuam representando a entrega P08, anterior à revisão visual; sua proveniência não foi alterada.
+
 ## O problema
 
 O PetLand 2.0 nasceu como sistema acadêmico em Flask/MySQL. O diagnóstico do commit preservado encontrou SQL junto às rotas e modelos, contratos divergentes, referências por CPF, operações sem proteção suficiente de propriedade e disponibilidade calculada por contagem de horários. A interface mostrava a intenção de autoatendimento, mas não comprovava uma reserva protegida sob concorrência. [Diagnóstico e trechos do código](../product/PetLand_3.0_Plano_Consolidado.md#21-evidências-do-código-e-escopo-auditado), [baseline](../migration/baseline.md).

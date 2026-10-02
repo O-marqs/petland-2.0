@@ -124,6 +124,8 @@ jobs:
           cat .local/staging/rehearsal.json
       - name: New-account UI, confirmation, pet, reservation and staff communication
         run: node apps/web/scripts/onboarding-staging.mjs
+      - name: Visual reflow, accessible navigation and role boundaries
+        run: node apps/web/scripts/review-staging.mjs
       - name: Stop isolated staging, preserve volume
         if: always()
         run: python3 scripts/dev.py staging-down

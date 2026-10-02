@@ -9,7 +9,7 @@ test('real API connection, navigation, validation, accessibility and responsive 
   expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
   expect(headers['x-content-type-options']).toBe('nosniff');
   expect(headers['referrer-policy']).toBe('no-referrer');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Mais cuidado.');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Cada pet.');
   await expect(page.getByText('Ambiente conectado')).toBeVisible();
   const health = await page.request.get('/api/v1/health/ready');
   expect(health.status()).toBe(200);

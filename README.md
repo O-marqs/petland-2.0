@@ -2,9 +2,11 @@
 
 **O cuidado do pet, bem organizado.** Evolução de um sistema acadêmico Flask para um produto com agenda confiável, autorização por objeto e experiência própria para cliente, funcionário e administrador.
 
-**Estado atual: P08 integrada — candidata 3.0.0-rc.1 e case de portfólio; primeiro acesso corrigido para revisão.** Uma loja, dados fictícios, três perfis e reserva/atendimento completos. Demonstração isolada em HTTPS e backup autenticado com recuperação comprovada. O desenvolvimento começa sem expediente/equipe semeados; demo é iniciada explicitamente em outro banco. Aceite final e leitor de tela pendentes; publicação externa adiada por D10. Candidata preparada para revisão, sem release estável/tag automática.
+**Estado atual: P08 integrada — candidata 3.0.0-rc.1; primeiro acesso, identidade visual e navegação revisados.** Uma loja, dados fictícios e três perfis, com jornada individual de reserva/atendimento. A [matriz funcional](docs/product/functional-gap-analysis.md) registra dores cobertas, parciais e ausentes: escala coletiva, transferência independente, recursos físicos, lembretes e produtividade por pessoa ainda precisam evoluir. Demonstração isolada em HTTPS e backup autenticado com recuperação comprovada. Desenvolvimento começa sem expediente/equipe semeados; demo é iniciada explicitamente em outro banco. Aceite final e leitor de tela pendentes; publicação externa adiada por D10. Sem release estável/tag automática.
 
 [Case: problema, antes/depois e escolhas de engenharia](docs/case/README.md) · [Vídeo de três jornadas, 3 min 05 s](docs/case/media/petland-3.0-demo.webm) · [Transcrição](docs/case/transcript.md) · [Qualidade e métricas](docs/release/quality-report.md)
+
+[Revisão de UX e identidade](docs/ux/visual-review.md) · [Teste pessoal e escala por data](docs/runbooks/manual-acceptance.md) · [Evidências desta revisão](docs/evidence/Product-review.md). O vídeo e as capturas P08 abaixo representam a entrega histórica, anterior ao novo visual.
 
 ![Resumo real antes de confirmar uma reserva, com pet, serviço fictício, preço e duração](docs/case/media/after-booking-review.png)
 

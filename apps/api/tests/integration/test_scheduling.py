@@ -337,6 +337,44 @@ def test_hours_pauses_exception_intersection_offer_and_resource_guards(agenda, i
         book(a, 1)
 
 
+def test_one_day_staff_exceptions_reduce_capacity_and_restore_adjacent_days(agenda, crm):
+    a = agenda
+    target = a[6] + timedelta(days=3)
+    weekly = a[0].settings(a[1])[0].calendar.weekly
+    closed_resources = set()
+    for index in range(2, 6):
+        worker = register(crm[0], crm[1], f"day-worker-{index}@example.com", roles=[Role.EMPLOYEE])
+        resource = a[0].resource(
+            a[1],
+            Resource(
+                worker.id,
+                f"Pessoa sintética {index}",
+                [a[5]],
+                calendar=Calendar(
+                    weekly,
+                    [ExceptionDay(target.date(), [])] if index >= 4 else [],
+                ),
+            ),
+            "test",
+        )
+        if index >= 4:
+            closed_resources.add(resource.id)
+
+    for start, capacity in [
+        (target - timedelta(days=1), 5),
+        (target, 3),
+        (target + timedelta(days=1), 5),
+    ]:
+        appointments = [book(a, pet=pet, start=start) for pet in range(capacity)]
+        assert len({appointment.resource_id for appointment in appointments}) == capacity
+        if start == target:
+            assert not closed_resources.intersection(
+                appointment.resource_id for appointment in appointments
+            )
+        with pytest.raises(BusinessError, match="SLOT_UNAVAILABLE"):
+            book(a, pet=capacity, start=start)
+
+
 def test_database_exclusions_independent_of_application(agenda, identity_engine):
     a = agenda
     first = book(a)

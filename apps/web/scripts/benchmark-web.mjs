@@ -21,9 +21,21 @@ try {
       const context = await browser.newContext({ ...devices['Pixel 7'], baseURL });
       const page = await context.newPage();
       const errors = [];
+      const consoleErrors = [];
+      const guestAuthResponses = [];
+      const guestURL = new URL('/api/v1/auth/me', baseURL).href;
       page.on('pageerror', (error) => errors.push(error.message));
       page.on('console', (message) => {
-        if (message.type() === 'error') errors.push(message.text());
+        if (message.type() === 'error')
+          consoleErrors.push({ text: message.text(), url: message.location().url });
+      });
+      page.on('response', (response) => {
+        if (
+          response.url() === guestURL &&
+          response.status() === 401 &&
+          response.request().method() === 'GET'
+        )
+          guestAuthResponses.push(response.url());
       });
       await page.addInitScript({
         content:
@@ -91,11 +103,26 @@ try {
         shifts: window.__shifts,
         interactions: window.__interactions,
       }));
+      let expectedGuestAuth401 = 0;
+      for (const error of consoleErrors) {
+        // The public account link probes a real session; unauthenticated visitors get 401.
+        // Pair only this exact GET response with its browser console entry. All other
+        // console errors, including a 401 from any other endpoint, still fail the sample.
+        if (
+          error.url === guestURL &&
+          error.text ===
+            'Failed to load resource: the server responded with a status of 401 (Unauthorized)' &&
+          expectedGuestAuth401 < guestAuthResponses.length
+        )
+          expectedGuestAuth401++;
+        else errors.push(error.text);
+      }
       const result = {
         route,
         run,
         ...values,
         errors,
+        expected_guest_auth_401: expectedGuestAuth401,
         passed:
           Number.isFinite(values.LCP) &&
           Number.isFinite(values.INP) &&
