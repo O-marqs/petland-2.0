@@ -17,7 +17,7 @@ const checks = [];
 try {
   for (const [profile, route, content] of [
     ['customer_a', '/app/pets', 'Luna demo'],
-    ['employee', '/operacao/agenda', 'Agenda'],
+    ['employee', '/operacao/agenda', 'Agenda da equipe'],
     ['admin', '/gestao/acessos', 'Pessoas e acessos'],
   ]) {
     // Only the locally generated CA is absent from Chromium's trust store.
@@ -43,10 +43,8 @@ try {
     await page.getByRole('button', { name: 'Sair', exact: true }).waitFor();
     await page.goto(`https://localhost:8443${route}`);
     await page.getByRole('heading', { level: 1 }).waitFor();
-    await page
-      .getByText(content, { exact: profile === 'customer_a' })
-      .first()
-      .waitFor();
+    // Assert page content rather than a duplicate label in the closed mobile menu.
+    await page.getByRole('heading', { name: content, exact: true }).waitFor();
     await page.getByRole('complementary', { name: 'Ambiente de demonstração' }).waitFor();
     await page.waitForLoadState('networkidle');
     violations.push(

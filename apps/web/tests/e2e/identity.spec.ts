@@ -190,6 +190,9 @@ test('administrator provisions through email, invites employee, changes roles an
     await accessibility(page);
     await page.screenshot({ path: 'test-results/p05-management-desktop.png', fullPage: true });
     await page.goto('/gestao/auditoria');
+    await expect(page.getByLabel('Fim do período (obrigatório)')).toHaveValue(new Date().toISOString().slice(0, 10));
+    await page.getByLabel('Ação exata', { exact: true }).fill('appointment.complete');
+    await page.getByRole('button', { name: 'Consultar período', exact: true }).click();
     await expect(page.getByText('appointment.complete', { exact: true }).first()).toBeVisible();
     await accessibility(page);
     await page.goto('/gestao/acessos');

@@ -13,7 +13,7 @@ export default function ManagementPage({ audit = false }: { audit?: boolean }) {
     queryKey: ['schedule', 'establishment'],
     queryFn: ({ signal }) => operationsApi.establishment(signal),
   });
-  const today = localDay(shop.data?.timezone || 'America/Sao_Paulo');
+  const today = localDay(audit ? 'UTC' : shop.data?.timezone || 'America/Sao_Paulo');
   const first = params.get('inicio') || addDays(today, -29),
     last = params.get('fim') || today;
   const offset = Math.max(0, Number(params.get('pagina')) || 0) * 20;
