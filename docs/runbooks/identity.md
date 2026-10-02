@@ -1,8 +1,8 @@
-# Identidade local — P02
+# Identidade local
 
 ## Cliente
 
-Execute `python scripts/dev.py init` e `python scripts/dev.py up`. O volume existente recebe a migration `0002_identity`; não apague o volume para atualizar.
+Execute `python scripts/dev.py init` e `python scripts/dev.py up`. O job aplica todas as migrations pendentes até `0007_product_operations`, incluindo a identidade introduzida em P02; não apague o volume para atualizar. Checkout/requisitos em [versão e reprodução](../release/reproducibility.md).
 
 1. Abra [Criar conta](http://localhost:5173/criar-conta) e use dados sintéticos, por exemplo e-mail em `example.com`.
 2. Abra a [caixa local Mailpit](http://localhost:8025). Ela recebe SMTP real, sem enviar para destinatários externos.
@@ -22,7 +22,7 @@ python scripts/dev.py bootstrap-admin --email administrador-sintetico@example.co
 
 Abra a mensagem no Mailpit, aceite em até 30 minutos e defina a senha. Conta existente exige sua senha atual. O bootstrap é auditado e recusado após existir admin ativo. Para conceder ADMIN a outra conta, use **Pessoas e acessos** com a senha do administrador atual.
 
-O teste E2E provisiona `p02-admin-sintetico@example.com` apenas na demo local inicialmente vazia, usando credencial de fixture. Isso não é seed de produção. Para demo já provisionada, configure `E2E_ADMIN_EMAIL`/`E2E_ADMIN_PASSWORD` com conta sintética autorizada. Se já houver outro admin e as credenciais não servirem, o teste falha sem alterar esse administrador.
+O teste E2E de desenvolvimento provisiona `p02-admin-sintetico@example.com` apenas no banco local de teste inicialmente vazio, usando credencial de fixture. Isso não é seed de produção nem o staging. Para desenvolvimento sintético já provisionado, configure `E2E_ADMIN_EMAIL`/`E2E_ADMIN_PASSWORD` com conta autorizada. Se já houver outro admin e as credenciais não servirem, o teste falha sem alterar esse administrador. O ensaio de staging lê as contas próprias geradas em `.local/staging/accounts.json`.
 
 ## Convites e papéis
 
@@ -48,4 +48,4 @@ Use recuperação normal pelo e-mail: reset mantém papéis e revoga sessões. O
 
 Públicas: `/entrar`, `/criar-conta`, `/recuperar-acesso`, `/verificar-email`, `/redefinir-senha`, `/aceitar-convite`. Autenticadas: `/app`, `/app/conta`, `/operacao`, `/gestao`, `/gestao/acessos`. Galeria separada: `/design-system`.
 
-As áreas mostram dados reais da conta e recursos disponíveis. Perfil comercial, troca de e-mail, pets, catálogo, reservas, atendimentos, notas e gestão operacional continuam nos cards futuros, sem números simulados.
+As áreas mostram dados reais da conta e recursos disponíveis. Cadastro de contato/pets/catálogo, reservas, atendimento/notas, painel e gestão estão implementados: [produto atual](../product/product-overview.md). Troca de e-mail da identidade permanece fora do escopo. Para uma conta nova, siga contato → pet → reserva após confirmar e-mail; a loja vazia precisa de configuração comercial. [Roteiro dos perfis](manual-acceptance.md).

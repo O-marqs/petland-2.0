@@ -79,6 +79,15 @@
     "docs/ux/media/current/management-current.webp",
     "docs/ux/media/current/README.md",
     "docs/ux/media/current/roster-current.webp",
-    "docs/ux/media/current/tutor-current.webp"
+    "docs/ux/media/current/tutor-current.webp",
+    "README.md",
+    "docs/README.md",
+    "docs/runbooks/local.md",
+    "docs/release/reproducibility.md",
+    "docs/evidence/Reproducibility-review.md",
+    "docs/evidence/Reproducibility-review.json",
+    "scripts/check_repository.py",
+    "scripts/repository_hygiene.py",
+    "scripts/test_release.py"
   ]
 }

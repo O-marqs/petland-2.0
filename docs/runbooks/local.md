@@ -1,6 +1,6 @@
 # Execução local e qualidade
 
-Leia o README para o caminho de entrada. Os comandos abaixo partem da raiz. Windows/PowerShell e Linux são suportados pelo mesmo `scripts/dev.py`, sem dependência de Make/bash para desenvolvimento no host.
+Leia o [README](../../README.md) para o caminho de entrada e [versão/reprodução](../release/reproducibility.md) para a referência única de checkout, ferramentas e isolamento. Os comandos abaixo partem da raiz. Windows/PowerShell e Linux são suportados pelo mesmo `scripts/dev.py`, sem dependência de Make/bash para desenvolvimento no host.
 
 ## Pré-requisitos
 
@@ -14,19 +14,31 @@ Leia o README para o caminho de entrada. Os comandos abaixo partem da raiz. Wind
 O Git remoto mantém o legado na `main`; use a branch funcional atual, sem presumir que o 3.0 já foi integrado à principal:
 
 ```sh
-git clone --branch petland-3.0-onboarding-fix https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-reproducibility https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
 ```
 
-Em 02/10/2026, essa branch contém o PR #10 integrado (`d564114`); seu conteúdo executável corresponde a `2549523`. A branch `petland-3.0-portfolio-docs` prepara esta documentação em PR separado. [Auditoria/estado dos PRs](../evidence/Documentation-review.md).
+Essa branch acrescenta instruções de reprodução à consolidação documental `4ef44e0` (PR #11), preservando o código funcional `2549523`. Versão `3.0.0-rc.1`, schema `0007_product_operations`. `main` ainda é legada no snapshot desta auditoria; confira o SHA clonado. [Estado dos PRs e ensaio limpo](../evidence/Reproducibility-review.md).
 
 `python scripts/dev.py init` gera `.env` com segredos locais aleatórios; nunca sobrescreve arquivo existente. O arquivo de exemplo usa marcadores que devem ser substituídos, não senhas default. Não copiar `.env` entre ambientes.
 
 `python scripts/dev.py up` é o caminho somente Docker. Os Dockerfiles instalam pelos lockfiles; imagens base são fixadas por digest. O job `migrate` termina antes de a API subir; web aguarda readiness. Não executar migration automática em cada worker.
 
 Para desenvolver no host: `install`, `db`, `migrate`, depois `api` e `web` em terminais separados. `install` usa lockfiles congelados. O script desconsidera `VIRTUAL_ENV` de outro projeto; a venv fica em `apps/api/.venv`.
+
+```sh
+python scripts/dev.py init
+python scripts/dev.py install
+python scripts/dev.py db
+python scripts/dev.py migrate
+python scripts/dev.py api
+# Em outro terminal na mesma raiz:
+python scripts/dev.py web
+```
+
+Não execute esse modo simultaneamente aos containers API/web de `up`. Para testes, `check` inicia somente o PostgreSQL efêmero necessário; `e2e` exige a aplicação previamente iniciada e modifica o banco sintético de desenvolvimento. Staging/demo usa outra configuração, certificado, contas, volume e portas: siga [RUN DEMO](../../README.md#run-demo), sem copiar arquivos locais.
 
 ## Variáveis
 
@@ -74,9 +86,10 @@ Auditoria de dependências: `pnpm audit --prod --audit-level high`; Python: `uv 
 - Readiness 503: iniciar o PostgreSQL e aplicar a migration com a URL de migrations. Processo vivo não comprova banco/schema prontos. O erro público não mostra detalhes de conexão.
 - Porta ocupada: pare apenas o processo desta aplicação; não encerre outros projetos indiscriminadamente. Não execute host e Compose ao mesmo tempo.
 - Credencial alterada após volume criado: variáveis POSTGRES_* só inicializam volume novo. Não apagar volume automaticamente; restaurar a configuração original ou executar procedimento explícito de troca de senha.
-- Nova migration: revisar DDL, atualizar SCHEMA_REVISION e testar upgrade/downgrade em banco efêmero; não usar autogenerate cegamente. P01 contém marcador técnico; P02 acrescenta seis tabelas de identidade; P03 acrescenta clientes, vínculos, pets, referências e ofertas por porte.
+- Nova migration: revisar DDL, atualizar SCHEMA_REVISION e testar upgrade/política de downgrade em banco efêmero; não usar autogenerate cegamente. Head atual `0007_product_operations`, com recusa de downgrade destrutivo. `up` aplica todas as revisions pendentes, sem apagar o volume.
 - Imagem antiga após alteração: `python scripts/dev.py up` reconstrói imagens. O modo Compose não monta todo o código; para hot reload de edição, use o modo host.
 - pnpm incorreto no PATH: confirmar `pnpm --version` = 10.34.5 e Node linha 22. Não alterar lockfile com outro gerenciador.
+- Outro clone usando as mesmas portas ou volumes: use o override `COMPOSE_PROJECT_NAME` descrito em [isolamento](../release/reproducibility.md#isolamento-e-portas). Nome distinto separa volumes, mas não altera as portas fixas. Preserve o ambiente anterior ao liberá-las.
 
 ## Limites
 
