@@ -48,6 +48,8 @@
     "docs/case/media/operations-evolution.json",
     "docs/adr/0016-operational-evolution.md",
     "docs/runbooks/operational-evolution.md",
-    "docs/evidence/Operations-evolution.md"
+    "docs/evidence/Operations-evolution.md",
+    "docs/evidence/Operations-evolution-api-local.json",
+    "docs/evidence/Operations-evolution-web-benchmark.json"
   ]
 }

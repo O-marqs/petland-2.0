@@ -56,3 +56,5 @@ Não há falha crítica conhecida de autorização/integridade nas verificaçõe
 ## Evolução operacional posterior
 
 Schema atual 0007, escala coletiva/pools físicos/transferência/contexto crítico e anterior/comunicação/painel/indicadores por pessoa, conforme [ADR-016](../adr/0016-operational-evolution.md). Check final local 126 Python + 20 React; E2E 15 + skip previsto e revisão 16 checkpoints. Novo roteiro HTTPS usa horário/SMTP reais e restaura regras temporárias; [evidência e limites atuais](../evidence/Operations-evolution.md). Medições locais e uma rodada Linux reprovaram carga e geraram otimização; resultado final/CI fica no PR, sem reutilizar métricas anteriores. Candidata permanece para revisão humana, com todos os gates D10/leitor de tela pendentes.
+
+Web final: 9/9 amostras, LCP até 2452 ms, INP até 104 ms, CLS até 0,0011783, após carregar CSS operacional junto ao layout autenticado. API local ainda reprova relatório/painel/reserva; execução Linux da revisão `a4c2630` passou. [Carga local](../evidence/Operations-evolution-api-local.json), [web e condições](../evidence/Operations-evolution-web-benchmark.json); CI final permanece registrada no PR.

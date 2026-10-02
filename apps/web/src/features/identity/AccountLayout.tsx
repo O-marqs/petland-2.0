@@ -237,3 +237,4 @@ export default function AccountLayout() {
     </>
   );
 }
+import '../../shared/styles/operational.css';

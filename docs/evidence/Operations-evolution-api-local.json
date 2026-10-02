@@ -1,0 +1,122 @@
+{
+  "measured_at": "2026-10-02T12:39:46.960994+00:00",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "processor": "",
+  "logical_cpus": 12,
+  "python": "3.13.15",
+  "api_workers": 2,
+  "sql_profile": false,
+  "dataset": {
+    "appointments": 100000,
+    "customers": 2000,
+    "pets": 2000,
+    "employees": 5,
+    "historical_days": 1000,
+    "audit_records": 100000,
+    "completed_percent": 80,
+    "cancelled_percent": 10,
+    "no_show_percent": 10
+  },
+  "method": "Local uvicorn workers as reported, default DB pool 5+5 per worker, HTTP keep-alive, 20 distinct sessions per scenario; closed-loop, 3 read warmups, nearest-rank percentiles; login/CSRF setup and SMTP delivery excluded; booking commits include outbox.",
+  "results": {
+    "catalog": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 178.63,
+      "p95_ms": 261.22,
+      "max_ms": 295.96,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "customer_history": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 220.03,
+      "p95_ms": 324.44,
+      "max_ms": 379.89,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "staff_agenda": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 244.57,
+      "p95_ms": 378.59,
+      "max_ms": 486.87,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "admin_metrics_month": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 308.03,
+      "p95_ms": 439.64,
+      "max_ms": 537.26,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": false
+    },
+    "staff_daily_dashboard": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 478.17,
+      "p95_ms": 935.14,
+      "max_ms": 1200.36,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": false
+    },
+    "admin_audit_month": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 240.44,
+      "p95_ms": 327.78,
+      "max_ms": 373.91,
+      "statuses": {
+        "200": 200
+      },
+      "errors": {},
+      "target_ms": 400,
+      "warmup_errors": 0,
+      "passed": true
+    },
+    "booking": {
+      "samples": 200,
+      "concurrency": 20,
+      "p50_ms": 555.96,
+      "p95_ms": 951.86,
+      "max_ms": 1238.33,
+      "statuses": {
+        "201": 200
+      },
+      "errors": {},
+      "target_ms": 800,
+      "warmup_errors": 0,
+      "passed": false
+    }
+  },
+  "passed": false
+}

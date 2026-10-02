@@ -9,7 +9,6 @@ import './shared/styles/care.css';
 import './shared/styles/booking.css';
 import './shared/styles/operations.css';
 import './shared/styles/editorial.css';
-import './shared/styles/operational.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
