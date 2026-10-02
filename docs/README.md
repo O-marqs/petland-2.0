@@ -1,40 +1,66 @@
 # Documentação PetLand 3.0
 
-- [Case P08 e jornadas filmadas](case/README.md), [player local](case/index.html), [transcrição](case/transcript.md).
-- [Notas 3.0.0-rc.1](release/3.0.0-rc.1.md), [qualidade/rastreabilidade](release/quality-report.md), [revisão e promoção](runbooks/release.md).
-- [Contexto/containers/transação](architecture/release-diagrams.md), [DER/dicionário](architecture/data-model.md).
+Estado implementado para revisão humana: código `2549523`, schema `0007_product_operations`, candidata `3.0.0-rc.1`. Publicação e aceite final pendentes. Discovery e evidências de fases são referências históricas, não lista atual de funcionalidades.
 
-## Fontes oficiais preservadas
+## START HERE
 
-- [Plano consolidado integral](product/PetLand_3.0_Plano_Consolidado.md): produto, RF/RNF, RB01–RB22, arquitetura, dados, contratos e roadmap.
-- [Caderno de UX integral — 12 páginas](ux/PetLand_3.0_Caderno_UX.pdf): referência visual.
-- [Pedido que autoriza P01](implementation/P01-request.txt): prevalece sobre o status anterior de proposta dos documentos.
-- [Continuidade P02 e aprovação D07](implementation/P02-request.txt).
+| Leitura                                           | Para quê                                                                                |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [Product Overview](product/product-overview.md)   | Problema, três perfis, jornadas, escopo e limites em cerca de cinco minutos.            |
+| [Architecture Overview](architecture/overview.md) | Monólito modular, camadas, concorrência, implantação atual e evolução não implementada. |
+| [Case Study](case/README.md)                      | Problema, escolhas, antes/depois e vídeo histórico com proveniência.                    |
+| [Quick Start](runbooks/local.md)                  | Clone correto, Docker, acesso e verificações locais.                                    |
 
-## Navegação
+## PRODUCT
 
-- [Andamento e próxima entrega](implementation/progress.md)
-- [Decisões e gates](product/decisions.md)
-- [Arquitetura implementada](architecture/README.md)
-- [ADRs](adr/README.md)
-- [Preservação do legado](migration/baseline.md)
-- [Contratos HTTP](architecture/api.md)
-- [Design system](ux/design-system.md)
-- [Execução local e qualidade](runbooks/local.md)
-- [Cadastro, caixa de e-mail, convites e administrador](runbooks/identity.md)
-- [Matriz de autorização D07](architecture/authorization.md)
-- [Decisões de identidade](adr/0004-identity.md)
-- [Evidências P01](evidence/P01.md)
-- [Evidências P02](evidence/P02.md)
+- [Visão do produto implementado](product/product-overview.md).
+- [Decisões D01–D12](product/decisions.md).
+- [Dor → cobertura → lacuna → prioridade](product/functional-gap-analysis.md).
 
-Funcionalidades futuras permanecem propostas até a fase correspondente. Os originais não foram substituídos por resumos. O progresso registra o estado verificável de cada fase.
+## UX
 
-P03: [cadastros e catálogo](runbooks/catalogs.md), [evidências](evidence/P03.md), [ADR 0007](adr/0007-p03-customers-pets-catalog.md) e [pedido autorizado](implementation/P03-request.txt).
+- [UX atual: identidade, jornadas, navegação, mobile e oito capturas](ux/PetLand_3.0_UX_Final.md).
+- [Design system efetivo e referências de código](ux/design-system.md).
+- [Proveniência das capturas atuais](ux/media/current/capture.json).
+- [Revisão visual pós-P08](ux/visual-review.md), [imagem editorial e origem](ux/editorial-image.md).
 
-P04: [agenda e avisos](runbooks/scheduling.md), [evidências](evidence/P04.md), [ADR 003](adr/0003-scheduling.md) e [pedido autorizado](implementation/P04-request.txt).
+## ARCHITECTURE
 
-P05: [operação e gestão](runbooks/operations.md), [evidências](evidence/P05.md), [ADR 012](adr/0012-p05-operations.md) e [pedido autorizado](implementation/P05-request.txt).
+- [Overview](architecture/overview.md), [dados/DER/garantias/JSONB](architecture/data-model.md).
+- [Sete diagramas atuais: Draw.io editável, SVG e Mermaid](architecture/diagrams/README.md).
+- [Contratos HTTP](architecture/api.md), [segurança/autorização contextual](architecture/authorization.md).
+- [Índice de ADRs: status, motivo e consequência](adr/README.md).
+- [RNFs: Target / Measurement / Evidence / Limitation](architecture/non-functional-requirements.md).
 
-P06: [qualidade e medições](runbooks/quality.md), [evidências](evidence/P06.md) e [ADR 013](adr/0013-p06-hardening.md).
+## ENGINEERING
 
-P07: [demo e recuperação](runbooks/operations-recovery.md), [evidências](evidence/P07.md), [ADR 014](adr/0014-p07-operations.md) e [autorização](implementation/P07-request.txt).
+- [Execução e qualidade local](runbooks/local.md).
+- [OpenAPI gerado](../packages/api-contract/openapi.json), [migrations](../apps/api/migrations/versions).
+- [CI](../.github/workflows/ci.yml), [fitness functions](../scripts/check_architecture.py).
+- [Candidata e gates](release/candidate.json), [qualidade incremental](release/quality-report.md).
+- [Auditoria documental e verificações desta revisão](evidence/Documentation-review.md).
+
+## RUNBOOKS
+
+| Tarefa                                           | Guia                                                      |
+| ------------------------------------------------ | --------------------------------------------------------- |
+| Executar/desenvolver                             | [Local](runbooks/local.md)                                |
+| Conta, caixa de e-mail, convite e admin          | [Identidade](runbooks/identity.md)                        |
+| Tutor/pet/catálogo                               | [Cadastros](runbooks/catalogs.md)                         |
+| Disponibilidade/reserva/configuração             | [Agenda](runbooks/scheduling.md)                          |
+| Execução/notas/gestão                            | [Operação](runbooks/operations.md)                        |
+| Painel/escala/pools/transferência/cuidado/avisos | [Evolução operacional](runbooks/operational-evolution.md) |
+| Testar os três perfis pessoalmente               | [Aceite manual](runbooks/manual-acceptance.md)            |
+| Benchmark/leitor de tela                         | [Qualidade](runbooks/quality.md)                          |
+| TLS/demo/backup/restore/incidentes               | [Recuperação](runbooks/operations-recovery.md)            |
+| Revisar/gravar/empacotar localmente              | [Release](runbooks/release.md)                            |
+
+## HISTORY / EVIDENCE
+
+**Discovery preservado:** [plano consolidado integral](product/PetLand_3.0_Plano_Consolidado.md), [Caderno UX original PDF](ux/PetLand_3.0_Caderno_UX.pdf). Não representam automaticamente o estado implementado.
+
+**História:** [baseline 2.0](migration/baseline.md), [pedidos/progresso](implementation/progress.md), [visão antiga de arquitetura](architecture/README.md), [Mermaid P08](architecture/release-diagrams.md), [notas da candidata P08](release/3.0.0-rc.1.md).
+
+**Evidências por referência:** [P01](evidence/P01.md), [P02](evidence/P02.md), [P03](evidence/P03.md), [P04](evidence/P04.md), [P05](evidence/P05.md), [P06](evidence/P06.md), [P07](evidence/P07.md), [P08](evidence/P08.md), [onboarding](evidence/Onboarding.md), [revisão de produto](evidence/Product-review.md), [evolução operacional](evidence/Operations-evolution.md).
+
+**Mídia:** [player local/vídeo P08](case/index.html), [transcrição](case/transcript.md), [capturas atuais separadas](ux/PetLand_3.0_UX_Final.md#antesdepois-e-proveniência). Números de fases/capturas antigas não são renomeados como novos. As fases registradas são P01–P08 e incrementos posteriores; número de PR não cria uma fase adicional.

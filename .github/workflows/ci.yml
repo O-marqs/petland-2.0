@@ -44,8 +44,11 @@ jobs:
       - run: uv run --directory apps/api mypy
       - run: uv run --project apps/api python scripts/check_architecture.py
       - run: python scripts/check_repository.py
-      - name: Review candidate, versions and portfolio media
-        run: python scripts/release.py check
+      - name: Review documentation, diagrams, candidate and portfolio media
+        run: |
+          python scripts/check_documentation.py
+          python scripts/render_architecture.py --check
+          python scripts/release.py check
       - name: Unit, HTTP and real PostgreSQL migrations
         run: uv run --directory apps/api pytest
       - run: pnpm lint

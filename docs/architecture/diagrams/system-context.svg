@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img">
+<title>01-System-Context</title><desc>Uma loja · personas e dependências atuais. PostgreSQL pertence ao sistema. SMTP atual é local; não há provedor externo contratado.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1f5d50"/></marker></defs>
+<rect width="1440" height="1000" fill="#f7f5ef"/>
+<text data-node="header" x="60" y="57" fill="#243a35" font-family="Arial, sans-serif" font-size="23" font-weight="700">PETLAND 3.0 · 01-System-Context</text>
+<text data-node="header" x="60" y="82" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">Uma loja · personas e dependências atuais</text>
+<text data-node="header" x="60" y="107" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">CURRENT / 2549523 / 0007_product_operations</text>
+<rect id="node-tutor" x="60" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="tutor" x="78" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Tutor / CUSTOMER</text>
+<text data-node="tutor" x="78" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Pets, reserva e</text>
+<text data-node="tutor" x="78" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">histórico próprios</text>
+<rect id="node-staff" x="60" y="400" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="staff" x="78" y="459.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Funcionário / EMPLOYEE</text>
+<text data-node="staff" x="78" y="480.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Agenda e cuidado do dia</text>
+<rect id="node-admin" x="60" y="620" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="admin" x="78" y="669.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Administrador / ADMIN</text>
+<text data-node="admin" x="78" y="689.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Operação, gestão e</text>
+<text data-node="admin" x="78" y="710.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">acessos</text>
+<rect id="node-petland" x="510" y="400" width="320" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="petland" x="528" y="439.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">PetLand 3.0</text>
+<text data-node="petland" x="528" y="459.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Plataforma operacional de pet</text>
+<text data-node="petland" x="528" y="480.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">shop</text>
+<text data-node="petland" x="528" y="500.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Uma loja · monólito modular</text>
+<rect id="node-smtp" x="1080" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="smtp" x="1098" y="209.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">SMTP / Mailpit local</text>
+<text data-node="smtp" x="1098" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Confirmação, lembrete e</text>
+<text data-node="smtp" x="1098" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">pronto</text>
+<text data-node="smtp" x="1098" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Sem entrega externa</text>
+<text data-node="smtp" x="1098" y="290.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">comprovada</text>
+<rect id="node-db" x="1080" y="400" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="db" x="1098" y="449.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">PostgreSQL 17</text>
+<text data-node="db" x="1098" y="469.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Armazenamento interno</text>
+<text data-node="db" x="1098" y="490.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Single-node</text>
+<rect id="node-ops" x="1080" y="620" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="ops" x="1098" y="649.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Operador offline</text>
+<text data-node="ops" x="1098" y="669.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Migrations, backup e</text>
+<text data-node="ops" x="1098" y="689.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">recuperação</text>
+<text data-node="ops" x="1098" y="710.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Archive e chave no mesmo</text>
+<text data-node="ops" x="1098" y="730.375" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">host</text>
+<text data-node="footer" x="60" y="962" fill="#243a35" font-family="Arial, sans-serif" font-size="16" font-weight="700">PostgreSQL pertence ao sistema. SMTP atual é local; não há provedor externo contratado.</text>
+<polyline points="320,245.0 415.0,245.0 415.0,465.0 510,465.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="415.0" y="346.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">usa</text>
+<polyline points="320,465.0 415.0,465.0 415.0,465.0 510,465.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="367.5" y="456.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">usa</text>
+<polyline points="320,685.0 415.0,685.0 415.0,465.0 510,465.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="415.0" y="566.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">usa</text>
+<polyline points="830,465.0 955.0,465.0 955.0,245.0 1080,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="955.0" y="346.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">comunica</text>
+<polyline points="830,465.0 955.0,465.0 955.0,465.0 1080,465.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="892.5" y="456.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">persiste</text>
+<polyline points="1210.0,620 1210.0,575.0 1210.0,575.0 1210.0,530" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1210.0" y="588.5" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">opera</text>
+</svg>

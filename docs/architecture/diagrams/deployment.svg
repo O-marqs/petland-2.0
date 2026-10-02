@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img">
+<title>07-Deployment-Staging</title><desc>CURRENT · máquina local / sem alta disponibilidade. Rede privada entre containers; portas públicas somente loopback. Archive local não cobre perda da máquina.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1f5d50"/></marker></defs>
+<rect width="1440" height="1000" fill="#f7f5ef"/>
+<text data-node="header" x="60" y="57" fill="#243a35" font-family="Arial, sans-serif" font-size="23" font-weight="700">PETLAND 3.0 · 07-Deployment-Staging</text>
+<text data-node="header" x="60" y="82" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">CURRENT · máquina local / sem alta disponibilidade</text>
+<text data-node="header" x="60" y="107" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">CURRENT / 2549523 / 0007_product_operations</text>
+<rect id="node-user" x="60" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="user" x="78" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Navegador local</text>
+<text data-node="user" x="78" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">CA de teste</text>
+<text data-node="user" x="78" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">https://localhost:8443</text>
+<rect id="node-web" x="410" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="web" x="428" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">petland7 / web</text>
+<text data-node="web" x="428" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Nginx + React estático</text>
+<text data-node="web" x="428" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Não root / read-only</text>
+<rect id="node-api" x="760" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="api" x="778" y="219.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">petland7 / api</text>
+<text data-node="api" x="778" y="239.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">2 workers + outbox</text>
+<text data-node="api" x="778" y="260.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">threads</text>
+<text data-node="api" x="778" y="280.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Sem porta publicada</text>
+<rect id="node-pg" x="1110" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="pg" x="1128" y="219.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">petland7 / postgres</text>
+<text data-node="pg" x="1128" y="239.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">PostgreSQL 17 single-</text>
+<text data-node="pg" x="1128" y="260.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">node</text>
+<text data-node="pg" x="1128" y="280.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Volume persistente / TLS</text>
+<rect id="node-mail" x="760" y="480" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="mail" x="778" y="529.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">petland7 / mailpit</text>
+<text data-node="mail" x="778" y="549.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">STARTTLS</text>
+<text data-node="mail" x="778" y="570.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">UI loopback :8026</text>
+<rect id="node-job" x="1110" y="480" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="job" x="1128" y="519.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">petland7 / migrate</text>
+<text data-node="job" x="1128" y="539.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Job separado antes da</text>
+<text data-node="job" x="1128" y="560.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">API</text>
+<text data-node="job" x="1128" y="580.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Alembic head 0007</text>
+<rect id="node-host" x="410" y="480" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="host" x="428" y="511.75" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="700">Host / ferramentas offline</text>
+<text data-node="host" x="428" y="530.65" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">Backup local / chave</text>
+<text data-node="host" x="428" y="549.55" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">separada</text>
+<text data-node="host" x="428" y="568.45" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">Restore + reconciliação +</text>
+<text data-node="host" x="428" y="587.35" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">ativação</text>
+<rect id="node-other" x="60" y="790" width="650" height="100" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="other" x="78" y="824.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Ambientes independentes</text>
+<text data-node="other" x="78" y="844.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">petland3: dev Vite / outro volume; testes PG efêmeros</text>
+<text data-node="other" x="78" y="865.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">petlanddocs: captura temporária sintética / imagem funcional 2549523</text>
+<rect id="node-future" x="760" y="790" width="610" height="100" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="future" x="778" y="825.65" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="700">POSSIBLE PRODUCTION EVOLUTION</text>
+<text data-node="future" x="778" y="844.55" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">Não implementada: provedor, Multi-AZ, PITR, SMTP externo, off-host</text>
+<text data-node="future" x="778" y="863.4499999999999" fill="#243a35" font-family="Arial, sans-serif" font-size="14" font-weight="400">SLO/RPO/RTO, observabilidade e balanceamento dependem de D10</text>
+<text data-node="footer" x="60" y="962" fill="#243a35" font-family="Arial, sans-serif" font-size="16" font-weight="700">Rede privada entre containers; portas públicas somente loopback. Archive local não cobre perda da máquina.</text>
+<polyline points="320,245.0 365.0,245.0 365.0,245.0 410,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="342.5" y="221.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">HTTPS</text>
+<text x="342.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">local</text>
+<polyline points="670,245.0 715.0,245.0 715.0,245.0 760,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="692.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">/api</text>
+<polyline points="1020,245.0 1065.0,245.0 1065.0,245.0 1110,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="221.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">verify-</text>
+<text x="1042.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">full</text>
+<polyline points="890.0,310 890.0,395.0 890.0,395.0 890.0,480" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="890.0" y="343.5" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">STARTTLS</text>
+<polyline points="1240.0,480 1240.0,395.0 1240.0,395.0 1240.0,310" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1240.0" y="428.5" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">migrator / DDL</text>
+<polyline points="670.0,545.0 690,545 690,365 1240,365 1240.0,310.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="965.0" y="356.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">dump / restore</text>
+</svg>

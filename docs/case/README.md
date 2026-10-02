@@ -2,6 +2,8 @@
 
 Case de portfólio de Lucas Marques. **Candidato 3.0.0-rc.1, ambiente local e dados fictícios.** P08 prepara a entrega para revisão; publicação externa e aceite final não estão declarados concluídos.
 
+**Leitura atual:** [produto implementado](../product/product-overview.md), [arquitetura](../architecture/overview.md), [UX e oito capturas atuais](../ux/PetLand_3.0_UX_Final.md), [metas/medições/limites](../architecture/non-functional-requirements.md). O vídeo/`after-*` são históricos P08; `review-home.webp` e `operations-dashboard.webp` são snapshots posteriores com seus próprios manifestos, não novas capturas desta revisão. Somente `docs/ux/media/current` corresponde à captura funcional `2549523` desta documentação.
+
 Revisão posterior de produto/identidade: [matriz completa de dores](../product/functional-gap-analysis.md), [navegação e direção visual](../ux/visual-review.md) e [evidências](../evidence/Product-review.md). A capa atual do case usa uma nova captura real em `media/review-home.webp`, com origem em `media/visual-review.json`. As imagens `after-*` e o vídeo a seguir continuam representando a entrega P08, anterior à revisão visual; sua proveniência não foi alterada.
 
 ## O problema
@@ -60,7 +62,7 @@ Laboratório móvel P06: nove amostras, LCP máximo 2028 ms, INP máximo 88 ms, 
 
 ## O que falta para promoção
 
-Aceite final de produto e revisão humana com leitor de tela continuam pendentes. D10 adia provedor, domínio, e-mail externo, publicação, cópia de backup fora do host e metas produtivas. Não há dados reais, multiempresa, pagamentos ou importação histórica; D08/D12 dispensam esta última. Não houve tag/release estável, merge ou deploy automático. [Candidato e procedimento de promoção](../runbooks/release.md).
+Aceite final de produto e revisão humana com leitor de tela continuam pendentes. D10 adia provedor, domínio, e-mail externo, publicação, cópia de backup fora do host e metas produtivas. As gravações/capturas publicadas usam dados fictícios; isso não afirma que um banco local de teste pessoal nunca contenha dados fornecidos pelo autor. Sem multiempresa, pagamentos ou importação histórica; D08/D12 dispensam esta última. Ferramentas não fazem tag/release estável, merge ou deploy automático. [Candidato e procedimento de promoção](../runbooks/release.md).
 
 O repositório preserva a baseline, as alterações locais do legado, fontes recebidas e o histórico incremental. A evolução é demonstrada pelas jornadas, constraints e ensaios reproduzíveis; este case não apresenta o candidato como serviço comercial em operação.
 

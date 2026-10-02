@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img">
+<title>02-Containers</title><desc>Staging local · containers e processo de outbox. Outbox é componente dentro da API, não um container ou broker independente. Entrega at least once.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#1f5d50"/></marker></defs>
+<rect width="1440" height="1000" fill="#f7f5ef"/>
+<text data-node="header" x="60" y="57" fill="#243a35" font-family="Arial, sans-serif" font-size="23" font-weight="700">PETLAND 3.0 · 02-Containers</text>
+<text data-node="header" x="60" y="82" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">Staging local · containers e processo de outbox</text>
+<text data-node="header" x="60" y="107" fill="#243a35" font-family="Arial, sans-serif" font-size="17" font-weight="400">CURRENT / 2549523 / 0007_product_operations</text>
+<rect id="node-react" x="60" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="react" x="78" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Browser / React SPA</text>
+<text data-node="react" x="78" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Query, RHF/Zod,</text>
+<text data-node="react" x="78" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">TypeScript</text>
+<rect id="node-nginx" x="410" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="nginx" x="428" y="219.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Nginx</text>
+<text data-node="nginx" x="428" y="239.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Frontend estático e</text>
+<text data-node="nginx" x="428" y="260.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">proxy /api</text>
+<text data-node="nginx" x="428" y="280.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">HTTPS localhost:8443</text>
+<rect id="node-api" x="760" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="api" x="778" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">FastAPI</text>
+<text data-node="api" x="778" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">2 Uvicorn workers</text>
+<text data-node="api" x="778" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Casos de uso síncronos</text>
+<rect id="node-db" x="1110" y="180" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="db" x="1128" y="229.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">PostgreSQL 17</text>
+<text data-node="db" x="1128" y="249.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">SQLAlchemy / psycopg</text>
+<text data-node="db" x="1128" y="270.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Volume staging_data</text>
+<rect id="node-outbox" x="760" y="430" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="outbox" x="778" y="469.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Outbox processor</text>
+<text data-node="outbox" x="778" y="489.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Thread no lifespan de</text>
+<text data-node="outbox" x="778" y="510.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">cada worker</text>
+<text data-node="outbox" x="778" y="530.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Claim / lease / retry</text>
+<rect id="node-smtp" x="1110" y="430" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="smtp" x="1128" y="479.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Mailpit</text>
+<text data-node="smtp" x="1128" y="499.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">SMTP STARTTLS</text>
+<text data-node="smtp" x="1128" y="520.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">UI somente loopback</text>
+<rect id="node-migration" x="410" y="680" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="migration" x="428" y="719.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Alembic job</text>
+<text data-node="migration" x="428" y="739.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Executa antes da API</text>
+<text data-node="migration" x="428" y="760.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Credencial migrator</text>
+<text data-node="migration" x="428" y="780.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">separada</text>
+<rect id="node-backup" x="760" y="680" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="backup" x="778" y="729.625" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Ferramentas offline</text>
+<text data-node="backup" x="778" y="749.875" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Backup autenticado local</text>
+<text data-node="backup" x="778" y="770.125" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Restore em banco novo</text>
+<rect id="node-archive" x="1110" y="680" width="260" height="130" rx="12" fill="#fff" stroke="#1f5d50" stroke-width="2"/>
+<text data-node="archive" x="1128" y="719.5" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="700">Archive criptografado</text>
+<text data-node="archive" x="1128" y="739.75" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Chave separada / mesmo</text>
+<text data-node="archive" x="1128" y="760.0" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">host</text>
+<text data-node="archive" x="1128" y="780.25" fill="#243a35" font-family="Arial, sans-serif" font-size="15" font-weight="400">Não publicado</text>
+<text data-node="footer" x="60" y="962" fill="#243a35" font-family="Arial, sans-serif" font-size="16" font-weight="700">Outbox é componente dentro da API, não um container ou broker independente. Entrega at least once.</text>
+<polyline points="320,245.0 365.0,245.0 365.0,245.0 410,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="342.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">HTTPS</text>
+<polyline points="670,245.0 715.0,245.0 715.0,245.0 760,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="692.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">/api</text>
+<polyline points="1020,245.0 1065.0,245.0 1065.0,245.0 1110,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="221.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">TLS /</text>
+<text x="1042.5" y="236.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">runtime</text>
+<polyline points="890.0,310 890.0,370.0 890.0,370.0 890.0,430" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="890.0" y="331.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">lifespan</text>
+<polyline points="1020,495.0 1065.0,495.0 1065.0,495.0 1110,495.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="471.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">fora da</text>
+<text x="1042.5" y="486.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">transação</text>
+<polyline points="1020.0,495.0 1055,495 1055,320 1240,320 1240.0,310.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1147.5" y="311.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">claim</text>
+<polyline points="670.0,745.0 690,745 690,350 1390,350 1390,245 1370.0,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1040.0" y="341.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">DDL separado</text>
+<polyline points="1020,745.0 1065.0,745.0 1065.0,745.0 1110,745.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1042.5" y="721.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">dump /</text>
+<text x="1042.5" y="736.0" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">encrypt</text>
+<polyline points="1020.0,745.0 1040,745 1040,600 1390,600 1390,245 1370.0,245.0" fill="none" stroke="#1f5d50" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1390.0" y="413.5" text-anchor="middle" fill="#243a35" stroke="#f7f5ef" stroke-width="5" paint-order="stroke" font-family="Arial, sans-serif" font-size="12">restore isolado</text>
+</svg>

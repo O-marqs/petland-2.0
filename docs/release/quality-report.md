@@ -1,5 +1,7 @@
 # Qualidade e rastreabilidade — candidata 3.0.0-rc.1
 
+**Relatório incremental/histórico.** O quadro consolidado de metas, resultados finais `2549523` e limites está em [RNFs atuais](../architecture/non-functional-requirements.md). P06/P07/P08 abaixo conservam números/ambientes próprios. [Checks da revisão documental](../evidence/Documentation-review.md).
+
 O relatório consolida provas existentes e a demonstração P08. Cada medição identifica sua fase; números de P06/P07 não são apresentados como nova medição P08 nem como tráfego de produção. CI do commit da candidata será registrada nos checks/descrição de seu PR.
 
 ## Funcionalidades
@@ -57,4 +59,4 @@ Não há falha crítica conhecida de autorização/integridade nas verificaçõe
 
 Schema atual 0007, escala coletiva/pools físicos/transferência/contexto crítico e anterior/comunicação/painel/indicadores por pessoa, conforme [ADR-016](../adr/0016-operational-evolution.md). Check final local 128 Python + 20 React; E2E 15 + skip previsto e revisão 16 checkpoints. Novo roteiro HTTPS usa horário/SMTP reais e restaura regras temporárias; [evidência e limites atuais](../evidence/Operations-evolution.md). Medições locais e rodadas Linux reprovaram carga e geraram otimização; resultado final/CI fica no PR, sem reutilizar métricas anteriores. Candidata permanece para revisão humana, com todos os gates D10/leitor de tela pendentes.
 
-Web final: 9/9 amostras, LCP até 2452 ms, INP até 104 ms, CLS até 0,0011783, após carregar CSS operacional junto ao layout autenticado. API local da revisão `a4c2630` reprova relatório/painel/reserva; Linux dessa revisão passou, mas uma rodada posterior excedeu o relatório e motivou compartilhar conversões da capacidade. [Carga local preservada](../evidence/Operations-evolution-api-local.json), [web e condições](../evidence/Operations-evolution-web-benchmark.json); CI final permanece registrada no PR.
+Web final: 9/9 amostras, LCP até 2452 ms, INP até 104 ms, CLS até 0,0011783, após carregar CSS operacional junto ao layout autenticado. API local da revisão `a4c2630` reprova relatório/painel/reserva; Linux dessa revisão passou, mas uma rodada posterior excedeu o relatório e motivou compartilhar conversões da capacidade. [Carga local anterior preservada](../evidence/Operations-evolution-api-local.json), [web e condições](../evidence/Operations-evolution-web-benchmark.json). Referência final `2549523`: duas rodadas Linux aprovadas e carga Windows/WSL ainda reprovada em gestão/painel/reserva; [JSONs, p95 e condições consolidados](../architecture/non-functional-requirements.md#api--comparação-de-ensaios-sem-percentual-de-melhoria). Os novos arquivos apenas preservam medições já feitas, sem alegar reexecução nesta revisão.
