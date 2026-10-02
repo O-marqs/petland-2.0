@@ -1,0 +1,292 @@
+Atue como Principal Engineer, Release Engineer, DevEx Engineer e Technical Writer.
+
+Repositório:
+
+https://github.com/O-marqs/petland-2.0
+
+Esta tarefa acontece DEPOIS da atualização final de produto, UX e arquitetura.
+
+Objetivo:
+
+garantir que uma pessoa sem nenhum contexto prévio consiga:
+
+1. descobrir qual é a versão correta do PetLand 3.0;
+2. clonar o repositório;
+3. configurar o ambiente;
+4. subir o sistema;
+5. acessar uma demonstração;
+6. executar os testes;
+7. entender arquitetura/produto;
+8. reproduzir o estado documentado.
+
+Não implementar novas funcionalidades.
+
+Não fazer merge.
+
+Não publicar release.
+
+====================================================
+1. SOURCE OF TRUTH
+====================================================
+
+Analise branches e PRs atuais.
+
+Identifique qual HEAD realmente contém a versão final mais completa.
+
+Procure inconsistências como:
+
+- README mandando clonar branch antiga;
+- documentação apontando para P08;
+- schema revision antiga;
+- versão de pacote inconsistente;
+- referência para PR antigo;
+- mídia histórica tratada como atual.
+
+Proponha e aplique somente alterações documentais/configuracionais necessárias para que o estado atual tenha uma única narrativa.
+
+Não reorganizar histórico Git destrutivamente.
+
+====================================================
+2. CLEAN CLONE EXPERIENCE
+====================================================
+
+Execute, quando permitido, um teste equivalente a um clone limpo.
+
+A reprodução deve depender somente de requisitos documentados.
+
+Validar o caminho principal:
+
+git clone ...
+cd ...
+python scripts/dev.py init
+python scripts/dev.py up
+
+Verificar:
+
+- imagens constroem;
+- migrations executam;
+- health responde;
+- readiness responde;
+- React abre;
+- API comunica com PostgreSQL;
+- Mailpit funciona;
+- nenhuma senha default é necessária;
+- nenhum arquivo local não documentado é necessário.
+
+Se qualquer pré-requisito estiver faltando no README, documentar.
+
+====================================================
+3. QUICK START
+====================================================
+
+O README deve possuir um Quick Start realmente mínimo.
+
+Separar claramente:
+
+RUN THE APP
+
+DEVELOP LOCALLY
+
+RUN TESTS
+
+RUN DEMO
+
+RUN STAGING REHEARSAL
+
+Não obrigar o usuário comum a entender todos os scripts antes de executar.
+
+====================================================
+4. DEMO
+====================================================
+
+Criar ou revisar instrução clara para executar a demonstração com dados fictícios.
+
+A pessoa deve conseguir descobrir:
+
+- como criar/seedar demo;
+- onde ficam credenciais geradas;
+- como acessar cliente;
+- como acessar funcionário;
+- como acessar admin;
+- como acessar e-mails;
+- como limpar/parar;
+- o que é preservado.
+
+Não adicionar credenciais default versionadas.
+
+====================================================
+5. ENVIRONMENT
+====================================================
+
+Auditar:
+
+.env.example
+Dockerfiles
+Compose
+staging
+scripts/dev.py
+Python version
+uv version
+Node version
+pnpm version
+PostgreSQL version
+
+Garantir coerência entre documentação e configuração.
+
+Não atualizar dependências somente por existir versão nova.
+
+====================================================
+6. DOCUMENTATION LINKS
+====================================================
+
+Executar uma verificação de links relativos Markdown se existir ferramenta apropriada ou implementar um check simples e seguro se for justificável.
+
+Detectar:
+
+- arquivo inexistente;
+- âncora inválida;
+- imagem quebrada;
+- referência para documento renomeado.
+
+====================================================
+7. LICENSE E REPOSITORY HYGIENE
+====================================================
+
+Verifique se o repositório possui licença explícita.
+
+Não escolha uma licença em nome do autor se nenhuma decisão foi fornecida.
+
+Se estiver ausente:
+
+- registrar a ausência;
+- preparar recomendação;
+- não adicionar automaticamente MIT/Apache/etc sem decisão humana.
+
+Verifique também:
+
+- .gitignore;
+- arquivos locais;
+- secrets;
+- dumps;
+- databases;
+- certificados;
+- caches;
+- builds;
+- venv;
+- test artifacts.
+
+Nada sensível deve fazer parte do pacote público.
+
+====================================================
+8. RELEASE PACKAGE
+====================================================
+
+Revise `scripts/release.py`.
+
+Validar que o pacote de portfólio:
+
+- corresponde ao commit correto;
+- possui inventário;
+- possui hashes;
+- exclui secrets;
+- exclui bancos;
+- exclui certificados privados;
+- inclui documentação principal;
+- inclui diagramas;
+- inclui case;
+- inclui mídia necessária.
+
+Não publicar o pacote.
+
+====================================================
+9. CI
+====================================================
+
+Confirme que CI executa os gates importantes:
+
+Backend:
+- Ruff;
+- formatting;
+- mypy;
+- architecture;
+- pytest;
+- PostgreSQL real;
+- migrations.
+
+Frontend:
+- lint;
+- typecheck;
+- format;
+- unit;
+- contracts;
+- build.
+
+Integration:
+- E2E;
+- staging;
+- recovery;
+- performance quando previsto.
+
+Não aumentar artificialmente o número de checks.
+
+====================================================
+10. README FINAL
+====================================================
+
+Após a auditoria, revise novamente o README.
+
+Ele deve permitir:
+
+30 segundos:
+entender o projeto.
+
+5 minutos:
+entender produto + arquitetura.
+
+10 minutos:
+executar.
+
+15+ minutos:
+entrar em documentação profunda.
+
+Evitar histórico excessivo.
+
+====================================================
+11. DEFINITION OF DONE
+====================================================
+
+Considere esta tarefa concluída somente se:
+
+- documentação atual e código não se contradizem;
+- caminho de clone está correto;
+- quick start foi efetivamente validado;
+- demo possui caminho reproduzível;
+- links principais funcionam;
+- versão/schema estão coerentes;
+- CI está verde ou qualquer falha está explicitamente registrada;
+- nenhuma dependência implícita do ambiente do autor é necessária.
+
+====================================================
+12. RELATÓRIO FINAL
+====================================================
+
+Retorne:
+
+- HEAD analisado;
+- comandos executados;
+- ambiente usado;
+- resultado do clean-start;
+- inconsistências encontradas;
+- correções feitas;
+- arquivos alterados;
+- testes executados;
+- limitações;
+- qualquer decisão humana ainda necessária.
+
+Não faça merge.
+
+Não tagueie.
+
+Não publique.
+
+A revisão humana decidirá quando criar a release final.

@@ -49,6 +49,7 @@ jobs:
           python scripts/check_documentation.py
           python scripts/render_architecture.py --check
           python scripts/release.py check
+          python -m unittest discover -s scripts -p 'test_release.py'
       - name: Unit, HTTP and real PostgreSQL migrations
         run: uv run --directory apps/api pytest
       - run: pnpm lint

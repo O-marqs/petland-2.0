@@ -8,11 +8,12 @@ import subprocess
 import tomllib
 import zipfile
 from datetime import UTC, datetime
-from pathlib import Path, PurePosixPath
+from pathlib import Path
+
+from repository_hygiene import check_public_file, check_public_path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = "docs/release/candidate.json"
-FORBIDDEN = {".git", ".local", ".tools", ".venv", "node_modules", "__pycache__"}
 
 
 def digest(path: Path) -> str:
@@ -67,31 +68,33 @@ def check():
 
 
 def safe_names(names):
+    if len(names) != len(set(names)):
+        raise ValueError("Duplicate candidate archive entries")
     for name in names:
-        path = PurePosixPath(name)
-        if (
-            path.is_absolute()
-            or ".." in path.parts
-            or FORBIDDEN.intersection(path.parts)
-            or any(part.startswith(".env") and part != ".env.example" for part in path.parts)
-        ):
-            raise ValueError("Private or unsafe path in candidate archive")
+        check_public_path(name)
 
 
 def verify(folder: Path):
     manifest = json.loads((folder / "manifest.json").read_text())
-    archive = folder / manifest["archive"]
+    check_public_path(manifest["archive"])
     if Path(manifest["archive"]).name != manifest["archive"]:
         raise ValueError("Invalid archive name")
+    archive = folder / manifest["archive"]
     if digest(archive) != manifest["archive_sha256"]:
         raise ValueError("Candidate archive checksum mismatch")
     with zipfile.ZipFile(archive) as file:
+        if not re.fullmatch(r"[0-9a-f]{40}", manifest["commit"]) or file.comment != manifest[
+            "commit"
+        ].encode("ascii"):
+            raise ValueError("Archive commit disagrees with manifest")
+        safe_names(file.namelist())
         names = [name for name in file.namelist() if not name.endswith("/")]
-        safe_names(names)
         if set(names) != set(manifest["files"]):
             raise ValueError("Candidate file inventory mismatch")
         for name in names:
-            if hashlib.sha256(file.read(name)).hexdigest() != manifest["files"][name]:
+            data = file.read(name)
+            check_public_file(name, data)
+            if hashlib.sha256(data).hexdigest() != manifest["files"][name]:
                 raise ValueError("Candidate asset checksum mismatch")
         candidate = validate(file.read)
         if candidate["version"] != manifest["version"]:
@@ -122,11 +125,14 @@ def bundle():
         ["git", "archive", "--format=zip", "--output", str(archive), "HEAD"], cwd=ROOT, check=True
     )
     with zipfile.ZipFile(archive) as file:
-        files = {
-            name: hashlib.sha256(file.read(name)).hexdigest()
-            for name in file.namelist()
-            if not name.endswith("/")
-        }
+        safe_names(file.namelist())
+        files = {}
+        for name in file.namelist():
+            if name.endswith("/"):
+                continue
+            data = file.read(name)
+            check_public_file(name, data)
+            files[name] = hashlib.sha256(data).hexdigest()
     (folder / "manifest.json").write_text(
         json.dumps(
             {

@@ -21,3 +21,16 @@ test-results/
 *.log
 .DS_Store
 Thumbs.db
+*.key
+*.pem
+*.p12
+*.pfx
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.backup
+*.plbackup
+*.sql.gz
+*.sql.zip
+*.sql.bz2

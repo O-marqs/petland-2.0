@@ -2,6 +2,8 @@
 
 Estado implementado para revisão humana: código `2549523`, schema `0007_product_operations`, candidata `3.0.0-rc.1`. Publicação e aceite final pendentes. Discovery e evidências de fases são referências históricas, não lista atual de funcionalidades.
 
+**Checkout e execução:** [versão/reprodução](release/reproducibility.md) define a branch atual e os cinco caminhos do [README](../README.md). [Auditoria de clone, ambiente, demo e pacote](evidence/Reproducibility-review.md). Branches avançam; evidências e mídias conservam o SHA em que foram produzidas.
+
 ## START HERE
 
 | Leitura                                           | Para quê                                                                                |
@@ -39,6 +41,7 @@ Estado implementado para revisão humana: código `2549523`, schema `0007_produc
 - [CI](../.github/workflows/ci.yml), [fitness functions](../scripts/check_architecture.py).
 - [Candidata e gates](release/candidate.json), [qualidade incremental](release/quality-report.md).
 - [Auditoria documental e verificações desta revisão](evidence/Documentation-review.md).
+- [Reprodução, licença ausente e higiene do pacote](release/reproducibility.md), [resultados do clone limpo](evidence/Reproducibility-review.md).
 
 ## RUNBOOKS
 

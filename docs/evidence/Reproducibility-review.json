@@ -1,0 +1,134 @@
+{
+  "received_head": "4ef44e03ce4601b753767bfe65fee1d55283f7be",
+  "environment": {
+    "os": "Windows / Linux Docker WSL",
+    "launcher_python": "3.11.9",
+    "project_python": "3.13.15",
+    "uv": "0.12.18",
+    "node": "22.14.0",
+    "pnpm": "10.34.5",
+    "postgres": "17.11",
+    "docker": "28.0.4",
+    "compose": "2.34.0-desktop.1"
+  },
+  "app": {
+    "init_idempotent": true,
+    "generated_credentials": true,
+    "project": "petlandcleanapp20261002",
+    "head": "4ef44e03ce4601b753767bfe65fee1d55283f7be",
+    "started_at": "2026-10-02T18:26:02.8617071Z",
+    "finished_at": "2026-10-02T18:38:26.3586868Z",
+    "clean_initial_environment": true,
+    "app_start": true,
+    "e2e": true,
+    "historical_data_copied": false,
+    "host_install": true,
+    "check": true
+  },
+  "http": [
+    {
+      "url": "http://localhost:8000/api/v1/health/live",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8000/api/v1/health/ready",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5173",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:5173/api/v1/health/ready",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8025/api/v1/info",
+      "status": 200
+    }
+  ],
+  "initial_database": {
+    "schema": "0007_product_operations",
+    "users": 0,
+    "pets": 0,
+    "appointments": 0
+  },
+  "migration_exit": 0,
+  "check": {
+    "python_pass": 128,
+    "react_pass": 20,
+    "e2e_pass": 15,
+    "e2e_expected_mobile_singleton_skip": 1
+  },
+  "demo": {
+    "rehearse": true,
+    "reset_preserved_origin": true,
+    "seed": true,
+    "own_credentials_and_ca": true,
+    "clean_initial_staging": true,
+    "smoke": true,
+    "historical_data_copied": false,
+    "init_idempotent": true,
+    "seed_idempotent": true,
+    "finished_at": "2026-10-02T18:45:49.3006842Z",
+    "started_at": "2026-10-02T18:42:15.6535840Z",
+    "head": "4ef44e03ce4601b753767bfe65fee1d55283f7be",
+    "project": "petlandcleanstage20261002"
+  },
+  "preservation": {
+    "original_counts_preserved": true,
+    "original_images_preserved": true,
+    "original_database_preserved": true,
+    "review_volume_preserved": true
+  },
+  "recovery": {
+    "executed_at": "2026-10-02T18:45:47.934129+00:00",
+    "schema_revision": "0007_product_operations",
+    "reconciled_tables": 23,
+    "source_preserved": true,
+    "source_smoke": {
+      "passed": true,
+      "tls_verified": true,
+      "smtp_starttls_verified": true,
+      "profiles": 3,
+      "static_deep_links": 6,
+      "ownership_private_notes_and_capacity": true,
+      "persistent_booking_idempotency": true
+    },
+    "restored_smoke": {
+      "passed": true,
+      "tls_verified": true,
+      "smtp_starttls_verified": true,
+      "profiles": 3,
+      "static_deep_links": 6,
+      "ownership_private_notes_and_capacity": true,
+      "persistent_booking_idempotency": true
+    },
+    "return_to_source_smoke": {
+      "passed": true,
+      "tls_verified": true,
+      "smtp_starttls_verified": true,
+      "profiles": 3,
+      "static_deep_links": 6,
+      "ownership_private_notes_and_capacity": true,
+      "persistent_booking_idempotency": true
+    },
+    "browser": {
+      "source": {
+        "passed": true,
+        "checkpoints": 3
+      },
+      "recovery": {
+        "passed": true,
+        "checkpoints": 3
+      },
+      "return": {
+        "passed": true,
+        "checkpoints": 3
+      }
+    }
+  },
+  "cold_cache_claimed": false,
+  "author_private_files_copied": false,
+  "merge_tag_or_publication": false
+}

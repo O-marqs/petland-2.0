@@ -1,12 +1,12 @@
-# Revisão e promoção da candidata P08
+# Revisão e pacote local da candidata
 
-Responsável: Lucas. Artefato **3.0.0-rc.1**, schema `0006_hardening`. A solicitação P08 autoriza preparar a entrega e o PR; não registra aceite sonoro nem revoga D10. O plano exige aprovação antes de publicar (§18/P08). Não fazer merge/tag/promoção automática.
+Responsável: Lucas. Artefato **3.0.0-rc.1**, schema atual `0007_product_operations`. [Versão/checkout e reprodução](../release/reproducibility.md) são a referência de execução; [candidate.json](../release/candidate.json) registra gates. A versão RC permanece durante incrementos de revisão; identifique o commit, não apenas o número. Não fazer merge/tag/promoção automática. Aceite de produto/leitor de tela e D10 permanecem pendentes.
 
 ## Revisar agora
 
-1. Conferir PR P08, CI do head, [notas](../release/3.0.0-rc.1.md) e [relatório](../release/quality-report.md).
+1. Conferir branch/PR atual da [auditoria de reprodução](../evidence/Reproducibility-review.md), CI do commit exato, [produto atual](../product/product-overview.md) e [relatório](../release/quality-report.md). As [notas P08](../release/3.0.0-rc.1.md) conservam seu schema e resultados históricos.
 2. Reproduzir setup pelo README. Em demo local, consultar apenas localmente `.local/staging/accounts.json`; não publicar seu conteúdo. Certificado é local de teste.
-3. Cliente: cadastrar/editar pet, escolher oferta, conferir resumo, confirmar e acompanhar. Equipe: chegar/iniciar/concluir, publicar resumo, conferir nota interna. Administração: indicadores, acesso restrito, impacto antes de mudar expediente. Comparar com [vídeo](../case/index.html).
+3. Cliente: cadastrar/editar pet, escolher oferta, conferir resumo, confirmar e acompanhar. Equipe: painel/agenda, chegar/iniciar/concluir, transferir, conferir cuidados e comunicação. Gestão: equipe por data, capacidade física, indicadores e acessos. Siga [aceite manual](manual-acceptance.md) e [operação atual](operational-evolution.md). Compare com [capturas atuais](../ux/PetLand_3.0_UX_Final.md); o [vídeo](../case/index.html) é histórico P08.
 4. Realizar aceite com leitor de tela segundo P06. Registrar sistema/leitor/versão, resultado por jornada e achados. Axe/árvore acessível/teclado/vídeo não substituem essa execução.
 5. Registrar decisão final de produto e limitações aceitas. Um merge de código não concede automaticamente aprovação de publicação ou SLA.
 
@@ -19,7 +19,7 @@ python scripts/release.py bundle
 python scripts/release.py verify --folder CAMINHO_DA_PASTA_EMITIDA
 ```
 
-Saída em `.local/release/3.0.0-rc.1/<commit>/`: ZIP, inventário e SHA-256, versão/commit e gates explícitos. Diretório/arquivo existente não é sobrescrito; repetição verifica o pacote. ZIP contém somente arquivos da árvore ativa do commit; não embute histórico legado, credenciais, contas de demo, CA/chaves, archive de banco, venv/node_modules ou `.local`. O pacote não é publicado nem muda refs Git. `verify` lê o ZIP sem extrair e confere cada arquivo, mídia e versão. Para executar staging/regravar a proveniência histórica, use o clone Git do README: o ZIP de revisão não contém os metadados/histórico Git exigidos por essas rotinas.
+Saída em `.local/release/3.0.0-rc.1/<commit>/`: ZIP, inventário e SHA-256, versão/commit e gates explícitos. Diretório/arquivo existente não é sobrescrito; repetição verifica o pacote. ZIP contém somente arquivos da árvore ativa do commit; não embute histórico legado, credenciais, contas de demo, CA/chaves, archive de banco, venv/node_modules ou `.local`. O pacote não é publicado nem muda refs Git. `verify` lê sem extrair, compara o commit no comentário Git do ZIP e no manifesto, recusa entradas duplicadas/caminhos privados/assinaturas de segredo conhecidas e confere inventário, hashes, mídia e versão. Hashes dependem de manifesto confiável; não são assinatura externa nem auditoria completa de PII/histórico. Para staging/proveniência histórica, use o clone Git do README: ZIP não contém os metadados/histórico exigidos por essas rotinas.
 
 Para assistir o case com legendas, servir **somente a pasta pública do case**:
 
@@ -29,7 +29,9 @@ python scripts/portfolio_preview.py
 
 Abrir http://127.0.0.1:8780/. O servidor fixa loopback/pasta pública, não permite listar/expor arquivos privados e suporta ranges HTTP para saltar capítulos do vídeo. Não servir a raiz do repositório, que contém arquivos privados ignorados. Vídeo sem áudio, com WebVTT e transcrição. Fontes do case não exigem rede externa.
 
-## Regravar com segurança
+## Capturador histórico P08: uso isolado
+
+O procedimento abaixo mantém a preparação/proveniência P08. Não substitui as capturas atuais nem autoriza sobrescrever mídia histórica. Uma gravação nova deve ter manifesto separado e referência explícita ao commit executado.
 
 Pré-condição: ferramentas host/Chromium e staging P07 operacionais. Anotar o banco ativo em `.local/staging/active-db.txt`, criar **reset novo** e preservar a origem. O capturador exige banco `petland_reset_<id>_demo` correspondente ao manifesto P07 e recusa uma gravação já iniciada nesse banco. Exportar somente manifesto/identificação/imagens, sem credenciais:
 
