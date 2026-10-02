@@ -4,15 +4,19 @@
 
 ## Qual versão clonar
 
-| Referência auditada em 02/10/2026 | Estado |
-|---|---|
-| `main` / `3cc3f8` | Legado PetLand 2.0; não é o checkout do 3.0. |
-| `petland-3.0-onboarding-fix` / `d564114` | PR #10 integrado; código funcional equivalente a `2549523`, sem a consolidação documental posterior. PR #9 ainda em revisão. |
-| `petland-3.0-portfolio-docs` / `4ef44e03ce4601b753767bfe65fee1d55283f7be` | HEAD mais completo recebido nesta auditoria; PR #11 em rascunho, CI aprovada. |
-| `petland-3.0-reproducibility` | Incremento desta auditoria sobre `4ef44e0`: instruções de execução e proteção dos artefatos. Branch indicada no Quick Start; não concede merge ou release. |
+**Atual após merges humanos dos PRs 11/12:** onboarding em `f3d70a2cce07d587351eadaa66864b7c1ae4444a`. A branch `petland-3.0-final-case` acrescenta a apresentação final sobre esse estado, sem mudança funcional. [Vídeo/capturas finais](../case/README.md), [proveniência](../case/media/final/capture.json). `main` permanece legada; nenhuma promoção presumida.
+
+A tabela abaixo preserva o snapshot recebido na auditoria anterior, antes desses merges. Os estados dos PRs nessa tabela são históricos.
+
+| Referência auditada em 02/10/2026                                         | Estado                                                                                                                                                    |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `main` / `3cc3f8`                                                         | Legado PetLand 2.0; não é o checkout do 3.0.                                                                                                              |
+| `petland-3.0-onboarding-fix` / `d564114`                                  | PR #10 integrado; código funcional equivalente a `2549523`, sem a consolidação documental posterior. PR #9 ainda em revisão.                              |
+| `petland-3.0-portfolio-docs` / `4ef44e03ce4601b753767bfe65fee1d55283f7be` | HEAD mais completo recebido nesta auditoria; PR #11 em rascunho, CI aprovada.                                                                             |
+| `petland-3.0-reproducibility`                                             | Incremento desta auditoria sobre `4ef44e0`: instruções de execução e proteção dos artefatos. Branch auditada anteriormente; não concede merge ou release. |
 
 ```sh
-git clone --branch petland-3.0-reproducibility https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 git rev-parse HEAD
 ```
@@ -21,13 +25,13 @@ No Windows, coloque o clone em `C:\Users\LUCASMARQUESMARQUES\Documents\GitHub` o
 
 ## Cinco caminhos, requisitos distintos
 
-| Objetivo | Requisitos no host | Caminho |
-|---|---|---|
-| RUN THE APP | Git, Python 3.11+, Docker com Compose v2 ativo | `init` → `up`; aplicação vazia e configuração comercial explícita. |
-| DEVELOP LOCALLY | Requisitos acima + uv 0.12.18, Node 22.14–22.x, pnpm 10.34.5 | `init` → `install` → `db` → `migrate` → `api` e `web` em terminais separados. |
-| RUN TESTS | Ferramentas host + Docker | `init` → `install` → `check`; E2E exige `up` e depois `e2e`. |
-| RUN DEMO | Git, Python 3.11+, Docker + uv 0.12.18 | `staging-init` → `staging-up` → `seed-demo`; contas fictícias/expediente já preparados. |
-| RUN STAGING REHEARSAL | Ferramentas host completas + Chromium Playwright | Demo preparada → `smoke-demo` → `rehearse`; backup/restore e três perfis. |
+| Objetivo              | Requisitos no host                                           | Caminho                                                                                 |
+| --------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
+| RUN THE APP           | Git, Python 3.11+, Docker com Compose v2 ativo               | `init` → `up`; aplicação vazia e configuração comercial explícita.                      |
+| DEVELOP LOCALLY       | Requisitos acima + uv 0.12.18, Node 22.14–22.x, pnpm 10.34.5 | `init` → `install` → `db` → `migrate` → `api` e `web` em terminais separados.           |
+| RUN TESTS             | Ferramentas host + Docker                                    | `init` → `install` → `check`; E2E exige `up` e depois `e2e`.                            |
+| RUN DEMO              | Git, Python 3.11+, Docker + uv 0.12.18                       | `staging-init` → `staging-up` → `seed-demo`; contas fictícias/expediente já preparados. |
+| RUN STAGING REHEARSAL | Ferramentas host completas + Chromium Playwright             | Demo preparada → `smoke-demo` → `rehearse`; backup/restore e três perfis.               |
 
 Imagens precisam de acesso a Docker Hub/GHCR, npm e PyPI na primeira construção; instalação host usa os mesmos registries/lockfiles. Cache existente pode ser reutilizado, sem obrigação de apagar imagens/volumes. Tempo de download/construção depende do host e da rede; “10 minutos” é uma trilha de leitura/execução, não um SLA de instalação.
 
@@ -47,10 +51,10 @@ Essa ferramenta é baixada do npm, não copiada do autor; `.tools` é ignorada. 
 
 ## Isolamento e portas
 
-| Ambiente padrão | Web / API | PostgreSQL | E-mails |
-|---|---|---|---|
-| Desenvolvimento `petland3` | http://localhost:5173 / http://localhost:8000 | 55432; teste efêmero 55433 | UI 8025; SMTP 1025 |
-| Demo/staging `petland7` | https://localhost:8443; API interna | 55434, TLS | UI 8026; SMTP interno STARTTLS |
+| Ambiente padrão            | Web / API                                     | PostgreSQL                 | E-mails                        |
+| -------------------------- | --------------------------------------------- | -------------------------- | ------------------------------ |
+| Desenvolvimento `petland3` | http://localhost:5173 / http://localhost:8000 | 55432; teste efêmero 55433 | UI 8025; SMTP 1025             |
+| Demo/staging `petland7`    | https://localhost:8443; API interna           | 55434, TLS                 | UI 8026; SMTP interno STARTTLS |
 
 Portas são de loopback e estão fixadas no Compose; somente uma instalação de cada ambiente pode ocupá-las no host. Não executar Vite/API host e os respectivos containers simultaneamente.
 

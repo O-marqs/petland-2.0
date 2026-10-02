@@ -6,12 +6,12 @@ Estado implementado para revisão humana: código `2549523`, schema `0007_produc
 
 ## START HERE
 
-| Leitura                                           | Para quê                                                                                |
-| ------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| [Product Overview](product/product-overview.md)   | Problema, três perfis, jornadas, escopo e limites em cerca de cinco minutos.            |
-| [Architecture Overview](architecture/overview.md) | Monólito modular, camadas, concorrência, implantação atual e evolução não implementada. |
-| [Case Study](case/README.md)                      | Problema, escolhas, antes/depois e vídeo histórico com proveniência.                    |
-| [Quick Start](runbooks/local.md)                  | Clone correto, Docker, acesso e verificações locais.                                    |
+| Leitura                                           | Para quê                                                                                      |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [Product Overview](product/product-overview.md)   | Problema, três perfis, jornadas, escopo e limites em cerca de cinco minutos.                  |
+| [Architecture Overview](architecture/overview.md) | Monólito modular, camadas, concorrência, implantação atual e evolução não implementada.       |
+| [Case Study](case/README.md)                      | Problema, decisões, engenharia e jornada final com proveniência; P08 separado como histórico. |
+| [Quick Start](runbooks/local.md)                  | Clone correto, Docker, acesso e verificações locais.                                          |
 
 ## PRODUCT
 
@@ -57,6 +57,10 @@ Estado implementado para revisão humana: código `2549523`, schema `0007_produc
 | Benchmark/leitor de tela                         | [Qualidade](runbooks/quality.md)                          |
 | TLS/demo/backup/restore/incidentes               | [Recuperação](runbooks/operations-recovery.md)            |
 | Revisar/gravar/empacotar localmente              | [Release](runbooks/release.md)                            |
+
+## FINAL PRESENTATION
+
+[Case final](case/README.md) · [Player](case/index.html) · [Roteiro](case/presentation-script.md) · [Transcrição](case/final-transcript.md) · [Capturas/proveniência f3d70a2](case/media/final/capture.json) · [Evidência](evidence/Final-case.md).
 
 ## HISTORY / EVIDENCE
 

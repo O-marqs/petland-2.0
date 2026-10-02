@@ -15,8 +15,8 @@ def anchors(path: Path) -> set[str]:
     result = set(re.findall(r'(?:id|name)=["\']([^"\']+)', text))
     occurrences: dict[str, int] = {}
     # Ignore code fences before deriving GitHub-style heading anchors.
-    text = re.sub(r"```.*?```", "", text, flags=re.S)
-    for heading in re.findall(r"^#{1,6}\s+(.+?)\s*#*\s*$", text, re.M):
+    text = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+    for heading in re.findall(r"^#{1,6}\s+(.+?)\s*#*\s*$", text, re.MULTILINE):
         heading = re.sub(r"\[([^]]+)\]\([^)]+\)", r"\1", heading)
         slug = re.sub(r"[^\w\- ]", "", heading.lower(), flags=re.UNICODE).replace(" ", "-")
         count = occurrences.get(slug, 0)
@@ -28,8 +28,12 @@ def anchors(path: Path) -> set[str]:
 def validate() -> list[str]:
     errors = []
     links = 0
-    for path in [ROOT / "README.md", ROOT / "AGENTS.md", *sorted((ROOT / "docs").rglob("*.md"))]:
-        text = re.sub(r"```.*?```", "", path.read_text(encoding="utf-8"), flags=re.S)
+    for path in [
+        ROOT / "README.md",
+        ROOT / "AGENTS.md",
+        *sorted((ROOT / "docs").rglob("*.md")),
+    ]:
+        text = re.sub(r"```.*?```", "", path.read_text(encoding="utf-8"), flags=re.DOTALL)
         for match in re.finditer(r"!?\[[^\]]*\]\((<[^>]+>|[^\s)]+)(?:\s+\"[^\"]*\")?\)", text):
             target = unquote(match[1].strip("<>"))
             if re.match(r"^[a-zA-Z]+:", target):
@@ -102,6 +106,9 @@ if __name__ == "__main__":
     found = validate()
     if found:
         raise SystemExit("\n".join(found))
+    from check_final_case import validate_final
+
+    validate_final(lambda name: (ROOT / name).read_bytes())
     print(
         "Documentation references and provenance verified. Human product acceptance remains pending."
     )

@@ -1,0 +1,845 @@
+{
+  "status": "FINAL_CURRENT_SNAPSHOT",
+  "application_commit": "f3d70a2cce07d587351eadaa66864b7c1ae4444a",
+  "schema_revision": "0007_product_operations",
+  "captured_at": "2026-10-02T20:18:38.357Z",
+  "origin": "https://localhost:8445",
+  "project": "petlandfinalcase",
+  "database": "petland_reset_4a54d1638d774f98997b6382576dd1ab_demo",
+  "synthetic": true,
+  "fixture": "petland-p07-synthetic-v1",
+  "fake_clock": false,
+  "video_audio": "none",
+  "source_equality_checked": true,
+  "images": {
+    "api": {
+      "tag": "petland-final-case-api:f3d70a2cce07",
+      "id": "sha256:2f10d29b59a8641daa2c261a9bbdaa17935e3aee68be7516f8f7ee86577ac4c3",
+      "revision": "f3d70a2cce07"
+    },
+    "web": {
+      "tag": "petland-final-case-web:f3d70a2cce07",
+      "id": "sha256:c2246e6ac9ece0936229eab94b18ef04b34a36de4358dde0a4bedd0c441fa629",
+      "revision": "f3d70a2cce07"
+    }
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "duration_seconds": 240.16,
+  "preparation": [
+    "Own credentials/CA/volume; seed/reset through existing offline tools",
+    "Verified demo customer/contact; authentication through normal API before filmed journeys; passwords not filmed",
+    "Existing service API: fictional five-minute service at BRL 40; two skilled resources; minute slots; current-day opening; lead=0/reminder=1",
+    "Shared pool initially two units; one future booking via ordinary customer API solely for impact preview"
+  ],
+  "actions": [
+    {
+      "kind": "pet_created_via_ui",
+      "pet_id": "79087f20-1b60-49d6-aacf-846f81656f52",
+      "persisted": true
+    },
+    {
+      "kind": "booking_confirmed_via_ui",
+      "appointment_id": "f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "pet_id": "79087f20-1b60-49d6-aacf-846f81656f52",
+      "status": "BOOKED"
+    },
+    {
+      "kind": "arrival_and_transfer_via_ui",
+      "appointment_id": "f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "assigned_resource": "da6407b5-7922-5ed2-ab89-d04e27133c07",
+      "time_preserved": true
+    },
+    {
+      "kind": "completed_history_via_ui",
+      "appointment_id": "f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "status": "COMPLETED",
+      "internal_note_hidden_in_public_payload": true
+    },
+    {
+      "kind": "single_date_roster_saved_via_ui",
+      "date": "2026-10-07",
+      "outside_week_unchanged": true
+    },
+    {
+      "kind": "physical_capacity_saved_via_ui",
+      "shared_pool": "Banheiras da demonstração",
+      "quantity": 1
+    },
+    {
+      "kind": "blocked_impact_preview_via_ui",
+      "future_appointment_id": "3d74c1ab-5e8d-4832-8843-8fe56cf21851",
+      "mutation": false,
+      "reservation_preserved": true
+    }
+  ],
+  "chapters": [
+    {
+      "at_seconds": 1.93,
+      "title": "O cuidado começa aqui",
+      "caption": "PetLand 3.0: uma jornada de tutor, equipe e gestão. Ambiente local, dados fictícios.",
+      "screenshot": "final-home.webp"
+    },
+    {
+      "at_seconds": 12.13,
+      "title": "Primeiros passos com contexto",
+      "caption": "Conta demo verificada e contato preparado. A área do tutor orienta pet, reserva e acompanhamento.",
+      "screenshot": "final-customer-dashboard.webp"
+    },
+    {
+      "at_seconds": 22.52,
+      "title": "O pet vem com seu contexto",
+      "caption": "Nala é cadastrada pela interface, com porte, alergia e preferência. São dados fictícios persistidos.",
+      "screenshot": "final-pet.webp"
+    },
+    {
+      "at_seconds": 31.58,
+      "title": "Um cuidado com preço claro",
+      "caption": "O catálogo apresenta serviços e portes. O serviço da captura usa duração fictícia de cinco minutos.",
+      "screenshot": "final-services.webp"
+    },
+    {
+      "at_seconds": 42.19,
+      "title": "Uma vaga real",
+      "caption": "A disponibilidade considera loja, pessoas aptas, duração, bloqueios e recurso físico. O tutor escolhe o horário.",
+      "screenshot": "final-availability.webp"
+    },
+    {
+      "at_seconds": 50.12,
+      "title": "Revisar antes de reservar",
+      "caption": "Preço e duração aparecem no resumo. Abrir o resumo ainda não cria a reserva; o tutor precisa confirmar.",
+      "screenshot": "final-booking.webp"
+    },
+    {
+      "at_seconds": 60.19,
+      "title": "Reserva confirmada",
+      "caption": "A confirmação grava a reserva. Uma pessoa apta é atribuída pelo servidor, conforme a regra de produto.",
+      "screenshot": "final-confirmation.webp"
+    },
+    {
+      "at_seconds": 70.07,
+      "title": "O que a equipe faz hoje",
+      "caption": "O painel reúne próximos cuidados, agenda, pendências e carga. A mesma Nala aparece para a equipe.",
+      "screenshot": "final-operations-dashboard.webp"
+    },
+    {
+      "at_seconds": 80.22,
+      "title": "Da agenda ao atendimento",
+      "caption": "A reserva do tutor é a mesma na agenda da loja. O funcionário abre seu atendimento.",
+      "screenshot": "final-agenda.webp"
+    },
+    {
+      "at_seconds": 88.56,
+      "title": "Contexto crítico antes de começar",
+      "caption": "A alergia acompanha o pet. A equipe tem contexto de cuidado e registra as ações com autoria.",
+      "screenshot": "final-attendance.webp"
+    },
+    {
+      "at_seconds": 97.83,
+      "title": "Trocar a pessoa, preservar o combinado",
+      "caption": "A equipe transfere o cuidado com motivo. Horário, preço e duração contratados permanecem iguais.",
+      "screenshot": "final-transfer.webp"
+    },
+    {
+      "at_seconds": 158.02,
+      "title": "Leitura atual e início real",
+      "caption": "Início liberado pelo relógio real do servidor. A equipe confirma que leu as restrições atuais.",
+      "screenshot": "final-attendance-started.webp"
+    },
+    {
+      "at_seconds": 167.39,
+      "title": "Concluir e comunicar",
+      "caption": "Conclusão e resumo são registrados. O aviso de pronto é verificado no Mailpit local, sem envio externo.",
+      "screenshot": "final-attendance-completed.webp"
+    },
+    {
+      "at_seconds": 176.92,
+      "title": "O tutor sabe o que aconteceu",
+      "caption": "O histórico mostra o cuidado concluído e o resumo publicado. A nota interna permanece privada.",
+      "screenshot": "final-customer-history.webp"
+    },
+    {
+      "at_seconds": 187.91,
+      "title": "A operação vira informação",
+      "caption": "Indicadores vêm dos atendimentos persistidos. Atribuição pelo responsável final; números da demo são fictícios.",
+      "screenshot": "final-management.webp"
+    },
+    {
+      "at_seconds": 199.32,
+      "title": "Um dia diferente, sem refazer a semana",
+      "caption": "Escala coletiva salva para uma única data: pessoas e períodos definidos, com prévia e confirmação.",
+      "screenshot": "final-roster.webp"
+    },
+    {
+      "at_seconds": 209.52,
+      "title": "Equipe livre não basta",
+      "caption": "O recurso físico limita serviços simultâneos. Uma banheira pode ser o limite mesmo com duas pessoas livres.",
+      "screenshot": "final-capacity.webp"
+    },
+    {
+      "at_seconds": 219.75,
+      "title": "Mudar com responsabilidade",
+      "caption": "A prévia identifica a reserva afetada e bloqueia salvar. Ninguém perde seu horário silenciosamente.",
+      "screenshot": "final-impact.webp"
+    },
+    {
+      "at_seconds": 230.2,
+      "title": "História e limites explícitos",
+      "caption": "Ações mantêm autoria e histórico. Aceite humano, publicação e SMTP externo continuam pendentes.",
+      "screenshot": "final-audit.webp"
+    }
+  ],
+  "checks": [
+    {
+      "name": "final-home",
+      "route": "/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-home.png"
+    },
+    {
+      "name": "final-customer-dashboard",
+      "route": "/app",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-dashboard.png"
+    },
+    {
+      "name": "final-pet",
+      "route": "/app/pets",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-pet.png"
+    },
+    {
+      "name": "final-services",
+      "route": "/servicos",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-services.png"
+    },
+    {
+      "name": "final-availability",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-availability.png"
+    },
+    {
+      "name": "final-booking",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-booking.png"
+    },
+    {
+      "name": "final-confirmation",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-confirmation.png"
+    },
+    {
+      "name": "final-operations-dashboard",
+      "route": "/operacao?data=2026-10-02&escopo=equipe",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-operations-dashboard.png"
+    },
+    {
+      "name": "final-agenda",
+      "route": "/operacao/agenda?data=2026-10-02&busca=Nala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-agenda.png"
+    },
+    {
+      "name": "final-attendance",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance.png"
+    },
+    {
+      "name": "final-transfer",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-transfer.png"
+    },
+    {
+      "name": "final-attendance-started",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance-started.png"
+    },
+    {
+      "name": "final-attendance-completed",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance-completed.png"
+    },
+    {
+      "name": "smtp-pet ficou pronto",
+      "actual_mailpit": true,
+      "external_delivery": false
+    },
+    {
+      "name": "final-customer-history",
+      "route": "/app/reservas/f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-history.png"
+    },
+    {
+      "name": "final-management",
+      "route": "/gestao",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-management.png"
+    },
+    {
+      "name": "final-roster",
+      "route": "/operacao/escala?data=2026-10-07",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-roster.png"
+    },
+    {
+      "name": "final-capacity",
+      "route": "/operacao/capacidade",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-capacity.png"
+    },
+    {
+      "name": "final-impact",
+      "route": "/operacao/escala?data=2026-10-10",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-impact.png"
+    },
+    {
+      "name": "final-audit",
+      "route": "/gestao/auditoria",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-audit.png"
+    },
+    {
+      "name": "final-customer-mobile",
+      "route": "/app/reservas/f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-mobile.png"
+    },
+    {
+      "name": "final-operations-mobile",
+      "route": "/operacao?data=2026-10-02&escopo=equipe",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-operations-mobile.png"
+    },
+    {
+      "name": "final-roster-mobile",
+      "route": "/operacao/escala?data=2026-10-07",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-roster-mobile.png"
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "capture_script_sha256": "9f7c4074b106405f3d92401ef0a55441be8b5ef2d2098594e07c2a2f084c77e5",
+  "recording_wall_seconds": 240.01,
+  "version": "3.0.0-rc.1",
+  "screenshots": [
+    {
+      "name": "final-home",
+      "route": "/",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-home.png",
+      "png_sha256": "b17a7fd3c7fdb6c389ef6fe4e15f4e1d2f5e53addc5901e76a83940cb8440238",
+      "image": "final-home.webp",
+      "image_sha256": "4e4ba3a35c42410ef0aac23fa932419ad90fb9d60a0b20b4aecea4f316ab4259",
+      "width": 1280,
+      "height": 900,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-customer-dashboard",
+      "route": "/app",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-dashboard.png",
+      "png_sha256": "e509eaffb0818af9913ab8b2d9115e2f406928e40ee19bc61a20a62cfd54168c",
+      "image": "final-customer-dashboard.webp",
+      "image_sha256": "444f4ebb4910da7f4f8f05312841195ed57ae4420484e91f30f8ddccf32dfa2b",
+      "width": 1280,
+      "height": 1425,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-pet",
+      "route": "/app/pets",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-pet.png",
+      "png_sha256": "9b15be893f4d3ad6fea497fceec2d67e8222d4f36a2672cbb345d14d215a8c4f",
+      "image": "final-pet.webp",
+      "image_sha256": "1322ecf94eefc5ae9b1a9dcb38b8241dd07736b3c64541fc70e0769f4598cd8e",
+      "width": 1280,
+      "height": 2082,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-services",
+      "route": "/servicos",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-services.png",
+      "png_sha256": "07fdb8d80c414a358f6f6059972e41548c500cfb219af677fe7574e13b6b9102",
+      "image": "final-services.webp",
+      "image_sha256": "f909913d0f11a9648477dac2654d4467298c79bffb3ace87a73e21bd109b24f4",
+      "width": 1280,
+      "height": 2524,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-availability",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-availability.png",
+      "png_sha256": "506c59509c02eeedd63698bc1aa5d258c002e535560080a569cc5c04d1fe4b80",
+      "image": "final-availability.webp",
+      "image_sha256": "93e8de30ae962d26568c78e57120201f236202e465a0daa50ec1a1233e85e14e",
+      "width": 1280,
+      "height": 5330,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-booking",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-booking.png",
+      "png_sha256": "9de346804295379a51bca996e61faf641f54d2bbe4792f8e84d9a403395aa5d9",
+      "image": "final-booking.webp",
+      "image_sha256": "0aec162318c98c13994f9c083a91249aff9d67b44150166d1287ffcdb8983477",
+      "width": 1280,
+      "height": 1150,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-confirmation",
+      "route": "/app/agendar",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-confirmation.png",
+      "png_sha256": "1f640e2471c95baf82b2e51c5027ac38c73f18a8d9e8359ba8905c9d57cb5c08",
+      "image": "final-confirmation.webp",
+      "image_sha256": "949eb20e02df6ec992334beeba8547b27a15e5479430c76976828882acc5e43c",
+      "width": 1280,
+      "height": 900,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-operations-dashboard",
+      "route": "/operacao?data=2026-10-02&escopo=equipe",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-operations-dashboard.png",
+      "png_sha256": "4b3ac9aefb4c344bea03eb48be9cc7f606a94fc5362116395d57dbe3dc1308d1",
+      "image": "final-operations-dashboard.webp",
+      "image_sha256": "ec73cb1058e4c7363962fd717ace34e95d634999d8191ab853180fec4fee7670",
+      "width": 1280,
+      "height": 1641,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-agenda",
+      "route": "/operacao/agenda?data=2026-10-02&busca=Nala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-agenda.png",
+      "png_sha256": "e0b75ac3154e62e4d50827d2e8fe27ef480b587ad025091050fbf898d128e445",
+      "image": "final-agenda.webp",
+      "image_sha256": "bd54359de60193532cb4a2b2846180f3ab0acb230afcf7eac4ddc18984597ebf",
+      "width": 1280,
+      "height": 1126,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-attendance",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance.png",
+      "png_sha256": "cdea7660f9e54c831254606bafe79c022e66be55c382473d30c617e311aac919",
+      "image": "final-attendance.webp",
+      "image_sha256": "ff63a0ca91074b5c0b5b63437c5b9cb84daea80593f1d463c7db2d499a29f63d",
+      "width": 1280,
+      "height": 2231,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-transfer",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-transfer.png",
+      "png_sha256": "d8b7cab66cacfdf2859ec6dc3f0c8b59ec544bc97d408758720d399e9f8b9e68",
+      "image": "final-transfer.webp",
+      "image_sha256": "b1a67ac1ba8f9b716c07f9051a6d358d74f313367b2075fb329dec9b0430a466",
+      "width": 1280,
+      "height": 2459,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-attendance-started",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance-started.png",
+      "png_sha256": "aef36a406e81c30b360f6c46bea333ca79c88a54a54d3417b7867cb83b702f28",
+      "image": "final-attendance-started.webp",
+      "image_sha256": "5302fd9e03adc9432cad6599a7d910e93846f1af63e9931ef7be5ae452b86987",
+      "width": 1280,
+      "height": 2795,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-attendance-completed",
+      "route": "/operacao/atendimentos/f6a5ed91-47cd-479e-b071-22e141116b5a?voltar=%2Foperacao%2Fagenda%3Fdata%3D2026-10-02%26busca%3DNala",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-attendance-completed.png",
+      "png_sha256": "562c8bb235fcfe7c6ea1493ca08d8eaf4522b242c8f2c74a4dd7305036263202",
+      "image": "final-attendance-completed.webp",
+      "image_sha256": "5890abfad6f52d93b72ec4888ec11a146129ac33d2ea44f4bed951995b57fd28",
+      "width": 1280,
+      "height": 2880,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-customer-history",
+      "route": "/app/reservas/f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-history.png",
+      "png_sha256": "f601e161ab0751fccb5c7b2b84319a160d261cdbc30812a30cbdd3791b88ffdb",
+      "image": "final-customer-history.webp",
+      "image_sha256": "f9d9ed226fd1981eeb71d98479dbcda6075d41fd55d7c99dc39b1a3d826e1784",
+      "width": 1280,
+      "height": 2136,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-management",
+      "route": "/gestao",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-management.png",
+      "png_sha256": "e56238942ceeff22eff4ad0baf6e82c28628f249b1146e1f73623862fc8fb02e",
+      "image": "final-management.webp",
+      "image_sha256": "a29b4f1c7cdbd4302d0f54293eb18f3410f8db5c45ded15422f1f0b3a08853b3",
+      "width": 1280,
+      "height": 3139,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-roster",
+      "route": "/operacao/escala?data=2026-10-07",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-roster.png",
+      "png_sha256": "80a4a94403128b4a2a555b67a70750c1b126937a7e144b77e65531c222432a4a",
+      "image": "final-roster.webp",
+      "image_sha256": "770859e865e7a30346679ed0cf2032531d747f8f6735ed9060afaf4bb3d7dd44",
+      "width": 1280,
+      "height": 1796,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-capacity",
+      "route": "/operacao/capacidade",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-capacity.png",
+      "png_sha256": "7c33a28d166915b79fbf511c7bce9c0ecc69764db53a5a067c148e32d057fae7",
+      "image": "final-capacity.webp",
+      "image_sha256": "3c16d1289743932bccc0eebe3e3c4b3b656c6cd1808eff74b80cbacc8c6674cd",
+      "width": 1280,
+      "height": 1295,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-impact",
+      "route": "/operacao/escala?data=2026-10-10",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-impact.png",
+      "png_sha256": "dd16fae371090e7bad31b725a75f803b8e06575c4903eee200851f3130495aca",
+      "image": "final-impact.webp",
+      "image_sha256": "e113952aef44ff388ce4b9382ded0768b8cd61bcae4f1b4c1ec2e0cb6cce3b8b",
+      "width": 1280,
+      "height": 1765,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-audit",
+      "route": "/gestao/auditoria",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-audit.png",
+      "png_sha256": "794b9173cbd4787a9a7c284499cca224af4b581596eef9dcf1f40e0c4812a6d9",
+      "image": "final-audit.webp",
+      "image_sha256": "d8974ce73b5175033c69e5305c06ee095f6b8f56aa986eb3bc1f513f86a21114",
+      "width": 1280,
+      "height": 5086,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-customer-mobile",
+      "route": "/app/reservas/f6a5ed91-47cd-479e-b071-22e141116b5a",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-customer-mobile.png",
+      "png_sha256": "07c31945aaa053e2863955174cde4a09c00c152ab0dbcdd3a987f704c786d292",
+      "image": "final-customer-mobile.webp",
+      "image_sha256": "1412a4a7c838040c3f65031df43ce665ba23ca47561644864305d98312b7c0d6",
+      "width": 320,
+      "height": 2748,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-operations-mobile",
+      "route": "/operacao?data=2026-10-02&escopo=equipe",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-operations-mobile.png",
+      "png_sha256": "999b86bf04b8bd49749a391df9f650e60570ff6c0cc1bee5ea445be1e18c51bf",
+      "image": "final-operations-mobile.webp",
+      "image_sha256": "a41a8398393ce6ea9ece8d0b862db2831bc23fa1d8d781d50d2ddaf7a763d5f6",
+      "width": 320,
+      "height": 2791,
+      "pixels_preserved": true
+    },
+    {
+      "name": "final-roster-mobile",
+      "route": "/operacao/escala?data=2026-10-07",
+      "viewport": {
+        "width": 320,
+        "height": 900
+      },
+      "violations": [],
+      "reflow": true,
+      "screenshot": "final-roster-mobile.png",
+      "png_sha256": "f41785506e3fbfc97b6bcdddb3fdf0d57ce0a84d9b540e84d031e116545c6916",
+      "image": "final-roster-mobile.webp",
+      "image_sha256": "835f90ef116fe1349af4f181dcecbbebd4fbc9d8d62469c1ce3012ce513dd18e",
+      "width": 320,
+      "height": 2487,
+      "pixels_preserved": true
+    }
+  ],
+  "video": {
+    "file": "petland-final-demo.webm",
+    "sha256": "3b50691f3fe23969f7df9454d80ae642467b42af9b002a85c0a5199773d4ba63",
+    "bytes": 17383008,
+    "container": "WebM",
+    "codec": "VP8",
+    "fps": 25,
+    "audio": "none",
+    "editing": "none; continuous Playwright viewport recording, copied byte-for-byte",
+    "duration_verified": "FFmpeg container metadata; independently checked in browser player"
+  },
+  "captions": {
+    "file": "petland-final-demo.vtt",
+    "sha256": "9aa0feaee77cc596f04eb5d13b6d35f62180420b91a50a8ca2a7cf8e3cd0f16d",
+    "cues": 19
+  },
+  "conversion": "Pillow lossless WebP; decoded RGBA pixels equal to original PNG",
+  "limitations": [
+    "No human product/screen-reader acceptance or external SMTP/production deployment",
+    "First attempt failed application reflow at 320px: long synthetic pet name expanded the customer detail to 334px. Product source unchanged; final fixture uses Nala. Long-name layout remains a known limitation."
+  ]
+}

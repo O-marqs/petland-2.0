@@ -31,6 +31,8 @@ Abrir http://127.0.0.1:8780/. O servidor fixa loopback/pasta pública, não perm
 
 ## Capturador histórico P08: uso isolado
 
+Para o material final, use o [roteiro e capturador atual](../case/presentation-script.md#regravar-sem-mudar-o-produto), com namespace/portas próprios, origem `f3d70a2` e mídia em `docs/case/media/final`. O [case final](../case/README.md) é a primeira demonstração; [P08](../case/historical-p08.html) permanece histórico. Checks atuais validam ambos os players e os hashes finais, sem invalidar verificação de bundles históricos que não continham mídia final.
+
 O procedimento abaixo mantém a preparação/proveniência P08. Não substitui as capturas atuais nem autoriza sobrescrever mídia histórica. Uma gravação nova deve ter manifesto separado e referência explícita ao commit executado.
 
 Pré-condição: ferramentas host/Chromium e staging P07 operacionais. Anotar o banco ativo em `.local/staging/active-db.txt`, criar **reset novo** e preservar a origem. O capturador exige banco `petland_reset_<id>_demo` correspondente ao manifesto P07 e recusa uma gravação já iniciada nesse banco. Exportar somente manifesto/identificação/imagens, sem credenciais:

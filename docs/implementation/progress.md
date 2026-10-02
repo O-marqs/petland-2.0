@@ -6,29 +6,29 @@
 
 **Branch atual:** `petland-3.0-onboarding-fix`, criada do merge P08 `3fba52725d5a6e77fd87b40a2e166a0a436f64df` na `petland-3.0-p04`. PR incremental com base P04; sem merge automático. **Baseline:** `3cc3f898cde896b80fed587bf8c06f4aa46742f6`; tag `legacy/petland-2.0-2024-11-24`.
 
-| Card | Escopo / requisitos | Estado e evidência |
-|---|---|---|
-| PL3-01 | Histórico, fontes oficiais, ADRs e gates | Concluído, commit `80afeaa`; docs/product, ux, adr, migration |
-| PL3-02 | API/web/DB/Compose/contratos/CI, RF13, RNF05/07/09 | Concluído; verificações locais, CI e clone limpo aprovados |
-| PL3-03 | Tokens, navegação e campos acessíveis, RF13/RNF04 | Concluído; galeria funcional, 4 testes React e 6 E2E aprovados |
-| PL3-04 | Sessão/login/logout e CSRF; RF01/RNF01 | Concluído; revogação/CSRF/propriedade, React/API/PostgreSQL e E2E aprovados |
-| PL3-05 | Cadastro/verificação/reset; RF01/RNF01 | Concluído; SMTP/Mailpit real, uso único e consumo concorrente verificados |
-| PL3-06 | Convites/papéis/bootstrap; RF01/RNF01 | Concluído; D07, reautenticação, versão, auditoria e último admin sob concorrência |
-| PL3-07 | Perfil mínimo, cadastro assistido e associação verificada; RF02 | Implementado; vínculo de uso único, e-mail confirmado e isolamento |
-| PL3-08 | Pets, referências, edição/arquivo; RF03/RNF01/04 | Implementado; propriedade A/B, FK raça/espécie, versão, preservação |
-| PL3-09 | Serviços/ofertas por porte e catálogo público; RF04/RF12 | Implementado; Decimal BRL, duração, compatibilidade, ativo/inativo, catálogo/landing/dashboard |
-| PL3-10 | Calendário, recursos, pausas/exceções; RF05 | Implementado; interseção loja/pessoa e impacto revalidado ao salvar |
-| PL3-11 | Disponibilidade e reserva; RF06/RNF06 | Implementado; lock, duas exclusões GiST, snapshots, idempotência e testes concorrentes |
-| PL3-12 | Jornada de agendamento; RF06/RNF04/06 | Implementado; resumo do servidor, confirmação, 409 sem perder escolhas, repetição após resposta perdida |
-| PL3-13 | Cancelar/reagendar; RF07 | Implementado; versão, prazo contratado, assistência, rollback, eventos e avisos SMTP persistentes |
-| PL3-14 | Agenda e execução, RF08/RNF01/04/06 | Implementado; dia/semana/filtros, transições, instantes reais, falta, extensão e proteção de ocupação |
-| PL3-15 | Notas e histórico, RF09/RNF01 | Implementado; autoria, append-only, visibilidade explícita, resumo próprio sem notas internas |
-| PL3-16 | Gestão/configuração, RF10/RF07 | Implementado; impacto protege execução aberta, calendário até meia-noite, identificação pública e gestão existente integrada |
-| PL3-17 | Indicadores/auditoria, RF11 | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada |
-| PL3-18 | P06, RNF01–04/06/07 | Integrado pelo usuário; CI/medições aprovadas, aceite humano com leitor de tela ainda pendente |
-| PL3-19 | Mapeamento/migração condicionais | Dispensados por D08/D12; nenhum MySQL acessado ou histórico importado |
-| PL3-20 | Dados/ensaio operacional P07 | PR #7 integrado; checks/browser/operations aprovados; demo e restore comprovados, publicação externa adiada D10 |
-| PL3-21 | P08, release/case | Candidata, case, antes/depois, vídeo, diagramas e pacote local preparados; aceite final/publicação estável pendentes |
+| Card   | Escopo / requisitos                                             | Estado e evidência                                                                                                           |
+| ------ | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| PL3-01 | Histórico, fontes oficiais, ADRs e gates                        | Concluído, commit `80afeaa`; docs/product, ux, adr, migration                                                                |
+| PL3-02 | API/web/DB/Compose/contratos/CI, RF13, RNF05/07/09              | Concluído; verificações locais, CI e clone limpo aprovados                                                                   |
+| PL3-03 | Tokens, navegação e campos acessíveis, RF13/RNF04               | Concluído; galeria funcional, 4 testes React e 6 E2E aprovados                                                               |
+| PL3-04 | Sessão/login/logout e CSRF; RF01/RNF01                          | Concluído; revogação/CSRF/propriedade, React/API/PostgreSQL e E2E aprovados                                                  |
+| PL3-05 | Cadastro/verificação/reset; RF01/RNF01                          | Concluído; SMTP/Mailpit real, uso único e consumo concorrente verificados                                                    |
+| PL3-06 | Convites/papéis/bootstrap; RF01/RNF01                           | Concluído; D07, reautenticação, versão, auditoria e último admin sob concorrência                                            |
+| PL3-07 | Perfil mínimo, cadastro assistido e associação verificada; RF02 | Implementado; vínculo de uso único, e-mail confirmado e isolamento                                                           |
+| PL3-08 | Pets, referências, edição/arquivo; RF03/RNF01/04                | Implementado; propriedade A/B, FK raça/espécie, versão, preservação                                                          |
+| PL3-09 | Serviços/ofertas por porte e catálogo público; RF04/RF12        | Implementado; Decimal BRL, duração, compatibilidade, ativo/inativo, catálogo/landing/dashboard                               |
+| PL3-10 | Calendário, recursos, pausas/exceções; RF05                     | Implementado; interseção loja/pessoa e impacto revalidado ao salvar                                                          |
+| PL3-11 | Disponibilidade e reserva; RF06/RNF06                           | Implementado; lock, duas exclusões GiST, snapshots, idempotência e testes concorrentes                                       |
+| PL3-12 | Jornada de agendamento; RF06/RNF04/06                           | Implementado; resumo do servidor, confirmação, 409 sem perder escolhas, repetição após resposta perdida                      |
+| PL3-13 | Cancelar/reagendar; RF07                                        | Implementado; versão, prazo contratado, assistência, rollback, eventos e avisos SMTP persistentes                            |
+| PL3-14 | Agenda e execução, RF08/RNF01/04/06                             | Implementado; dia/semana/filtros, transições, instantes reais, falta, extensão e proteção de ocupação                        |
+| PL3-15 | Notas e histórico, RF09/RNF01                                   | Implementado; autoria, append-only, visibilidade explícita, resumo próprio sem notas internas                                |
+| PL3-16 | Gestão/configuração, RF10/RF07                                  | Implementado; impacto protege execução aberta, calendário até meia-noite, identificação pública e gestão existente integrada |
+| PL3-17 | Indicadores/auditoria, RF11                                     | Implementado; fórmulas documentadas, limites de período, capacidade atual e consulta ADMIN paginada                          |
+| PL3-18 | P06, RNF01–04/06/07                                             | Integrado pelo usuário; CI/medições aprovadas, aceite humano com leitor de tela ainda pendente                               |
+| PL3-19 | Mapeamento/migração condicionais                                | Dispensados por D08/D12; nenhum MySQL acessado ou histórico importado                                                        |
+| PL3-20 | Dados/ensaio operacional P07                                    | PR #7 integrado; checks/browser/operations aprovados; demo e restore comprovados, publicação externa adiada D10              |
+| PL3-21 | P08, release/case                                               | Candidata, case, antes/depois, vídeo, diagramas e pacote local preparados; aceite final/publicação estável pendentes         |
 
 Arquivos principais: `apps/api/src/petland/bootstrap/app.py`, módulo técnico `system`, `apps/api/migrations`, `apps/web/src/features`, `apps/web/src/shared`, `packages/api-contract`, `infra`, `.github/workflows/ci.yml`, `scripts/dev.py`, README e AGENTS.md.
 
@@ -159,3 +159,13 @@ Clone remoto independente sob Documents/GitHub, sem arquivos privados copiados: 
 Ignore e guards das ferramentas reforçados para chaves/bancos/dumps/caches/artefatos, sem mudança no produto. Verificação do pacote compara commit Git no ZIP/manifesto, hashes/inventário e recusa caminhos/duplicatas/segredos conhecidos; **oito testes** aprovados dentro da etapa de CI existente. Links/âncoras/proveniência, diagramas determinísticos, candidata, scan, Ruff/format e React format aprovados. Bundle anterior de 395 arquivos também verificado. [Resultados e limites](../evidence/Reproducibility-review.md), [resumo público sem credenciais](../evidence/Reproducibility-review.json).
 
 CI/clone/pacote do commit desta revisão ficam registrados no PR e no manifesto local, sem conceder aceite humano. Próximas decisões: revisão do material/produto, leitor de tela, licença e D10. Sem merge/tag/release/publicação ou dependências atualizadas.
+
+## Apresentação final do escopo implementado
+
+[Pedido integral](Final-case-request.txt) após merges humanos dos PRs 11/12 em onboarding `f3d70a2`. Branch `petland-3.0-final-case`, base onboarding. Case reescrito em problema/diagnóstico/decisões/arquitetura/experiência/engenharia/resultados/trade-offs/limites, player editorial com Engineering Highlights e README apontando primeiro ao material final. P08 separado como histórico, mídia original preservada; checkout atual/documentação de execução coerentes.
+
+Demo própria `petlandfinalcase`, 8445/55436/8028, sem pausar/copiar staging pessoal. Vídeo contínuo **240,16 s**, sem áudio/cortes/aceleração, **19 capítulos/legendas** e **22 capturas lossless** desktop/mobile. Tutor → reserva confirmada → painel/agenda/contexto/chegada/transferência/início/conclusão → histórico público → indicadores/escala de uma data/capacidade/impacto/auditoria. Persistência/API/SMTP Mailpit/nota privada/versão preservada conferidos, dados fictícios e preparações declarados. Nenhum diff funcional/schema/contrato/infra/dependência contra origem.
+
+Tentativa 1 falhou em mobile: nome longo do pet expandiu detalhe do tutor para 334 px em viewport 320. Tentativa 2 usa Nala e passou; a limitação de texto longo permanece explícita, sem mudança do produto para a gravação. Player final/histórico verificados a 1280/320 px, todos os capítulos/legendas/ranges/links/transcrição/axe/reflow/zero erros JS. [Evidência e arquivos](../evidence/Final-case.md), [origem com hashes](../case/media/final/capture.json).
+
+Checks de documentação/hashes/diagramas/guard de pacote/lint e CI do commit desta revisão registrados na evidência/PR conforme execução; sem aceitar resultado antecipado. Próximos gates: revisão humana do material/produto/leitor de tela, licença e D10. Sem merge/tag/publicação/release estável.

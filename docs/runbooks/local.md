@@ -14,7 +14,7 @@ Leia o [README](../../README.md) para o caminho de entrada e [versão/reproduç�
 O Git remoto mantém o legado na `main`; use a branch funcional atual, sem presumir que o 3.0 já foi integrado à principal:
 
 ```sh
-git clone --branch petland-3.0-reproducibility https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -42,40 +42,40 @@ Não execute esse modo simultaneamente aos containers API/web de `up`. Para test
 
 ## Variáveis
 
-| Nome | Finalidade |
-|---|---|
-| APP_ENV | development/test/staging/production |
-| DATABASE_URL | Conexão runtime `postgresql+psycopg`; sem superuser/DDL |
-| MIGRATION_DATABASE_URL | Conexão privilegiada, usada somente por Alembic |
-| TEST_DATABASE_URL | Banco descartável com nome terminando `_test` |
-| POSTGRES_PASSWORD / APP_DATABASE_PASSWORD / TEST_DATABASE_PASSWORD | Credenciais locais de papéis separados, geradas por `init` |
-| PUBLIC_ORIGIN | Origem pública; HTTPS obrigatório fora de dev/test |
-| LOG_LEVEL | DEBUG/INFO/WARNING/ERROR, sem payloads sensíveis |
-| API_PROXY_TARGET | Opcional para Vite; no host aponta por padrão para 127.0.0.1:8000 |
-| SMTP_HOST / SMTP_PORT / SMTP_SENDER | SMTP local; Compose usa Mailpit, sem entrega externa |
-| SMTP_STARTTLS / SMTP_USERNAME / SMTP_PASSWORD | Configuração do futuro provedor; segredo nunca versionado |
+| Nome                                                               | Finalidade                                                        |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| APP_ENV                                                            | development/test/staging/production                               |
+| DATABASE_URL                                                       | Conexão runtime `postgresql+psycopg`; sem superuser/DDL           |
+| MIGRATION_DATABASE_URL                                             | Conexão privilegiada, usada somente por Alembic                   |
+| TEST_DATABASE_URL                                                  | Banco descartável com nome terminando `_test`                     |
+| POSTGRES_PASSWORD / APP_DATABASE_PASSWORD / TEST_DATABASE_PASSWORD | Credenciais locais de papéis separados, geradas por `init`        |
+| PUBLIC_ORIGIN                                                      | Origem pública; HTTPS obrigatório fora de dev/test                |
+| LOG_LEVEL                                                          | DEBUG/INFO/WARNING/ERROR, sem payloads sensíveis                  |
+| API_PROXY_TARGET                                                   | Opcional para Vite; no host aponta por padrão para 127.0.0.1:8000 |
+| SMTP_HOST / SMTP_PORT / SMTP_SENDER                                | SMTP local; Compose usa Mailpit, sem entrega externa              |
+| SMTP_STARTTLS / SMTP_USERNAME / SMTP_PASSWORD                      | Configuração do futuro provedor; segredo nunca versionado         |
 
 O script carrega `.env` sem exibir valores e preserva overrides explícitos do processo. Dentro do Compose, URLs de host são substituídas por URLs da rede privada do container. O banco só é exposto localmente para ferramentas de desenvolvimento.
 
 ## Comandos
 
-| Comando | Efeito |
-|---|---|
-| `python scripts/dev.py init` | Cria configuração local se ausente |
-| `python scripts/dev.py install` | uv sync/pnpm install com lockfiles |
-| `python scripts/dev.py up` | Constrói e inicia aplicação, PostgreSQL e Mailpit por Docker |
-| `python scripts/dev.py db` | Inicia PostgreSQL de desenvolvimento e Mailpit |
-| `python scripts/dev.py migrate` | Alembic upgrade head no host |
-| `python scripts/dev.py api` | FastAPI com reload, sem access log de URLs arbitrárias |
-| `python scripts/dev.py web` | Vite com proxy de mesma origem |
-| `python scripts/dev.py lint` | Lint, format, tipos, arquitetura, estado ativo, contratos e build |
-| `python scripts/dev.py test` | PostgreSQL de teste + pytest obrigatório + Vitest |
-| `python scripts/dev.py benchmark` | Mede leituras/reservas com 100 mil agendamentos em banco efêmero isolado |
-| `python scripts/dev.py check` | Lint e testes completos |
-| `python scripts/dev.py e2e` | Instala Chromium e executa Playwright contra aplicação já iniciada |
+| Comando                                                            | Efeito                                                                         |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `python scripts/dev.py init`                                       | Cria configuração local se ausente                                             |
+| `python scripts/dev.py install`                                    | uv sync/pnpm install com lockfiles                                             |
+| `python scripts/dev.py up`                                         | Constrói e inicia aplicação, PostgreSQL e Mailpit por Docker                   |
+| `python scripts/dev.py db`                                         | Inicia PostgreSQL de desenvolvimento e Mailpit                                 |
+| `python scripts/dev.py migrate`                                    | Alembic upgrade head no host                                                   |
+| `python scripts/dev.py api`                                        | FastAPI com reload, sem access log de URLs arbitrárias                         |
+| `python scripts/dev.py web`                                        | Vite com proxy de mesma origem                                                 |
+| `python scripts/dev.py lint`                                       | Lint, format, tipos, arquitetura, estado ativo, contratos e build              |
+| `python scripts/dev.py test`                                       | PostgreSQL de teste + pytest obrigatório + Vitest                              |
+| `python scripts/dev.py benchmark`                                  | Mede leituras/reservas com 100 mil agendamentos em banco efêmero isolado       |
+| `python scripts/dev.py check`                                      | Lint e testes completos                                                        |
+| `python scripts/dev.py e2e`                                        | Instala Chromium e executa Playwright contra aplicação já iniciada             |
 | `python scripts/dev.py bootstrap-admin --email pessoa@example.com` | Emite convite inicial, apenas enquanto não há administrador ativo e verificado |
-| `python scripts/dev.py prune-identity` | Remove sessões/tokens expirados e contadores antigos; preserva auditoria |
-| `python scripts/dev.py down` | Para containers, preserva volume dev; tmpfs dos testes não persiste |
+| `python scripts/dev.py prune-identity`                             | Remove sessões/tokens expirados e contadores antigos; preserva auditoria       |
+| `python scripts/dev.py down`                                       | Para containers, preserva volume dev; tmpfs dos testes não persiste            |
 
 Comandos granulares: `uv run --directory apps/api pytest`, `uv run --directory apps/api mypy`, `pnpm test`, `pnpm build`, `pnpm typecheck`, `pnpm contracts:generate`, `pnpm contracts:check`. Para pytest de integração granular configure APP_ENV=test e TEST_DATABASE_URL; sem configuração ele é explicitamente pulado, nunca chamado de aprovado. CI define REQUIRE_INTEGRATION=1, que converte ausência de configuração em falha.
 

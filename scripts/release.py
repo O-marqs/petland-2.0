@@ -10,6 +10,7 @@ import zipfile
 from datetime import UTC, datetime
 from pathlib import Path
 
+from check_final_case import validate_final
 from repository_hygiene import check_public_file, check_public_path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,7 +29,11 @@ def validate(read):
         raise ValueError("Only a review candidate is allowed")
     if candidate["production_ready"] or candidate["stable_release_published"]:
         raise ValueError("This tool cannot grant acceptance or publication")
-    for name in ["package.json", "apps/web/package.json", "packages/api-contract/package.json"]:
+    for name in [
+        "package.json",
+        "apps/web/package.json",
+        "packages/api-contract/package.json",
+    ]:
         if json.loads(read(name))["version"] != version:
             raise ValueError("Package versions disagree")
     if (
@@ -58,6 +63,8 @@ def validate(read):
         or not 180 <= capture["duration_seconds"] <= 300
     ):
         raise ValueError("Three-journey recording evidence is incompatible")
+    if "docs/case/media/final/capture.json" in candidate["assets"]:
+        validate_final(read)
     return candidate
 
 
@@ -122,7 +129,9 @@ def bundle():
     folder.mkdir(parents=True)
     archive = folder / f"petland-{candidate['version']}-{commit[:12]}.zip"
     subprocess.run(
-        ["git", "archive", "--format=zip", "--output", str(archive), "HEAD"], cwd=ROOT, check=True
+        ["git", "archive", "--format=zip", "--output", str(archive), "HEAD"],
+        cwd=ROOT,
+        check=True,
     )
     with zipfile.ZipFile(archive) as file:
         safe_names(file.namelist())
