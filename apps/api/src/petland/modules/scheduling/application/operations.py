@@ -28,7 +28,7 @@ from petland.modules.scheduling.domain.operations import (
     ServiceMetric,
     StaffMetric,
     actions,
-    available_minutes,
+    available_minutes_by_resource,
     transition,
 )
 from petland.shared.domain.errors import BusinessError
@@ -530,10 +530,11 @@ class Operations:
         end: datetime,
     ) -> list[StaffMetric]:
         by_id = {row.resource_id: row for row in rows}
+        capacity = available_minutes_by_resource(config, resources, start, end)
         for resource in resources:
             row = by_id.setdefault(
                 resource.id,
                 StaffMetric(resource.id, resource.name, 0, 0, 0, 0, None, None, None, 0),
             )
-            row.available_minutes = available_minutes(config, [resource], start, end)
+            row.available_minutes = capacity[resource.id]
         return sorted(by_id.values(), key=lambda row: (row.name.casefold(), str(row.resource_id)))

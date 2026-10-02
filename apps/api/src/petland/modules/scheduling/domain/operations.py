@@ -163,17 +163,19 @@ def transition(a: Appointment, operation: str, now: datetime, admin: bool) -> Ap
     raise BusinessError("INVALID_TRANSITION", 409)
 
 
-def available_minutes(
+def available_minutes_by_resource(
     config: Configuration, resources: list[Resource], start: datetime, end: datetime
-) -> float:
+) -> dict[UUID, float]:
     """Capacity of current configuration, clipped to the requested absolute interval."""
+    minutes = {r.id: 0.0 for r in resources}
     if not config.enabled:
-        return 0
+        return minutes
     zone = ZoneInfo(config.timezone)
     day = start.astimezone(zone).date()
-    minutes = 0.0
-    while day <= end.astimezone(zone).date():
+    last = end.astimezone(zone).date()
+    while day <= last:
         shop = config.calendar.windows(day)
+        periods: dict[tuple[int, int], float] = {}
         for resource in resources:
             if not resource.active or not resource.service_ids:
                 continue
@@ -183,11 +185,15 @@ def available_minutes(
                     lo, hi = max(left.start, right.start), min(left.end, right.end)
                     if lo >= hi:
                         continue
-                    begin, finish = local_instant(day, lo, zone), local_instant(day, hi, zone)
-                    if begin is not None and finish is not None:
-                        minutes += max(
-                            0, (min(finish, end) - max(begin, start)).total_seconds() / 60
+                    key = (lo, hi)
+                    if key not in periods:
+                        begin, finish = local_instant(day, lo, zone), local_instant(day, hi, zone)
+                        periods[key] = (
+                            max(0, (min(finish, end) - max(begin, start)).total_seconds() / 60)
+                            if begin is not None and finish is not None
+                            else 0.0
                         )
+                    minutes[resource.id] += periods[key]
         day += timedelta(days=1)
     return minutes
 
