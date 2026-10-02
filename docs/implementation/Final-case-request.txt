@@ -1,0 +1,241 @@
+Atue como Senior Product Designer, Developer Advocate, Principal Engineer e Technical Storyteller.
+
+Repositório:
+
+https://github.com/O-marqs/petland-2.0
+
+O produto e a documentação final já foram consolidados.
+
+Agora precisamos atualizar o material de apresentação do PetLand 3.0 para refletir o estado FINAL do projeto.
+
+Não alterar regras de negócio.
+
+Não criar funcionalidades para melhorar a gravação.
+
+Não simular comportamentos inexistentes.
+
+====================================================
+OBJETIVO
+====================================================
+
+Atualizar:
+
+- case de portfólio;
+- screenshots finais;
+- roteiro de apresentação;
+- vídeo demonstrativo;
+- legendas/transcrição;
+- capítulos;
+- metadados/proveniência;
+- README links.
+
+O material anterior P08 deve permanecer identificável como histórico quando necessário.
+
+====================================================
+1. STORYTELLING
+====================================================
+
+O case final deve contar:
+
+1. PetLand 2.0 — problema;
+2. diagnóstico;
+3. decisões de produto;
+4. modernização;
+5. arquitetura;
+6. experiência final;
+7. engenharia;
+8. resultados;
+9. limitações.
+
+Evitar apresentação endpoint por endpoint.
+
+A narrativa deve demonstrar:
+
+PRODUCT
+ARCHITECTURE
+SOFTWARE ENGINEERING
+DATABASE ENGINEERING
+QUALITY
+SECURITY
+
+====================================================
+2. VÍDEO
+====================================================
+
+Produza um roteiro final de aproximadamente 3–5 minutos.
+
+A demonstração deve priorizar:
+
+CLIENTE
+- primeiro acesso já contextualizado;
+- pet;
+- serviço;
+- disponibilidade;
+- resumo;
+- confirmação;
+- histórico/status.
+
+OPERAÇÃO
+- dashboard;
+- agenda;
+- contexto crítico;
+- atendimento;
+- transferência, se couber naturalmente;
+- conclusão.
+
+GESTÃO
+- escala;
+- capacidade;
+- indicadores;
+- impacto de mudança.
+
+Não é necessário mostrar todas as telas.
+
+O objetivo é demonstrar uma jornada coerente.
+
+====================================================
+3. BLOCO TÉCNICO
+====================================================
+
+No case, acrescente uma seção curta:
+
+Engineering Highlights
+
+Mostrar visualmente:
+
+- React;
+- FastAPI;
+- PostgreSQL;
+- modular monolith;
+- Hexagonal Architecture;
+- DDD pragmático;
+- OpenAPI;
+- idempotency;
+- transactional outbox;
+- database constraints;
+- concurrency;
+- security;
+- CI;
+- testing.
+
+Não transformar o vídeo em aula de arquitetura.
+
+Arquitetura aprofundada permanece nos documentos.
+
+====================================================
+4. SCREENSHOTS
+====================================================
+
+Capture versões FINAL/CURRENT das telas relevantes.
+
+Usar nomes inequívocos, por exemplo:
+
+final-home.webp
+final-customer-dashboard.webp
+final-booking.webp
+final-operations-dashboard.webp
+final-roster.webp
+final-capacity.webp
+final-attendance.webp
+final-management.webp
+
+Não sobrescrever evidências históricas P03-P08.
+
+====================================================
+5. PROVENIÊNCIA
+====================================================
+
+Registrar:
+
+- commit;
+- ambiente;
+- data;
+- viewport;
+- dados fictícios;
+- qualquer preparação necessária;
+- quais ações foram executadas realmente.
+
+Nunca chamar dado sintético de produção.
+
+Nunca afirmar comunicação externa quando o ambiente usa Mailpit.
+
+====================================================
+6. CASE README
+====================================================
+
+Atualize `docs/case/README.md`.
+
+Estrutura sugerida:
+
+Problem
+Before
+Product decisions
+Architecture
+Final experience
+Engineering highlights
+Quality evidence
+Results
+Trade-offs
+What I would do in real production
+What I intentionally did not build
+Run it yourself
+
+O texto deve ser técnico, mas legível para recrutadores.
+
+====================================================
+7. VÍDEO E ACESSIBILIDADE
+====================================================
+
+Atualizar:
+
+- vídeo;
+- WebVTT;
+- transcrição;
+- capítulos;
+- player.
+
+Validar:
+
+- desktop;
+- mobile;
+- links;
+- seek;
+- captions;
+- reflow;
+- axe;
+- ausência de erro JS.
+
+Se o ambiente não permitir gerar/regravar vídeo automaticamente com qualidade adequada, NÃO inventar um vídeo.
+
+Nesse caso:
+
+- produza o roteiro;
+- prepare automação/capturas;
+- indique precisamente o comando/manual step restante.
+
+====================================================
+8. README
+====================================================
+
+Atualizar links e thumbnails para que README aponte para o case FINAL.
+
+Material histórico continua disponível, mas não é a primeira demonstração mostrada.
+
+====================================================
+9. ENTREGA
+====================================================
+
+No final apresente:
+
+- roteiro usado;
+- jornadas demonstradas;
+- arquivos criados;
+- screenshots;
+- vídeo/legendas/transcrição;
+- commit de origem;
+- validações;
+- itens que exigem ação humana.
+
+Não faça merge.
+
+Não publique release.

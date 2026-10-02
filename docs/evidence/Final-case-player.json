@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "route": "/",
+      "width": 1280,
+      "local_links": true,
+      "range_206": true,
+      "video_duration": 240.16,
+      "captions": "showing",
+      "chapter_seek_count": 19,
+      "axe_violations": [],
+      "errors": [],
+      "reflow": true
+    },
+    {
+      "route": "/",
+      "width": 320,
+      "local_links": true,
+      "range_206": true,
+      "video_duration": 240.16,
+      "captions": "showing",
+      "chapter_seek_count": 19,
+      "axe_violations": [],
+      "errors": [],
+      "reflow": true
+    },
+    {
+      "route": "/historical-p08.html",
+      "width": 1280,
+      "local_links": true,
+      "range_206": true,
+      "video_duration": 185.12,
+      "captions": "showing",
+      "chapter_seek_count": 14,
+      "axe_violations": [],
+      "errors": [],
+      "reflow": true
+    },
+    {
+      "route": "/historical-p08.html",
+      "width": 320,
+      "local_links": true,
+      "range_206": true,
+      "video_duration": 185.12,
+      "captions": "showing",
+      "chapter_seek_count": 14,
+      "axe_violations": [],
+      "errors": [],
+      "reflow": true
+    }
+  ]
+}

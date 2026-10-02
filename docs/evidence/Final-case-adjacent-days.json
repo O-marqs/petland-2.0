@@ -1,0 +1,52 @@
+{
+  "application_commit": "f3d70a2cce07d587351eadaa66864b7c1ae4444a",
+  "project": "petlandfinalcase",
+  "synthetic": true,
+  "checked_at": "2026-10-02T20:31:04.778Z",
+  "mode": "read-only verification after capture, own demo only",
+  "counts": [
+    {
+      "date": "2026-10-06",
+      "working_people": 2,
+      "resources": [
+        {
+          "id": "da6407b5-7922-5ed2-ab89-d04e27133c07",
+          "working": true
+        },
+        {
+          "id": "168caac3-3e44-56f0-967f-01abdcd7e405",
+          "working": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "working_people": 1,
+      "resources": [
+        {
+          "id": "da6407b5-7922-5ed2-ab89-d04e27133c07",
+          "working": false
+        },
+        {
+          "id": "168caac3-3e44-56f0-967f-01abdcd7e405",
+          "working": true
+        }
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "working_people": 2,
+      "resources": [
+        {
+          "id": "da6407b5-7922-5ed2-ab89-d04e27133c07",
+          "working": true
+        },
+        {
+          "id": "168caac3-3e44-56f0-967f-01abdcd7e405",
+          "working": true
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

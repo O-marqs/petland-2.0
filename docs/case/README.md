@@ -1,71 +1,108 @@
-# PetLand 3.0 — um CRM de pet shop com agenda verificável
+# PetLand 3.0 — o cuidado do pet, uma operação inteira
 
-Case de portfólio de Lucas Marques. **Candidato 3.0.0-rc.1, ambiente local e dados fictícios.** P08 prepara a entrega para revisão; publicação externa e aceite final não estão declarados concluídos.
+Case de produto e engenharia de **Lucas Marques**. Uma loja, três perfis, da disponibilidade ao cuidado concluído. **Apresentação final do escopo implementado; candidata `3.0.0-rc.1` para revisão humana, sem publicação em produção.**
 
-**Leitura atual:** [produto implementado](../product/product-overview.md), [arquitetura](../architecture/overview.md), [UX e oito capturas atuais](../ux/PetLand_3.0_UX_Final.md), [metas/medições/limites](../architecture/non-functional-requirements.md). O vídeo/`after-*` são históricos P08; `review-home.webp` e `operations-dashboard.webp` são snapshots posteriores com seus próprios manifestos, não novas capturas desta revisão. Somente `docs/ux/media/current` corresponde à captura funcional `2549523` desta documentação.
+[Abrir o case e assistir](index.html) · [Vídeo final, cerca de 4 minutos](media/final/petland-final-demo.webm) · [Roteiro usado](presentation-script.md) · [Transcrição](final-transcript.md) · [Legendas](media/final/petland-final-demo.vtt) · [Origem e ações reais](media/final/capture.json).
 
-Revisão posterior de produto/identidade: [matriz completa de dores](../product/functional-gap-analysis.md), [navegação e direção visual](../ux/visual-review.md) e [evidências](../evidence/Product-review.md). A capa atual do case usa uma nova captura real em `media/review-home.webp`, com origem em `media/visual-review.json`. As imagens `after-*` e o vídeo a seguir continuam representando a entrega P08, anterior à revisão visual; sua proveniência não foi alterada.
+![PetLand final: cuidado acolhedor, fotografia e composição editorial](media/final/final-home.webp)
 
-## O problema
+## Problem
 
-O PetLand 2.0 nasceu como sistema acadêmico em Flask/MySQL. O diagnóstico do commit preservado encontrou SQL junto às rotas e modelos, contratos divergentes, referências por CPF, operações sem proteção suficiente de propriedade e disponibilidade calculada por contagem de horários. A interface mostrava a intenção de autoatendimento, mas não comprovava uma reserva protegida sob concorrência. [Diagnóstico e trechos do código](../product/PetLand_3.0_Plano_Consolidado.md#21-evidências-do-código-e-escopo-auditado), [baseline](../migration/baseline.md).
+Encontrar um horário é só o início. O tutor precisa de preço, duração e confirmação; a equipe precisa saber quem atender e quais cuidados o animal exige; a gestão precisa mudar a capacidade sem perder reservas. O PetLand foi reconstruído para conectar essas responsabilidades, com histórico e autoria.
 
-O trabalho foi reconstruir o fluxo de uma única loja: o cliente escolhe pet, serviço e horário; o servidor escolhe uma pessoa apta e conserva o preço e a duração contratados. A equipe registra o atendimento e publica um resumo. A administração consulta indicadores e configura a capacidade sem invalidar reservas existentes.
+O diagnóstico do 2.0 encontrou SQL junto a rotas/modelos, referências por CPF, contratos divergentes, verificações insuficientes de propriedade e disponibilidade por contagem de horários. Isso não comprovava uma reserva protegida sob concorrência. [Diagnóstico com evidências](../product/PetLand_3.0_Plano_Consolidado.md#21-evidências-do-código-e-escopo-auditado), [baseline preservada](../migration/baseline.md). Personas são hipóteses de produto, sem alegação de pesquisa com lojas reais.
 
-## Quem usa e o que foi decidido
+## Before
 
-Personas são hipóteses de produto, sem alegação de pesquisa com operadores reais. O tutor quer encontrar um cuidado compatível e saber se a reserva foi confirmada. A equipe precisa consultar a agenda, atender e comunicar alterações. O administrador precisa gerir acessos, recursos, expediente e indicadores. Lucas definiu o contexto como demonstração de portfólio, autorizou os três perfis, serviços por porte, profissional atribuído pelo servidor, confirmação explícita e ausência de taxas. [Decisões D01–D12](../product/decisions.md).
+![Template de agendamento 2.0 renderizado isoladamente](media/before-booking.png)
 
-## Antes e depois, com proveniência
+**Template isolado** do commit `3cc3f898cde896b80fed587bf8c06f4aa46742f6`: links/forms inativos, scripts/fontes externas removidos, opções fictícias e aviso acrescentado. Não executamos o legado, acessamos MySQL ou comprovamos sua jornada. [Hashes e adaptações](media/before-provenance.json).
 
-| Comparação | 2.0 | 3.0 candidata |
-|---|---|---|
-| Acesso | [Template de login isolado](media/before-login.png) | [Login real da aplicação](media/after-login.png) |
-| Reserva | [Template de agendamento isolado](media/before-booking.png) | [Resumo real antes da confirmação](media/after-booking-review.png) |
-| Operação | Contratos e estados diagnosticados no código | [Atendimento concluído](media/after-employee-completed.png) |
-| Histórico móvel | Sem captura dinâmica equivalente alegada | [Resumo público a 320 px](media/after-customer-mobile.png) |
-| Configuração | Sem ensaio de impacto equivalente alegado | [Fechamento bloqueado por reserva existente](media/after-admin-impact.png) |
+P03–P08 e snapshots posteriores permanecem preservados. O [player histórico P08](historical-p08.html), seu [manifesto](media/capture.json), [vídeo](media/petland-3.0-demo.webm) e [transcrição histórica](transcript.md) não são a demonstração final.
 
-As capturas 2.0 vêm de **`3cc3f898cde896b80fed587bf8c06f4aa46742f6`**, com hashes em [proveniência](media/before-provenance.json). Apenas dois templates e sua imagem pública foram lidos pelo Git. Links/forms ficaram inativos, scripts/estilos externos foram retirados, flashes ficaram vazios, opções/data receberam valores fictícios e foi acrescentado um aviso. As fontes usam fallback do sistema. Não foi executado o aplicativo legado, acessado MySQL ou alegado um fluxo antigo funcional. Capturas de login/reserva usam 1280×900 nos dois lados; a captura móvel é explicitamente diferente.
+## Product decisions
 
-O “depois” é a aplicação implementada, servida por Nginx/TLS, com API/PostgreSQL e identidades verdadeiras da demo. Os wireframes do Caderno UX não são usados como evidência de implementação. Imagens/build de trabalho e limites no [registro da gravação](media/capture.json).
+- **Uma vaga real:** loja aberta, pessoa apta, escala da data, duração, bloqueios, recurso físico e ausência de conflito. O servidor atribui o profissional; o tutor escolhe cuidado e horário.
+- **Confirmar é uma ação explícita:** o horário abre um resumo com preço/duração. Só a segunda confirmação cria a reserva; um snapshot conserva a oferta contratada.
+- **Cuidado contínuo:** alergias/preferências acompanham o pet; a equipe reconhece as restrições atuais antes de iniciar. Nota interna e resumo público têm visibilidades distintas.
+- **Mudar sem apagar:** chegada, execução, conclusão, falta, cancelamento, reagendamento e transferência preservam história. Escala de uma única data e capacidade física têm prévia de impacto.
+- **Uma loja, sem taxas:** um pet e um serviço por reserva, três perfis e comunicação persistida. Sem escolha pública do profissional, grupos atômicos, pagamento ou multiempresa.
 
-## Três jornadas demonstradas
+[Decisões D01–D12](../product/decisions.md) · [Produto implementado](../product/product-overview.md) · [Dores, cobertura e lacunas](../product/functional-gap-analysis.md).
 
-[Assistir com legendas e transcrição](index.html), [vídeo WebM](media/petland-3.0-demo.webm), [legendas](media/petland-3.0-demo.vtt), [transcrição](transcript.md). Vídeo de aproximadamente **3 min 05 s**, sem áudio, sem cortes ou aceleração, com capítulos e dados fictícios.
+## Architecture
 
-1. Cliente autenticado cadastra Nala pela interface, escolhe serviço/horário, confere preço e duração e confirma a reserva. O novo pet e a reserva são consultados na API para comprovar persistência.
-2. Funcionário encontra a mesma reserva, registra chegada, anota informação interna, aguarda o horário real, inicia e conclui com resumo público. Cliente consulta a mesma reserva concluída; a nota interna é ausente tanto da interface quanto do payload público.
-3. Administrador consulta indicadores, propõe fechar uma data com reserva futura e vê a alteração bloqueada. A consulta de impacto não altera versão/configuração nem cancela a reserva. A trilha de auditoria encerra a demonstração.
+**React/TypeScript → FastAPI → PostgreSQL 17.** Monólito modular com Hexagonal Architecture e DDD pragmático: seis módulos, domínio puro, casos de uso, ports pequenas, adapters e composição explícita. OpenAPI gera os tipos usados pelo cliente. Nginx/TLS serve o build estático no staging local; Alembic controla schema/migrations.
 
-Preparação declarada: autenticação pela API antes de filmar, serviço fictício de cinco minutos, passo de um minuto e exceção de expediente para o dia. Uma segunda reserva futura é criada pela API própria do cliente para o ensaio de impacto. Não são padrões comerciais nem atalhos de produção. A reserva filmada e suas transições usam o relógio real do servidor; não há endpoint de teste ou relógio simulado. **14 checkpoints** de captura passaram axe/reflow nos critérios exercitados; isso não substitui o aceite humano com leitor de tela.
+Uma loja não justificou serviços distribuídos. Fronteiras são verificadas por imports/testes; não foram criadas camadas vazias para demonstrar padrões. [Visão e diagramas](../architecture/overview.md), [transação de reserva](../architecture/diagrams/booking-transaction.svg), [DER/dicionário](../architecture/data-model.md), [ADRs](../adr/README.md).
 
-## Escolhas de engenharia
+## Final experience
 
-| Escolha | Motivo e limite |
-|---|---|
-| Monólito modular com domínio/application separados | Uma loja não justificou serviços distribuídos. Ports/adapters isolam persistência e comunicação; imports são verificados na CI. |
-| PostgreSQL + Alembic | Intervalos e duas exclusões GiST protegem ocupação de pet/recurso. Migrations e grants têm ensaio real; SQLite não valida essas invariantes. |
-| Primeiro lock do estabelecimento | Simplifica a ordem de locks e preserva atomicidade de reserva/configuração. É uma escolha deliberada de contenção; não há alegação de escala ilimitada. |
-| Sessão opaca + CSRF + autorização contextual | Papéis vêm do servidor e cada objeto tem proprietário. Conta, tutor e pet têm identidades próprias; CPF não é identidade pública. |
-| Snapshot, idempotência e outbox | Mudança posterior de preço não reescreve contratação; resposta perdida não duplica reserva; commit não é confundido com entrega de e-mail. |
-| React, TypeScript e TanStack Query | Formulários/erros e estado remoto usam contratos gerados. UI compartilha tokens; cliente acolhedor e back office compacto. |
-| Staging estático isolado e restore em banco novo | Seed/reset e recuperação preservam desenvolvimento/origem. Backup autenticado é ensaiado, mas permanece no mesmo host por D10. |
+Vídeo contínuo, sem áudio, aceleração ou cortes, com capítulos/legendas. Aplicação real do commit **`f3d70a2cce07d587351eadaa66864b7c1ae4444a`**, após merges dos PRs 11/12. Código funcional/infra/contrato conferidos contra esse SHA; ferramentas e apresentação pertencem a esta revisão. Ambiente HTTPS local **`petlandfinalcase`**, separado do staging pessoal, com PostgreSQL, identidades e SMTP reais da demo.
 
-[Contexto, containers e transação](../architecture/release-diagrams.md), [DER e dicionário](../architecture/data-model.md), [API](../architecture/api.md), [autorização](../architecture/authorization.md), [ADRs](../adr/README.md).
+1. **Tutor:** conta demo verificada e contato preparado; início contextualizado → cadastrar Nala com alergia/preferência → catálogo → disponibilidade → resumo → confirmação → reserva persistida.
+2. **Equipe:** painel diário → mesma reserva na agenda → contexto crítico → chegada → transferência com motivo → nota interna → início no horário real com reconhecimento das restrições → conclusão com resumo.
+3. **Tutor e gestão:** histórico sem nota interna; aviso de pronto verificado no **Mailpit local**, sem entrega externa. Indicadores → salvar equipe em uma única data → alterar capacidade física → prévia bloqueada por reserva afetada → auditoria.
 
-## Resultados medidos e limites
+Preparação por APIs/ferramentas existentes: namespace/CA/contas próprios, banco novo com fixture fictício, serviço de **cinco minutos/R$ 40**, duas pessoas aptas, passo de um minuto, antecedência zero, lembrete de um minuto e exceção de expediente no dia. Reserva futura criada pela API comum do tutor para a prévia de impacto. Esses parâmetros encurtam o ensaio; não são recomendações comerciais. O relógio do host/servidor não foi alterado; nenhum comportamento foi simulado ou regra adicionada para filmar.
 
-A CI da P07 passou **114 testes Python, 15 React e 15 E2E**, com um skip mobile previsto; duas execuções repetiram instalação limpa, carga e recuperação. O ensaio Linux reconciliou **23 tabelas** e verificou três perfis na origem, cópia e retorno. Com 100 mil agendamentos e 20 sessões, 200 reservas retornaram 201; p95 de reserva **440,73 ms**, maior p95 de leitura **255,87 ms**, dentro das metas 800/400 ms. [Execução de referência](https://github.com/O-marqs/petland-2.0/actions/runs/36905134678). Resultados da candidata P08 ficam nos checks do seu PR, sem reaproveitar números como nova medição.
+| Experiência final             | Captura real                                                      |
+| ----------------------------- | ----------------------------------------------------------------- |
+| Início do tutor               | [Dashboard](media/final/final-customer-dashboard.webp)            |
+| Contratação informada         | [Resumo](media/final/final-booking.webp)                          |
+| Trabalho de hoje              | [Painel operacional](media/final/final-operations-dashboard.webp) |
+| Contexto do animal            | [Atendimento e alerta crítico](media/final/final-attendance.webp) |
+| Exceção de equipe             | [Escala por data](media/final/final-roster.webp)                  |
+| Limite físico                 | [Capacidade compartilhada](media/final/final-capacity.webp)       |
+| Gestão e atribuição           | [Indicadores](media/final/final-management.webp)                  |
+| Mudança com reserva existente | [Prévia bloqueada](media/final/final-impact.webp)                 |
+| Tutor em 320 px               | [Histórico móvel](media/final/final-customer-mobile.webp)         |
 
-Laboratório móvel P06: nove amostras, LCP máximo 2028 ms, INP máximo 88 ms, CLS máximo 0,00119. Não são métricas de campo. Não há benchmark comparável do 2.0 e, portanto, **não há percentual de melhoria alegado**. [Relatório de qualidade e rastreabilidade](../release/quality-report.md).
+## Engineering highlights
 
-## O que falta para promoção
+| Camada                                           | Implementação e motivo                                                                                                  |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| **React · OpenAPI**                              | React/TS, TanStack Query e RHF/Zod; tipos derivados dos endpoints reais, drift verificado na CI.                        |
+| **FastAPI · Modular monolith · Hexagonal · DDD** | Casos de uso/autorização separados de HTTP/SQL; contratos públicos entre módulos.                                       |
+| **PostgreSQL · Constraints · Concurrency**       | Exclusões GiST para pet/pessoa; lock da loja primeiro. Pools físicos verificados sob a mesma coordenação transacional.  |
+| **Idempotency · Transactional outbox**           | Retentativa não duplica contratação; evento de comunicação persistido na transação. SMTP aceito não equivale a entrega. |
+| **Security**                                     | Sessão opaca, CSRF, papéis/propriedade, identidades próprias e TLS local. Dados privados ausentes do payload público.   |
+| **CI · Testing**                                 | PostgreSQL real, migrations, fronteiras, contratos, React, navegador, axe/reflow, carga e recuperação.                  |
 
-Aceite final de produto e revisão humana com leitor de tela continuam pendentes. D10 adia provedor, domínio, e-mail externo, publicação, cópia de backup fora do host e metas produtivas. As gravações/capturas publicadas usam dados fictícios; isso não afirma que um banco local de teste pessoal nunca contenha dados fornecidos pelo autor. Sem multiempresa, pagamentos ou importação histórica; D08/D12 dispensam esta última. Ferramentas não fazem tag/release estável, merge ou deploy automático. [Candidato e procedimento de promoção](../runbooks/release.md).
+[API](../architecture/api.md), [segurança/permissões](../architecture/authorization.md), [RNFs](../architecture/non-functional-requirements.md). O bloco visual no [case](index.html#engineering) resume essas relações; arquitetura aprofundada nos documentos.
 
-O repositório preserva a baseline, as alterações locais do legado, fontes recebidas e o histórico incremental. A evolução é demonstrada pelas jornadas, constraints e ensaios reproduzíveis; este case não apresenta o candidato como serviço comercial em operação.
+## Quality evidence
 
-## Incremento operacional posterior à gravação
+A captura confere persistência, horário preservado na transferência, conclusão, ausência da nota privada no payload público, SMTP no Mailpit e prévia sem mutação. Desktop/mobile exercitam axe, reflow e ausência de erro JS. O player verifica links, duração, seek e legendas a 1280/320 px. [Evidência desta apresentação](../evidence/Final-case.md), [proveniência com hashes](media/final/capture.json).
 
-O vídeo P08 é histórico e permanece intacto. O case acrescenta captura separada do painel diário real, com origem em `media/operations-evolution.json`, para mostrar agenda pessoal/equipe, pendências e carga. O incremento autorizado traz escala coletiva, pools físicos, transferência independente, contexto crítico/anterior e avisos programados/de conclusão. Resultados atuais e limites ficam em [Operations-evolution](../evidence/Operations-evolution.md); a referência P07 acima não é nova medição. Reserva em grupo, serviço alterado durante execução, períodos de férias, recepção em tela única, recorrência e D10 continuam lacunas explícitas.
+A auditoria anterior passou **128 Python, 20 React e 15 E2E**, com um skip mobile previsto para o primeiro admin singleton. São resultados anteriores, não testes atribuídos às capturas. [Reprodução independente](../evidence/Reproducibility-review.md). [CI `31920b4`, tentativa 2](https://github.com/O-marqs/petland-2.0/actions/runs/37050291620/attempts/2): três jobs aprovados após falha de leituras na primeira tentativa; metas 400/800 ms preservadas. Axe não substitui leitor de tela/aceite humano.
+
+## Results
+
+A mesma reserva percorre tutor/equipe/gestão, com persistência e comunicação local. O backoffice responde o que fazer hoje, configura uma data específica, apresenta cuidado crítico e inspeciona impacto. Gestão consulta carga/conclusões/duração com atribuição pelo responsável final, sem ranking automático.
+
+No laboratório CI anterior `31920b4`, tentativa 2, p95 da reserva **414,61 ms** (meta 800), dashboard **250,02 ms** e maior leitura **278 ms** (meta 400). A tentativa 1 teve dashboard 494,06 ms/auditoria 413,57 ms e falhou. Não houve benchmark comparável do 2.0, ganho percentual, medição de campo ou validação de escala produtiva. [Fontes e recortes](../architecture/non-functional-requirements.md), [auditoria](../evidence/Reproducibility-review.md).
+
+## Trade-offs
+
+Lock da loja simplifica atomicidade/ordem de locks e limita paralelismo de escrita. Responsável final permite medir operação, mas não divide crédito por transferências. Um serviço por reserva evita prometer grupos atômicos inexistentes. Outbox desacopla comunicação; SMTP aceito não comprova entrega/leitura. Números da demo não descrevem uma loja real.
+
+## What I would do in real production
+
+Concluir aceite dos três perfis/leitor de tela; decidir licença; definir provedor/domínio/SMTP externo; testar entrega, custódia de chaves/backup fora do host, retenção, observabilidade, SLO e RPO/RTO no ambiente alvo. D10 adia essas decisões. Dados reais/importação/implantação exigem escopo próprio. [Gates](../release/candidate.json), [runbook de promoção](../runbooks/release.md).
+
+## What I intentionally did not build
+
+Multiempresa, pagamentos, taxas, escolha pública de profissional, reservas atômicas para vários pets, recorrência, alteração de serviço durante execução, férias em lote e recepção em tela única. O modelo expõe lacunas; o case não as demonstra como entregues. D08/D12 dispensam importar o legado.
+
+## Run it yourself
+
+[Quick Start](../../README.md#quick-start) e [requisitos por caminho](../release/reproducibility.md). `main` ainda contém o legado; apresentação na branch `petland-3.0-final-case`.
+
+Para abrir só o case público, da raiz com Python 3.11+:
+
+```sh
+python scripts/portfolio_preview.py --port 8780
+```
+
+Abra http://127.0.0.1:8780. Serve só `docs/case`, com ranges para seek, sem expor `.local`/raiz. [Comandos de regravação](presentation-script.md#regravar-sem-mudar-o-produto). O material não concede aceite, merge, tag ou release estável.

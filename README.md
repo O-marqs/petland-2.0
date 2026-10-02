@@ -8,11 +8,11 @@ O tutor precisa de horário, preço e autonomia; a equipe precisa saber o que fa
 
 **Arquitetura:** Modular Monolith with Hexagonal Architecture and pragmatic DDD principles.
 
-![Hero atual do PetLand, aplicação real identificada como demonstração](docs/ux/media/current/home-current.webp)
+![Home final do PetLand, aplicação real com dados fictícios](docs/case/media/final/final-home.webp)
 
-Captura do código funcional `2549523`, em demo separada com dados fictícios. [UX e oito telas atuais](docs/ux/PetLand_3.0_UX_Final.md) · [Proveniência](docs/ux/media/current/capture.json).
+Captura final de `f3d70a2`, após os merges dos PRs 11/12, em demo separada com dados fictícios. [Case final](docs/case/README.md) · [Capturas, ações e proveniência](docs/case/media/final/capture.json).
 
-[Vídeo de três jornadas — 3 min 05 s](docs/case/index.html) · [WebM](docs/case/media/petland-3.0-demo.webm) · [Transcrição](docs/case/transcript.md). **Vídeo histórico P08**, anterior à revisão visual/operacional; capturas atuais permanecem separadas.
+[Assistir à jornada final — cerca de 4 minutos](docs/case/index.html#demo) · [Vídeo](docs/case/media/final/petland-final-demo.webm) · [Legendas](docs/case/media/final/petland-final-demo.vtt) · [Transcrição](docs/case/final-transcript.md) · [Roteiro](docs/case/presentation-script.md). Tutor → atendimento → escala/capacidade/impacto. [P08 histórico preservado](docs/case/historical-p08.html).
 
 ## Produto implementado
 
@@ -23,7 +23,7 @@ Captura do código funcional `2549523`, em demo separada com dados fictícios. [
 
 Uma reserva contém **um pet e um serviço**; profissional atribuído automaticamente. Sem taxas, pagamentos, grupos atômicos ou multiempresa. [Produto e limites](docs/product/product-overview.md) · [Matriz de dores](docs/product/functional-gap-analysis.md).
 
-**Estado:** candidata `3.0.0-rc.1`, schema `0007_product_operations`, staging local. **Clone `petland-3.0-reproducibility`: a `main` ainda contém o legado.** [Versão/SHAs e requisitos](docs/release/reproducibility.md). Documentação para revisão humana, sem declarar produção ou aceite final. Mailpit não entrega e-mail externo; backup permanece no host. [Gates](docs/release/candidate.json).
+**Estado:** candidata `3.0.0-rc.1`, schema `0007_product_operations`, staging local. **Clone `petland-3.0-final-case`: a `main` ainda contém o legado.** [Versão/SHAs e requisitos](docs/release/reproducibility.md). Documentação para revisão humana, sem declarar produção ou aceite final. Mailpit não entrega e-mail externo; backup permanece no host. [Gates](docs/release/candidate.json).
 
 ## Quick Start
 
@@ -34,7 +34,7 @@ Os comandos partem da raiz do clone. Escolha seu objetivo abaixo. Rede necessár
 Git, Docker com Compose v2 ativo e Python 3.11+ no host. Imagens instalam Python 3.13/Node 22 e dependências pelos lockfiles; uv/Node/pnpm no host não são necessários neste caminho.
 
 ```sh
-git clone --branch petland-3.0-reproducibility https://github.com/O-marqs/petland-2.0.git
+git clone --branch petland-3.0-final-case https://github.com/O-marqs/petland-2.0.git
 cd petland-2.0
 python scripts/dev.py init
 python scripts/dev.py up
@@ -130,10 +130,10 @@ Referência funcional: **128 Python + 20 React**, E2E **15 pass + 1 skip previst
 
 | Tempo / objetivo    | Caminho                                                                                                                                                                                                                                |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 30 segundos         | Abertura, captura e produto implementado neste README. |
-| 5 minutos           | [Product Overview](docs/product/product-overview.md) + [Architecture Overview](docs/architecture/overview.md). |
-| 10 minutos          | Escolher um caminho no Quick Start e executar; tempo de download/construção varia. |
-| 15+ minutos         | [Case](docs/case/README.md), [UX atual](docs/ux/PetLand_3.0_UX_Final.md), ADRs e RNFs. |
+| 30 segundos         | Abertura, captura e produto implementado neste README.                                                                                                                                                                                 |
+| 5 minutos           | [Product Overview](docs/product/product-overview.md) + [Architecture Overview](docs/architecture/overview.md).                                                                                                                         |
+| 10 minutos          | Escolher um caminho no Quick Start e executar; tempo de download/construção varia.                                                                                                                                                     |
+| 15+ minutos         | [Case](docs/case/README.md), [UX atual](docs/ux/PetLand_3.0_UX_Final.md), ADRs e RNFs.                                                                                                                                                 |
 | Technical deep dive | [ADRs](docs/adr/README.md), [Data Model](docs/architecture/data-model.md), [Security](docs/architecture/authorization.md), [RNFs](docs/architecture/non-functional-requirements.md), [Quality Report](docs/release/quality-report.md). |
 | Run locally         | [Quick Start completo](docs/runbooks/local.md), [aceite manual](docs/runbooks/manual-acceptance.md) e [operação atual](docs/runbooks/operational-evolution.md).                                                                        |
 
